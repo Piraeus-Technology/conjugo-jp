@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "ConjuGo JP",
+    "slug": "conjuGoJP",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#1A237E"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.lkh9596.conjugojp",
+      "buildNumber": "1",
+      "infoPlist": {
+        "CFBundleDisplayName": "ConjuGo JP",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1A237E"
+      },
+      "package": "com.lkh9596.conjugojp",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    }
+  }
+}
