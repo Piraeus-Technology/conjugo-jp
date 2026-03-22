@@ -12780,5 +12780,538 @@
     "translation": "to decide, to determine",
     "jlpt": "N1",
     "examples": [{ "ja": "勝敗を決する。", "en": "I determine the outcome." }]
+  },
+  "こぼす": {
+    "reading": "こぼす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to spill, to complain",
+    "jlpt": "N4",
+    "examples": [{ "ja": "水をこぼす。", "en": "I spill water." }]
+  },
+  "こぼれる": {
+    "reading": "こぼれる",
+    "group": "ichidan",
+    "translation": "to spill (intransitive), to overflow",
+    "jlpt": "N4",
+    "examples": [{ "ja": "涙がこぼれる。", "en": "Tears overflow." }]
+  },
+  "すべる": {
+    "reading": "すべる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to slide, to slip",
+    "jlpt": "N4",
+    "examples": [{ "ja": "氷の上をすべる。", "en": "I slide on the ice." }]
+  },
+  "つまずく": {
+    "reading": "つまずく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to stumble, to trip",
+    "jlpt": "N4",
+    "examples": [{ "ja": "石につまずく。", "en": "I trip on a stone." }]
+  },
+  "ぶら下がる": {
+    "reading": "ぶらさがる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to hang from, to dangle",
+    "jlpt": "N4",
+    "examples": [{ "ja": "鉄棒にぶら下がる。", "en": "I hang from the horizontal bar." }]
+  },
+  "ぶら下げる": {
+    "reading": "ぶらさげる",
+    "group": "ichidan",
+    "translation": "to hang, to dangle (something)",
+    "jlpt": "N4",
+    "examples": [{ "ja": "鍵をぶら下げる。", "en": "I dangle the keys." }]
+  },
+  "しゃがむ": {
+    "reading": "しゃがむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to squat, to crouch",
+    "jlpt": "N4",
+    "examples": [{ "ja": "地面にしゃがむ。", "en": "I squat on the ground." }]
+  },
+  "さぼる": {
+    "reading": "さぼる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to skip (class/work), to slack off",
+    "jlpt": "N4",
+    "examples": [{ "ja": "授業をさぼる。", "en": "I skip class." }]
+  },
+  "ふざける": {
+    "reading": "ふざける",
+    "group": "ichidan",
+    "translation": "to joke around, to mess around",
+    "jlpt": "N4",
+    "examples": [{ "ja": "友達とふざける。", "en": "I mess around with friends." }]
+  },
+  "はしゃぐ": {
+    "reading": "はしゃぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to be excited, to frolic",
+    "jlpt": "N4",
+    "examples": [{ "ja": "子供がはしゃぐ。", "en": "The children frolic." }]
+  },
+  "ごまかす": {
+    "reading": "ごまかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to deceive, to fudge",
+    "jlpt": "N3",
+    "examples": [{ "ja": "数字をごまかす。", "en": "I fudge the numbers." }]
+  },
+  "はぐらかす": {
+    "reading": "はぐらかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to dodge (a question), to evade",
+    "jlpt": "N3",
+    "examples": [{ "ja": "質問をはぐらかす。", "en": "I dodge the question." }]
+  },
+  "からかう": {
+    "reading": "からかう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to tease, to make fun of",
+    "jlpt": "N3",
+    "examples": [{ "ja": "弟をからかう。", "en": "I tease my younger brother." }]
+  },
+  "すくう": {
+    "reading": "すくう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to scoop, to rescue",
+    "jlpt": "N3",
+    "examples": [{ "ja": "金魚をすくう。", "en": "I scoop goldfish." }]
+  },
+  "つまむ": {
+    "reading": "つまむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to pinch, to pick up (with fingers)",
+    "jlpt": "N3",
+    "examples": [{ "ja": "つまみをつまむ。", "en": "I pick at snacks." }]
+  },
+  "すくむ": {
+    "reading": "すくむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to freeze up, to be paralyzed",
+    "jlpt": "N3",
+    "examples": [{ "ja": "恐怖ですくむ。", "en": "I freeze up from fear." }]
+  },
+  "ずらす": {
+    "reading": "ずらす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to shift, to stagger (a schedule)",
+    "jlpt": "N3",
+    "examples": [{ "ja": "時間をずらす。", "en": "I stagger the time." }]
+  },
+  "ずれる": {
+    "reading": "ずれる",
+    "group": "ichidan",
+    "translation": "to slip, to be off",
+    "jlpt": "N3",
+    "examples": [{ "ja": "焦点がずれる。", "en": "The focus is off." }]
+  },
+  "はみ出す": {
+    "reading": "はみだす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to stick out, to go beyond",
+    "jlpt": "N3",
+    "examples": [{ "ja": "枠からはみ出す。", "en": "It sticks out from the frame." }]
+  },
+  "のめり込む": {
+    "reading": "のめりこむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to be absorbed in, to get hooked",
+    "jlpt": "N3",
+    "examples": [{ "ja": "趣味にのめり込む。", "en": "I get absorbed in a hobby." }]
+  },
+  "のさばる": {
+    "reading": "のさばる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to swagger, to act arrogantly",
+    "jlpt": "N3",
+    "examples": [{ "ja": "権力者がのさばる。", "en": "Those in power act arrogantly." }]
+  },
+  "ぼやく": {
+    "reading": "ぼやく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to grumble, to complain",
+    "jlpt": "N3",
+    "examples": [{ "ja": "給料が安いとぼやく。", "en": "I grumble that the salary is low." }]
+  },
+  "たかる": {
+    "reading": "たかる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to mooch, to swarm",
+    "jlpt": "N3",
+    "examples": [{ "ja": "人にたかる。", "en": "I mooch off someone." }]
+  },
+  "ぐずる": {
+    "reading": "ぐずる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be fussy, to whine",
+    "jlpt": "N3",
+    "examples": [{ "ja": "子供がぐずる。", "en": "The child whines." }]
+  },
+  "すがる": {
+    "reading": "すがる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to cling to, to depend on",
+    "jlpt": "N3",
+    "examples": [{ "ja": "希望にすがる。", "en": "I cling to hope." }]
+  },
+  "まごつく": {
+    "reading": "まごつく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to be flustered, to be at a loss",
+    "jlpt": "N3",
+    "examples": [{ "ja": "急な質問にまごつく。", "en": "I am flustered by the sudden question." }]
+  },
+  "たじろぐ": {
+    "reading": "たじろぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to flinch, to falter",
+    "jlpt": "N3",
+    "examples": [{ "ja": "相手の迫力にたじろぐ。", "en": "I flinch at the opponent's intensity." }]
+  },
+  "うろつく": {
+    "reading": "うろつく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to wander about, to loiter",
+    "jlpt": "N3",
+    "examples": [{ "ja": "夜道をうろつく。", "en": "I wander the streets at night." }]
+  },
+  "ほじくる": {
+    "reading": "ほじくる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to dig out, to pick at",
+    "jlpt": "N3",
+    "examples": [{ "ja": "過去をほじくる。", "en": "I dig up the past." }]
+  },
+  "いびる": {
+    "reading": "いびる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to torment, to pick on",
+    "jlpt": "N2",
+    "examples": [{ "ja": "新人をいびる。", "en": "I pick on the newcomer." }]
+  },
+  "すげ替える": {
+    "reading": "すげかえる",
+    "group": "ichidan",
+    "translation": "to replace (a person), to swap out",
+    "jlpt": "N2",
+    "examples": [{ "ja": "トップをすげ替える。", "en": "I replace the top person." }]
+  },
+  "とぼける": {
+    "reading": "とぼける",
+    "group": "ichidan",
+    "translation": "to play dumb, to feign ignorance",
+    "jlpt": "N2",
+    "examples": [{ "ja": "知らないととぼける。", "en": "I play dumb." }]
+  },
+  "おちょくる": {
+    "reading": "おちょくる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to mock, to make fun of",
+    "jlpt": "N2",
+    "examples": [{ "ja": "人をおちょくる。", "en": "I make fun of someone." }]
+  },
+  "ほくそ笑む": {
+    "reading": "ほくそえむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to smirk, to gloat",
+    "jlpt": "N2",
+    "examples": [{ "ja": "成功にほくそ笑む。", "en": "I smirk at the success." }]
+  },
+  "たぶらかす": {
+    "reading": "たぶらかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to deceive, to trick",
+    "jlpt": "N2",
+    "examples": [{ "ja": "人をたぶらかす。", "en": "I trick someone." }]
+  },
+  "すっぽかす": {
+    "reading": "すっぽかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to stand someone up, to blow off",
+    "jlpt": "N2",
+    "examples": [{ "ja": "約束をすっぽかす。", "en": "I blow off the appointment." }]
+  },
+  "かき回す": {
+    "reading": "かきまわす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to stir, to disrupt",
+    "jlpt": "N2",
+    "examples": [{ "ja": "場をかき回す。", "en": "I disrupt the situation." }]
+  },
+  "ぶちまける": {
+    "reading": "ぶちまける",
+    "group": "ichidan",
+    "translation": "to spill everything, to confess all",
+    "jlpt": "N2",
+    "examples": [{ "ja": "本音をぶちまける。", "en": "I confess my true feelings." }]
+  },
+  "ぶち壊す": {
+    "reading": "ぶちこわす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to wreck, to ruin",
+    "jlpt": "N2",
+    "examples": [{ "ja": "雰囲気をぶち壊す。", "en": "I wreck the atmosphere." }]
+  },
+  "でしゃばる": {
+    "reading": "でしゃばる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be nosy, to meddle",
+    "jlpt": "N2",
+    "examples": [{ "ja": "人の問題にでしゃばる。", "en": "I meddle in others' problems." }]
+  },
+  "こじ開ける": {
+    "reading": "こじあける",
+    "group": "ichidan",
+    "translation": "to pry open, to force open",
+    "jlpt": "N2",
+    "examples": [{ "ja": "ドアをこじ開ける。", "en": "I force the door open." }]
+  },
+  "しくじる": {
+    "reading": "しくじる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to fail, to blunder",
+    "jlpt": "N2",
+    "examples": [{ "ja": "試験をしくじる。", "en": "I fail the exam." }]
+  },
+  "のたうつ": {
+    "reading": "のたうつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to writhe, to roll in agony",
+    "jlpt": "N1",
+    "examples": [{ "ja": "痛みにのたうつ。", "en": "I writhe in pain." }]
+  },
+  "せめぎ合う": {
+    "reading": "せめぎあう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to vie with, to clash",
+    "jlpt": "N1",
+    "examples": [{ "ja": "二つの勢力がせめぎ合う。", "en": "Two forces clash." }]
+  },
+  "もがく": {
+    "reading": "もがく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to struggle, to writhe",
+    "jlpt": "N1",
+    "examples": [{ "ja": "運命にもがく。", "en": "I struggle against fate." }]
+  },
+  "あがく": {
+    "reading": "あがく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to struggle desperately",
+    "jlpt": "N1",
+    "examples": [{ "ja": "苦境であがく。", "en": "I struggle desperately in a difficult situation." }]
+  },
+  "ひしめく": {
+    "reading": "ひしめく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to crowd together, to jostle",
+    "jlpt": "N1",
+    "examples": [{ "ja": "人がひしめく。", "en": "People jostle together." }]
+  },
+  "たたずむ": {
+    "reading": "たたずむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to stand still, to linger",
+    "jlpt": "N1",
+    "examples": [{ "ja": "窓辺にたたずむ。", "en": "I linger by the window." }]
+  },
+  "うずくまる": {
+    "reading": "うずくまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to crouch down, to huddle",
+    "jlpt": "N1",
+    "examples": [{ "ja": "隅にうずくまる。", "en": "I huddle in the corner." }]
+  },
+  "はばかる": {
+    "reading": "はばかる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to hesitate, to refrain from",
+    "jlpt": "N1",
+    "examples": [{ "ja": "言うのをはばかる。", "en": "I hesitate to say it." }]
+  },
+  "おもねる": {
+    "reading": "おもねる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to flatter, to curry favor",
+    "jlpt": "N1",
+    "examples": [{ "ja": "上司におもねる。", "en": "I curry favor with my boss." }]
+  },
+  "こうべを垂れる": {
+    "reading": "こうべをたれる",
+    "group": "ichidan",
+    "translation": "to bow one's head, to be humble",
+    "jlpt": "N1",
+    "examples": [{ "ja": "感謝してこうべを垂れる。", "en": "I bow my head in gratitude." }]
+  },
+  "たゆまぬ": {
+    "reading": "たゆまぬ",
+    "group": "godan",
+    "godanRow": "nu",
+    "translation": "to be untiring, to be ceaseless",
+    "jlpt": "N1",
+    "examples": [{ "ja": "たゆまぬ努力。", "en": "Untiring effort." }]
+  },
+  "物怖じする": {
+    "reading": "ものおじする",
+    "group": "irregular",
+    "translation": "to be timid, to be intimidated",
+    "jlpt": "N1",
+    "examples": [{ "ja": "人前で物怖じする。", "en": "I am timid in front of people." }]
+  },
+  "面食らう": {
+    "reading": "めんくらう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to be taken aback, to be confused",
+    "jlpt": "N1",
+    "examples": [{ "ja": "突然の質問に面食らう。", "en": "I am taken aback by the sudden question." }]
+  },
+  "図に乗る": {
+    "reading": "ずにのる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to get carried away, to push one's luck",
+    "jlpt": "N1",
+    "examples": [{ "ja": "褒められて図に乗る。", "en": "I get carried away by the praise." }]
+  },
+  "高を括る": {
+    "reading": "たかをくくる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to underestimate, to make light of",
+    "jlpt": "N1",
+    "examples": [{ "ja": "相手を高を括る。", "en": "I underestimate the opponent." }]
+  },
+  "袂を分かつ": {
+    "reading": "たもとをわかつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to part ways, to break off relations",
+    "jlpt": "N1",
+    "examples": [{ "ja": "仲間と袂を分かつ。", "en": "I part ways with my companions." }]
+  },
+  "腕を振るう": {
+    "reading": "うでをふるう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to demonstrate one's skill",
+    "jlpt": "N1",
+    "examples": [{ "ja": "料理で腕を振るう。", "en": "I show off my cooking skills." }]
+  },
+  "度肝を抜く": {
+    "reading": "どぎもをぬく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to astonish, to take one's breath away",
+    "jlpt": "N1",
+    "examples": [{ "ja": "演技で度肝を抜く。", "en": "The performance is astonishing." }]
+  },
+  "舌を巻く": {
+    "reading": "したをまく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to be amazed, to be speechless",
+    "jlpt": "N1",
+    "examples": [{ "ja": "技術に舌を巻く。", "en": "I am amazed by the technique." }]
+  },
+  "骨を折る": {
+    "reading": "ほねをおる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to take pains, to make great effort",
+    "jlpt": "N1",
+    "examples": [{ "ja": "部下のために骨を折る。", "en": "I take pains for my subordinates." }]
+  },
+  "顔を立てる": {
+    "reading": "かおをたてる",
+    "group": "ichidan",
+    "translation": "to save face (for someone)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "上司の顔を立てる。", "en": "I save face for my boss." }]
+  },
+  "手を焼く": {
+    "reading": "てをやく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to have trouble with, to be at one's wit's end",
+    "jlpt": "N1",
+    "examples": [{ "ja": "子供に手を焼く。", "en": "I have trouble with the child." }]
+  },
+  "目を見張る": {
+    "reading": "めをみはる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to stare in wonder, to be astonished",
+    "jlpt": "N1",
+    "examples": [{ "ja": "成長に目を見張る。", "en": "I am astonished by the growth." }]
+  },
+  "耳を疑う": {
+    "reading": "みみをうたがう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to doubt one's ears, to be shocked",
+    "jlpt": "N1",
+    "examples": [{ "ja": "ニュースに耳を疑う。", "en": "I can't believe what I'm hearing." }]
+  },
+  "肩を持つ": {
+    "reading": "かたをもつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to take someone's side",
+    "jlpt": "N1",
+    "examples": [{ "ja": "友人の肩を持つ。", "en": "I take my friend's side." }]
+  },
+  "腹を括る": {
+    "reading": "はらをくくる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to steel oneself, to resolve",
+    "jlpt": "N1",
+    "examples": [{ "ja": "覚悟を決めて腹を括る。", "en": "I steel myself with resolve." }]
   }
 }
