@@ -108,7 +108,14 @@ export default function ConjugationScreen() {
                     <Text style={[styles.formLabelEn, { color: colors.textMuted }]}>{result.labelEn}</Text>
                   </View>
                   <View style={styles.formValue}>
-                    <Text style={[styles.formText, { color: colors.textPrimary }]}>{result.reading}</Text>
+                    {result.value !== result.reading ? (
+                      <>
+                        <Text style={[styles.formText, { color: colors.textPrimary }]}>{result.value}</Text>
+                        <Text style={[styles.formReading, { color: colors.textMuted }]}>{result.reading}</Text>
+                      </>
+                    ) : (
+                      <Text style={[styles.formText, { color: colors.textPrimary }]}>{result.reading}</Text>
+                    )}
                   </View>
                   <Ionicons name="volume-medium-outline" size={16} color={colors.textMuted} />
                 </TouchableOpacity>
@@ -194,6 +201,7 @@ const styles = StyleSheet.create({
   formLabelEn: { fontSize: 10 },
   formValue: { flex: 1 },
   formText: { fontSize: fonts.sizes.lg },
+  formReading: { fontSize: fonts.sizes.sm, marginTop: 2 },
   exampleRow: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -280,12 +280,31 @@ export function conjugateReading(verb: VerbData, form: ConjugationForm): string 
 
 // Build the display form with kanji where possible
 // For now, return the reading (hiragana) — kanji display can be enhanced later
+// Derive kanji conjugated form from verb kanji + reading + conjugated reading
+// e.g., verb=飲む, reading=のむ, conjugated=のみます → 飲みます
+export function deriveKanjiForm(verb: string, reading: string, conjugated: string): string {
+  if (conjugated === reading) return verb; // dictionary form
+  let sharedSuffix = 0;
+  for (let i = 1; i <= Math.min(verb.length, reading.length); i++) {
+    if (verb[verb.length - i] === reading[reading.length - i]) {
+      sharedSuffix = i;
+    } else {
+      break;
+    }
+  }
+  if (sharedSuffix === 0) return conjugated;
+  const kanjiStem = verb.slice(0, verb.length - sharedSuffix);
+  const readingStem = reading.slice(0, reading.length - sharedSuffix);
+  if (conjugated.startsWith(readingStem)) {
+    return kanjiStem + conjugated.slice(readingStem.length);
+  }
+  return conjugated;
+}
+
 export function conjugate(verb: string, verbData: VerbData, form: ConjugationForm): ConjugationResult {
   const reading = conjugateReading(verbData, form);
   const labels = FORM_LABELS[form];
-
-  // For dictionary form, use the original verb (with kanji)
-  const value = form === 'dictionary' ? verb : reading;
+  const value = deriveKanjiForm(verb, verbData.reading, reading);
 
   return {
     form,
