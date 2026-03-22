@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#1A237E"
+      "backgroundColor": "#BC002D"
     },
     "ios": {
       "supportsTablet": false,
@@ -23,7 +23,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#1A237E"
+        "backgroundColor": "#BC002D"
       },
       "package": "com.lkh9596.conjugojp",
       "versionCode": 1

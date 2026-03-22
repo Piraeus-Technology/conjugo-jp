@@ -1,11 +1,11 @@
 import { useThemeStore } from '../store/themeStore';
 
 const lightColors = {
-  primary: '#1A237E',
-  primaryLight: '#3949AB',
-  primaryDark: '#0D1642',
+  primary: '#BC002D',
+  primaryLight: '#D4354F',
+  primaryDark: '#8C0021',
 
-  accent: '#E91E63',
+  accent: '#BC002D',
   accentLight: '#FCE4EC',
 
   bg: '#FAFAFA',
@@ -20,7 +20,7 @@ const lightColors = {
   divider: '#F0EEEB',
 
   pillBg: '#F0EEEB',
-  pillActiveBg: '#1A237E',
+  pillActiveBg: '#BC002D',
   pillText: '#4A4A4A',
   pillActiveText: '#FFFFFF',
 
@@ -33,12 +33,12 @@ const lightColors = {
 };
 
 const darkColors = {
-  primary: '#5C6BC0',
-  primaryLight: '#7986CB',
-  primaryDark: '#9FA8DA',
+  primary: '#E8384F',
+  primaryLight: '#FF5A6E',
+  primaryDark: '#FF6B7A',
 
-  accent: '#F48FB1',
-  accentLight: '#3D1A2A',
+  accent: '#E8384F',
+  accentLight: '#3D1A1A',
 
   bg: '#121212',
   card: '#1E1E1E',
@@ -52,7 +52,7 @@ const darkColors = {
   divider: '#2A2A2A',
 
   pillBg: '#2A2A2A',
-  pillActiveBg: '#5C6BC0',
+  pillActiveBg: '#E8384F',
   pillText: '#A0A0A0',
   pillActiveText: '#FFFFFF',
 
