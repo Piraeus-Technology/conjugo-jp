@@ -16756,5 +16756,946 @@
     "translation": "to keep in one's heart, to harbor",
     "jlpt": "N1",
     "examples": [{ "ja": "思いを胸に秘める。", "en": "I keep my feelings in my heart." }]
+  },
+  "腰が引ける": {
+    "reading": "こしがひける",
+    "group": "ichidan",
+    "translation": "to get cold feet, to hesitate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "困難に腰が引ける。", "en": "I get cold feet at the difficulty." }]
+  },
+  "地団駄を踏む": {
+    "reading": "じだんだをふむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to stamp one's feet in frustration",
+    "jlpt": "N1",
+    "examples": [{ "ja": "悔しくて地団駄を踏む。", "en": "I stamp my feet in frustration." }]
+  },
+  "踵を返す": {
+    "reading": "きびすをかえす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to turn on one's heel",
+    "jlpt": "N1",
+    "examples": [{ "ja": "踵を返して去る。", "en": "I turn on my heel and leave." }]
+  },
+  "居丈高になる": {
+    "reading": "いたけだかになる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to become overbearing",
+    "jlpt": "N1",
+    "examples": [{ "ja": "権力を持つと居丈高になる。", "en": "I become overbearing with power." }]
+  },
+  "顎で使う": {
+    "reading": "あごでつかう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to boss around",
+    "jlpt": "N1",
+    "examples": [{ "ja": "部下を顎で使う。", "en": "I boss around my subordinates." }]
+  },
+  "舌を振るう": {
+    "reading": "したをふるう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to be eloquent",
+    "jlpt": "N1",
+    "examples": [{ "ja": "弁舌を振るう。", "en": "I display eloquence." }]
+  },
+  "腕を撫す": {
+    "reading": "うでをぶす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to rub one's hands in anticipation",
+    "jlpt": "N1",
+    "examples": [{ "ja": "腕を撫して待つ。", "en": "I wait eagerly." }]
+  },
+  "舌を振るう": {
+    "reading": "したをふるう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to speak eloquently",
+    "jlpt": "N1",
+    "examples": [{ "ja": "巧みに舌を振るう。", "en": "I speak skillfully." }]
+  },
+  "音を上げる": {
+    "reading": "ねをあげる",
+    "group": "ichidan",
+    "translation": "to give up, to cry uncle",
+    "jlpt": "N1",
+    "examples": [{ "ja": "暑さに音を上げる。", "en": "I cry uncle from the heat." }]
+  },
+  "腰を上げる": {
+    "reading": "こしをあげる",
+    "group": "ichidan",
+    "translation": "to get up, to finally take action",
+    "jlpt": "N1",
+    "examples": [{ "ja": "やっと腰を上げる。", "en": "I finally take action." }]
+  },
+  "重い腰を上げる": {
+    "reading": "おもいこしをあげる",
+    "group": "ichidan",
+    "translation": "to reluctantly get started",
+    "jlpt": "N1",
+    "examples": [{ "ja": "重い腰を上げて取り組む。", "en": "I reluctantly get started on it." }]
+  },
+  "目を丸くする": {
+    "reading": "めをまるくする",
+    "group": "irregular",
+    "translation": "to be wide-eyed with surprise",
+    "jlpt": "N1",
+    "examples": [{ "ja": "驚いて目を丸くする。", "en": "I am wide-eyed with surprise." }]
+  },
+  "目を細める": {
+    "reading": "めをほそめる",
+    "group": "ichidan",
+    "translation": "to narrow one's eyes (in pleasure), to beam",
+    "jlpt": "N1",
+    "examples": [{ "ja": "孫を見て目を細める。", "en": "I beam at my grandchild." }]
+  },
+  "目を背ける": {
+    "reading": "めをそむける",
+    "group": "ichidan",
+    "translation": "to look away, to avert one's eyes from",
+    "jlpt": "N1",
+    "examples": [{ "ja": "現実から目を背ける。", "en": "I look away from reality." }]
+  },
+  "眉を顰める": {
+    "reading": "まゆをひそめる",
+    "group": "ichidan",
+    "translation": "to frown, to knit one's brows",
+    "jlpt": "N1",
+    "examples": [{ "ja": "不快に眉を顰める。", "en": "I frown in displeasure." }]
+  },
+  "額を寄せ合う": {
+    "reading": "ひたいをよせあう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to put their heads together",
+    "jlpt": "N1",
+    "examples": [{ "ja": "額を寄せ合って相談する。", "en": "We put our heads together to discuss." }]
+  },
+  "狐に摘まれる": {
+    "reading": "きつねにつままれる",
+    "group": "ichidan",
+    "translation": "to be dumbfounded, to be bewildered",
+    "jlpt": "N1",
+    "examples": [{ "ja": "狐に摘まれた気分。", "en": "I feel dumbfounded." }]
+  },
+  "虎の尾を踏む": {
+    "reading": "とらのおをふむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to do something extremely dangerous",
+    "jlpt": "N1",
+    "examples": [{ "ja": "虎の尾を踏む思い。", "en": "I feel like I'm treading on dangerous ground." }]
+  },
+  "蛇足を加える": {
+    "reading": "だそくをくわえる",
+    "group": "ichidan",
+    "translation": "to add something unnecessary",
+    "jlpt": "N1",
+    "examples": [{ "ja": "説明に蛇足を加える。", "en": "I add an unnecessary detail." }]
+  },
+  "轍を踏む": {
+    "reading": "てつをふむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to follow in someone's footsteps (mistake)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "同じ轍を踏む。", "en": "I repeat the same mistake." }]
+  },
+  "汗を流す": {
+    "reading": "あせをながす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to work hard, to sweat",
+    "jlpt": "N1",
+    "examples": [{ "ja": "共に汗を流す。", "en": "We work hard together." }]
+  },
+  "血を流す": {
+    "reading": "ちをながす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to shed blood, to bleed",
+    "jlpt": "N1",
+    "examples": [{ "ja": "革命で血を流す。", "en": "Blood is shed in the revolution." }]
+  },
+  "血を分ける": {
+    "reading": "ちをわける",
+    "group": "ichidan",
+    "translation": "to be blood-related",
+    "jlpt": "N1",
+    "examples": [{ "ja": "血を分けた兄弟。", "en": "Blood brothers." }]
+  },
+  "涙を拭う": {
+    "reading": "なみだをぬぐう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to wipe away tears",
+    "jlpt": "N1",
+    "examples": [{ "ja": "涙を拭って立ち上がる。", "en": "I wipe away my tears and stand up." }]
+  },
+  "息を呑む": {
+    "reading": "いきをのむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to gasp, to hold one's breath",
+    "jlpt": "N1",
+    "examples": [{ "ja": "美しさに息を呑む。", "en": "I gasp at the beauty." }]
+  },
+  "息を潜める": {
+    "reading": "いきをひそめる",
+    "group": "ichidan",
+    "translation": "to hold one's breath, to lie low",
+    "jlpt": "N1",
+    "examples": [{ "ja": "息を潜めて隠れる。", "en": "I hold my breath and hide." }]
+  },
+  "息を吹き返す": {
+    "reading": "いきをふきかえす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to come back to life, to revive",
+    "jlpt": "N1",
+    "examples": [{ "ja": "経済が息を吹き返す。", "en": "The economy revives." }]
+  },
+  "声を枯らす": {
+    "reading": "こえをからす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to shout oneself hoarse",
+    "jlpt": "N1",
+    "examples": [{ "ja": "応援で声を枯らす。", "en": "I shout myself hoarse cheering." }]
+  },
+  "声を潜める": {
+    "reading": "こえをひそめる",
+    "group": "ichidan",
+    "translation": "to lower one's voice",
+    "jlpt": "N1",
+    "examples": [{ "ja": "声を潜めて話す。", "en": "I speak in a low voice." }]
+  },
+  "声を荒げる": {
+    "reading": "こえをあらげる",
+    "group": "ichidan",
+    "translation": "to raise one's voice (angrily)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "怒って声を荒げる。", "en": "I raise my voice in anger." }]
+  },
+  "顔を曇らせる": {
+    "reading": "かおをくもらせる",
+    "group": "ichidan",
+    "translation": "to cloud one's face, to look gloomy",
+    "jlpt": "N1",
+    "examples": [{ "ja": "知らせに顔を曇らせる。", "en": "My face clouds at the news." }]
+  },
+  "顔を赤らめる": {
+    "reading": "かおをあからめる",
+    "group": "ichidan",
+    "translation": "to blush",
+    "jlpt": "N1",
+    "examples": [{ "ja": "褒められて顔を赤らめる。", "en": "I blush at the praise." }]
+  },
+  "顔を輝かせる": {
+    "reading": "かおをかがやかせる",
+    "group": "ichidan",
+    "translation": "to light up (face), to beam",
+    "jlpt": "N1",
+    "examples": [{ "ja": "喜びで顔を輝かせる。", "en": "My face lights up with joy." }]
+  },
+  "膝を突く": {
+    "reading": "ひざをつく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to kneel, to drop to one's knees",
+    "jlpt": "N1",
+    "examples": [{ "ja": "疲れて膝を突く。", "en": "I drop to my knees from exhaustion." }]
+  },
+  "腰を落とす": {
+    "reading": "こしをおとす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to lower one's hips, to settle in",
+    "jlpt": "N1",
+    "examples": [{ "ja": "腰を落として構える。", "en": "I lower my stance and brace." }]
+  },
+  "足が竦む": {
+    "reading": "あしがすくむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to be frozen with fear (legs)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "高さに足が竦む。", "en": "My legs freeze from the height." }]
+  },
+  "足が棒になる": {
+    "reading": "あしがぼうになる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to have one's legs give out from exhaustion",
+    "jlpt": "N1",
+    "examples": [{ "ja": "歩き回って足が棒になる。", "en": "My legs give out from walking around." }]
+  },
+  "背筋が凍る": {
+    "reading": "せすじがこおる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to send chills down one's spine",
+    "jlpt": "N1",
+    "examples": [{ "ja": "恐怖で背筋が凍る。", "en": "A chill runs down my spine." }]
+  },
+  "背筋を伸ばす": {
+    "reading": "せすじをのばす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to straighten one's back, to sit up straight",
+    "jlpt": "N1",
+    "examples": [{ "ja": "背筋を伸ばして座る。", "en": "I sit up straight." }]
+  },
+  "腹を探る": {
+    "reading": "はらをさぐる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to sound someone out, to probe intentions",
+    "jlpt": "N1",
+    "examples": [{ "ja": "相手の腹を探る。", "en": "I probe the opponent's intentions." }]
+  },
+  "腹が据わる": {
+    "reading": "はらがすわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be resolute, to have guts",
+    "jlpt": "N1",
+    "examples": [{ "ja": "腹が据わった人物。", "en": "A resolute person." }]
+  },
+  "手綱を締める": {
+    "reading": "たづなをしめる",
+    "group": "ichidan",
+    "translation": "to tighten the reins, to exercise control",
+    "jlpt": "N1",
+    "examples": [{ "ja": "組織の手綱を締める。", "en": "I tighten the reins on the organization." }]
+  },
+  "手綱を緩める": {
+    "reading": "たづなをゆるめる",
+    "group": "ichidan",
+    "translation": "to loosen the reins, to relax control",
+    "jlpt": "N1",
+    "examples": [{ "ja": "規制の手綱を緩める。", "en": "I loosen the reins on regulation." }]
+  },
+  "鳴りを潜める": {
+    "reading": "なりをひそめる",
+    "group": "ichidan",
+    "translation": "to go quiet, to lie low",
+    "jlpt": "N1",
+    "examples": [{ "ja": "批判が鳴りを潜める。", "en": "The criticism goes quiet." }]
+  },
+  "角が立つ": {
+    "reading": "かどがたつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to cause friction, to give offense",
+    "jlpt": "N1",
+    "examples": [{ "ja": "言い方で角が立つ。", "en": "The way of saying it causes friction." }]
+  },
+  "角を立てる": {
+    "reading": "かどをたてる",
+    "group": "ichidan",
+    "translation": "to be confrontational",
+    "jlpt": "N1",
+    "examples": [{ "ja": "角を立てずに話す。", "en": "I speak without being confrontational." }]
+  },
+  "丸く収める": {
+    "reading": "まるくおさめる",
+    "group": "ichidan",
+    "translation": "to settle amicably",
+    "jlpt": "N1",
+    "examples": [{ "ja": "問題を丸く収める。", "en": "I settle the problem amicably." }]
+  },
+  "折り合いをつける": {
+    "reading": "おりあいをつける",
+    "group": "ichidan",
+    "translation": "to reach a compromise",
+    "jlpt": "N1",
+    "examples": [{ "ja": "条件の折り合いをつける。", "en": "I reach a compromise on the terms." }]
+  },
+  "落としどころを探る": {
+    "reading": "おとしどころをさぐる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to look for a compromise point",
+    "jlpt": "N1",
+    "examples": [{ "ja": "交渉の落としどころを探る。", "en": "I look for a compromise in negotiations." }]
+  },
+  "玉虫色にする": {
+    "reading": "たまむしいろにする",
+    "group": "irregular",
+    "translation": "to make ambiguous, to leave vague",
+    "jlpt": "N1",
+    "examples": [{ "ja": "結論を玉虫色にする。", "en": "I leave the conclusion ambiguous." }]
+  },
+  "一矢報いる": {
+    "reading": "いっしむくいる",
+    "group": "ichidan",
+    "translation": "to fight back, to get a hit in",
+    "jlpt": "N1",
+    "examples": [{ "ja": "強敵に一矢報いる。", "en": "I fight back against the powerful enemy." }]
+  },
+  "汚名を返上する": {
+    "reading": "おめいをへんじょうする",
+    "group": "irregular",
+    "translation": "to redeem one's reputation",
+    "jlpt": "N1",
+    "examples": [{ "ja": "汚名を返上する。", "en": "I redeem my reputation." }]
+  },
+  "面目を一新する": {
+    "reading": "めんぼくをいっしんする",
+    "group": "irregular",
+    "translation": "to completely transform one's image",
+    "jlpt": "N1",
+    "examples": [{ "ja": "組織の面目を一新する。", "en": "I completely transform the organization's image." }]
+  },
+  "紐解く": {
+    "reading": "ひもとく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to unravel, to trace back",
+    "jlpt": "N1",
+    "examples": [{ "ja": "歴史を紐解く。", "en": "I trace back through history." }]
+  },
+  "底を突く": {
+    "reading": "そこをつく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to run out, to be exhausted",
+    "jlpt": "N1",
+    "examples": [{ "ja": "資金が底を突く。", "en": "Funds run out." }]
+  },
+  "底を打つ": {
+    "reading": "そこをうつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to hit bottom, to bottom out",
+    "jlpt": "N1",
+    "examples": [{ "ja": "株価が底を打つ。", "en": "The stock price hits bottom." }]
+  },
+  "頂点を極める": {
+    "reading": "ちょうてんをきわめる",
+    "group": "ichidan",
+    "translation": "to reach the pinnacle",
+    "jlpt": "N1",
+    "examples": [{ "ja": "人気が頂点を極める。", "en": "Popularity reaches its pinnacle." }]
+  },
+  "功を奏する": {
+    "reading": "こうをそうする",
+    "group": "irregular",
+    "translation": "to be effective, to produce results",
+    "jlpt": "N1",
+    "examples": [{ "ja": "対策が功を奏する。", "en": "The measures produce results." }]
+  },
+  "一役買う": {
+    "reading": "ひとやくかう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to play a part in, to contribute to",
+    "jlpt": "N1",
+    "examples": [{ "ja": "成功に一役買う。", "en": "I play a part in the success." }]
+  },
+  "目を凝らす": {
+    "reading": "めをこらす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to strain one's eyes, to peer",
+    "jlpt": "N1",
+    "examples": [{ "ja": "暗闇に目を凝らす。", "en": "I peer into the darkness." }]
+  },
+  "耳を傾ける": {
+    "reading": "みみをかたむける",
+    "group": "ichidan",
+    "translation": "to listen attentively",
+    "jlpt": "N1",
+    "examples": [{ "ja": "意見に耳を傾ける。", "en": "I listen attentively to opinions." }]
+  },
+  "耳を塞ぐ": {
+    "reading": "みみをふさぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to plug one's ears, to refuse to listen",
+    "jlpt": "N1",
+    "examples": [{ "ja": "批判に耳を塞ぐ。", "en": "I refuse to listen to criticism." }]
+  },
+  "目を通す": {
+    "reading": "めをとおす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to look over, to skim through",
+    "jlpt": "N1",
+    "examples": [{ "ja": "書類に目を通す。", "en": "I look over the documents." }]
+  },
+  "目を奪う": {
+    "reading": "めをうばう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to captivate, to be eye-catching",
+    "jlpt": "N1",
+    "examples": [{ "ja": "美しさが目を奪う。", "en": "The beauty is captivating." }]
+  },
+  "目を疑う": {
+    "reading": "めをうたがう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to doubt one's eyes",
+    "jlpt": "N1",
+    "examples": [{ "ja": "光景に目を疑う。", "en": "I can't believe my eyes at the sight." }]
+  },
+  "手に汗握る": {
+    "reading": "てにあせにぎる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be on the edge of one's seat",
+    "jlpt": "N1",
+    "examples": [{ "ja": "手に汗握る展開。", "en": "A thrilling development." }]
+  },
+  "手を拱く": {
+    "reading": "てをこまねく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to stand by idly, to fold one's arms",
+    "jlpt": "N1",
+    "examples": [{ "ja": "手を拱いて見ている。", "en": "I stand by idly watching." }]
+  },
+  "手を広げる": {
+    "reading": "てをひろげる",
+    "group": "ichidan",
+    "translation": "to expand one's business/activities",
+    "jlpt": "N1",
+    "examples": [{ "ja": "事業の手を広げる。", "en": "I expand the business." }]
+  },
+  "口火を切る": {
+    "reading": "くちびをきる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to open fire, to start (a discussion)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "議論の口火を切る。", "en": "I start the discussion." }]
+  },
+  "口を閉ざす": {
+    "reading": "くちをとざす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to close one's mouth, to remain silent",
+    "jlpt": "N1",
+    "examples": [{ "ja": "事件について口を閉ざす。", "en": "I remain silent about the incident." }]
+  },
+  "口を開く": {
+    "reading": "くちをひらく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to open one's mouth, to speak up",
+    "jlpt": "N1",
+    "examples": [{ "ja": "ようやく口を開く。", "en": "I finally speak up." }]
+  },
+  "顔に泥を塗る": {
+    "reading": "かおにどろをぬる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to disgrace, to cause someone to lose face",
+    "jlpt": "N1",
+    "examples": [{ "ja": "親の顔に泥を塗る。", "en": "I disgrace my parents." }]
+  },
+  "白羽の矢が立つ": {
+    "reading": "しらはのやがたつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to be singled out, to be chosen",
+    "jlpt": "N1",
+    "examples": [{ "ja": "次期社長に白羽の矢が立つ。", "en": "I am singled out as the next president." }]
+  },
+  "錆び付く": {
+    "reading": "さびつく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to rust, to become rusty",
+    "jlpt": "N1",
+    "examples": [{ "ja": "技術が錆び付く。", "en": "Skills become rusty." }]
+  },
+  "鎧を纏う": {
+    "reading": "よろいをまとう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to don armor, to arm oneself",
+    "jlpt": "N1",
+    "examples": [{ "ja": "武士が鎧を纏う。", "en": "The samurai dons armor." }]
+  },
+  "刃を研ぐ": {
+    "reading": "やいばをとぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to sharpen a blade",
+    "jlpt": "N1",
+    "examples": [{ "ja": "刀の刃を研ぐ。", "en": "I sharpen the sword's blade." }]
+  },
+  "矛を収める": {
+    "reading": "ほこをおさめる",
+    "group": "ichidan",
+    "translation": "to sheathe one's weapon, to make peace",
+    "jlpt": "N1",
+    "examples": [{ "ja": "矛を収めて和解する。", "en": "I sheathe my weapon and reconcile." }]
+  },
+  "盾に取る": {
+    "reading": "たてにとる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to use as a shield, to hide behind",
+    "jlpt": "N1",
+    "examples": [{ "ja": "法律を盾に取る。", "en": "I hide behind the law." }]
+  },
+  "煮え湯を飲まされる": {
+    "reading": "にえゆをのまされる",
+    "group": "ichidan",
+    "translation": "to be betrayed by a trusted person",
+    "jlpt": "N1",
+    "examples": [{ "ja": "味方に煮え湯を飲まされる。", "en": "I am betrayed by an ally." }]
+  },
+  "一線を画す": {
+    "reading": "いっせんをかくす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to draw the line, to be distinct from",
+    "jlpt": "N1",
+    "examples": [{ "ja": "他社と一線を画す。", "en": "I distinguish myself from other companies." }]
+  },
+  "一線を越える": {
+    "reading": "いっせんをこえる",
+    "group": "ichidan",
+    "translation": "to cross the line, to go too far",
+    "jlpt": "N1",
+    "examples": [{ "ja": "一線を越えた発言。", "en": "A remark that crosses the line." }]
+  },
+  "退路を断つ": {
+    "reading": "たいろをたつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to cut off retreat, to burn bridges",
+    "jlpt": "N1",
+    "examples": [{ "ja": "退路を断って挑む。", "en": "I burn my bridges and challenge." }]
+  },
+  "道を拓く": {
+    "reading": "みちをひらく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to open a path, to pioneer",
+    "jlpt": "N1",
+    "examples": [{ "ja": "新しい道を拓く。", "en": "I open a new path." }]
+  },
+  "礎を築く": {
+    "reading": "いしずえをきずく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to lay the foundation",
+    "jlpt": "N1",
+    "examples": [{ "ja": "平和の礎を築く。", "en": "I lay the foundation for peace." }]
+  },
+  "布石を打つ": {
+    "reading": "ふせきをうつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to lay the groundwork",
+    "jlpt": "N1",
+    "examples": [{ "ja": "将来のために布石を打つ。", "en": "I lay the groundwork for the future." }]
+  },
+  "地盤を固める": {
+    "reading": "じばんをかためる",
+    "group": "ichidan",
+    "translation": "to solidify one's base, to consolidate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "支持基盤を固める。", "en": "I consolidate my support base." }]
+  },
+  "基盤を整える": {
+    "reading": "きばんをととのえる",
+    "group": "ichidan",
+    "translation": "to prepare the foundation",
+    "jlpt": "N1",
+    "examples": [{ "ja": "経営基盤を整える。", "en": "I prepare the management foundation." }]
+  },
+  "軒を連ねる": {
+    "reading": "のきをつらねる",
+    "group": "ichidan",
+    "translation": "to line up (shops), to stand side by side",
+    "jlpt": "N1",
+    "examples": [{ "ja": "店が軒を連ねる。", "en": "Shops stand side by side." }]
+  },
+  "鼎の軽重を問う": {
+    "reading": "かなえのけいちょうをとう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to question one's authority",
+    "jlpt": "N1",
+    "examples": [{ "ja": "リーダーの鼎の軽重を問う。", "en": "I question the leader's authority." }]
+  },
+  "憂き目に遭う": {
+    "reading": "うきめにあう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to meet with misfortune",
+    "jlpt": "N1",
+    "examples": [{ "ja": "リストラの憂き目に遭う。", "en": "I suffer the misfortune of layoffs." }]
+  },
+  "甘い汁を吸う": {
+    "reading": "あまいしるをすう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to profit unfairly, to reap unearned benefits",
+    "jlpt": "N1",
+    "examples": [{ "ja": "他人の努力で甘い汁を吸う。", "en": "I reap benefits from others' efforts." }]
+  },
+  "苦汁を飲む": {
+    "reading": "くじゅうをのむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to swallow a bitter pill",
+    "jlpt": "N1",
+    "examples": [{ "ja": "苦汁を飲んで受け入れる。", "en": "I swallow a bitter pill and accept it." }]
+  },
+  "四面楚歌に陥る": {
+    "reading": "しめんそかにおちいる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be surrounded on all sides, to be isolated",
+    "jlpt": "N1",
+    "examples": [{ "ja": "四面楚歌に陥る。", "en": "I find myself isolated on all sides." }]
+  },
+  "暗中模索する": {
+    "reading": "あんちゅうもさくする",
+    "group": "irregular",
+    "translation": "to grope in the dark, to search blindly",
+    "jlpt": "N1",
+    "examples": [{ "ja": "解決策を暗中模索する。", "en": "I search blindly for a solution." }]
+  },
+  "試行錯誤する": {
+    "reading": "しこうさくごする",
+    "group": "irregular",
+    "translation": "to proceed by trial and error",
+    "jlpt": "N1",
+    "examples": [{ "ja": "試行錯誤しながら進む。", "en": "I proceed through trial and error." }]
+  },
+  "臥薪嘗胆する": {
+    "reading": "がしんしょうたんする",
+    "group": "irregular",
+    "translation": "to endure hardship for the sake of revenge",
+    "jlpt": "N1",
+    "examples": [{ "ja": "臥薪嘗胆して機会を待つ。", "en": "I endure hardship and wait for the chance." }]
+  },
+  "呉越同舟する": {
+    "reading": "ごえつどうしゅうする",
+    "group": "irregular",
+    "translation": "to cooperate with rivals in a crisis",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵と呉越同舟する。", "en": "I cooperate with rivals in the crisis." }]
+  },
+  "針の筵に座る": {
+    "reading": "はりのむしろにすわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be in an extremely uncomfortable position",
+    "jlpt": "N1",
+    "examples": [{ "ja": "会議で針の筵に座る。", "en": "I sit in extreme discomfort at the meeting." }]
+  },
+  "薄氷を踏む": {
+    "reading": "はくひょうをふむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to walk on thin ice",
+    "jlpt": "N1",
+    "examples": [{ "ja": "薄氷を踏む思いで進む。", "en": "I proceed as if walking on thin ice." }]
+  },
+  "清水の舞台から飛び降りる": {
+    "reading": "きよみずのぶたいからとびおりる",
+    "group": "ichidan",
+    "translation": "to take the plunge, to take a big risk",
+    "jlpt": "N1",
+    "examples": [{ "ja": "清水の舞台から飛び降りる覚悟。", "en": "I resolve to take the plunge." }]
+  },
+  "袖を引く": {
+    "reading": "そでをひく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to tug at someone's sleeve, to solicit",
+    "jlpt": "N1",
+    "examples": [{ "ja": "客の袖を引く。", "en": "I solicit a customer." }]
+  },
+  "采を振る": {
+    "reading": "さいをふる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to cast the die, to take a gamble",
+    "jlpt": "N1",
+    "examples": [{ "ja": "采を振って勝負する。", "en": "I cast the die and compete." }]
+  },
+  "風穴を開ける": {
+    "reading": "かざあなをあける",
+    "group": "ichidan",
+    "translation": "to make a breakthrough, to shake things up",
+    "jlpt": "N1",
+    "examples": [{ "ja": "旧体制に風穴を開ける。", "en": "I shake up the old system." }]
+  },
+  "堰を切る": {
+    "reading": "せきをきる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to burst (a dam), to break loose",
+    "jlpt": "N1",
+    "examples": [{ "ja": "堰を切ったように話す。", "en": "I talk as if a dam burst." }]
+  },
+  "槍玉に挙げる": {
+    "reading": "やりだまにあげる",
+    "group": "ichidan",
+    "translation": "to single out for attack, to make a target of",
+    "jlpt": "N1",
+    "examples": [{ "ja": "政治家を槍玉に挙げる。", "en": "I single out the politician for attack." }]
+  },
+  "手腕を振るう": {
+    "reading": "しゅわんをふるう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to display one's skill, to show ability",
+    "jlpt": "N1",
+    "examples": [{ "ja": "交渉で手腕を振るう。", "en": "I display my skill in negotiations." }]
+  },
+  "手を緩める": {
+    "reading": "てをゆるめる",
+    "group": "ichidan",
+    "translation": "to ease up, to let up",
+    "jlpt": "N1",
+    "examples": [{ "ja": "追及の手を緩める。", "en": "I ease up on the pursuit." }]
+  },
+  "根を張る": {
+    "reading": "ねをはる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to take root, to become entrenched",
+    "jlpt": "N1",
+    "examples": [{ "ja": "慣習が根を張る。", "en": "The custom becomes entrenched." }]
+  },
+  "花道を飾る": {
+    "reading": "はなみちをかざる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to make a glorious exit",
+    "jlpt": "N1",
+    "examples": [{ "ja": "引退で花道を飾る。", "en": "I make a glorious exit at retirement." }]
+  },
+  "日の目を見る": {
+    "reading": "ひのめをみる",
+    "group": "ichidan",
+    "translation": "to see the light of day, to be realized",
+    "jlpt": "N1",
+    "examples": [{ "ja": "企画が日の目を見る。", "en": "The plan sees the light of day." }]
+  },
+  "幅を利かせる": {
+    "reading": "はばをきかせる",
+    "group": "ichidan",
+    "translation": "to throw one's weight around",
+    "jlpt": "N1",
+    "examples": [{ "ja": "組織で幅を利かせる。", "en": "I throw my weight around in the organization." }]
+  },
+  "大見得を切る": {
+    "reading": "おおみえをきる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to make a grand declaration, to boast boldly",
+    "jlpt": "N1",
+    "examples": [{ "ja": "大見得を切って宣言する。", "en": "I make a grand declaration." }]
+  },
+  "啖呵を切る": {
+    "reading": "たんかをきる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to give someone a piece of one's mind",
+    "jlpt": "N1",
+    "examples": [{ "ja": "上司に啖呵を切る。", "en": "I give my boss a piece of my mind." }]
+  },
+  "お茶を濁す": {
+    "reading": "おちゃをにごす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to give a vague answer, to dodge",
+    "jlpt": "N1",
+    "examples": [{ "ja": "質問にお茶を濁す。", "en": "I dodge the question." }]
+  },
+  "阿吽の呼吸で合わせる": {
+    "reading": "あうんのこきゅうであわせる",
+    "group": "ichidan",
+    "translation": "to be in perfect sync",
+    "jlpt": "N1",
+    "examples": [{ "ja": "阿吽の呼吸で合わせる。", "en": "We act in perfect sync." }]
+  },
+  "異彩を放つ": {
+    "reading": "いさいをはなつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to stand out brilliantly",
+    "jlpt": "N1",
+    "examples": [{ "ja": "作品が異彩を放つ。", "en": "The work stands out brilliantly." }]
+  },
+  "袋小路に入る": {
+    "reading": "ふくろこうじにはいる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to reach a dead end",
+    "jlpt": "N1",
+    "examples": [{ "ja": "議論が袋小路に入る。", "en": "The discussion reaches a dead end." }]
+  },
+  "渦中に身を置く": {
+    "reading": "かちゅうにみをおく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to be in the thick of it",
+    "jlpt": "N1",
+    "examples": [{ "ja": "騒動の渦中に身を置く。", "en": "I am in the thick of the commotion." }]
+  },
+  "窮地に追い込む": {
+    "reading": "きゅうちにおいこむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to drive into a corner",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵を窮地に追い込む。", "en": "I drive the enemy into a corner." }]
+  },
+  "窮地を脱する": {
+    "reading": "きゅうちをだっする",
+    "group": "irregular",
+    "translation": "to escape a predicament",
+    "jlpt": "N1",
+    "examples": [{ "ja": "なんとか窮地を脱する。", "en": "I manage to escape the predicament." }]
+  },
+  "起死回生を図る": {
+    "reading": "きしかいせいをはかる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to attempt a dramatic comeback",
+    "jlpt": "N1",
+    "examples": [{ "ja": "起死回生を図る。", "en": "I attempt a dramatic comeback." }]
+  },
+  "捲土重来を期す": {
+    "reading": "けんどちょうらいをきす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to prepare for a comeback after defeat",
+    "jlpt": "N1",
+    "examples": [{ "ja": "捲土重来を期す。", "en": "I prepare for a comeback." }]
+  },
+  "乾坤一擲の勝負に出る": {
+    "reading": "けんこんいってきのしょうぶにでる",
+    "group": "ichidan",
+    "translation": "to stake everything on one throw",
+    "jlpt": "N1",
+    "examples": [{ "ja": "乾坤一擲の勝負に出る。", "en": "I stake everything on one throw." }]
+  },
+  "天命を全うする": {
+    "reading": "てんめいをまっとうする",
+    "group": "irregular",
+    "translation": "to fulfill one's destiny",
+    "jlpt": "N1",
+    "examples": [{ "ja": "天命を全うする。", "en": "I fulfill my destiny." }]
   }
 }
