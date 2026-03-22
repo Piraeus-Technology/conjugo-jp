@@ -31,11 +31,11 @@ const lightColors = {
   irregularTag: '#FFF3E0',
   irregularTagText: '#E65100',
 
-  n5Bg: '#E8F5E9', n5Text: '#2E7D32',
+  n5Bg: '#E0F7FA', n5Text: '#00838F',
   n4Bg: '#E0F2F1', n4Text: '#00695C',
-  n3Bg: '#E3F2FD', n3Text: '#1565C0',
-  n2Bg: '#EDE7F6', n2Text: '#4527A0',
-  n1Bg: '#FCE4EC', n1Text: '#AD1457',
+  n3Bg: '#EDE7F6', n3Text: '#4527A0',
+  n2Bg: '#FCE4EC', n2Text: '#AD1457',
+  n1Bg: '#F3E5F5', n1Text: '#6A1B9A',
 };
 
 const darkColors = {
@@ -69,11 +69,11 @@ const darkColors = {
   irregularTag: '#3E2200',
   irregularTagText: '#FFB74D',
 
-  n5Bg: '#1B3A1B', n5Text: '#66BB6A',
+  n5Bg: '#0A2E30', n5Text: '#4DD0E1',
   n4Bg: '#0D2E2B', n4Text: '#4DB6AC',
-  n3Bg: '#0D2137', n3Text: '#64B5F6',
-  n2Bg: '#1A1035', n2Text: '#B39DDB',
-  n1Bg: '#2D0E1E', n1Text: '#F48FB1',
+  n3Bg: '#1A1035', n3Text: '#B39DDB',
+  n2Bg: '#2D0E1E', n2Text: '#F48FB1',
+  n1Bg: '#1F0D2B', n1Text: '#CE93D8',
 };
 
 export type ThemeColors = typeof lightColors;
