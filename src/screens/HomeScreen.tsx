@@ -176,6 +176,7 @@ export default function HomeScreen() {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
+        style={{ flexGrow: 0 }}
         data={[{ key: 'all', label: 'All' }, ...jlptLevels.map((l) => ({ key: l, label: l }))]}
         keyExtractor={(item) => item.key}
         contentContainerStyle={styles.chipBar}
