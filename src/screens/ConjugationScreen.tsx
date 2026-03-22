@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useCallback } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
@@ -16,10 +16,15 @@ export default function ConjugationScreen() {
   const highlightForm: string | undefined = route.params?.highlightForm;
   const verbData = (verbs as Record<string, VerbData>)[verb];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();
+  const scrollRef = useRef<ScrollView>(null);
+  const highlightY = useRef<number | null>(null);
 
   React.useEffect(() => {
     loadFavorites();
   }, []);
+
+  const highlightRef = useRef<View>(null);
+  const scrollContentRef = useRef<View>(null);
 
   if (!verbData) {
     return (
@@ -32,7 +37,8 @@ export default function ConjugationScreen() {
   const groupLabel = verbData.group === 'godan' ? '五段' : verbData.group === 'ichidan' ? '一段' : '不規則';
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.bg }]}>
+    <ScrollView ref={scrollRef} style={[styles.container, { backgroundColor: colors.bg }]}>
+      <View ref={scrollContentRef}>
       {/* Header */}
       <View style={[styles.header, { backgroundColor: colors.card }]}>
         <View style={styles.headerTop}>
@@ -75,6 +81,20 @@ export default function ConjugationScreen() {
               return (
                 <TouchableOpacity
                   key={form}
+                  ref={isHighlighted ? highlightRef as any : undefined}
+                  onLayout={isHighlighted ? () => {
+                    setTimeout(() => {
+                      if (highlightRef.current && scrollContentRef.current) {
+                        highlightRef.current.measureLayout(
+                          scrollContentRef.current as any,
+                          (_x, y) => {
+                            scrollRef.current?.scrollTo({ y: Math.max(0, y - 150), animated: true });
+                          },
+                          () => {},
+                        );
+                      }
+                    }, 400);
+                  } : undefined}
                   style={[
                     styles.formRow,
                     { borderBottomColor: colors.divider },
@@ -122,6 +142,7 @@ export default function ConjugationScreen() {
       )}
 
       <View style={{ height: spacing.xl }} />
+      </View>
     </ScrollView>
   );
 }
