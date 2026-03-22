@@ -40,7 +40,7 @@ function SearchStackScreen() {
         name="SearchHome"
         component={HomeScreen}
         options={{
-          title: 'ConjuGo JP',
+          title: 'Search',
         }}
       />
       <SearchStack.Screen
