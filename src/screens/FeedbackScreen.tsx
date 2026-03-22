@@ -88,6 +88,17 @@ export default function FeedbackScreen() {
           <Ionicons name="share-outline" size={20} color={colors.textMuted} />
         </TouchableOpacity>
 
+        {/* Privacy Policy */}
+        <TouchableOpacity
+          style={[styles.rowCard, { backgroundColor: colors.card }]}
+          onPress={() => Linking.openURL('https://piraeus-technology.github.io/conjugo-jp/')}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="shield-checkmark-outline" size={20} color={colors.textSecondary} style={{ marginRight: spacing.md }} />
+          <Text style={[styles.linkText, { color: colors.textPrimary }]}>Privacy Policy</Text>
+          <Ionicons name="open-outline" size={16} color={colors.textMuted} />
+        </TouchableOpacity>
+
         {/* Version */}
         <Text style={[styles.version, { color: colors.textMuted }]}>
           ConjuGo JP v{APP_VERSION}
@@ -144,6 +155,11 @@ const styles = StyleSheet.create({
   rowInfo: { flex: 1 },
   rowTitle: { fontSize: fonts.sizes.lg, fontWeight: fonts.weights.semibold },
   rowSubtitle: { fontSize: fonts.sizes.sm, marginTop: 2 },
+  linkText: {
+    flex: 1,
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.medium,
+  },
   version: {
     fontSize: fonts.sizes.xs,
     textAlign: 'center',
