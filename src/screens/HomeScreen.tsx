@@ -22,7 +22,7 @@ import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { romajiToHiragana } from '../utils/kana';
 import type { RootStackParamList } from '../types/navigation';
-import type { VerbData, VerbGroup } from '../utils/conjugate';
+import { conjugateReading, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, ConjugationForm } from '../utils/conjugate';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -53,6 +53,56 @@ const groupColors: Record<VerbGroup, { bg: string; text: string; label: string }
   irregular: { bg: '', text: '', label: '不規則' },
 };
 
+// Lazy-built conjugation index — only created on first conjugated form search
+interface ConjMatch {
+  verb: string;
+  reading: string;
+  translation: string;
+  form: ConjugationForm;
+  conjugated: string;
+}
+
+let conjugationIndex: ConjMatch[] | null = null;
+let conjFuse: Fuse<ConjMatch> | null = null;
+
+function getConjugationIndex(): ConjMatch[] {
+  if (conjugationIndex) return conjugationIndex;
+  conjugationIndex = [];
+  verbList.forEach(([verb, data]) => {
+    ALL_FORMS.forEach((form) => {
+      const reading = conjugateReading(data, form);
+      conjugationIndex!.push({
+        verb,
+        reading: data.reading,
+        translation: data.translation,
+        form,
+        conjugated: reading,
+      });
+    });
+  });
+  return conjugationIndex;
+}
+
+function getConjFuse(): Fuse<ConjMatch> {
+  if (conjFuse) return conjFuse;
+  conjFuse = new Fuse(getConjugationIndex(), {
+    keys: ['conjugated'],
+    threshold: 0.2,
+  });
+  return conjFuse;
+}
+
+interface SearchResult {
+  verb: string;
+  reading: string;
+  translation: string;
+  jlpt: string;
+  group: string;
+  matchType: 'verb' | 'conjugation';
+  matchDetail?: string;
+  matchForm?: ConjugationForm;
+}
+
 function getVerbOfTheDay(): [string, VerbData] {
   const dayIndex = Math.floor(Date.now() / 86400000) % verbList.length;
   return verbList[dayIndex];
@@ -70,28 +120,78 @@ export default function HomeScreen() {
     loadFavorites();
   }, []);
 
-  const results = useMemo(() => {
+  const results = useMemo((): SearchResult[] => {
     if (!query.trim()) return [];
-    // Convert romaji to hiragana for search
-    const hiraganaQuery = romajiToHiragana(query.trim());
-    // Search with both original and hiragana
-    const results1 = fuse.search(query.trim());
-    const results2 = hiraganaQuery !== query.trim() ? fuse.search(hiraganaQuery) : [];
-    // Merge and deduplicate
+    const q = query.trim();
+    const hiraganaQuery = romajiToHiragana(q);
+
+    // Check for exact conjugation matches first
+    const exactConjMatches = getConjugationIndex().filter(
+      (c) => c.conjugated === hiraganaQuery || c.conjugated === q
+    );
+
     const seen = new Set<string>();
-    const merged = [];
+    const out: SearchResult[] = [];
+
+    if (exactConjMatches.length > 0) {
+      exactConjMatches.forEach((c) => {
+        if (!seen.has(c.verb)) {
+          seen.add(c.verb);
+          const label = FORM_LABELS[c.form];
+          out.push({
+            verb: c.verb,
+            reading: c.reading,
+            translation: c.translation,
+            jlpt: (verbs as Record<string, VerbData>)[c.verb]?.jlpt || '',
+            group: (verbs as Record<string, VerbData>)[c.verb]?.group || '',
+            matchType: 'conjugation',
+            matchDetail: `「${c.conjugated}」— ${label.ja} (${label.en})`,
+            matchForm: c.form,
+          });
+        }
+      });
+    }
+
+    // Verb name/reading/translation search
+    const results1 = fuse.search(q);
+    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery) : [];
     for (const r of [...results1, ...results2]) {
       if (!seen.has(r.item.verb)) {
         seen.add(r.item.verb);
-        merged.push(r);
+        out.push({
+          ...r.item,
+          matchType: 'verb',
+        });
       }
     }
-    return merged.slice(0, 20);
+
+    // Fuzzy conjugation matches (if no exact matches found)
+    if (exactConjMatches.length === 0) {
+      const conjResults = getConjFuse().search(hiraganaQuery || q);
+      conjResults.forEach((r) => {
+        if (!seen.has(r.item.verb)) {
+          seen.add(r.item.verb);
+          const label = FORM_LABELS[r.item.form];
+          out.push({
+            verb: r.item.verb,
+            reading: r.item.reading,
+            translation: r.item.translation,
+            jlpt: (verbs as Record<string, VerbData>)[r.item.verb]?.jlpt || '',
+            group: (verbs as Record<string, VerbData>)[r.item.verb]?.group || '',
+            matchType: 'conjugation',
+            matchDetail: `「${r.item.conjugated}」— ${label.ja} (${label.en})`,
+            matchForm: r.item.form,
+          });
+        }
+      });
+    }
+
+    return out.slice(0, 20);
   }, [query]);
 
-  const handleVerbPress = useCallback((verb: string) => {
+  const handleVerbPress = useCallback((verb: string, highlightForm?: string) => {
     addToHistory(verb);
-    navigation.navigate('Conjugation', { verb });
+    navigation.navigate('Conjugation', { verb, highlightForm });
   }, [navigation]);
 
   const [vodVerb, vodData] = getVerbOfTheDay();
@@ -120,12 +220,12 @@ export default function HomeScreen() {
     );
   };
 
-  const renderVerbItem = ({ item }: { item: typeof searchData[0] }) => {
+  const renderVerbItem = ({ item }: { item: SearchResult }) => {
     const tagColor = groupTagColors[item.group as VerbGroup];
     return (
       <TouchableOpacity
         style={[styles.resultItem, { backgroundColor: colors.card }]}
-        onPress={() => handleVerbPress(item.verb)}
+        onPress={() => handleVerbPress(item.verb, item.matchForm)}
         activeOpacity={0.7}
       >
         <View style={styles.resultLeft}>
@@ -136,6 +236,11 @@ export default function HomeScreen() {
           <Text style={[styles.resultTranslation, { color: colors.textSecondary }]} numberOfLines={1}>
             {item.translation}
           </Text>
+          {item.matchType === 'conjugation' && item.matchDetail && (
+            <Text style={[styles.matchDetail, { color: colors.primary }]} numberOfLines={1}>
+              {item.matchDetail}
+            </Text>
+          )}
           <View style={styles.tagRow}>
             <View style={[styles.tag, { backgroundColor: tagColor.bg }]}>
               <Text style={[styles.tagText, { color: tagColor.text }]}>
@@ -216,8 +321,8 @@ export default function HomeScreen() {
 
       {query.trim() ? (
         <FlatList
-          data={results.map((r) => r.item)}
-          keyExtractor={(item) => item.verb}
+          data={results}
+          keyExtractor={(item, i) => item.verb + item.matchType + i}
           renderItem={renderVerbItem}
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={
@@ -285,7 +390,8 @@ const styles = StyleSheet.create({
   resultVerb: { fontSize: fonts.sizes.xl, fontWeight: fonts.weights.bold },
   resultReading: { fontSize: fonts.sizes.sm, marginTop: 2 },
   resultRight: { flex: 1, alignItems: 'flex-end' },
-  resultTranslation: { fontSize: fonts.sizes.sm, marginBottom: 4 },
+  resultTranslation: { fontSize: fonts.sizes.sm, marginBottom: 2 },
+  matchDetail: { fontSize: fonts.sizes.xs, fontStyle: 'italic', marginBottom: 4 },
   tagRow: { flexDirection: 'row', gap: spacing.xs },
   tag: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: radius.full },
   tagText: { fontSize: fonts.sizes.xs, fontWeight: fonts.weights.medium },

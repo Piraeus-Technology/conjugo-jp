@@ -13,6 +13,7 @@ export default function ConjugationScreen() {
   const colors = useColors();
   const route = useRoute<any>();
   const verb: string = route.params.verb;
+  const highlightForm: string | undefined = route.params?.highlightForm;
   const verbData = (verbs as Record<string, VerbData>)[verb];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();
 
@@ -70,10 +71,15 @@ export default function ConjugationScreen() {
           <View style={[styles.groupCard, { backgroundColor: colors.card }]}>
             {group.forms.map((form) => {
               const result = conjugate(verb, verbData, form);
+              const isHighlighted = form === highlightForm;
               return (
                 <TouchableOpacity
                   key={form}
-                  style={[styles.formRow, { borderBottomColor: colors.divider }]}
+                  style={[
+                    styles.formRow,
+                    { borderBottomColor: colors.divider },
+                    isHighlighted && { backgroundColor: colors.primary + '15' },
+                  ]}
                   onPress={() => speak(result.reading)}
                   activeOpacity={0.7}
                 >
