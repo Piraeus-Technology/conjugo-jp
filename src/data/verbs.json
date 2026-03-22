@@ -15866,5 +15866,895 @@
     "translation": "to have an audience with",
     "jlpt": "N1",
     "examples": [{ "ja": "陛下に拝謁する。", "en": "I have an audience with His Majesty." }]
+  },
+  "憂慮する": {
+    "reading": "ゆうりょする",
+    "group": "irregular",
+    "translation": "to be gravely concerned",
+    "jlpt": "N1",
+    "examples": [{ "ja": "事態を憂慮する。", "en": "I am gravely concerned about the situation." }]
+  },
+  "哀悼する": {
+    "reading": "あいとうする",
+    "group": "irregular",
+    "translation": "to mourn, to grieve",
+    "jlpt": "N1",
+    "examples": [{ "ja": "故人を哀悼する。", "en": "I mourn the deceased." }]
+  },
+  "追悼する": {
+    "reading": "ついとうする",
+    "group": "irregular",
+    "translation": "to pay tribute to, to memorialize",
+    "jlpt": "N1",
+    "examples": [{ "ja": "犠牲者を追悼する。", "en": "I pay tribute to the victims." }]
+  },
+  "称賛する": {
+    "reading": "しょうさんする",
+    "group": "irregular",
+    "translation": "to praise highly, to commend",
+    "jlpt": "N1",
+    "examples": [{ "ja": "勇気を称賛する。", "en": "I commend the courage." }]
+  },
+  "糾弾する": {
+    "reading": "きゅうだんする",
+    "group": "irregular",
+    "translation": "to denounce, to impeach",
+    "jlpt": "N1",
+    "examples": [{ "ja": "不正を糾弾する。", "en": "I denounce the injustice." }]
+  },
+  "弾劾する": {
+    "reading": "だんがいする",
+    "group": "irregular",
+    "translation": "to impeach",
+    "jlpt": "N1",
+    "examples": [{ "ja": "大統領を弾劾する。", "en": "I impeach the president." }]
+  },
+  "恫喝する": {
+    "reading": "どうかつする",
+    "group": "irregular",
+    "translation": "to intimidate, to threaten",
+    "jlpt": "N1",
+    "examples": [{ "ja": "相手を恫喝する。", "en": "I intimidate the opponent." }]
+  },
+  "威嚇する": {
+    "reading": "いかくする",
+    "group": "irregular",
+    "translation": "to threaten, to menace",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵を威嚇する。", "en": "I menace the enemy." }]
+  },
+  "懐柔する": {
+    "reading": "かいじゅうする",
+    "group": "irregular",
+    "translation": "to win over, to appease",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵を懐柔する。", "en": "I win over the enemy." }]
+  },
+  "籠絡する": {
+    "reading": "ろうらくする",
+    "group": "irregular",
+    "translation": "to ensnare, to win over by trickery",
+    "jlpt": "N1",
+    "examples": [{ "ja": "相手を籠絡する。", "en": "I ensnare the other party." }]
+  },
+  "扇動する": {
+    "reading": "せんどうする",
+    "group": "irregular",
+    "translation": "to incite, to agitate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "群衆を扇動する。", "en": "I incite the crowd." }]
+  },
+  "教唆する": {
+    "reading": "きょうさする",
+    "group": "irregular",
+    "translation": "to abet, to instigate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "犯罪を教唆する。", "en": "I instigate a crime." }]
+  },
+  "凌駕する": {
+    "reading": "りょうがする",
+    "group": "irregular",
+    "translation": "to surpass, to exceed",
+    "jlpt": "N1",
+    "examples": [{ "ja": "先人を凌駕する。", "en": "I surpass my predecessors." }]
+  },
+  "席巻する": {
+    "reading": "せっけんする",
+    "group": "irregular",
+    "translation": "to sweep over, to dominate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "市場を席巻する。", "en": "I sweep over the market." }]
+  },
+  "蔓延する": {
+    "reading": "まんえんする",
+    "group": "irregular",
+    "translation": "to spread (disease), to become widespread",
+    "jlpt": "N1",
+    "examples": [{ "ja": "ウイルスが蔓延する。", "en": "The virus spreads." }]
+  },
+  "蹂躙する": {
+    "reading": "じゅうりんする",
+    "group": "irregular",
+    "translation": "to trample on, to ravage",
+    "jlpt": "N1",
+    "examples": [{ "ja": "尊厳を蹂躙する。", "en": "I trample on dignity." }]
+  },
+  "粛清する": {
+    "reading": "しゅくせいする",
+    "group": "irregular",
+    "translation": "to purge",
+    "jlpt": "N1",
+    "examples": [{ "ja": "組織を粛清する。", "en": "I purge the organization." }]
+  },
+  "瓦解する": {
+    "reading": "がかいする",
+    "group": "irregular",
+    "translation": "to collapse, to disintegrate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "同盟が瓦解する。", "en": "The alliance collapses." }]
+  },
+  "離散する": {
+    "reading": "りさんする",
+    "group": "irregular",
+    "translation": "to be scattered, to be dispersed",
+    "jlpt": "N1",
+    "examples": [{ "ja": "家族が離散する。", "en": "The family is scattered." }]
+  },
+  "流浪する": {
+    "reading": "るろうする",
+    "group": "irregular",
+    "translation": "to wander, to drift",
+    "jlpt": "N1",
+    "examples": [{ "ja": "各地を流浪する。", "en": "I wander from place to place." }]
+  },
+  "漂泊する": {
+    "reading": "ひょうはくする",
+    "group": "irregular",
+    "translation": "to wander, to drift about",
+    "jlpt": "N1",
+    "examples": [{ "ja": "各地を漂泊する。", "en": "I drift about various places." }]
+  },
+  "放浪する": {
+    "reading": "ほうろうする",
+    "group": "irregular",
+    "translation": "to roam, to wander",
+    "jlpt": "N1",
+    "examples": [{ "ja": "世界を放浪する。", "en": "I roam the world." }]
+  },
+  "逃亡する": {
+    "reading": "とうぼうする",
+    "group": "irregular",
+    "translation": "to flee, to run away",
+    "jlpt": "N1",
+    "examples": [{ "ja": "国外に逃亡する。", "en": "I flee the country." }]
+  },
+  "亡命する": {
+    "reading": "ぼうめいする",
+    "group": "irregular",
+    "translation": "to seek asylum, to defect",
+    "jlpt": "N1",
+    "examples": [{ "ja": "海外に亡命する。", "en": "I seek asylum abroad." }]
+  },
+  "帰還する": {
+    "reading": "きかんする",
+    "group": "irregular",
+    "translation": "to return (home), to repatriate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "故郷に帰還する。", "en": "I return to my homeland." }]
+  },
+  "凱旋する": {
+    "reading": "がいせんする",
+    "group": "irregular",
+    "translation": "to return in triumph",
+    "jlpt": "N1",
+    "examples": [{ "ja": "勝利して凱旋する。", "en": "I return in triumph after victory." }]
+  },
+  "即位する": {
+    "reading": "そくいする",
+    "group": "irregular",
+    "translation": "to ascend the throne",
+    "jlpt": "N1",
+    "examples": [{ "ja": "新天皇が即位する。", "en": "The new emperor ascends the throne." }]
+  },
+  "退位する": {
+    "reading": "たいいする",
+    "group": "irregular",
+    "translation": "to abdicate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "天皇が退位する。", "en": "The emperor abdicates." }]
+  },
+  "践祚する": {
+    "reading": "せんそする",
+    "group": "irregular",
+    "translation": "to succeed to the throne",
+    "jlpt": "N1",
+    "examples": [{ "ja": "皇太子が践祚する。", "en": "The crown prince succeeds to the throne." }]
+  },
+  "布告する": {
+    "reading": "ふこくする",
+    "group": "irregular",
+    "translation": "to proclaim, to decree",
+    "jlpt": "N1",
+    "examples": [{ "ja": "独立を布告する。", "en": "I proclaim independence." }]
+  },
+  "宣言する": {
+    "reading": "せんげんする",
+    "group": "irregular",
+    "translation": "to declare",
+    "jlpt": "N1",
+    "examples": [{ "ja": "非常事態を宣言する。", "en": "I declare a state of emergency." }]
+  },
+  "発布する": {
+    "reading": "はっぷする",
+    "group": "irregular",
+    "translation": "to promulgate (a law)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "憲法を発布する。", "en": "I promulgate the constitution." }]
+  },
+  "批准する": {
+    "reading": "ひじゅんする",
+    "group": "irregular",
+    "translation": "to ratify",
+    "jlpt": "N1",
+    "examples": [{ "ja": "条約を批准する。", "en": "I ratify the treaty." }]
+  },
+  "締結する": {
+    "reading": "ていけつする",
+    "group": "irregular",
+    "translation": "to conclude (a treaty/contract)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "条約を締結する。", "en": "I conclude a treaty." }]
+  },
+  "破棄する": {
+    "reading": "はきする",
+    "group": "irregular",
+    "translation": "to annul, to discard",
+    "jlpt": "N1",
+    "examples": [{ "ja": "契約を破棄する。", "en": "I annul the contract." }]
+  },
+  "調停する": {
+    "reading": "ちょうていする",
+    "group": "irregular",
+    "translation": "to mediate, to arbitrate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "紛争を調停する。", "en": "I mediate the dispute." }]
+  },
+  "仲裁する": {
+    "reading": "ちゅうさいする",
+    "group": "irregular",
+    "translation": "to arbitrate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "争いを仲裁する。", "en": "I arbitrate the dispute." }]
+  },
+  "裁定する": {
+    "reading": "さいていする",
+    "group": "irregular",
+    "translation": "to rule, to make a ruling",
+    "jlpt": "N1",
+    "examples": [{ "ja": "裁判所が裁定する。", "en": "The court makes a ruling." }]
+  },
+  "制裁する": {
+    "reading": "せいさいする",
+    "group": "irregular",
+    "translation": "to sanction, to punish",
+    "jlpt": "N1",
+    "examples": [{ "ja": "違反者を制裁する。", "en": "I sanction the violator." }]
+  },
+  "報復する": {
+    "reading": "ほうふくする",
+    "group": "irregular",
+    "translation": "to retaliate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "攻撃に報復する。", "en": "I retaliate for the attack." }]
+  },
+  "応酬する": {
+    "reading": "おうしゅうする",
+    "group": "irregular",
+    "translation": "to exchange (blows/words)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "言葉を応酬する。", "en": "We exchange words." }]
+  },
+  "牽制する": {
+    "reading": "けんせいする",
+    "group": "irregular",
+    "translation": "to check, to hold in check",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵を牽制する。", "en": "I hold the enemy in check." }]
+  },
+  "包囲する": {
+    "reading": "ほういする",
+    "group": "irregular",
+    "translation": "to surround, to lay siege to",
+    "jlpt": "N1",
+    "examples": [{ "ja": "城を包囲する。", "en": "I lay siege to the castle." }]
+  },
+  "侵攻する": {
+    "reading": "しんこうする",
+    "group": "irregular",
+    "translation": "to invade",
+    "jlpt": "N1",
+    "examples": [{ "ja": "領土に侵攻する。", "en": "I invade the territory." }]
+  },
+  "占拠する": {
+    "reading": "せんきょする",
+    "group": "irregular",
+    "translation": "to occupy, to seize",
+    "jlpt": "N1",
+    "examples": [{ "ja": "拠点を占拠する。", "en": "I seize the base." }]
+  },
+  "陥落する": {
+    "reading": "かんらくする",
+    "group": "irregular",
+    "translation": "to fall (a fortress), to capitulate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "要塞が陥落する。", "en": "The fortress falls." }]
+  },
+  "降伏する": {
+    "reading": "こうふくする",
+    "group": "irregular",
+    "translation": "to surrender",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵が降伏する。", "en": "The enemy surrenders." }]
+  },
+  "投降する": {
+    "reading": "とうこうする",
+    "group": "irregular",
+    "translation": "to surrender, to give oneself up",
+    "jlpt": "N1",
+    "examples": [{ "ja": "兵士が投降する。", "en": "The soldiers surrender." }]
+  },
+  "休戦する": {
+    "reading": "きゅうせんする",
+    "group": "irregular",
+    "translation": "to cease fire, to declare a truce",
+    "jlpt": "N1",
+    "examples": [{ "ja": "両軍が休戦する。", "en": "Both armies declare a truce." }]
+  },
+  "停戦する": {
+    "reading": "ていせんする",
+    "group": "irregular",
+    "translation": "to cease hostilities",
+    "jlpt": "N1",
+    "examples": [{ "ja": "停戦に合意する。", "en": "We agree to a ceasefire." }]
+  },
+  "講和する": {
+    "reading": "こうわする",
+    "group": "irregular",
+    "translation": "to make peace",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵国と講和する。", "en": "I make peace with the enemy nation." }]
+  },
+  "復興する": {
+    "reading": "ふっこうする",
+    "group": "irregular",
+    "translation": "to reconstruct, to revive",
+    "jlpt": "N1",
+    "examples": [{ "ja": "街を復興する。", "en": "I reconstruct the town." }]
+  },
+  "興隆する": {
+    "reading": "こうりゅうする",
+    "group": "irregular",
+    "translation": "to prosper, to flourish",
+    "jlpt": "N1",
+    "examples": [{ "ja": "文明が興隆する。", "en": "Civilization flourishes." }]
+  },
+  "繁栄する": {
+    "reading": "はんえいする",
+    "group": "irregular",
+    "translation": "to prosper, to thrive",
+    "jlpt": "N1",
+    "examples": [{ "ja": "国が繁栄する。", "en": "The nation prospers." }]
+  },
+  "衰亡する": {
+    "reading": "すいぼうする",
+    "group": "irregular",
+    "translation": "to decline and fall",
+    "jlpt": "N1",
+    "examples": [{ "ja": "帝国が衰亡する。", "en": "The empire declines and falls." }]
+  },
+  "滅亡する": {
+    "reading": "めつぼうする",
+    "group": "irregular",
+    "translation": "to perish, to be destroyed",
+    "jlpt": "N1",
+    "examples": [{ "ja": "文明が滅亡する。", "en": "The civilization perishes." }]
+  },
+  "勃興する": {
+    "reading": "ぼっこうする",
+    "group": "irregular",
+    "translation": "to rise suddenly, to emerge",
+    "jlpt": "N1",
+    "examples": [{ "ja": "新勢力が勃興する。", "en": "A new force emerges." }]
+  },
+  "台頭する": {
+    "reading": "たいとうする",
+    "group": "irregular",
+    "translation": "to rise to prominence",
+    "jlpt": "N1",
+    "examples": [{ "ja": "若手が台頭する。", "en": "Young talent rises to prominence." }]
+  },
+  "君臨する": {
+    "reading": "くんりんする",
+    "group": "irregular",
+    "translation": "to reign over, to dominate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "業界に君臨する。", "en": "I reign over the industry." }]
+  },
+  "統治する": {
+    "reading": "とうちする",
+    "group": "irregular",
+    "translation": "to govern, to rule",
+    "jlpt": "N1",
+    "examples": [{ "ja": "国を統治する。", "en": "I govern the country." }]
+  },
+  "君主が治める": {
+    "reading": "くんしゅがおさめる",
+    "group": "ichidan",
+    "translation": "for a sovereign to rule",
+    "jlpt": "N1",
+    "examples": [{ "ja": "君主が国を治める。", "en": "The sovereign rules the country." }]
+  },
+  "暴虐を極める": {
+    "reading": "ぼうぎゃくをきわめる",
+    "group": "ichidan",
+    "translation": "to be extremely tyrannical",
+    "jlpt": "N1",
+    "examples": [{ "ja": "暴虐を極める。", "en": "The tyranny reaches its extreme." }]
+  },
+  "栄華を極める": {
+    "reading": "えいがをきわめる",
+    "group": "ichidan",
+    "translation": "to reach the height of glory",
+    "jlpt": "N1",
+    "examples": [{ "ja": "一族が栄華を極める。", "en": "The clan reaches the height of glory." }]
+  },
+  "贅を凝らす": {
+    "reading": "ぜいをこらす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to spare no expense in luxury",
+    "jlpt": "N1",
+    "examples": [{ "ja": "贅を凝らした料理。", "en": "Lavishly prepared cuisine." }]
+  },
+  "粋を集める": {
+    "reading": "すいをあつめる",
+    "group": "ichidan",
+    "translation": "to bring together the best",
+    "jlpt": "N1",
+    "examples": [{ "ja": "技術の粋を集める。", "en": "I bring together the best of technology." }]
+  },
+  "末路を辿る": {
+    "reading": "まつろをたどる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to meet one's end, to come to a bad end",
+    "jlpt": "N1",
+    "examples": [{ "ja": "悲惨な末路を辿る。", "en": "I come to a tragic end." }]
+  },
+  "転落する": {
+    "reading": "てんらくする",
+    "group": "irregular",
+    "translation": "to fall, to plummet",
+    "jlpt": "N1",
+    "examples": [{ "ja": "赤字に転落する。", "en": "I plummet into the red." }]
+  },
+  "没落する": {
+    "reading": "ぼつらくする",
+    "group": "irregular",
+    "translation": "to decline, to fall from power",
+    "jlpt": "N1",
+    "examples": [{ "ja": "名家が没落する。", "en": "The prominent family falls from power." }]
+  },
+  "零落する": {
+    "reading": "れいらくする",
+    "group": "irregular",
+    "translation": "to fall into ruin, to become impoverished",
+    "jlpt": "N1",
+    "examples": [{ "ja": "家が零落する。", "en": "The family falls into ruin." }]
+  },
+  "専横する": {
+    "reading": "せんおうする",
+    "group": "irregular",
+    "translation": "to act tyrannically, to abuse power",
+    "jlpt": "N1",
+    "examples": [{ "ja": "権力を専横する。", "en": "I abuse power tyrannically." }]
+  },
+  "壟断する": {
+    "reading": "ろうだんする",
+    "group": "irregular",
+    "translation": "to monopolize, to hoard",
+    "jlpt": "N1",
+    "examples": [{ "ja": "市場を壟断する。", "en": "I monopolize the market." }]
+  },
+  "搾取する": {
+    "reading": "さくしゅする",
+    "group": "irregular",
+    "translation": "to exploit",
+    "jlpt": "N1",
+    "examples": [{ "ja": "労働者を搾取する。", "en": "I exploit the workers." }]
+  },
+  "収奪する": {
+    "reading": "しゅうだつする",
+    "group": "irregular",
+    "translation": "to plunder, to pillage",
+    "jlpt": "N1",
+    "examples": [{ "ja": "資源を収奪する。", "en": "I plunder resources." }]
+  },
+  "蹂躙する": {
+    "reading": "じゅうりんする",
+    "group": "irregular",
+    "translation": "to ravage, to violate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "権利を蹂躙する。", "en": "I violate rights." }]
+  },
+  "征伐する": {
+    "reading": "せいばつする",
+    "group": "irregular",
+    "translation": "to subjugate, to conquer",
+    "jlpt": "N1",
+    "examples": [{ "ja": "反乱を征伐する。", "en": "I subjugate the rebellion." }]
+  },
+  "討伐する": {
+    "reading": "とうばつする",
+    "group": "irregular",
+    "translation": "to suppress, to subdue",
+    "jlpt": "N1",
+    "examples": [{ "ja": "賊を討伐する。", "en": "I subdue the bandits." }]
+  },
+  "掃討する": {
+    "reading": "そうとうする",
+    "group": "irregular",
+    "translation": "to mop up, to sweep clean",
+    "jlpt": "N1",
+    "examples": [{ "ja": "残党を掃討する。", "en": "I mop up the remnants." }]
+  },
+  "殲滅する": {
+    "reading": "せんめつする",
+    "group": "irregular",
+    "translation": "to annihilate, to wipe out",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵軍を殲滅する。", "en": "I annihilate the enemy forces." }]
+  },
+  "焦土と化す": {
+    "reading": "しょうどとかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to be reduced to scorched earth",
+    "jlpt": "N1",
+    "examples": [{ "ja": "街が焦土と化す。", "en": "The town is reduced to scorched earth." }]
+  },
+  "蜂起する": {
+    "reading": "ほうきする",
+    "group": "irregular",
+    "translation": "to rise up in revolt",
+    "jlpt": "N1",
+    "examples": [{ "ja": "民衆が蜂起する。", "en": "The people rise up in revolt." }]
+  },
+  "決起する": {
+    "reading": "けっきする",
+    "group": "irregular",
+    "translation": "to rise up, to take action",
+    "jlpt": "N1",
+    "examples": [{ "ja": "市民が決起する。", "en": "The citizens rise up." }]
+  },
+  "挙兵する": {
+    "reading": "きょへいする",
+    "group": "irregular",
+    "translation": "to raise an army, to take up arms",
+    "jlpt": "N1",
+    "examples": [{ "ja": "反乱軍が挙兵する。", "en": "The rebels take up arms." }]
+  },
+  "謀反する": {
+    "reading": "むほんする",
+    "group": "irregular",
+    "translation": "to rebel, to commit treason",
+    "jlpt": "N1",
+    "examples": [{ "ja": "家臣が謀反する。", "en": "The vassal commits treason." }]
+  },
+  "潰走する": {
+    "reading": "かいそうする",
+    "group": "irregular",
+    "translation": "to flee in disarray, to rout",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵軍が潰走する。", "en": "The enemy army flees in disarray." }]
+  },
+  "撤退する": {
+    "reading": "てったいする",
+    "group": "irregular",
+    "translation": "to retreat, to withdraw",
+    "jlpt": "N1",
+    "examples": [{ "ja": "戦場から撤退する。", "en": "I retreat from the battlefield." }]
+  },
+  "進軍する": {
+    "reading": "しんぐんする",
+    "group": "irregular",
+    "translation": "to march, to advance (military)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "首都に進軍する。", "en": "I march on the capital." }]
+  },
+  "奇襲する": {
+    "reading": "きしゅうする",
+    "group": "irregular",
+    "translation": "to make a surprise attack",
+    "jlpt": "N1",
+    "examples": [{ "ja": "敵陣を奇襲する。", "en": "I make a surprise attack on the enemy camp." }]
+  },
+  "強襲する": {
+    "reading": "きょうしゅうする",
+    "group": "irregular",
+    "translation": "to storm, to assault",
+    "jlpt": "N1",
+    "examples": [{ "ja": "要塞を強襲する。", "en": "I storm the fortress." }]
+  },
+  "攻略する": {
+    "reading": "こうりゃくする",
+    "group": "irregular",
+    "translation": "to capture, to conquer",
+    "jlpt": "N1",
+    "examples": [{ "ja": "城を攻略する。", "en": "I capture the castle." }]
+  },
+  "略奪する": {
+    "reading": "りゃくだつする",
+    "group": "irregular",
+    "translation": "to plunder, to loot",
+    "jlpt": "N1",
+    "examples": [{ "ja": "街を略奪する。", "en": "I plunder the town." }]
+  },
+  "虐殺する": {
+    "reading": "ぎゃくさつする",
+    "group": "irregular",
+    "translation": "to massacre",
+    "jlpt": "N1",
+    "examples": [{ "ja": "罪なき民を虐殺する。", "en": "I massacre the innocent." }]
+  },
+  "追放する": {
+    "reading": "ついほうする",
+    "group": "irregular",
+    "translation": "to banish, to exile",
+    "jlpt": "N1",
+    "examples": [{ "ja": "国から追放する。", "en": "I banish from the country." }]
+  },
+  "幽閉する": {
+    "reading": "ゆうへいする",
+    "group": "irregular",
+    "translation": "to confine, to imprison",
+    "jlpt": "N1",
+    "examples": [{ "ja": "塔に幽閉する。", "en": "I confine in the tower." }]
+  },
+  "処刑する": {
+    "reading": "しょけいする",
+    "group": "irregular",
+    "translation": "to execute (a prisoner)",
+    "jlpt": "N1",
+    "examples": [{ "ja": "罪人を処刑する。", "en": "I execute the criminal." }]
+  },
+  "恩赦する": {
+    "reading": "おんしゃする",
+    "group": "irregular",
+    "translation": "to grant amnesty, to pardon",
+    "jlpt": "N1",
+    "examples": [{ "ja": "囚人を恩赦する。", "en": "I grant amnesty to the prisoner." }]
+  },
+  "赦免する": {
+    "reading": "しゃめんする",
+    "group": "irregular",
+    "translation": "to pardon, to absolve",
+    "jlpt": "N1",
+    "examples": [{ "ja": "罪を赦免する。", "en": "I pardon the crime." }]
+  },
+  "懐古する": {
+    "reading": "かいこする",
+    "group": "irregular",
+    "translation": "to look back on with nostalgia",
+    "jlpt": "N1",
+    "examples": [{ "ja": "昔を懐古する。", "en": "I look back with nostalgia." }]
+  },
+  "回顧する": {
+    "reading": "かいこする",
+    "group": "irregular",
+    "translation": "to look back on, to reminisce",
+    "jlpt": "N1",
+    "examples": [{ "ja": "人生を回顧する。", "en": "I look back on my life." }]
+  },
+  "慈しむ": {
+    "reading": "いつくしむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to love, to cherish",
+    "jlpt": "N1",
+    "examples": [{ "ja": "命を慈しむ。", "en": "I cherish life." }]
+  },
+  "労わる": {
+    "reading": "いたわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to care for, to be kind to",
+    "jlpt": "N1",
+    "examples": [{ "ja": "体を労わる。", "en": "I take care of my body." }]
+  },
+  "奉る": {
+    "reading": "たてまつる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to offer respectfully, to dedicate",
+    "jlpt": "N1",
+    "examples": [{ "ja": "神に奉る。", "en": "I offer to the gods." }]
+  },
+  "祀る": {
+    "reading": "まつる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to enshrine, to worship",
+    "jlpt": "N1",
+    "examples": [{ "ja": "神を祀る。", "en": "I enshrine a god." }]
+  },
+  "弔う": {
+    "reading": "とむらう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to mourn, to hold a memorial",
+    "jlpt": "N1",
+    "examples": [{ "ja": "戦没者を弔う。", "en": "I mourn the war dead." }]
+  },
+  "偲ぶ": {
+    "reading": "しのぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to recall fondly, to remember",
+    "jlpt": "N1",
+    "examples": [{ "ja": "亡き友を偲ぶ。", "en": "I fondly remember my late friend." }]
+  },
+  "悼む": {
+    "reading": "いたむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to mourn, to grieve for",
+    "jlpt": "N1",
+    "examples": [{ "ja": "死を悼む。", "en": "I mourn the death." }]
+  },
+  "堪え忍ぶ": {
+    "reading": "たえしのぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to endure patiently",
+    "jlpt": "N1",
+    "examples": [{ "ja": "苦難を堪え忍ぶ。", "en": "I endure hardship patiently." }]
+  },
+  "思い悩む": {
+    "reading": "おもいなやむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to agonize, to worry deeply",
+    "jlpt": "N1",
+    "examples": [{ "ja": "将来を思い悩む。", "en": "I agonize about the future." }]
+  },
+  "思い焦がれる": {
+    "reading": "おもいこがれる",
+    "group": "ichidan",
+    "translation": "to yearn for, to pine for",
+    "jlpt": "N1",
+    "examples": [{ "ja": "故郷を思い焦がれる。", "en": "I pine for my homeland." }]
+  },
+  "思い馳せる": {
+    "reading": "おもいはせる",
+    "group": "ichidan",
+    "translation": "to let one's thoughts wander to",
+    "jlpt": "N1",
+    "examples": [{ "ja": "遠い昔に思い馳せる。", "en": "I let my thoughts wander to the distant past." }]
+  },
+  "思い詰める": {
+    "reading": "おもいつめる",
+    "group": "ichidan",
+    "translation": "to brood, to think too much about",
+    "jlpt": "N1",
+    "examples": [{ "ja": "一人で思い詰める。", "en": "I brood alone." }]
+  },
+  "思い煩う": {
+    "reading": "おもいわずらう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to worry endlessly",
+    "jlpt": "N1",
+    "examples": [{ "ja": "将来を思い煩う。", "en": "I worry endlessly about the future." }]
+  },
+  "思い残す": {
+    "reading": "おもいのこす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to have regrets, to leave something undone",
+    "jlpt": "N1",
+    "examples": [{ "ja": "思い残すことはない。", "en": "I have no regrets." }]
+  },
+  "思い定める": {
+    "reading": "おもいさだめる",
+    "group": "ichidan",
+    "translation": "to make up one's mind firmly",
+    "jlpt": "N1",
+    "examples": [{ "ja": "覚悟を思い定める。", "en": "I firmly make up my mind." }]
+  },
+  "顧みず突き進む": {
+    "reading": "かえりみずつきすすむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to push forward without looking back",
+    "jlpt": "N1",
+    "examples": [{ "ja": "危険を顧みず突き進む。", "en": "I push forward regardless of danger." }]
+  },
+  "心を砕く": {
+    "reading": "こころをくだく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to worry about, to take pains over",
+    "jlpt": "N1",
+    "examples": [{ "ja": "教育に心を砕く。", "en": "I take great pains over education." }]
+  },
+  "心を鬼にする": {
+    "reading": "こころをおににする",
+    "group": "irregular",
+    "translation": "to steel one's heart, to be strict",
+    "jlpt": "N1",
+    "examples": [{ "ja": "心を鬼にして叱る。", "en": "I steel my heart and scold." }]
+  },
+  "襟を正す": {
+    "reading": "えりをただす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to straighten one's collar, to shape up",
+    "jlpt": "N1",
+    "examples": [{ "ja": "襟を正して臨む。", "en": "I shape up and face it." }]
+  },
+  "腕を磨く": {
+    "reading": "うでをみがく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to polish one's skills",
+    "jlpt": "N1",
+    "examples": [{ "ja": "日々腕を磨く。", "en": "I polish my skills every day." }]
+  },
+  "舌鼓を打つ": {
+    "reading": "したつづみをうつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to smack one's lips, to savor food",
+    "jlpt": "N1",
+    "examples": [{ "ja": "美味に舌鼓を打つ。", "en": "I savor the delicious food." }]
+  },
+  "涙を誘う": {
+    "reading": "なみだをさそう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to bring to tears, to be tear-jerking",
+    "jlpt": "N1",
+    "examples": [{ "ja": "感動の場面が涙を誘う。", "en": "The moving scene brings tears." }]
+  },
+  "琴線に触れる": {
+    "reading": "きんせんにふれる",
+    "group": "ichidan",
+    "translation": "to touch a chord, to strike a nerve",
+    "jlpt": "N1",
+    "examples": [{ "ja": "言葉が琴線に触れる。", "en": "The words touch a chord." }]
+  },
+  "胸に迫る": {
+    "reading": "むねにせまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be deeply moving",
+    "jlpt": "N1",
+    "examples": [{ "ja": "感動が胸に迫る。", "en": "The emotion is deeply moving." }]
+  },
+  "胸に刻む": {
+    "reading": "むねにきざむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to engrave in one's heart",
+    "jlpt": "N1",
+    "examples": [{ "ja": "教えを胸に刻む。", "en": "I engrave the teaching in my heart." }]
+  },
+  "胸に秘める": {
+    "reading": "むねにひめる",
+    "group": "ichidan",
+    "translation": "to keep in one's heart, to harbor",
+    "jlpt": "N1",
+    "examples": [{ "ja": "思いを胸に秘める。", "en": "I keep my feelings in my heart." }]
   }
 }
