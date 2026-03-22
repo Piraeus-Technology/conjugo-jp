@@ -1,37 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Alert,
   KeyboardAvoidingView,
   Platform,
+  Share,
   Linking,
   ScrollView,
+  Switch,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
+import { useThemeStore } from '../store/themeStore';
+
+const APP_VERSION = '1.0.0';
 
 export default function FeedbackScreen() {
   const colors = useColors();
-  const [message, setMessage] = useState('');
+  const { isDark, toggleTheme } = useThemeStore();
 
   const handleSendEmail = () => {
-    if (!message.trim()) {
-      Alert.alert('Empty Message', 'Please write your feedback before sending.');
-      return;
-    }
-
     const subject = encodeURIComponent('ConjuGo JP Feedback');
-    const body = encodeURIComponent(message);
-    const url = `mailto:contact@piraeus.app?subject=${subject}&body=${body}`;
+    const url = `mailto:contact@piraeus.app?subject=${subject}`;
 
     Linking.openURL(url).catch(() => {
       Alert.alert(
         'No Email App',
-        'Could not open your email app. You can send feedback directly to contact@piraeus.app'
+        'You can send feedback directly to contact@piraeus.app'
       );
     });
   };
@@ -42,48 +40,58 @@ export default function FeedbackScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerEmoji}>💬</Text>
-          <Text style={[styles.title, { color: colors.textPrimary }]}>We'd Love Your Feedback</Text>
-          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-            Found a bug? Have a suggestion? Missing a verb? Let us know!
-          </Text>
+        {/* Settings section */}
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Settings</Text>
+        <View style={[styles.settingsCard, { backgroundColor: colors.card }]}>
+          <View style={[styles.settingRow, { borderBottomColor: colors.divider }]}>
+            <Ionicons name={isDark ? 'moon' : 'sunny'} size={20} color={colors.textSecondary} />
+            <Text style={[styles.settingLabel, { color: colors.textPrimary }]}>Dark Mode</Text>
+            <Switch
+              value={isDark}
+              onValueChange={toggleTheme}
+              trackColor={{ false: colors.border, true: colors.primary }}
+              thumbColor="#fff"
+            />
+          </View>
         </View>
 
-        <View style={[styles.inputCard, { backgroundColor: colors.card }]}>
-          <TextInput
-            style={[styles.textInput, { color: colors.textPrimary, borderColor: colors.divider }]}
-            placeholder="Write your feedback here..."
-            placeholderTextColor={colors.textMuted}
-            value={message}
-            onChangeText={setMessage}
-            multiline
-            numberOfLines={6}
-            textAlignVertical="top"
-          />
-          <TouchableOpacity
-            style={[
-              styles.sendButton,
-              { backgroundColor: message.trim() ? '#43A047' : colors.pillBg },
-            ]}
-            onPress={handleSendEmail}
-            disabled={!message.trim()}
-          >
-            <Ionicons
-              name="send"
-              size={18}
-              color={message.trim() ? '#FFFFFF' : colors.textMuted}
-            />
-            <Text
-              style={[
-                styles.sendText,
-                { color: message.trim() ? '#FFFFFF' : colors.textMuted },
-              ]}
-            >
-              Send Feedback
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {/* Support section */}
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary, marginTop: spacing.lg }]}>Support</Text>
+        <TouchableOpacity
+          style={[styles.rowCard, { backgroundColor: colors.card }]}
+          onPress={handleSendEmail}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.rowEmoji}>💬</Text>
+          <View style={styles.rowInfo}>
+            <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Send Feedback</Text>
+            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>Bug reports, suggestions, missing verbs</Text>
+          </View>
+          <Ionicons name="mail-outline" size={20} color={colors.textMuted} />
+        </TouchableOpacity>
+
+        {/* Share */}
+        <TouchableOpacity
+          style={[styles.rowCard, { backgroundColor: colors.card }]}
+          onPress={() => {
+            Share.share({
+              message: 'Check out ConjuGo JP — a Japanese verb conjugation app!',
+            });
+          }}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.rowEmoji}>🔗</Text>
+          <View style={styles.rowInfo}>
+            <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Share ConjuGo JP</Text>
+            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>Tell a friend about the app</Text>
+          </View>
+          <Ionicons name="share-outline" size={20} color={colors.textMuted} />
+        </TouchableOpacity>
+
+        {/* Version */}
+        <Text style={[styles.version, { color: colors.textMuted }]}>
+          ConjuGo JP v{APP_VERSION}
+        </Text>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -92,41 +100,54 @@ export default function FeedbackScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: spacing.lg },
-  header: { alignItems: 'center', paddingTop: spacing.md, paddingBottom: spacing.lg },
-  headerEmoji: { fontSize: 48 },
-  title: { fontSize: fonts.sizes.xl, fontWeight: fonts.weights.bold, marginTop: spacing.md },
-  subtitle: {
-    fontSize: fonts.sizes.md,
-    textAlign: 'center',
-    marginTop: spacing.sm,
-    lineHeight: 22,
-    paddingHorizontal: spacing.md,
+  sectionTitle: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.semibold,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: spacing.sm,
   },
-  inputCard: {
+  settingsCard: {
     borderRadius: radius.md,
-    padding: spacing.md,
+    overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 2,
   },
-  textInput: {
-    fontSize: fonts.sizes.md,
-    minHeight: 140,
-    borderWidth: 1,
-    borderRadius: radius.sm,
-    padding: spacing.md,
-    lineHeight: 22,
-  },
-  sendButton: {
+  settingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
+    padding: spacing.md,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    gap: spacing.md,
+  },
+  settingLabel: {
+    flex: 1,
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.medium,
+  },
+  rowCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.md,
     borderRadius: radius.md,
     marginTop: spacing.md,
-    gap: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  sendText: { fontSize: fonts.sizes.md, fontWeight: fonts.weights.semibold },
+  rowEmoji: { fontSize: 32, marginRight: spacing.md },
+  rowInfo: { flex: 1 },
+  rowTitle: { fontSize: fonts.sizes.lg, fontWeight: fonts.weights.semibold },
+  rowSubtitle: { fontSize: fonts.sizes.sm, marginTop: 2 },
+  version: {
+    fontSize: fonts.sizes.xs,
+    textAlign: 'center',
+    marginTop: spacing.xl,
+    marginBottom: spacing.md,
+  },
 });

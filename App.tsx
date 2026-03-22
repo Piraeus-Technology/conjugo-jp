@@ -151,15 +151,6 @@ export default function App() {
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="ellipsis-horizontal" size={size} color={color} />
               ),
-              headerRight: () => (
-                <TouchableOpacity onPress={toggleTheme} style={{ marginRight: 16 }}>
-                  <Ionicons
-                    name={isDark ? 'sunny' : 'moon'}
-                    size={22}
-                    color={colors.textPrimary}
-                  />
-                </TouchableOpacity>
-              ),
             }}
           />
         </Tab.Navigator>
