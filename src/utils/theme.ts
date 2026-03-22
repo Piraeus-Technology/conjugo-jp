@@ -5,21 +5,21 @@ const lightColors = {
   primaryLight: '#D4354F',
   primaryDark: '#8C0021',
 
-  accent: '#BC002D',
-  accentLight: '#FCE4EC',
+  accent: '#E890A0',
+  accentLight: '#FFF0F3',
 
-  bg: '#FAFAFA',
+  bg: '#FFFAFA',
   card: '#FFFFFF',
-  searchBg: '#F0EEEB',
+  searchBg: '#FFF5F6',
 
   textPrimary: '#1A1A1A',
   textSecondary: '#6B6B6B',
   textMuted: '#9E9E9E',
 
-  border: '#E8E5E0',
-  divider: '#F0EEEB',
+  border: '#F0D8DC',
+  divider: '#FFF0F3',
 
-  pillBg: '#F0EEEB',
+  pillBg: '#FFF0F3',
   pillActiveBg: '#BC002D',
   pillText: '#4A4A4A',
   pillActiveText: '#FFFFFF',
@@ -43,21 +43,21 @@ const darkColors = {
   primaryLight: '#FF5A6E',
   primaryDark: '#FF6B7A',
 
-  accent: '#E8384F',
-  accentLight: '#3D1A1A',
+  accent: '#F48FB1',
+  accentLight: '#2D1520',
 
-  bg: '#121212',
-  card: '#1E1E1E',
-  searchBg: '#2A2A2A',
+  bg: '#141012',
+  card: '#1E1A1C',
+  searchBg: '#2A2426',
 
   textPrimary: '#F0F0F0',
   textSecondary: '#A0A0A0',
   textMuted: '#666666',
 
-  border: '#333333',
-  divider: '#2A2A2A',
+  border: '#3A2A30',
+  divider: '#2A2426',
 
-  pillBg: '#2A2A2A',
+  pillBg: '#2A2426',
   pillActiveBg: '#E8384F',
   pillText: '#A0A0A0',
   pillActiveText: '#FFFFFF',
