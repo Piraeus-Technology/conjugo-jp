@@ -5,7 +5,12 @@
     "translation": "to eat",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "毎日ご飯を食べる。", "en": "I eat rice every day." }]
+    "examples": [
+      {
+        "ja": "毎日ご飯を食べる。",
+        "en": "I eat rice every day."
+      }
+    ]
   },
   "飲む": {
     "reading": "のむ",
@@ -14,7 +19,12 @@
     "translation": "to drink",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "水を飲む。", "en": "I drink water." }]
+    "examples": [
+      {
+        "ja": "水を飲む。",
+        "en": "I drink water."
+      }
+    ]
   },
   "見る": {
     "reading": "みる",
@@ -22,7 +32,12 @@
     "translation": "to see, to watch",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "映画を見る。", "en": "I watch a movie." }]
+    "examples": [
+      {
+        "ja": "映画を見る。",
+        "en": "I watch a movie."
+      }
+    ]
   },
   "聞く": {
     "reading": "きく",
@@ -31,7 +46,12 @@
     "translation": "to listen, to ask",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "音楽を聞く。", "en": "I listen to music." }]
+    "examples": [
+      {
+        "ja": "音楽を聞く。",
+        "en": "I listen to music."
+      }
+    ]
   },
   "読む": {
     "reading": "よむ",
@@ -40,7 +60,12 @@
     "translation": "to read",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "本を読む。", "en": "I read a book." }]
+    "examples": [
+      {
+        "ja": "本を読む。",
+        "en": "I read a book."
+      }
+    ]
   },
   "書く": {
     "reading": "かく",
@@ -49,7 +74,12 @@
     "translation": "to write",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "手紙を書く。", "en": "I write a letter." }]
+    "examples": [
+      {
+        "ja": "手紙を書く。",
+        "en": "I write a letter."
+      }
+    ]
   },
   "話す": {
     "reading": "はなす",
@@ -58,7 +88,12 @@
     "translation": "to speak, to talk",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "日本語を話す。", "en": "I speak Japanese." }]
+    "examples": [
+      {
+        "ja": "日本語を話す。",
+        "en": "I speak Japanese."
+      }
+    ]
   },
   "行く": {
     "reading": "いく",
@@ -72,7 +107,12 @@
       "ta": "いった",
       "conditional_tara": "いったら"
     },
-    "examples": [{ "ja": "学校に行く。", "en": "I go to school." }]
+    "examples": [
+      {
+        "ja": "学校に行く。",
+        "en": "I go to school."
+      }
+    ]
   },
   "来る": {
     "reading": "くる",
@@ -80,7 +120,12 @@
     "translation": "to come",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "友達が来る。", "en": "A friend is coming." }]
+    "examples": [
+      {
+        "ja": "友達が来る。",
+        "en": "A friend is coming."
+      }
+    ]
   },
   "する": {
     "reading": "する",
@@ -88,7 +133,12 @@
     "translation": "to do",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "勉強する。", "en": "I study." }]
+    "examples": [
+      {
+        "ja": "勉強する。",
+        "en": "I study."
+      }
+    ]
   },
   "ある": {
     "reading": "ある",
@@ -101,7 +151,12 @@
       "nai": "ない",
       "nakatta": "なかった"
     },
-    "examples": [{ "ja": "本がある。", "en": "There is a book." }]
+    "examples": [
+      {
+        "ja": "本がある。",
+        "en": "There is a book."
+      }
+    ]
   },
   "いる": {
     "reading": "いる",
@@ -109,7 +164,12 @@
     "translation": "to exist (animate)",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "猫がいる。", "en": "There is a cat." }]
+    "examples": [
+      {
+        "ja": "猫がいる。",
+        "en": "There is a cat."
+      }
+    ]
   },
   "買う": {
     "reading": "かう",
@@ -118,7 +178,12 @@
     "translation": "to buy",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "パンを買う。", "en": "I buy bread." }]
+    "examples": [
+      {
+        "ja": "パンを買う。",
+        "en": "I buy bread."
+      }
+    ]
   },
   "待つ": {
     "reading": "まつ",
@@ -127,7 +192,12 @@
     "translation": "to wait",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "ここで待つ。", "en": "I wait here." }]
+    "examples": [
+      {
+        "ja": "ここで待つ。",
+        "en": "I wait here."
+      }
+    ]
   },
   "帰る": {
     "reading": "かえる",
@@ -136,7 +206,12 @@
     "translation": "to return home",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "家に帰る。", "en": "I go home." }]
+    "examples": [
+      {
+        "ja": "家に帰る。",
+        "en": "I go home."
+      }
+    ]
   },
   "入る": {
     "reading": "はいる",
@@ -145,7 +220,12 @@
     "translation": "to enter",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "部屋に入る。", "en": "I enter the room." }]
+    "examples": [
+      {
+        "ja": "部屋に入る。",
+        "en": "I enter the room."
+      }
+    ]
   },
   "出る": {
     "reading": "でる",
@@ -153,7 +233,12 @@
     "translation": "to go out, to leave",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "家を出る。", "en": "I leave the house." }]
+    "examples": [
+      {
+        "ja": "家を出る。",
+        "en": "I leave the house."
+      }
+    ]
   },
   "会う": {
     "reading": "あう",
@@ -162,7 +247,12 @@
     "translation": "to meet",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "友達に会う。", "en": "I meet a friend." }]
+    "examples": [
+      {
+        "ja": "友達に会う。",
+        "en": "I meet a friend."
+      }
+    ]
   },
   "作る": {
     "reading": "つくる",
@@ -171,7 +261,12 @@
     "translation": "to make",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "料理を作る。", "en": "I cook a meal." }]
+    "examples": [
+      {
+        "ja": "料理を作る。",
+        "en": "I cook a meal."
+      }
+    ]
   },
   "使う": {
     "reading": "つかう",
@@ -180,7 +275,12 @@
     "translation": "to use",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "パソコンを使う。", "en": "I use a computer." }]
+    "examples": [
+      {
+        "ja": "パソコンを使う。",
+        "en": "I use a computer."
+      }
+    ]
   },
   "立つ": {
     "reading": "たつ",
@@ -189,7 +289,12 @@
     "translation": "to stand",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "ここに立つ。", "en": "I stand here." }]
+    "examples": [
+      {
+        "ja": "ここに立つ。",
+        "en": "I stand here."
+      }
+    ]
   },
   "座る": {
     "reading": "すわる",
@@ -198,7 +303,12 @@
     "translation": "to sit",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "椅子に座る。", "en": "I sit on a chair." }]
+    "examples": [
+      {
+        "ja": "椅子に座る。",
+        "en": "I sit on a chair."
+      }
+    ]
   },
   "寝る": {
     "reading": "ねる",
@@ -206,7 +316,12 @@
     "translation": "to sleep, to go to bed",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "早く寝る。", "en": "I go to bed early." }]
+    "examples": [
+      {
+        "ja": "早く寝る。",
+        "en": "I go to bed early."
+      }
+    ]
   },
   "起きる": {
     "reading": "おきる",
@@ -214,7 +329,12 @@
     "translation": "to wake up",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "朝早く起きる。", "en": "I wake up early in the morning." }]
+    "examples": [
+      {
+        "ja": "朝早く起きる。",
+        "en": "I wake up early in the morning."
+      }
+    ]
   },
   "働く": {
     "reading": "はたらく",
@@ -223,7 +343,12 @@
     "translation": "to work",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "毎日働く。", "en": "I work every day." }]
+    "examples": [
+      {
+        "ja": "毎日働く。",
+        "en": "I work every day."
+      }
+    ]
   },
   "遊ぶ": {
     "reading": "あそぶ",
@@ -232,7 +357,12 @@
     "translation": "to play, to hang out",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "公園で遊ぶ。", "en": "I play in the park." }]
+    "examples": [
+      {
+        "ja": "公園で遊ぶ。",
+        "en": "I play in the park."
+      }
+    ]
   },
   "泳ぐ": {
     "reading": "およぐ",
@@ -241,7 +371,12 @@
     "translation": "to swim",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "プールで泳ぐ。", "en": "I swim in the pool." }]
+    "examples": [
+      {
+        "ja": "プールで泳ぐ。",
+        "en": "I swim in the pool."
+      }
+    ]
   },
   "死ぬ": {
     "reading": "しぬ",
@@ -250,7 +385,12 @@
     "translation": "to die",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "花が死ぬ。", "en": "The flower dies." }]
+    "examples": [
+      {
+        "ja": "花が死ぬ。",
+        "en": "The flower dies."
+      }
+    ]
   },
   "持つ": {
     "reading": "もつ",
@@ -259,7 +399,12 @@
     "translation": "to hold, to have",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "傘を持つ。", "en": "I hold an umbrella." }]
+    "examples": [
+      {
+        "ja": "傘を持つ。",
+        "en": "I hold an umbrella."
+      }
+    ]
   },
   "分かる": {
     "reading": "わかる",
@@ -268,7 +413,12 @@
     "translation": "to understand",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "日本語が分かる。", "en": "I understand Japanese." }]
+    "examples": [
+      {
+        "ja": "日本語が分かる。",
+        "en": "I understand Japanese."
+      }
+    ]
   },
   "教える": {
     "reading": "おしえる",
@@ -276,7 +426,12 @@
     "translation": "to teach, to tell",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "英語を教える。", "en": "I teach English." }]
+    "examples": [
+      {
+        "ja": "英語を教える。",
+        "en": "I teach English."
+      }
+    ]
   },
   "開ける": {
     "reading": "あける",
@@ -284,7 +439,12 @@
     "translation": "to open",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "窓を開ける。", "en": "I open the window." }]
+    "examples": [
+      {
+        "ja": "窓を開ける。",
+        "en": "I open the window."
+      }
+    ]
   },
   "閉める": {
     "reading": "しめる",
@@ -292,7 +452,12 @@
     "translation": "to close",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "ドアを閉める。", "en": "I close the door." }]
+    "examples": [
+      {
+        "ja": "ドアを閉める。",
+        "en": "I close the door."
+      }
+    ]
   },
   "歩く": {
     "reading": "あるく",
@@ -301,7 +466,12 @@
     "translation": "to walk",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "公園を歩く。", "en": "I walk in the park." }]
+    "examples": [
+      {
+        "ja": "公園を歩く。",
+        "en": "I walk in the park."
+      }
+    ]
   },
   "走る": {
     "reading": "はしる",
@@ -310,7 +480,12 @@
     "translation": "to run",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "毎朝走る。", "en": "I run every morning." }]
+    "examples": [
+      {
+        "ja": "毎朝走る。",
+        "en": "I run every morning."
+      }
+    ]
   },
   "乗る": {
     "reading": "のる",
@@ -319,7 +494,12 @@
     "translation": "to ride, to get on",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "電車に乗る。", "en": "I get on the train." }]
+    "examples": [
+      {
+        "ja": "電車に乗る。",
+        "en": "I get on the train."
+      }
+    ]
   },
   "降りる": {
     "reading": "おりる",
@@ -327,7 +507,12 @@
     "translation": "to get off, to descend",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "バスを降りる。", "en": "I get off the bus." }]
+    "examples": [
+      {
+        "ja": "バスを降りる。",
+        "en": "I get off the bus."
+      }
+    ]
   },
   "着る": {
     "reading": "きる",
@@ -335,7 +520,12 @@
     "translation": "to wear (upper body)",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "コートを着る。", "en": "I wear a coat." }]
+    "examples": [
+      {
+        "ja": "コートを着る。",
+        "en": "I wear a coat."
+      }
+    ]
   },
   "脱ぐ": {
     "reading": "ぬぐ",
@@ -344,7 +534,12 @@
     "translation": "to take off (clothes)",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "靴を脱ぐ。", "en": "I take off my shoes." }]
+    "examples": [
+      {
+        "ja": "靴を脱ぐ。",
+        "en": "I take off my shoes."
+      }
+    ]
   },
   "言う": {
     "reading": "いう",
@@ -353,7 +548,12 @@
     "translation": "to say",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "何と言う？", "en": "What do you say?" }]
+    "examples": [
+      {
+        "ja": "何と言う？",
+        "en": "What do you say?"
+      }
+    ]
   },
   "思う": {
     "reading": "おもう",
@@ -362,7 +562,12 @@
     "translation": "to think",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "いい天気だと思う。", "en": "I think it's nice weather." }]
+    "examples": [
+      {
+        "ja": "いい天気だと思う。",
+        "en": "I think it's nice weather."
+      }
+    ]
   },
   "知る": {
     "reading": "しる",
@@ -371,7 +576,12 @@
     "translation": "to know",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "答えを知る。", "en": "I know the answer." }]
+    "examples": [
+      {
+        "ja": "答えを知る。",
+        "en": "I know the answer."
+      }
+    ]
   },
   "住む": {
     "reading": "すむ",
@@ -380,7 +590,12 @@
     "translation": "to live, to reside",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "東京に住む。", "en": "I live in Tokyo." }]
+    "examples": [
+      {
+        "ja": "東京に住む。",
+        "en": "I live in Tokyo."
+      }
+    ]
   },
   "勉強する": {
     "reading": "べんきょうする",
@@ -388,7 +603,12 @@
     "translation": "to study",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "日本語を勉強する。", "en": "I study Japanese." }]
+    "examples": [
+      {
+        "ja": "日本語を勉強する。",
+        "en": "I study Japanese."
+      }
+    ]
   },
   "料理する": {
     "reading": "りょうりする",
@@ -396,7 +616,12 @@
     "translation": "to cook",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "夕食を料理する。", "en": "I cook dinner." }]
+    "examples": [
+      {
+        "ja": "夕食を料理する。",
+        "en": "I cook dinner."
+      }
+    ]
   },
   "洗う": {
     "reading": "あらう",
@@ -405,7 +630,12 @@
     "translation": "to wash",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "手を洗う。", "en": "I wash my hands." }]
+    "examples": [
+      {
+        "ja": "手を洗う。",
+        "en": "I wash my hands."
+      }
+    ]
   },
   "切る": {
     "reading": "きる",
@@ -414,7 +644,12 @@
     "translation": "to cut",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "紙を切る。", "en": "I cut paper." }]
+    "examples": [
+      {
+        "ja": "紙を切る。",
+        "en": "I cut paper."
+      }
+    ]
   },
   "撮る": {
     "reading": "とる",
@@ -423,7 +658,12 @@
     "translation": "to take (a photo)",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "写真を撮る。", "en": "I take a photo." }]
+    "examples": [
+      {
+        "ja": "写真を撮る。",
+        "en": "I take a photo."
+      }
+    ]
   },
   "出す": {
     "reading": "だす",
@@ -432,7 +672,12 @@
     "translation": "to take out, to submit",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "手紙を出す。", "en": "I send a letter." }]
+    "examples": [
+      {
+        "ja": "手紙を出す。",
+        "en": "I send a letter."
+      }
+    ]
   },
   "入れる": {
     "reading": "いれる",
@@ -440,7 +685,12 @@
     "translation": "to put in, to insert",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "砂糖を入れる。", "en": "I put in sugar." }]
+    "examples": [
+      {
+        "ja": "砂糖を入れる。",
+        "en": "I put in sugar."
+      }
+    ]
   },
   "消す": {
     "reading": "けす",
@@ -449,7 +699,12 @@
     "translation": "to turn off, to erase",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "電気を消す。", "en": "I turn off the light." }]
+    "examples": [
+      {
+        "ja": "電気を消す。",
+        "en": "I turn off the light."
+      }
+    ]
   },
   "つける": {
     "reading": "つける",
@@ -457,7 +712,12 @@
     "translation": "to turn on, to attach",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "テレビをつける。", "en": "I turn on the TV." }]
+    "examples": [
+      {
+        "ja": "テレビをつける。",
+        "en": "I turn on the TV."
+      }
+    ]
   },
   "止まる": {
     "reading": "とまる",
@@ -466,7 +726,12 @@
     "translation": "to stop",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "車が止まる。", "en": "The car stops." }]
+    "examples": [
+      {
+        "ja": "車が止まる。",
+        "en": "The car stops."
+      }
+    ]
   },
   "始まる": {
     "reading": "はじまる",
@@ -475,7 +740,12 @@
     "translation": "to begin (intransitive)",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "授業が始まる。", "en": "Class begins." }]
+    "examples": [
+      {
+        "ja": "授業が始まる。",
+        "en": "Class begins."
+      }
+    ]
   },
   "終わる": {
     "reading": "おわる",
@@ -484,7 +754,12 @@
     "translation": "to end",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "仕事が終わる。", "en": "Work ends." }]
+    "examples": [
+      {
+        "ja": "仕事が終わる。",
+        "en": "Work ends."
+      }
+    ]
   },
   "習う": {
     "reading": "ならう",
@@ -493,7 +768,12 @@
     "translation": "to learn",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "ピアノを習う。", "en": "I learn piano." }]
+    "examples": [
+      {
+        "ja": "ピアノを習う。",
+        "en": "I learn piano."
+      }
+    ]
   },
   "出かける": {
     "reading": "でかける",
@@ -501,7 +781,12 @@
     "translation": "to go out",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "友達と出かける。", "en": "I go out with friends." }]
+    "examples": [
+      {
+        "ja": "友達と出かける。",
+        "en": "I go out with friends."
+      }
+    ]
   },
   "かかる": {
     "reading": "かかる",
@@ -510,7 +795,12 @@
     "translation": "to take (time/money)",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "一時間かかる。", "en": "It takes one hour." }]
+    "examples": [
+      {
+        "ja": "一時間かかる。",
+        "en": "It takes one hour."
+      }
+    ]
   },
   "渡る": {
     "reading": "わたる",
@@ -519,7 +809,12 @@
     "translation": "to cross",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "橋を渡る。", "en": "I cross the bridge." }]
+    "examples": [
+      {
+        "ja": "橋を渡る。",
+        "en": "I cross the bridge."
+      }
+    ]
   },
   "曲がる": {
     "reading": "まがる",
@@ -528,7 +823,12 @@
     "translation": "to turn",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "右に曲がる。", "en": "I turn right." }]
+    "examples": [
+      {
+        "ja": "右に曲がる。",
+        "en": "I turn right."
+      }
+    ]
   },
   "吹く": {
     "reading": "ふく",
@@ -537,7 +837,12 @@
     "translation": "to blow",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "風が吹く。", "en": "The wind blows." }]
+    "examples": [
+      {
+        "ja": "風が吹く。",
+        "en": "The wind blows."
+      }
+    ]
   },
   "降る": {
     "reading": "ふる",
@@ -546,7 +851,12 @@
     "translation": "to fall (rain/snow)",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "雨が降る。", "en": "It rains." }]
+    "examples": [
+      {
+        "ja": "雨が降る。",
+        "en": "It rains."
+      }
+    ]
   },
   "咲く": {
     "reading": "さく",
@@ -555,7 +865,12 @@
     "translation": "to bloom",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "桜が咲く。", "en": "Cherry blossoms bloom." }]
+    "examples": [
+      {
+        "ja": "桜が咲く。",
+        "en": "Cherry blossoms bloom."
+      }
+    ]
   },
   "かける": {
     "reading": "かける",
@@ -563,7 +878,12 @@
     "translation": "to make (a phone call)",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "電話をかける。", "en": "I make a phone call." }]
+    "examples": [
+      {
+        "ja": "電話をかける。",
+        "en": "I make a phone call."
+      }
+    ]
   },
   "置く": {
     "reading": "おく",
@@ -572,7 +892,12 @@
     "translation": "to put, to place",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "机の上に置く。", "en": "I put it on the desk." }]
+    "examples": [
+      {
+        "ja": "机の上に置く。",
+        "en": "I put it on the desk."
+      }
+    ]
   },
   "送る": {
     "reading": "おくる",
@@ -581,7 +906,12 @@
     "translation": "to send",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "メールを送る。", "en": "I send an email." }]
+    "examples": [
+      {
+        "ja": "メールを送る。",
+        "en": "I send an email."
+      }
+    ]
   },
   "届ける": {
     "reading": "とどける",
@@ -589,7 +919,12 @@
     "translation": "to deliver",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "荷物を届ける。", "en": "I deliver a package." }]
+    "examples": [
+      {
+        "ja": "荷物を届ける。",
+        "en": "I deliver a package."
+      }
+    ]
   },
   "忘れる": {
     "reading": "わすれる",
@@ -597,7 +932,12 @@
     "translation": "to forget",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "傘を忘れる。", "en": "I forget my umbrella." }]
+    "examples": [
+      {
+        "ja": "傘を忘れる。",
+        "en": "I forget my umbrella."
+      }
+    ]
   },
   "覚える": {
     "reading": "おぼえる",
@@ -605,7 +945,12 @@
     "translation": "to remember, to memorize",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "漢字を覚える。", "en": "I memorize kanji." }]
+    "examples": [
+      {
+        "ja": "漢字を覚える。",
+        "en": "I memorize kanji."
+      }
+    ]
   },
   "答える": {
     "reading": "こたえる",
@@ -613,7 +958,12 @@
     "translation": "to answer",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "質問に答える。", "en": "I answer a question." }]
+    "examples": [
+      {
+        "ja": "質問に答える。",
+        "en": "I answer a question."
+      }
+    ]
   },
   "上げる": {
     "reading": "あげる",
@@ -621,7 +971,12 @@
     "translation": "to give, to raise",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "プレゼントを上げる。", "en": "I give a present." }]
+    "examples": [
+      {
+        "ja": "プレゼントを上げる。",
+        "en": "I give a present."
+      }
+    ]
   },
   "もらう": {
     "reading": "もらう",
@@ -630,7 +985,12 @@
     "translation": "to receive",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "手紙をもらう。", "en": "I receive a letter." }]
+    "examples": [
+      {
+        "ja": "手紙をもらう。",
+        "en": "I receive a letter."
+      }
+    ]
   },
   "貸す": {
     "reading": "かす",
@@ -639,7 +999,12 @@
     "translation": "to lend",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "本を貸す。", "en": "I lend a book." }]
+    "examples": [
+      {
+        "ja": "本を貸す。",
+        "en": "I lend a book."
+      }
+    ]
   },
   "借りる": {
     "reading": "かりる",
@@ -647,7 +1012,12 @@
     "translation": "to borrow",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "本を借りる。", "en": "I borrow a book." }]
+    "examples": [
+      {
+        "ja": "本を借りる。",
+        "en": "I borrow a book."
+      }
+    ]
   },
   "押す": {
     "reading": "おす",
@@ -656,7 +1026,12 @@
     "translation": "to push, to press",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "ボタンを押す。", "en": "I press the button." }]
+    "examples": [
+      {
+        "ja": "ボタンを押す。",
+        "en": "I press the button."
+      }
+    ]
   },
   "引く": {
     "reading": "ひく",
@@ -665,7 +1040,12 @@
     "translation": "to pull, to draw",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "ドアを引く。", "en": "I pull the door." }]
+    "examples": [
+      {
+        "ja": "ドアを引く。",
+        "en": "I pull the door."
+      }
+    ]
   },
   "歌う": {
     "reading": "うたう",
@@ -674,7 +1054,12 @@
     "translation": "to sing",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "歌を歌う。", "en": "I sing a song." }]
+    "examples": [
+      {
+        "ja": "歌を歌う。",
+        "en": "I sing a song."
+      }
+    ]
   },
   "弾く": {
     "reading": "ひく",
@@ -683,7 +1068,12 @@
     "translation": "to play (instrument)",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "ピアノを弾く。", "en": "I play the piano." }]
+    "examples": [
+      {
+        "ja": "ピアノを弾く。",
+        "en": "I play the piano."
+      }
+    ]
   },
   "飛ぶ": {
     "reading": "とぶ",
@@ -692,7 +1082,12 @@
     "translation": "to fly, to jump",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "鳥が飛ぶ。", "en": "The bird flies." }]
+    "examples": [
+      {
+        "ja": "鳥が飛ぶ。",
+        "en": "The bird flies."
+      }
+    ]
   },
   "呼ぶ": {
     "reading": "よぶ",
@@ -701,7 +1096,12 @@
     "translation": "to call",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "名前を呼ぶ。", "en": "I call a name." }]
+    "examples": [
+      {
+        "ja": "名前を呼ぶ。",
+        "en": "I call a name."
+      }
+    ]
   },
   "笑う": {
     "reading": "わらう",
@@ -710,7 +1110,12 @@
     "translation": "to laugh",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "みんなが笑う。", "en": "Everyone laughs." }]
+    "examples": [
+      {
+        "ja": "みんなが笑う。",
+        "en": "Everyone laughs."
+      }
+    ]
   },
   "泣く": {
     "reading": "なく",
@@ -719,7 +1124,12 @@
     "translation": "to cry",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "赤ちゃんが泣く。", "en": "The baby cries." }]
+    "examples": [
+      {
+        "ja": "赤ちゃんが泣く。",
+        "en": "The baby cries."
+      }
+    ]
   },
   "売る": {
     "reading": "うる",
@@ -728,7 +1138,12 @@
     "translation": "to sell",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "車を売る。", "en": "I sell a car." }]
+    "examples": [
+      {
+        "ja": "車を売る。",
+        "en": "I sell a car."
+      }
+    ]
   },
   "払う": {
     "reading": "はらう",
@@ -737,7 +1152,12 @@
     "translation": "to pay",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "お金を払う。", "en": "I pay money." }]
+    "examples": [
+      {
+        "ja": "お金を払う。",
+        "en": "I pay money."
+      }
+    ]
   },
   "運動する": {
     "reading": "うんどうする",
@@ -745,7 +1165,12 @@
     "translation": "to exercise",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "毎日運動する。", "en": "I exercise every day." }]
+    "examples": [
+      {
+        "ja": "毎日運動する。",
+        "en": "I exercise every day."
+      }
+    ]
   },
   "散歩する": {
     "reading": "さんぽする",
@@ -753,7 +1178,12 @@
     "translation": "to take a walk",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "公園を散歩する。", "en": "I take a walk in the park." }]
+    "examples": [
+      {
+        "ja": "公園を散歩する。",
+        "en": "I take a walk in the park."
+      }
+    ]
   },
   "掃除する": {
     "reading": "そうじする",
@@ -761,7 +1191,12 @@
     "translation": "to clean",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "部屋を掃除する。", "en": "I clean the room." }]
+    "examples": [
+      {
+        "ja": "部屋を掃除する。",
+        "en": "I clean the room."
+      }
+    ]
   },
   "洗濯する": {
     "reading": "せんたくする",
@@ -769,7 +1204,12 @@
     "translation": "to do laundry",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "服を洗濯する。", "en": "I do the laundry." }]
+    "examples": [
+      {
+        "ja": "服を洗濯する。",
+        "en": "I do the laundry."
+      }
+    ]
   },
   "電話する": {
     "reading": "でんわする",
@@ -777,7 +1217,12 @@
     "translation": "to make a phone call",
     "jlpt": "N5",
     "transitive": true,
-    "examples": [{ "ja": "友達に電話する。", "en": "I call a friend." }]
+    "examples": [
+      {
+        "ja": "友達に電話する。",
+        "en": "I call a friend."
+      }
+    ]
   },
   "結婚する": {
     "reading": "けっこんする",
@@ -785,6 +1230,2715 @@
     "translation": "to get married",
     "jlpt": "N5",
     "transitive": false,
-    "examples": [{ "ja": "来年結婚する。", "en": "I will get married next year." }]
+    "examples": [
+      {
+        "ja": "来年結婚する。",
+        "en": "I will get married next year."
+      }
+    ]
+  },
+  "届く": {
+    "reading": "とどく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to arrive, to reach",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "荷物が届いた。",
+        "en": "The package arrived."
+      }
+    ]
+  },
+  "決める": {
+    "reading": "きめる",
+    "group": "ichidan",
+    "translation": "to decide",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "旅行の日を決める。",
+        "en": "I decide the travel date."
+      }
+    ]
+  },
+  "変わる": {
+    "reading": "かわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to change (intransitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "天気が変わった。",
+        "en": "The weather changed."
+      }
+    ]
+  },
+  "変える": {
+    "reading": "かえる",
+    "group": "ichidan",
+    "translation": "to change (transitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "計画を変える。",
+        "en": "I change the plan."
+      }
+    ]
+  },
+  "集める": {
+    "reading": "あつめる",
+    "group": "ichidan",
+    "translation": "to collect, to gather",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "切手を集める。",
+        "en": "I collect stamps."
+      }
+    ]
+  },
+  "集まる": {
+    "reading": "あつまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to gather (intransitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "人が集まる。",
+        "en": "People gather."
+      }
+    ]
+  },
+  "落とす": {
+    "reading": "おとす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to drop",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "財布を落とした。",
+        "en": "I dropped my wallet."
+      }
+    ]
+  },
+  "落ちる": {
+    "reading": "おちる",
+    "group": "ichidan",
+    "translation": "to fall",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "葉が落ちる。",
+        "en": "Leaves fall."
+      }
+    ]
+  },
+  "壊す": {
+    "reading": "こわす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to break (transitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "おもちゃを壊す。",
+        "en": "I break the toy."
+      }
+    ]
+  },
+  "壊れる": {
+    "reading": "こわれる",
+    "group": "ichidan",
+    "translation": "to break (intransitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "時計が壊れた。",
+        "en": "The clock broke."
+      }
+    ]
+  },
+  "選ぶ": {
+    "reading": "えらぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to choose",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "好きな色を選ぶ。",
+        "en": "I choose my favorite color."
+      }
+    ]
+  },
+  "運ぶ": {
+    "reading": "はこぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to carry",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "荷物を運ぶ。",
+        "en": "I carry luggage."
+      }
+    ]
+  },
+  "捨てる": {
+    "reading": "すてる",
+    "group": "ichidan",
+    "translation": "to throw away",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "ゴミを捨てる。",
+        "en": "I throw away trash."
+      }
+    ]
+  },
+  "拾う": {
+    "reading": "ひろう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to pick up",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "お金を拾った。",
+        "en": "I picked up money."
+      }
+    ]
+  },
+  "育てる": {
+    "reading": "そだてる",
+    "group": "ichidan",
+    "translation": "to raise, to grow",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "子供を育てる。",
+        "en": "I raise children."
+      }
+    ]
+  },
+  "育つ": {
+    "reading": "そだつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to grow up",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "東京で育った。",
+        "en": "I grew up in Tokyo."
+      }
+    ]
+  },
+  "助ける": {
+    "reading": "たすける",
+    "group": "ichidan",
+    "translation": "to help, to rescue",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "困っている人を助ける。",
+        "en": "I help people in trouble."
+      }
+    ]
+  },
+  "探す": {
+    "reading": "さがす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to search for",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "鍵を探す。",
+        "en": "I search for my keys."
+      }
+    ]
+  },
+  "見つける": {
+    "reading": "みつける",
+    "group": "ichidan",
+    "translation": "to find",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "いい店を見つけた。",
+        "en": "I found a good shop."
+      }
+    ]
+  },
+  "見つかる": {
+    "reading": "みつかる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be found",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "鍵が見つかった。",
+        "en": "The keys were found."
+      }
+    ]
+  },
+  "起こす": {
+    "reading": "おこす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to wake someone up",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "朝、弟を起こす。",
+        "en": "I wake up my brother in the morning."
+      }
+    ]
+  },
+  "直す": {
+    "reading": "なおす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to fix, to correct",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "車を直す。",
+        "en": "I fix the car."
+      }
+    ]
+  },
+  "直る": {
+    "reading": "なおる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be fixed",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "パソコンが直った。",
+        "en": "The computer was fixed."
+      }
+    ]
+  },
+  "間に合う": {
+    "reading": "まにあう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to be in time",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "電車に間に合った。",
+        "en": "I made it in time for the train."
+      }
+    ]
+  },
+  "慣れる": {
+    "reading": "なれる",
+    "group": "ichidan",
+    "translation": "to get used to",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "新しい生活に慣れた。",
+        "en": "I got used to the new life."
+      }
+    ]
+  },
+  "信じる": {
+    "reading": "しんじる",
+    "group": "ichidan",
+    "translation": "to believe",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "友達を信じる。",
+        "en": "I believe in my friend."
+      }
+    ]
+  },
+  "比べる": {
+    "reading": "くらべる",
+    "group": "ichidan",
+    "translation": "to compare",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "値段を比べる。",
+        "en": "I compare prices."
+      }
+    ]
+  },
+  "続ける": {
+    "reading": "つづける",
+    "group": "ichidan",
+    "translation": "to continue (transitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "勉強を続ける。",
+        "en": "I continue studying."
+      }
+    ]
+  },
+  "続く": {
+    "reading": "つづく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to continue (intransitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "雨が続く。",
+        "en": "The rain continues."
+      }
+    ]
+  },
+  "伝える": {
+    "reading": "つたえる",
+    "group": "ichidan",
+    "translation": "to convey, to tell",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "気持ちを伝える。",
+        "en": "I convey my feelings."
+      }
+    ]
+  },
+  "考える": {
+    "reading": "かんがえる",
+    "group": "ichidan",
+    "translation": "to think, to consider",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "将来について考える。",
+        "en": "I think about the future."
+      }
+    ]
+  },
+  "調べる": {
+    "reading": "しらべる",
+    "group": "ichidan",
+    "translation": "to investigate, to look up",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "意味を調べる。",
+        "en": "I look up the meaning."
+      }
+    ]
+  },
+  "足りる": {
+    "reading": "たりる",
+    "group": "ichidan",
+    "translation": "to be enough",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "お金が足りない。",
+        "en": "There isn't enough money."
+      }
+    ]
+  },
+  "見える": {
+    "reading": "みえる",
+    "group": "ichidan",
+    "translation": "to be visible",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "山が見える。",
+        "en": "The mountain is visible."
+      }
+    ]
+  },
+  "聞こえる": {
+    "reading": "きこえる",
+    "group": "ichidan",
+    "translation": "to be audible",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "音楽が聞こえる。",
+        "en": "I can hear music."
+      }
+    ]
+  },
+  "増える": {
+    "reading": "ふえる",
+    "group": "ichidan",
+    "translation": "to increase (intransitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "人口が増える。",
+        "en": "The population increases."
+      }
+    ]
+  },
+  "減る": {
+    "reading": "へる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to decrease (intransitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "体重が減った。",
+        "en": "My weight decreased."
+      }
+    ]
+  },
+  "決まる": {
+    "reading": "きまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be decided",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "日程が決まった。",
+        "en": "The schedule was decided."
+      }
+    ]
+  },
+  "込む": {
+    "reading": "こむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to be crowded",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "電車が込んでいる。",
+        "en": "The train is crowded."
+      }
+    ]
+  },
+  "味わう": {
+    "reading": "あじわう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to taste, to savor",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "日本料理を味わう。",
+        "en": "I savor Japanese cuisine."
+      }
+    ]
+  },
+  "受ける": {
+    "reading": "うける",
+    "group": "ichidan",
+    "translation": "to receive, to take (exam)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "試験を受ける。",
+        "en": "I take an exam."
+      }
+    ]
+  },
+  "通う": {
+    "reading": "かよう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to commute",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "学校に通う。",
+        "en": "I commute to school."
+      }
+    ]
+  },
+  "通る": {
+    "reading": "とおる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to pass through",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この道を通る。",
+        "en": "I pass through this road."
+      }
+    ]
+  },
+  "向かう": {
+    "reading": "むかう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to head toward",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "駅に向かう。",
+        "en": "I head toward the station."
+      }
+    ]
+  },
+  "触る": {
+    "reading": "さわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to touch",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "触らないでください。",
+        "en": "Please don't touch."
+      }
+    ]
+  },
+  "急ぐ": {
+    "reading": "いそぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to hurry",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "急がないと遅れる。",
+        "en": "If I don't hurry, I'll be late."
+      }
+    ]
+  },
+  "並ぶ": {
+    "reading": "ならぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to line up",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "列に並ぶ。",
+        "en": "I stand in line."
+      }
+    ]
+  },
+  "並べる": {
+    "reading": "ならべる",
+    "group": "ichidan",
+    "translation": "to line up (transitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "本を並べる。",
+        "en": "I line up books."
+      }
+    ]
+  },
+  "注意する": {
+    "reading": "ちゅういする",
+    "group": "irregular",
+    "translation": "to be careful, to warn",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "車に注意する。",
+        "en": "I watch out for cars."
+      }
+    ]
+  },
+  "準備する": {
+    "reading": "じゅんびする",
+    "group": "irregular",
+    "translation": "to prepare",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "旅行の準備をする。",
+        "en": "I prepare for the trip."
+      }
+    ]
+  },
+  "紹介する": {
+    "reading": "しょうかいする",
+    "group": "irregular",
+    "translation": "to introduce",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "友達を紹介する。",
+        "en": "I introduce a friend."
+      }
+    ]
+  },
+  "説明する": {
+    "reading": "せつめいする",
+    "group": "irregular",
+    "translation": "to explain",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "ルールを説明する。",
+        "en": "I explain the rules."
+      }
+    ]
+  },
+  "予約する": {
+    "reading": "よやくする",
+    "group": "irregular",
+    "translation": "to reserve",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "ホテルを予約する。",
+        "en": "I reserve a hotel."
+      }
+    ]
+  },
+  "卒業する": {
+    "reading": "そつぎょうする",
+    "group": "irregular",
+    "translation": "to graduate",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "大学を卒業する。",
+        "en": "I graduate from university."
+      }
+    ]
+  },
+  "翻訳する": {
+    "reading": "ほんやくする",
+    "group": "irregular",
+    "translation": "to translate",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "英語に翻訳する。",
+        "en": "I translate into English."
+      }
+    ]
+  },
+  "故障する": {
+    "reading": "こしょうする",
+    "group": "irregular",
+    "translation": "to break down",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "エレベーターが故障した。",
+        "en": "The elevator broke down."
+      }
+    ]
+  },
+  "出発する": {
+    "reading": "しゅっぱつする",
+    "group": "irregular",
+    "translation": "to depart",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "朝早く出発する。",
+        "en": "I depart early in the morning."
+      }
+    ]
+  },
+  "到着する": {
+    "reading": "とうちゃくする",
+    "group": "irregular",
+    "translation": "to arrive",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "空港に到着した。",
+        "en": "I arrived at the airport."
+      }
+    ]
+  },
+  "安心する": {
+    "reading": "あんしんする",
+    "group": "irregular",
+    "translation": "to feel relieved",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "結果を聞いて安心した。",
+        "en": "I felt relieved after hearing the result."
+      }
+    ]
+  },
+  "心配する": {
+    "reading": "しんぱいする",
+    "group": "irregular",
+    "translation": "to worry",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "試験のことを心配する。",
+        "en": "I worry about the exam."
+      }
+    ]
+  },
+  "賛成する": {
+    "reading": "さんせいする",
+    "group": "irregular",
+    "translation": "to agree",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "その意見に賛成する。",
+        "en": "I agree with that opinion."
+      }
+    ]
+  },
+  "反対する": {
+    "reading": "はんたいする",
+    "group": "irregular",
+    "translation": "to oppose",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "その計画に反対する。",
+        "en": "I oppose that plan."
+      }
+    ]
+  },
+  "参加する": {
+    "reading": "さんかする",
+    "group": "irregular",
+    "translation": "to participate",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "パーティーに参加する。",
+        "en": "I participate in the party."
+      }
+    ]
+  },
+  "経験する": {
+    "reading": "けいけんする",
+    "group": "irregular",
+    "translation": "to experience",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "いろいろなことを経験する。",
+        "en": "I experience various things."
+      }
+    ]
+  },
+  "努力する": {
+    "reading": "どりょくする",
+    "group": "irregular",
+    "translation": "to make an effort",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "毎日努力する。",
+        "en": "I make an effort every day."
+      }
+    ]
+  },
+  "約束する": {
+    "reading": "やくそくする",
+    "group": "irregular",
+    "translation": "to promise",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "友達と約束した。",
+        "en": "I made a promise with a friend."
+      }
+    ]
+  },
+  "連絡する": {
+    "reading": "れんらくする",
+    "group": "irregular",
+    "translation": "to contact",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "後で連絡する。",
+        "en": "I'll contact you later."
+      }
+    ]
+  },
+  "生活する": {
+    "reading": "せいかつする",
+    "group": "irregular",
+    "translation": "to live (daily life)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "一人で生活する。",
+        "en": "I live alone."
+      }
+    ]
+  },
+  "引っ越す": {
+    "reading": "ひっこす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to move (house)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "来月引っ越す。",
+        "en": "I'm moving next month."
+      }
+    ]
+  },
+  "片付ける": {
+    "reading": "かたづける",
+    "group": "ichidan",
+    "translation": "to tidy up",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "部屋を片付ける。",
+        "en": "I tidy up the room."
+      }
+    ]
+  },
+  "怒る": {
+    "reading": "おこる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to get angry",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "先生が怒った。",
+        "en": "The teacher got angry."
+      }
+    ]
+  },
+  "謝る": {
+    "reading": "あやまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to apologize",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "遅れて謝る。",
+        "en": "I apologize for being late."
+      }
+    ]
+  },
+  "褒める": {
+    "reading": "ほめる",
+    "group": "ichidan",
+    "translation": "to praise",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "子供を褒める。",
+        "en": "I praise the child."
+      }
+    ]
+  },
+  "叱る": {
+    "reading": "しかる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to scold",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "子供を叱る。",
+        "en": "I scold the child."
+      }
+    ]
+  },
+  "喜ぶ": {
+    "reading": "よろこぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to be glad",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "プレゼントを喜ぶ。",
+        "en": "I'm glad about the present."
+      }
+    ]
+  },
+  "悲しむ": {
+    "reading": "かなしむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to be sad",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "別れを悲しむ。",
+        "en": "I'm sad about the parting."
+      }
+    ]
+  },
+  "驚く": {
+    "reading": "おどろく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to be surprised",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "結果に驚いた。",
+        "en": "I was surprised by the result."
+      }
+    ]
+  },
+  "迷う": {
+    "reading": "まよう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to be lost, to hesitate",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "道に迷った。",
+        "en": "I got lost."
+      }
+    ]
+  },
+  "困る": {
+    "reading": "こまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be troubled",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "お金がなくて困る。",
+        "en": "I'm troubled because I have no money."
+      }
+    ]
+  },
+  "太る": {
+    "reading": "ふとる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to gain weight",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "最近太った。",
+        "en": "I gained weight recently."
+      }
+    ]
+  },
+  "痩せる": {
+    "reading": "やせる",
+    "group": "ichidan",
+    "translation": "to lose weight",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "五キロ痩せた。",
+        "en": "I lost five kilos."
+      }
+    ]
+  },
+  "治る": {
+    "reading": "なおる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to heal, to recover",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "風邪が治った。",
+        "en": "My cold healed."
+      }
+    ]
+  },
+  "治す": {
+    "reading": "なおす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to cure, to heal",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "病気を治す。",
+        "en": "I cure the illness."
+      }
+    ]
+  },
+  "光る": {
+    "reading": "ひかる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to shine",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "星が光る。",
+        "en": "Stars shine."
+      }
+    ]
+  },
+  "濡れる": {
+    "reading": "ぬれる",
+    "group": "ichidan",
+    "translation": "to get wet",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "雨で濡れた。",
+        "en": "I got wet from the rain."
+      }
+    ]
+  },
+  "乾く": {
+    "reading": "かわく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to dry",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "洗濯物が乾いた。",
+        "en": "The laundry dried."
+      }
+    ]
+  },
+  "沸かす": {
+    "reading": "わかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to boil (transitive)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "お湯を沸かす。",
+        "en": "I boil water."
+      }
+    ]
+  },
+  "焼く": {
+    "reading": "やく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to grill, to bake",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "パンを焼く。",
+        "en": "I bake bread."
+      }
+    ]
+  },
+  "冷やす": {
+    "reading": "ひやす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to cool",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "ビールを冷やす。",
+        "en": "I chill the beer."
+      }
+    ]
+  },
+  "温める": {
+    "reading": "あたためる",
+    "group": "ichidan",
+    "translation": "to warm up",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "スープを温める。",
+        "en": "I warm up the soup."
+      }
+    ]
+  },
+  "包む": {
+    "reading": "つつむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to wrap",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "プレゼントを包む。",
+        "en": "I wrap a present."
+      }
+    ]
+  },
+  "混ぜる": {
+    "reading": "まぜる",
+    "group": "ichidan",
+    "translation": "to mix",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "材料を混ぜる。",
+        "en": "I mix the ingredients."
+      }
+    ]
+  },
+  "数える": {
+    "reading": "かぞえる",
+    "group": "ichidan",
+    "translation": "to count",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "お金を数える。",
+        "en": "I count the money."
+      }
+    ]
+  },
+  "植える": {
+    "reading": "うえる",
+    "group": "ichidan",
+    "translation": "to plant",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "花を植える。",
+        "en": "I plant flowers."
+      }
+    ]
+  },
+  "祈る": {
+    "reading": "いのる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to pray",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "平和を祈る。",
+        "en": "I pray for peace."
+      }
+    ]
+  },
+  "願う": {
+    "reading": "ねがう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to wish",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "成功を願う。",
+        "en": "I wish for success."
+      }
+    ]
+  },
+  "与える": {
+    "reading": "あたえる",
+    "group": "ichidan",
+    "translation": "to give, to provide",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "チャンスを与える。",
+        "en": "I give a chance."
+      }
+    ]
+  },
+  "得る": {
+    "reading": "える",
+    "group": "ichidan",
+    "translation": "to obtain, to gain",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "知識を得る。",
+        "en": "I gain knowledge."
+      }
+    ]
+  },
+  "求める": {
+    "reading": "もとめる",
+    "group": "ichidan",
+    "translation": "to seek, to request",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "助けを求める。",
+        "en": "I seek help."
+      }
+    ]
+  },
+  "認める": {
+    "reading": "みとめる",
+    "group": "ichidan",
+    "translation": "to recognize, to admit",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "間違いを認める。",
+        "en": "I admit my mistake."
+      }
+    ]
+  },
+  "含む": {
+    "reading": "ふくむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to include, to contain",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "税金を含む。",
+        "en": "It includes tax."
+      }
+    ]
+  },
+  "示す": {
+    "reading": "しめす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to show, to indicate",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "方向を示す。",
+        "en": "I indicate the direction."
+      }
+    ]
+  },
+  "述べる": {
+    "reading": "のべる",
+    "group": "ichidan",
+    "translation": "to state, to express",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "意見を述べる。",
+        "en": "I state my opinion."
+      }
+    ]
+  },
+  "防ぐ": {
+    "reading": "ふせぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to prevent, to defend",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "事故を防ぐ。",
+        "en": "I prevent accidents."
+      }
+    ]
+  },
+  "支える": {
+    "reading": "ささえる",
+    "group": "ichidan",
+    "translation": "to support",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "家族を支える。",
+        "en": "I support my family."
+      }
+    ]
+  },
+  "保つ": {
+    "reading": "たもつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to maintain, to keep",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "健康を保つ。",
+        "en": "I maintain my health."
+      }
+    ]
+  },
+  "果たす": {
+    "reading": "はたす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to fulfill, to accomplish",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "役割を果たす。",
+        "en": "I fulfill my role."
+      }
+    ]
+  },
+  "占める": {
+    "reading": "しめる",
+    "group": "ichidan",
+    "translation": "to occupy, to account for",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "半分を占める。",
+        "en": "It accounts for half."
+      }
+    ]
+  },
+  "抱える": {
+    "reading": "かかえる",
+    "group": "ichidan",
+    "translation": "to hold, to carry (problem)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "問題を抱える。",
+        "en": "I have a problem."
+      }
+    ]
+  },
+  "逃げる": {
+    "reading": "にげる",
+    "group": "ichidan",
+    "translation": "to escape, to run away",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "危険から逃げる。",
+        "en": "I escape from danger."
+      }
+    ]
+  },
+  "追う": {
+    "reading": "おう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to chase, to pursue",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "夢を追う。",
+        "en": "I pursue my dream."
+      }
+    ]
+  },
+  "捕まえる": {
+    "reading": "つかまえる",
+    "group": "ichidan",
+    "translation": "to catch, to capture",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "犯人を捕まえる。",
+        "en": "I catch the criminal."
+      }
+    ]
+  },
+  "叫ぶ": {
+    "reading": "さけぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to shout, to scream",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "助けを叫ぶ。",
+        "en": "I shout for help."
+      }
+    ]
+  },
+  "震える": {
+    "reading": "ふるえる",
+    "group": "ichidan",
+    "translation": "to tremble, to shiver",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "寒さで震える。",
+        "en": "I shiver from the cold."
+      }
+    ]
+  },
+  "眠る": {
+    "reading": "ねむる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to sleep, to fall asleep",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "ぐっすり眠る。",
+        "en": "I sleep soundly."
+      }
+    ]
+  },
+  "疲れる": {
+    "reading": "つかれる",
+    "group": "ichidan",
+    "translation": "to get tired",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "仕事で疲れた。",
+        "en": "I got tired from work."
+      }
+    ]
+  },
+  "戦う": {
+    "reading": "たたかう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to fight, to battle",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "敵と戦う。",
+        "en": "I fight the enemy."
+      }
+    ]
+  },
+  "守る": {
+    "reading": "まもる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to protect, to obey",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "約束を守る。",
+        "en": "I keep a promise."
+      }
+    ]
+  },
+  "攻める": {
+    "reading": "せめる",
+    "group": "ichidan",
+    "translation": "to attack",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "城を攻める。",
+        "en": "I attack the castle."
+      }
+    ]
+  },
+  "勝つ": {
+    "reading": "かつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to win",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "試合に勝った。",
+        "en": "I won the match."
+      }
+    ]
+  },
+  "負ける": {
+    "reading": "まける",
+    "group": "ichidan",
+    "translation": "to lose",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "試合に負けた。",
+        "en": "I lost the match."
+      }
+    ]
+  },
+  "倒す": {
+    "reading": "たおす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to knock down, to defeat",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "相手を倒す。",
+        "en": "I defeat the opponent."
+      }
+    ]
+  },
+  "倒れる": {
+    "reading": "たおれる",
+    "group": "ichidan",
+    "translation": "to collapse, to fall down",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "木が倒れた。",
+        "en": "The tree fell down."
+      }
+    ]
+  },
+  "結ぶ": {
+    "reading": "むすぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to tie, to connect",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "靴紐を結ぶ。",
+        "en": "I tie my shoelaces."
+      }
+    ]
+  },
+  "解く": {
+    "reading": "とく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to solve, to untie",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "問題を解く。",
+        "en": "I solve the problem."
+      }
+    ]
+  },
+  "測る": {
+    "reading": "はかる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to measure",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "体温を測る。",
+        "en": "I take my temperature."
+      }
+    ]
+  },
+  "試す": {
+    "reading": "ためす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to try, to test",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "新しい方法を試す。",
+        "en": "I try a new method."
+      }
+    ]
+  },
+  "挑む": {
+    "reading": "いどむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to challenge",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "難しい問題に挑む。",
+        "en": "I challenge a difficult problem."
+      }
+    ]
+  },
+  "頼む": {
+    "reading": "たのむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to request, to ask",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "仕事を頼む。",
+        "en": "I ask someone to do work."
+      }
+    ]
+  },
+  "頼る": {
+    "reading": "たよる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to rely on",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "友達に頼る。",
+        "en": "I rely on my friend."
+      }
+    ]
+  },
+  "断る": {
+    "reading": "ことわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to refuse, to decline",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "誘いを断る。",
+        "en": "I decline the invitation."
+      }
+    ]
+  },
+  "許す": {
+    "reading": "ゆるす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to forgive, to allow",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "失敗を許す。",
+        "en": "I forgive the mistake."
+      }
+    ]
+  },
+  "叩く": {
+    "reading": "たたく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to hit, to knock",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "ドアを叩く。",
+        "en": "I knock on the door."
+      }
+    ]
+  },
+  "掴む": {
+    "reading": "つかむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to grab, to seize",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "チャンスを掴む。",
+        "en": "I seize the opportunity."
+      }
+    ]
+  },
+  "投げる": {
+    "reading": "なげる",
+    "group": "ichidan",
+    "translation": "to throw",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "ボールを投げる。",
+        "en": "I throw the ball."
+      }
+    ]
+  },
+  "刺す": {
+    "reading": "さす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to stab, to sting",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "蚊に刺された。",
+        "en": "I was stung by a mosquito."
+      }
+    ]
+  },
+  "揺れる": {
+    "reading": "ゆれる",
+    "group": "ichidan",
+    "translation": "to shake, to sway",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "地震で揺れた。",
+        "en": "It shook from the earthquake."
+      }
+    ]
+  },
+  "沈む": {
+    "reading": "しずむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to sink",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "太陽が沈む。",
+        "en": "The sun sinks."
+      }
+    ]
+  },
+  "浮かぶ": {
+    "reading": "うかぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to float, to come to mind",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "いいアイデアが浮かぶ。",
+        "en": "A good idea comes to mind."
+      }
+    ]
+  },
+  "響く": {
+    "reading": "ひびく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to echo, to resound",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "音が響く。",
+        "en": "The sound echoes."
+      }
+    ]
+  },
+  "輝く": {
+    "reading": "かがやく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to shine, to sparkle",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "星が輝く。",
+        "en": "The stars sparkle."
+      }
+    ]
+  },
+  "溶ける": {
+    "reading": "とける",
+    "group": "ichidan",
+    "translation": "to melt, to dissolve",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "氷が溶ける。",
+        "en": "The ice melts."
+      }
+    ]
+  },
+  "凍る": {
+    "reading": "こおる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to freeze",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "水が凍る。",
+        "en": "The water freezes."
+      }
+    ]
+  },
+  "枯れる": {
+    "reading": "かれる",
+    "group": "ichidan",
+    "translation": "to wither",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "花が枯れた。",
+        "en": "The flower withered."
+      }
+    ]
+  },
+  "腐る": {
+    "reading": "くさる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to rot, to go bad",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "食べ物が腐った。",
+        "en": "The food went bad."
+      }
+    ]
+  },
+  "匂う": {
+    "reading": "におう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to smell",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "花が匂う。",
+        "en": "The flowers smell nice."
+      }
+    ]
+  },
+  "移動する": {
+    "reading": "いどうする",
+    "group": "irregular",
+    "translation": "to move, to transfer",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "バスで移動する。",
+        "en": "I move by bus."
+      }
+    ]
+  },
+  "発表する": {
+    "reading": "はっぴょうする",
+    "group": "irregular",
+    "translation": "to announce, to present",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "結果を発表する。",
+        "en": "I announce the results."
+      }
+    ]
+  },
+  "成功する": {
+    "reading": "せいこうする",
+    "group": "irregular",
+    "translation": "to succeed",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "計画が成功した。",
+        "en": "The plan succeeded."
+      }
+    ]
+  },
+  "失敗する": {
+    "reading": "しっぱいする",
+    "group": "irregular",
+    "translation": "to fail",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "試験に失敗した。",
+        "en": "I failed the exam."
+      }
+    ]
+  },
+  "完成する": {
+    "reading": "かんせいする",
+    "group": "irregular",
+    "translation": "to complete",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "作品が完成した。",
+        "en": "The work was completed."
+      }
+    ]
+  },
+  "利用する": {
+    "reading": "りようする",
+    "group": "irregular",
+    "translation": "to use, to utilize",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "サービスを利用する。",
+        "en": "I use the service."
+      }
+    ]
+  },
+  "影響する": {
+    "reading": "えいきょうする",
+    "group": "irregular",
+    "translation": "to influence",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "環境に影響する。",
+        "en": "It affects the environment."
+      }
+    ]
+  },
+  "存在する": {
+    "reading": "そんざいする",
+    "group": "irregular",
+    "translation": "to exist",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "可能性が存在する。",
+        "en": "The possibility exists."
+      }
+    ]
+  },
+  "活動する": {
+    "reading": "かつどうする",
+    "group": "irregular",
+    "translation": "to be active",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "ボランティアとして活動する。",
+        "en": "I'm active as a volunteer."
+      }
+    ]
+  },
+  "研究する": {
+    "reading": "けんきゅうする",
+    "group": "irregular",
+    "translation": "to research",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "歴史を研究する。",
+        "en": "I research history."
+      }
+    ]
+  },
+  "抑える": {
+    "reading": "おさえる",
+    "group": "ichidan",
+    "translation": "to suppress, to restrain",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "感情を抑える。",
+        "en": "I suppress my emotions."
+      }
+    ]
+  },
+  "覆う": {
+    "reading": "おおう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to cover",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "雪が地面を覆う。",
+        "en": "Snow covers the ground."
+      }
+    ]
+  },
+  "抱く": {
+    "reading": "いだく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to hold, to embrace",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "希望を抱く。",
+        "en": "I hold onto hope."
+      }
+    ]
+  },
+  "築く": {
+    "reading": "きずく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to build, to construct",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "信頼を築く。",
+        "en": "I build trust."
+      }
+    ]
+  },
+  "導く": {
+    "reading": "みちびく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to guide, to lead",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "人々を導く。",
+        "en": "I guide people."
+      }
+    ]
+  },
+  "退く": {
+    "reading": "しりぞく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to withdraw, to retreat",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "戦場から退く。",
+        "en": "I retreat from the battlefield."
+      }
+    ]
+  },
+  "潜む": {
+    "reading": "ひそむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to lurk, to be hidden",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "危険が潜む。",
+        "en": "Danger lurks."
+      }
+    ]
+  },
+  "悟る": {
+    "reading": "さとる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to realize, to perceive",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "真実を悟る。",
+        "en": "I realize the truth."
+      }
+    ]
+  },
+  "誓う": {
+    "reading": "ちかう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to swear, to vow",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "永遠の愛を誓う。",
+        "en": "I vow eternal love."
+      }
+    ]
+  },
+  "恐れる": {
+    "reading": "おそれる",
+    "group": "ichidan",
+    "translation": "to fear",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "失敗を恐れる。",
+        "en": "I fear failure."
+      }
+    ]
+  },
+  "憎む": {
+    "reading": "にくむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to hate",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "暴力を憎む。",
+        "en": "I hate violence."
+      }
+    ]
+  },
+  "惹かれる": {
+    "reading": "ひかれる",
+    "group": "ichidan",
+    "translation": "to be attracted to",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼女に惹かれる。",
+        "en": "I'm attracted to her."
+      }
+    ]
+  },
+  "裏切る": {
+    "reading": "うらぎる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to betray",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "友達を裏切る。",
+        "en": "I betray a friend."
+      }
+    ]
+  },
+  "悩む": {
+    "reading": "なやむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to worry, to be troubled",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "進路に悩む。",
+        "en": "I worry about my career path."
+      }
+    ]
+  },
+  "耐える": {
+    "reading": "たえる",
+    "group": "ichidan",
+    "translation": "to endure",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "痛みに耐える。",
+        "en": "I endure the pain."
+      }
+    ]
+  },
+  "溢れる": {
+    "reading": "あふれる",
+    "group": "ichidan",
+    "translation": "to overflow",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "涙が溢れる。",
+        "en": "Tears overflow."
+      }
+    ]
+  },
+  "蓄える": {
+    "reading": "たくわえる",
+    "group": "ichidan",
+    "translation": "to store, to save up",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "食料を蓄える。",
+        "en": "I store food."
+      }
+    ]
+  },
+  "率いる": {
+    "reading": "ひきいる",
+    "group": "ichidan",
+    "translation": "to lead, to command",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "チームを率いる。",
+        "en": "I lead the team."
+      }
+    ]
+  },
+  "挟む": {
+    "reading": "はさむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to insert, to sandwich",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "本にしおりを挟む。",
+        "en": "I insert a bookmark in the book."
+      }
+    ]
+  },
+  "覗く": {
+    "reading": "のぞく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to peek",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "窓から覗く。",
+        "en": "I peek through the window."
+      }
+    ]
+  },
+  "握る": {
+    "reading": "にぎる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to grip, to grasp",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "手を握る。",
+        "en": "I grasp a hand."
+      }
+    ]
+  },
+  "潰す": {
+    "reading": "つぶす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to crush, to kill (time)",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "時間を潰す。",
+        "en": "I kill time."
+      }
+    ]
+  },
+  "飾る": {
+    "reading": "かざる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to decorate",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "部屋を飾る。",
+        "en": "I decorate the room."
+      }
+    ]
+  },
+  "磨く": {
+    "reading": "みがく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to polish, to brush",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "歯を磨く。",
+        "en": "I brush my teeth."
+      }
+    ]
+  },
+  "縮む": {
+    "reading": "ちぢむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to shrink",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "服が縮んだ。",
+        "en": "The clothes shrank."
+      }
+    ]
+  },
+  "膨らむ": {
+    "reading": "ふくらむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to swell, to expand",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "風船が膨らむ。",
+        "en": "The balloon inflates."
+      }
+    ]
+  },
+  "染める": {
+    "reading": "そめる",
+    "group": "ichidan",
+    "translation": "to dye",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "髪を染める。",
+        "en": "I dye my hair."
+      }
+    ]
+  },
+  "干す": {
+    "reading": "ほす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to dry (clothes/laundry)",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "洗濯物を干す。",
+        "en": "I hang out the laundry."
+      }
+    ]
+  },
+  "縫う": {
+    "reading": "ぬう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to sew",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "ボタンを縫う。",
+        "en": "I sew a button."
+      }
+    ]
+  },
+  "刻む": {
+    "reading": "きざむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to chop, to carve",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "野菜を刻む。",
+        "en": "I chop vegetables."
+      }
+    ]
+  },
+  "削る": {
+    "reading": "けずる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to shave, to scrape",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "鉛筆を削る。",
+        "en": "I sharpen a pencil."
+      }
+    ]
+  },
+  "注ぐ": {
+    "reading": "そそぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to pour",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "お茶を注ぐ。",
+        "en": "I pour tea."
+      }
+    ]
+  },
+  "漏れる": {
+    "reading": "もれる",
+    "group": "ichidan",
+    "translation": "to leak",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "水が漏れる。",
+        "en": "Water leaks."
+      }
+    ]
+  },
+  "滑る": {
+    "reading": "すべる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to slip, to slide",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "氷の上で滑る。",
+        "en": "I slip on ice."
+      }
+    ]
+  },
+  "転ぶ": {
+    "reading": "ころぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to fall over, to tumble",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "走って転んだ。",
+        "en": "I fell while running."
+      }
+    ]
+  },
+  "把握する": {
+    "reading": "はあくする",
+    "group": "irregular",
+    "translation": "to grasp, to comprehend",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "状況を把握する。",
+        "en": "I grasp the situation."
+      }
+    ]
+  },
+  "達成する": {
+    "reading": "たっせいする",
+    "group": "irregular",
+    "translation": "to achieve",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "目標を達成する。",
+        "en": "I achieve my goal."
+      }
+    ]
+  },
+  "維持する": {
+    "reading": "いじする",
+    "group": "irregular",
+    "translation": "to maintain",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "平和を維持する。",
+        "en": "I maintain peace."
+      }
+    ]
+  },
+  "発展する": {
+    "reading": "はってんする",
+    "group": "irregular",
+    "translation": "to develop, to grow",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "経済が発展する。",
+        "en": "The economy develops."
+      }
+    ]
+  },
+  "実現する": {
+    "reading": "じつげんする",
+    "group": "irregular",
+    "translation": "to realize, to materialize",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "夢を実現する。",
+        "en": "I realize my dream."
+      }
+    ]
+  },
+  "対応する": {
+    "reading": "たいおうする",
+    "group": "irregular",
+    "translation": "to correspond, to deal with",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "問題に対応する。",
+        "en": "I deal with the problem."
+      }
+    ]
+  },
+  "挑戦する": {
+    "reading": "ちょうせんする",
+    "group": "irregular",
+    "translation": "to challenge",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "新しいことに挑戦する。",
+        "en": "I challenge myself with something new."
+      }
+    ]
+  },
+  "貢献する": {
+    "reading": "こうけんする",
+    "group": "irregular",
+    "translation": "to contribute",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "社会に貢献する。",
+        "en": "I contribute to society."
+      }
+    ]
+  },
+  "交渉する": {
+    "reading": "こうしょうする",
+    "group": "irregular",
+    "translation": "to negotiate",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "条件を交渉する。",
+        "en": "I negotiate terms."
+      }
+    ]
+  },
+  "主張する": {
+    "reading": "しゅちょうする",
+    "group": "irregular",
+    "translation": "to assert, to claim",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "自分の意見を主張する。",
+        "en": "I assert my opinion."
+      }
+    ]
+  },
+  "滅びる": {
+    "reading": "ほろびる",
+    "group": "ichidan",
+    "translation": "to perish, to be ruined",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "文明が滅びる。",
+        "en": "Civilization perishes."
+      }
+    ]
+  },
+  "潤う": {
+    "reading": "うるおう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to be moistened, to profit",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "肌が潤う。",
+        "en": "The skin is moistened."
+      }
+    ]
+  },
+  "諭す": {
+    "reading": "さとす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to admonish, to persuade",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "子供を諭す。",
+        "en": "I admonish the child."
+      }
+    ]
+  },
+  "嘆く": {
+    "reading": "なげく",
+    "group": "godan",
+    "godanRow": "ku",
+    "translation": "to lament, to grieve",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "運命を嘆く。",
+        "en": "I lament my fate."
+      }
+    ]
+  },
+  "蔑む": {
+    "reading": "さげすむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to despise, to scorn",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "弱い者を蔑む。",
+        "en": "I scorn the weak."
+      }
+    ]
+  },
+  "慈しむ": {
+    "reading": "いつくしむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to love, to cherish",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "自然を慈しむ。",
+        "en": "I cherish nature."
+      }
+    ]
+  },
+  "培う": {
+    "reading": "つちかう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to cultivate, to foster",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "能力を培う。",
+        "en": "I cultivate my abilities."
+      }
+    ]
+  },
+  "廃れる": {
+    "reading": "すたれる",
+    "group": "ichidan",
+    "translation": "to fall into disuse",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "古い習慣が廃れる。",
+        "en": "Old customs fall into disuse."
+      }
+    ]
+  },
+  "栄える": {
+    "reading": "さかえる",
+    "group": "ichidan",
+    "translation": "to prosper, to flourish",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "国が栄える。",
+        "en": "The nation prospers."
+      }
+    ]
+  },
+  "募る": {
+    "reading": "つのる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to recruit, to grow intense",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "不安が募る。",
+        "en": "Anxiety grows."
+      }
+    ]
+  },
+  "遂げる": {
+    "reading": "とげる",
+    "group": "ichidan",
+    "translation": "to accomplish",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "目的を遂げる。",
+        "en": "I accomplish my purpose."
+      }
+    ]
+  },
+  "企てる": {
+    "reading": "くわだてる",
+    "group": "ichidan",
+    "translation": "to plan, to scheme",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "脱出を企てる。",
+        "en": "I plan an escape."
+      }
+    ]
+  },
+  "覆す": {
+    "reading": "くつがえす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to overturn",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "判決を覆す。",
+        "en": "I overturn the verdict."
+      }
+    ]
+  },
+  "翻す": {
+    "reading": "ひるがえす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to wave, to reverse",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "旗を翻す。",
+        "en": "I wave a flag."
+      }
+    ]
+  },
+  "崇める": {
+    "reading": "あがめる",
+    "group": "ichidan",
+    "translation": "to worship, to revere",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "神を崇める。",
+        "en": "I worship God."
+      }
+    ]
   }
 }
