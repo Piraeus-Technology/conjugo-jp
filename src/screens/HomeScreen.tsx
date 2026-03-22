@@ -6,8 +6,12 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Animated,
+  ScrollView,
 } from 'react-native';
+import { Swipeable } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import Fuse from 'fuse.js';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -15,6 +19,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import verbs from '../data/verbs.json';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useHistoryStore } from '../store/historyStore';
+import { useFavoritesStore } from '../store/favoritesStore';
 import { romajiToHiragana } from '../utils/kana';
 import type { RootStackParamList } from '../types/navigation';
 import type { VerbData, VerbGroup } from '../utils/conjugate';
@@ -57,10 +62,12 @@ export default function HomeScreen() {
   const colors = useColors();
   const navigation = useNavigation<NavProp>();
   const { history, loadHistory, addToHistory, removeFromHistory } = useHistoryStore();
+  const { favorites, loadFavorites, toggleFavorite } = useFavoritesStore();
   const [query, setQuery] = useState('');
 
   useEffect(() => {
     loadHistory();
+    loadFavorites();
   }, []);
 
   const results = useMemo(() => {
@@ -95,6 +102,24 @@ export default function HomeScreen() {
     irregular: { bg: colors.irregularTag, text: colors.irregularTagText },
   };
 
+  const renderDeleteAction = (
+    _progress: Animated.AnimatedInterpolation<number>,
+    dragX: Animated.AnimatedInterpolation<number>,
+  ) => {
+    const scale = dragX.interpolate({
+      inputRange: [-80, 0],
+      outputRange: [1, 0.5],
+      extrapolate: 'clamp',
+    });
+    return (
+      <View style={styles.deleteAction}>
+        <Animated.View style={{ transform: [{ scale }] }}>
+          <Ionicons name="trash-outline" size={20} color="#fff" />
+        </Animated.View>
+      </View>
+    );
+  };
+
   const renderVerbItem = ({ item }: { item: typeof searchData[0] }) => {
     const tagColor = groupTagColors[item.group as VerbGroup];
     return (
@@ -123,6 +148,48 @@ export default function HomeScreen() {
           </View>
         </View>
       </TouchableOpacity>
+    );
+  };
+
+  const renderSwipeableRow = (verb: string, type: 'favorite' | 'history') => {
+    const data = (verbs as Record<string, VerbData>)[verb];
+    if (!data) return null;
+
+    const handleSwipeDelete = () => {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      if (type === 'favorite') {
+        toggleFavorite(verb);
+      } else {
+        removeFromHistory(verb);
+      }
+    };
+
+    return (
+      <Swipeable
+        key={verb + type}
+        renderRightActions={renderDeleteAction}
+        onSwipeableOpen={handleSwipeDelete}
+        overshootRight={false}
+      >
+        <TouchableOpacity
+          style={[styles.historyItem, { backgroundColor: colors.bg }]}
+          onPress={() => handleVerbPress(verb)}
+          activeOpacity={0.6}
+        >
+          <View style={styles.historyLeft}>
+            <Text style={[styles.historyVerb, { color: colors.textPrimary }]}>{verb}</Text>
+            <Text style={[styles.historyReading, { color: colors.textMuted }]}>{data.reading}</Text>
+          </View>
+          <Text style={[styles.historyTranslation, { color: colors.textSecondary }]} numberOfLines={1}>
+            {data.translation}
+          </Text>
+          {type === 'favorite' ? (
+            <Ionicons name="heart" size={16} color={colors.accent} style={{ marginLeft: 8 }} />
+          ) : (
+            <Ionicons name="chevron-forward" size={16} color={colors.textMuted} style={{ marginLeft: 8 }} />
+          )}
+        </TouchableOpacity>
+      </Swipeable>
     );
   };
 
@@ -158,7 +225,7 @@ export default function HomeScreen() {
           }
         />
       ) : (
-        <View style={styles.homeContent}>
+        <ScrollView style={styles.homeContent}>
           {/* Verb of the Day */}
           <TouchableOpacity
             style={[styles.vodCard, { backgroundColor: colors.card }]}
@@ -171,39 +238,24 @@ export default function HomeScreen() {
             <Text style={[styles.vodTranslation, { color: colors.textPrimary }]}>{vodData.translation}</Text>
           </TouchableOpacity>
 
-          {/* Recent history */}
-          {history.length > 0 && (
-            <View style={styles.historySection}>
-              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Recent</Text>
-              {history.slice(0, 10).map((verb) => {
-                const data = (verbs as Record<string, VerbData>)[verb];
-                if (!data) return null;
-                return (
-                  <TouchableOpacity
-                    key={verb}
-                    style={[styles.historyItem, { backgroundColor: colors.card }]}
-                    onPress={() => handleVerbPress(verb)}
-                    activeOpacity={0.7}
-                  >
-                    <View style={styles.historyLeft}>
-                      <Text style={[styles.historyVerb, { color: colors.textPrimary }]}>{verb}</Text>
-                      <Text style={[styles.historyReading, { color: colors.textMuted }]}>{data.reading}</Text>
-                    </View>
-                    <Text style={[styles.historyTranslation, { color: colors.textSecondary }]} numberOfLines={1}>
-                      {data.translation}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => removeFromHistory(verb)}
-                      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                    >
-                      <Ionicons name="close" size={16} color={colors.textMuted} />
-                    </TouchableOpacity>
-                  </TouchableOpacity>
-                );
-              })}
+          {/* Favorites */}
+          {favorites.length > 0 && (
+            <View style={styles.section}>
+              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Favorites</Text>
+              {favorites.slice(0, 10).map((verb) => renderSwipeableRow(verb, 'favorite'))}
             </View>
           )}
-        </View>
+
+          {/* Recent history */}
+          {history.length > 0 && (
+            <View style={styles.section}>
+              <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Recent</Text>
+              {history.slice(0, 10).map((verb) => renderSwipeableRow(verb, 'history'))}
+            </View>
+          )}
+
+          <View style={{ height: spacing.xl }} />
+        </ScrollView>
       )}
     </View>
   );
@@ -237,7 +289,7 @@ const styles = StyleSheet.create({
   tagRow: { flexDirection: 'row', gap: spacing.xs },
   tag: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: radius.full },
   tagText: { fontSize: fonts.sizes.xs, fontWeight: fonts.weights.medium },
-  homeContent: { paddingHorizontal: spacing.md },
+  homeContent: { flex: 1, paddingHorizontal: spacing.md },
   vodCard: {
     padding: spacing.lg,
     borderRadius: radius.md,
@@ -252,18 +304,29 @@ const styles = StyleSheet.create({
   vodVerb: { fontSize: fonts.sizes.hero, fontWeight: fonts.weights.bold },
   vodReading: { fontSize: fonts.sizes.lg, marginTop: spacing.xs },
   vodTranslation: { fontSize: fonts.sizes.md, marginTop: spacing.sm },
-  historySection: { marginTop: spacing.lg },
-  sectionTitle: { fontSize: fonts.sizes.sm, fontWeight: fonts.weights.semibold, marginBottom: spacing.sm },
+  section: { marginTop: spacing.lg },
+  sectionTitle: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.semibold,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: spacing.sm,
+  },
   historyItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: spacing.md,
-    borderRadius: radius.sm,
-    marginBottom: spacing.xs,
+    paddingVertical: 14,
+    paddingHorizontal: spacing.md,
   },
   historyLeft: { marginRight: spacing.md },
   historyVerb: { fontSize: fonts.sizes.lg, fontWeight: fonts.weights.semibold },
   historyReading: { fontSize: fonts.sizes.xs },
   historyTranslation: { flex: 1, fontSize: fonts.sizes.sm },
   emptyText: { textAlign: 'center', marginTop: spacing.xl, fontSize: fonts.sizes.md },
+  deleteAction: {
+    backgroundColor: '#E53935',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+  },
 });
