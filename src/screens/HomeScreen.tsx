@@ -8,7 +8,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
 import Fuse from 'fuse.js';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,7 +17,7 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useHistoryStore } from '../store/historyStore';
 import { romajiToHiragana } from '../utils/kana';
 import type { RootStackParamList } from '../types/navigation';
-import type { VerbData, VerbGroup, JLPTLevel } from '../utils/conjugate';
+import type { VerbData, VerbGroup } from '../utils/conjugate';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -59,25 +58,6 @@ export default function HomeScreen() {
   const navigation = useNavigation<NavProp>();
   const { history, loadHistory, addToHistory, removeFromHistory } = useHistoryStore();
   const [query, setQuery] = useState('');
-  const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
-  const [activeLevels, setActiveLevels] = useState<JLPTLevel[]>([...jlptLevels]);
-  const allLevelsSelected = activeLevels.length === jlptLevels.length;
-
-  const toggleLevel = useCallback((level: JLPTLevel) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setActiveLevels((prev) => {
-      if (prev.includes(level)) {
-        if (prev.length === 1) return prev; // keep at least one
-        return prev.filter((l) => l !== level);
-      }
-      return [...prev, level];
-    });
-  }, []);
-
-  const toggleAllLevels = useCallback(() => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setActiveLevels(allLevelsSelected ? ['N5'] : [...jlptLevels]);
-  }, [allLevelsSelected]);
 
   useEffect(() => {
     loadHistory();
@@ -101,11 +81,6 @@ export default function HomeScreen() {
     }
     return merged.slice(0, 20);
   }, [query]);
-
-  const filteredResults = useMemo(
-    () => results.filter((r) => activeLevels.includes(r.item.jlpt as JLPTLevel)),
-    [results, activeLevels],
-  );
 
   const handleVerbPress = useCallback((verb: string) => {
     addToHistory(verb);
@@ -172,38 +147,9 @@ export default function HomeScreen() {
         )}
       </View>
 
-      {/* JLPT level filter chips */}
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={{ flexGrow: 0 }}
-        data={[{ key: 'all', label: 'All' }, ...jlptLevels.map((l) => ({ key: l, label: l }))]}
-        keyExtractor={(item) => item.key}
-        contentContainerStyle={styles.chipBar}
-        renderItem={({ item }) => {
-          const isAll = item.key === 'all';
-          const active = isAll ? allLevelsSelected : activeLevels.includes(item.key as JLPTLevel);
-          return (
-            <TouchableOpacity
-              style={[
-                styles.chip,
-                active
-                  ? { backgroundColor: colors.accent, borderColor: colors.accent }
-                  : { backgroundColor: 'transparent', borderColor: colors.border, borderStyle: 'dashed' as const },
-              ]}
-              onPress={() => (isAll ? toggleAllLevels() : toggleLevel(item.key as JLPTLevel))}
-            >
-              <Text style={[styles.chipText, { color: active ? '#fff' : colors.textMuted }]}>
-                {item.label}
-              </Text>
-            </TouchableOpacity>
-          );
-        }}
-      />
-
       {query.trim() ? (
         <FlatList
-          data={filteredResults.map((r) => r.item)}
+          data={results.map((r) => r.item)}
           keyExtractor={(item) => item.verb}
           renderItem={renderVerbItem}
           contentContainerStyle={styles.listContent}
@@ -275,21 +221,6 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   searchInput: { flex: 1, fontSize: fonts.sizes.md },
-  chipBar: {
-    paddingHorizontal: spacing.md,
-    paddingBottom: spacing.sm,
-    gap: spacing.xs,
-  },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    borderRadius: radius.full,
-    borderWidth: 1,
-  },
-  chipText: {
-    fontSize: fonts.sizes.sm,
-    fontWeight: fonts.weights.medium,
-  },
   listContent: { paddingHorizontal: spacing.md },
   resultItem: {
     flexDirection: 'row',
