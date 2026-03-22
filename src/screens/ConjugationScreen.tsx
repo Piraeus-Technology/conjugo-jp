@@ -77,7 +77,7 @@ export default function ConjugationScreen() {
           <View style={[styles.groupCard, { backgroundColor: colors.card }]}>
             {group.forms.map((form) => {
               const result = conjugate(verb, verbData, form);
-              const isHighlighted = form === highlightForm;
+              const isHighlighted = form === highlightForm && highlightForm !== 'dictionary';
               return (
                 <TouchableOpacity
                   key={form}
