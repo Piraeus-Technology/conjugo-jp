@@ -193,11 +193,11 @@ export default function FlashcardScreen() {
           <Text style={[styles.answerText, { color: colors.primary }]}>
             {card.answer}
           </Text>
-          <Text style={[styles.answerTranslation, { color: colors.textSecondary }]}>
-            {card.translation}
-          </Text>
-          <Text style={[styles.contextText, { color: colors.textMuted }]}>
+          <Text style={[styles.contextText, { color: colors.textSecondary }]}>
             {card.verb} · {card.reading}
+          </Text>
+          <Text style={[styles.answerTranslation, { color: colors.textMuted }]}>
+            {card.translation}
           </Text>
           <TouchableOpacity
             style={[styles.speakButton, { backgroundColor: colors.primary }]}
