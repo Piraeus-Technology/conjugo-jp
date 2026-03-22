@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Animated,
   Dimensions,
+  FlatList,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,12 +16,13 @@ import {
   FORM_LABELS,
   ConjugationForm,
   VerbData,
+  JLPTLevel,
 } from '../utils/conjugate';
 import { speak } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 
-const verbEntries = Object.entries(verbs as Record<string, VerbData>);
-const commonCount = Math.min(50, verbEntries.length);
+const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
+const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
 
 const flashcardForms: ConjugationForm[] = [
   'masu', 'te', 'ta', 'nai', 'potential', 'passive',
@@ -35,7 +37,9 @@ interface Card {
   answer: string;
 }
 
-function generateCard(): Card {
+function generateCard(entries: [string, VerbData][]): Card {
+  const verbEntries = entries.length > 0 ? entries : allVerbEntries;
+  const commonCount = Math.min(50, verbEntries.length);
   const idx = Math.random() < 0.7
     ? Math.floor(Math.random() * commonCount)
     : Math.floor(Math.random() * verbEntries.length);
@@ -53,10 +57,37 @@ function generateCard(): Card {
 
 export default function FlashcardScreen() {
   const colors = useColors();
-  const [card, setCard] = useState<Card>(generateCard);
+  const [activeLevels, setActiveLevels] = useState<JLPTLevel[]>([...jlptLevels]);
+  const filteredEntries = useMemo(() =>
+    allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
+    [activeLevels]
+  );
+  const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries));
   const [flipped, setFlipped] = useState(false);
   const [count, setCount] = useState(0);
   const flipAnim = useRef(new Animated.Value(0)).current;
+
+  const allLevelsSelected = activeLevels.length === jlptLevels.length;
+
+  const toggleLevel = (level: JLPTLevel) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setActiveLevels(prev => {
+      if (prev.includes(level)) {
+        if (prev.length <= 1) return prev;
+        return prev.filter(l => l !== level);
+      }
+      return [...prev, level];
+    });
+  };
+
+  const toggleAllLevels = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (allLevelsSelected) {
+      setActiveLevels(['N5']);
+    } else {
+      setActiveLevels([...jlptLevels]);
+    }
+  };
 
   const flip = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -66,7 +97,7 @@ export default function FlashcardScreen() {
         duration: 200,
         useNativeDriver: true,
       }).start(() => {
-        setCard(generateCard());
+        setCard(generateCard(filteredEntries));
         setFlipped(false);
         setCount(c => c + 1);
       });
@@ -93,6 +124,39 @@ export default function FlashcardScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
+      {/* JLPT level chips */}
+      <View style={styles.chipBarWrapper}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={[{ key: 'all', label: 'All' }, ...jlptLevels.map(l => ({ key: l, label: l }))]}
+          keyExtractor={(item) => 'jlpt-' + item.key}
+          contentContainerStyle={styles.chipBar}
+          renderItem={({ item }) => {
+            const isAll = item.key === 'all';
+            const active = isAll ? allLevelsSelected : activeLevels.includes(item.key as JLPTLevel);
+            return (
+              <TouchableOpacity
+                style={[
+                  styles.chip,
+                  active
+                    ? { backgroundColor: colors.accent, borderColor: colors.accent }
+                    : { backgroundColor: 'transparent', borderColor: colors.border, borderStyle: 'dashed' as const },
+                ]}
+                onPress={() => isAll ? toggleAllLevels() : toggleLevel(item.key as JLPTLevel)}
+              >
+                <Text style={[
+                  styles.chipText,
+                  { color: active ? '#fff' : colors.textMuted },
+                ]}>
+                  {item.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </View>
+
       <Text style={[styles.counter, { color: colors.textMuted }]}>
         {count} cards reviewed
       </Text>
@@ -159,10 +223,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing.lg,
   },
+  chipBarWrapper: {
+    position: 'absolute',
+    top: spacing.sm,
+    left: 0,
+    right: 0,
+  },
+  chipBar: {
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+  },
+  chip: {
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderRadius: radius.full,
+    borderWidth: 1,
+  },
+  chipText: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: fonts.weights.semibold,
+  },
   counter: {
     fontSize: fonts.sizes.sm,
     position: 'absolute',
-    top: spacing.lg,
+    top: spacing.lg + 40,
   },
   cardContainer: {
     width: width - spacing.lg * 2,

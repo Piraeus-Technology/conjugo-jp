@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -17,12 +17,14 @@ import {
   FORM_LABELS,
   ConjugationForm,
   VerbData,
+  JLPTLevel,
 } from '../utils/conjugate';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 
-const verbEntries = Object.entries(verbs as Record<string, VerbData>);
+const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
+const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
 
 const quizzableForms: { key: ConjugationForm; label: string }[] = [
   { key: 'masu', label: 'ます' },
@@ -50,7 +52,9 @@ interface Question {
 function generateQuestion(
   activeForms: ConjugationForm[],
   getWeight: (verb: string) => number,
+  filteredEntries: [string, VerbData][],
 ): Question {
+  const verbEntries = filteredEntries.length > 0 ? filteredEntries : allVerbEntries;
   // Weighted random verb selection with bias toward common verbs
   const commonCount = Math.min(50, verbEntries.length);
   const candidates: number[] = [];
@@ -101,7 +105,7 @@ function generateQuestion(
 
   // Fallback if not enough wrong answers
   while (selected.length < 3) {
-    const [, otherData] = verbEntries[Math.floor(Math.random() * verbEntries.length)];
+    const [, otherData] = allVerbEntries[Math.floor(Math.random() * allVerbEntries.length)];
     const wrong = conjugateReading(otherData, form);
     if (wrong !== correctAnswer && !selected.includes(wrong)) {
       selected.push(wrong);
@@ -130,6 +134,7 @@ export default function QuizScreen() {
   const { totalQuestions, totalCorrect, bestStreak, loadStats, recordAnswer } = useQuizStore();
   const { loaded: weightsLoaded, loadWeights, recordResult, getWeight } = useSpacedRepStore();
   const [activeForms, setActiveForms] = useState<ConjugationForm[]>(quizzableForms.map(f => f.key));
+  const [activeLevels, setActiveLevels] = useState<JLPTLevel[]>([...jlptLevels]);
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [sessionScore, setSessionScore] = useState(0);
@@ -141,16 +146,22 @@ export default function QuizScreen() {
     loadWeights();
   }, []);
 
+  const filteredEntries = useMemo(() =>
+    allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
+    [activeLevels]
+  );
+
   useEffect(() => {
-    if (weightsLoaded && activeForms.length > 0) {
-      setQuestion(generateQuestion(activeForms, getWeight));
+    if (weightsLoaded && activeForms.length > 0 && filteredEntries.length > 0) {
+      setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
       setSelectedAnswer(null);
     }
-  }, [weightsLoaded, activeForms]);
+  }, [weightsLoaded, activeForms, activeLevels]);
 
   const isCorrect = selectedAnswer === question?.correctAnswer;
   const answered = selectedAnswer !== null;
-  const allSelected = activeForms.length === quizzableForms.length;
+  const allFormsSelected = activeForms.length === quizzableForms.length;
+  const allLevelsSelected = activeLevels.length === jlptLevels.length;
 
   const toggleForm = (form: ConjugationForm) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -163,12 +174,32 @@ export default function QuizScreen() {
     });
   };
 
-  const toggleAll = () => {
+  const toggleAllForms = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (allSelected) {
+    if (allFormsSelected) {
       setActiveForms(['masu']);
     } else {
       setActiveForms(quizzableForms.map(f => f.key));
+    }
+  };
+
+  const toggleLevel = (level: JLPTLevel) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setActiveLevels(prev => {
+      if (prev.includes(level)) {
+        if (prev.length <= 1) return prev;
+        return prev.filter(l => l !== level);
+      }
+      return [...prev, level];
+    });
+  };
+
+  const toggleAllLevels = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (allLevelsSelected) {
+      setActiveLevels(['N5']);
+    } else {
+      setActiveLevels([...jlptLevels]);
     }
   };
 
@@ -199,7 +230,7 @@ export default function QuizScreen() {
 
   const handleNext = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setQuestion(generateQuestion(activeForms, getWeight));
+    setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
     setSelectedAnswer(null);
   };
 
@@ -229,6 +260,37 @@ export default function QuizScreen() {
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.bg }]} contentContainerStyle={styles.content}>
+      {/* JLPT level chips */}
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={[{ key: 'all', label: 'All' }, ...jlptLevels.map(l => ({ key: l, label: l }))]}
+        keyExtractor={(item) => 'jlpt-' + item.key}
+        contentContainerStyle={styles.chipBar}
+        renderItem={({ item }) => {
+          const isAll = item.key === 'all';
+          const active = isAll ? allLevelsSelected : activeLevels.includes(item.key as JLPTLevel);
+          return (
+            <TouchableOpacity
+              style={[
+                styles.chip,
+                active
+                  ? { backgroundColor: colors.accent, borderColor: colors.accent }
+                  : { backgroundColor: 'transparent', borderColor: colors.border, borderStyle: 'dashed' as const },
+              ]}
+              onPress={() => isAll ? toggleAllLevels() : toggleLevel(item.key as JLPTLevel)}
+            >
+              <Text style={[
+                styles.chipText,
+                { color: active ? '#fff' : colors.textMuted },
+              ]}>
+                {item.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+
       {/* Form filter chips */}
       <FlatList
         horizontal
@@ -238,7 +300,7 @@ export default function QuizScreen() {
         contentContainerStyle={styles.chipBar}
         renderItem={({ item }) => {
           const isAll = item.key === 'all';
-          const active = isAll ? allSelected : activeForms.includes(item.key);
+          const active = isAll ? allFormsSelected : activeForms.includes(item.key);
           return (
             <TouchableOpacity
               style={[
@@ -247,7 +309,7 @@ export default function QuizScreen() {
                   ? { backgroundColor: colors.primary, borderColor: colors.primary }
                   : { backgroundColor: 'transparent', borderColor: colors.border, borderStyle: 'dashed' as const },
               ]}
-              onPress={() => isAll ? toggleAll() : toggleForm(item.key)}
+              onPress={() => isAll ? toggleAllForms() : toggleForm(item.key)}
             >
               <Text style={[
                 styles.chipText,
