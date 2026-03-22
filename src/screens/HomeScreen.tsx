@@ -22,7 +22,7 @@ import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { romajiToHiragana } from '../utils/kana';
 import type { RootStackParamList } from '../types/navigation';
-import { conjugateReading, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, ConjugationForm } from '../utils/conjugate';
+import { conjugateReading, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, ConjugationForm, conjugate as conjugateVerb } from '../utils/conjugate';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -53,6 +53,29 @@ const groupColors: Record<VerbGroup, { bg: string; text: string; label: string }
   irregular: { bg: '', text: '', label: '不規則' },
 };
 
+// Derive kanji conjugated form from verb kanji + reading + conjugated reading
+// e.g., verb=飲む, reading=のむ, conjugated=のんで → 飲んで
+function deriveKanjiForm(verb: string, reading: string, conjugated: string): string {
+  // Find how many trailing kana the verb and reading share
+  // e.g., 飲む vs のむ — both end in む, so kanji stem is 飲, reading stem is の
+  let sharedSuffix = 0;
+  for (let i = 1; i <= Math.min(verb.length, reading.length); i++) {
+    if (verb[verb.length - i] === reading[reading.length - i]) {
+      sharedSuffix = i;
+    } else {
+      break;
+    }
+  }
+  if (sharedSuffix === 0) return conjugated; // can't derive, return hiragana
+  const kanjiStem = verb.slice(0, verb.length - sharedSuffix);
+  const readingStem = reading.slice(0, reading.length - sharedSuffix);
+  // The conjugated form starts with the reading stem — replace it with kanji stem
+  if (conjugated.startsWith(readingStem)) {
+    return kanjiStem + conjugated.slice(readingStem.length);
+  }
+  return conjugated;
+}
+
 // Lazy-built conjugation index — only created on first conjugated form search
 interface ConjMatch {
   verb: string;
@@ -60,6 +83,7 @@ interface ConjMatch {
   translation: string;
   form: ConjugationForm;
   conjugated: string;
+  conjugatedKanji: string;
 }
 
 let conjugationIndex: ConjMatch[] | null = null;
@@ -71,12 +95,14 @@ function getConjugationIndex(): ConjMatch[] {
   verbList.forEach(([verb, data]) => {
     ALL_FORMS.forEach((form) => {
       const reading = conjugateReading(data, form);
+      const kanji = deriveKanjiForm(verb, data.reading, reading);
       conjugationIndex!.push({
         verb,
         reading: data.reading,
         translation: data.translation,
         form,
         conjugated: reading,
+        conjugatedKanji: kanji,
       });
     });
   });
@@ -86,7 +112,7 @@ function getConjugationIndex(): ConjMatch[] {
 function getConjFuse(): Fuse<ConjMatch> {
   if (conjFuse) return conjFuse;
   conjFuse = new Fuse(getConjugationIndex(), {
-    keys: ['conjugated'],
+    keys: ['conjugated', 'conjugatedKanji'],
     threshold: 0.2,
   });
   return conjFuse;
@@ -125,9 +151,9 @@ export default function HomeScreen() {
     const q = query.trim();
     const hiraganaQuery = romajiToHiragana(q);
 
-    // Check for exact conjugation matches first
+    // Check for exact conjugation matches first (hiragana or kanji)
     const exactConjMatches = getConjugationIndex().filter(
-      (c) => c.conjugated === hiraganaQuery || c.conjugated === q
+      (c) => c.conjugated === hiraganaQuery || c.conjugated === q || c.conjugatedKanji === q
     );
 
     const seen = new Set<string>();
