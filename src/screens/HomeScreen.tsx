@@ -250,8 +250,8 @@ export default function HomeScreen() {
                 {groupColors[item.group as VerbGroup].label}
               </Text>
             </View>
-            <View style={[styles.tag, { backgroundColor: colors.pillBg }]}>
-              <Text style={[styles.tagText, { color: colors.textMuted }]}>{item.jlpt}</Text>
+            <View style={[styles.tag, { backgroundColor: (colors as any)[`${item.jlpt.toLowerCase()}Bg`] || colors.pillBg }]}>
+              <Text style={[styles.tagText, { color: (colors as any)[`${item.jlpt.toLowerCase()}Text`] || colors.textMuted }]}>{item.jlpt}</Text>
             </View>
           </View>
         </View>

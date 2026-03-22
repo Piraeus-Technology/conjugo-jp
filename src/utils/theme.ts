@@ -30,6 +30,12 @@ const lightColors = {
   ichidanTagText: '#1565C0',
   irregularTag: '#FFF3E0',
   irregularTagText: '#E65100',
+
+  n5Bg: '#E8F5E9', n5Text: '#2E7D32',
+  n4Bg: '#E0F2F1', n4Text: '#00695C',
+  n3Bg: '#E3F2FD', n3Text: '#1565C0',
+  n2Bg: '#EDE7F6', n2Text: '#4527A0',
+  n1Bg: '#FCE4EC', n1Text: '#AD1457',
 };
 
 const darkColors = {
@@ -62,6 +68,12 @@ const darkColors = {
   ichidanTagText: '#64B5F6',
   irregularTag: '#3E2200',
   irregularTagText: '#FFB74D',
+
+  n5Bg: '#1B3A1B', n5Text: '#66BB6A',
+  n4Bg: '#0D2E2B', n4Text: '#4DB6AC',
+  n3Bg: '#0D2137', n3Text: '#64B5F6',
+  n2Bg: '#1A1035', n2Text: '#B39DDB',
+  n1Bg: '#2D0E1E', n1Text: '#F48FB1',
 };
 
 export type ThemeColors = typeof lightColors;

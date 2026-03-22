@@ -59,8 +59,8 @@ export default function ConjugationScreen() {
           <View style={[styles.tag, { backgroundColor: colors.pillBg }]}>
             <Text style={[styles.tagText, { color: colors.textSecondary }]}>{groupLabel}</Text>
           </View>
-          <View style={[styles.tag, { backgroundColor: colors.pillBg }]}>
-            <Text style={[styles.tagText, { color: colors.textSecondary }]}>{verbData.jlpt}</Text>
+          <View style={[styles.tag, { backgroundColor: (colors as any)[`${verbData.jlpt.toLowerCase()}Bg`] || colors.pillBg }]}>
+            <Text style={[styles.tagText, { color: (colors as any)[`${verbData.jlpt.toLowerCase()}Text`] || colors.textSecondary }]}>{verbData.jlpt}</Text>
           </View>
           <TouchableOpacity onPress={() => speak(verb)} style={styles.speakButton}>
             <Ionicons name="volume-medium" size={20} color={colors.primary} />
