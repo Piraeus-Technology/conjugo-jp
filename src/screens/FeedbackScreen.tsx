@@ -22,6 +22,17 @@ export default function FeedbackScreen() {
   const colors = useColors();
   const { isDark, toggleTheme } = useThemeStore();
 
+  const handleRateApp = () => {
+    const url = Platform.select({
+      ios: 'https://apps.apple.com/app/conjugo-jp', // TODO: update with real App Store ID
+      android: 'market://details?id=com.lkh9596.conjugojp',
+      default: 'https://apps.apple.com/app/conjugo-jp',
+    });
+    Linking.openURL(url).catch(() => {
+      Alert.alert('Not Available Yet', 'Rating will be available once the app is on the App Store.');
+    });
+  };
+
   const handleSendEmail = () => {
     const subject = encodeURIComponent('ConjuGo JP Feedback');
     const url = `mailto:contact@piraeus.app?subject=${subject}`;
@@ -68,6 +79,20 @@ export default function FeedbackScreen() {
             <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>Bug reports, suggestions, missing verbs</Text>
           </View>
           <Ionicons name="mail-outline" size={20} color={colors.textMuted} />
+        </TouchableOpacity>
+
+        {/* Rate */}
+        <TouchableOpacity
+          style={[styles.rowCard, { backgroundColor: colors.card }]}
+          onPress={handleRateApp}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.rowEmoji}>⭐</Text>
+          <View style={styles.rowInfo}>
+            <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Enjoying ConjuGo JP?</Text>
+            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>Rate us on the App Store</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
         </TouchableOpacity>
 
         {/* Share */}

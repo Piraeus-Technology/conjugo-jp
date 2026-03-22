@@ -39,7 +39,7 @@ interface Card {
 
 function generateCard(entries: [string, VerbData][]): Card {
   const verbEntries = entries.length > 0 ? entries : allVerbEntries;
-  const commonCount = Math.min(50, verbEntries.length);
+  const commonCount = Math.min(200, verbEntries.length);
   const idx = Math.random() < 0.7
     ? Math.floor(Math.random() * commonCount)
     : Math.floor(Math.random() * verbEntries.length);
@@ -193,8 +193,11 @@ export default function FlashcardScreen() {
           <Text style={[styles.answerText, { color: colors.primary }]}>
             {card.answer}
           </Text>
-          <Text style={[styles.contextText, { color: colors.textSecondary }]}>
-            {card.verb} · {card.translation}
+          <Text style={[styles.answerTranslation, { color: colors.textSecondary }]}>
+            {card.translation}
+          </Text>
+          <Text style={[styles.contextText, { color: colors.textMuted }]}>
+            {card.verb} · {card.reading}
           </Text>
           <TouchableOpacity
             style={[styles.speakButton, { backgroundColor: colors.primary }]}
@@ -294,6 +297,11 @@ const styles = StyleSheet.create({
   answerText: {
     fontSize: 42,
     fontWeight: fonts.weights.bold,
+    marginBottom: spacing.xs,
+  },
+  answerTranslation: {
+    fontSize: fonts.sizes.md,
+    fontStyle: 'italic',
     marginBottom: spacing.md,
   },
   contextText: {
