@@ -7,6 +7,8 @@ import {
   Animated,
   Dimensions,
   FlatList,
+  Modal,
+  Pressable,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
@@ -65,7 +67,28 @@ export default function FlashcardScreen() {
   const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries));
   const [flipped, setFlipped] = useState(false);
   const [count, setCount] = useState(0);
+  const [showResults, setShowResults] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
+  const sessionStart = useRef(Date.now());
+
+  const formatDuration = (ms: number) => {
+    const mins = Math.floor(ms / 60000);
+    const secs = Math.floor((ms % 60000) / 1000);
+    return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+  };
+
+  const handleEndSession = () => {
+    setShowResults(true);
+  };
+
+  const handleNewSession = () => {
+    setShowResults(false);
+    setCount(0);
+    sessionStart.current = Date.now();
+    setCard(generateCard(filteredEntries));
+    setFlipped(false);
+    flipAnim.setValue(0);
+  };
 
   const allLevelsSelected = activeLevels.length === jlptLevels.length;
 
@@ -213,6 +236,44 @@ export default function FlashcardScreen() {
           </Text>
         </Animated.View>
       </TouchableOpacity>
+
+      {/* End session button */}
+      {count > 0 && (
+        <TouchableOpacity
+          style={[styles.endSessionButton, { borderColor: colors.border }]}
+          onPress={handleEndSession}
+          activeOpacity={0.7}
+        >
+          <Text style={[styles.endSessionText, { color: colors.textMuted }]}>세션 종료</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* Results modal */}
+      <Modal visible={showResults} transparent animationType="fade">
+        <Pressable style={styles.modalOverlay} onPress={() => setShowResults(false)}>
+          <Pressable style={[styles.modalContent, { backgroundColor: colors.card }]}>
+            <Text style={[styles.modalTitle, { color: colors.primary }]}>세션 완료!</Text>
+            <View style={styles.modalStats}>
+              <View style={styles.modalStatItem}>
+                <Text style={[styles.modalStatValue, { color: colors.primary }]}>{count}</Text>
+                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>카드</Text>
+              </View>
+              <View style={styles.modalStatItem}>
+                <Text style={[styles.modalStatValue, { color: colors.textSecondary }]}>
+                  {formatDuration(Date.now() - sessionStart.current)}
+                </Text>
+                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>시간</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={[styles.modalButton, { backgroundColor: colors.primary }]}
+              onPress={handleNewSession}
+            >
+              <Text style={styles.modalButtonText}>새 세션</Text>
+            </TouchableOpacity>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 }
@@ -320,5 +381,65 @@ const styles = StyleSheet.create({
     fontSize: fonts.sizes.xs,
     position: 'absolute',
     bottom: spacing.lg,
+  },
+  endSessionButton: {
+    position: 'absolute',
+    bottom: spacing.lg + 20,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 1,
+  },
+  endSessionText: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.medium,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '80%',
+    borderRadius: radius.lg,
+    padding: spacing.xl,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: fonts.sizes.xl,
+    fontWeight: fonts.weights.bold,
+    marginBottom: spacing.lg,
+  },
+  modalStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginBottom: spacing.lg,
+  },
+  modalStatItem: {
+    alignItems: 'center',
+  },
+  modalStatValue: {
+    fontSize: 28,
+    fontWeight: fonts.weights.bold,
+  },
+  modalStatLabel: {
+    fontSize: fonts.sizes.xs,
+    marginTop: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  modalButton: {
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+    borderRadius: radius.md,
+    width: '100%',
+    alignItems: 'center',
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.bold,
   },
 });
