@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   StyleSheet,
   ScrollView,
   FlatList,
+  Modal,
+  Pressable,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +24,7 @@ import {
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
+import { useSessionStore } from '../store/sessionStore';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -135,15 +138,20 @@ export default function QuizScreen() {
   const { loaded: weightsLoaded, loadWeights, recordResult, getWeight } = useSpacedRepStore();
   const [activeForms, setActiveForms] = useState<ConjugationForm[]>(quizzableForms.map(f => f.key));
   const [activeLevels, setActiveLevels] = useState<JLPTLevel[]>([...jlptLevels]);
+  const { sessions, loadSessions, saveSession } = useSessionStore();
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [sessionScore, setSessionScore] = useState(0);
   const [sessionTotal, setSessionTotal] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [bestSessionStreak, setBestSessionStreak] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const sessionStart = useRef(Date.now());
 
   useEffect(() => {
     loadStats();
     loadWeights();
+    loadSessions();
   }, []);
 
   const filteredEntries = useMemo(() =>
@@ -214,6 +222,7 @@ export default function QuizScreen() {
       setSessionScore(s => s + 1);
       const newStreak = streak + 1;
       setStreak(newStreak);
+      if (newStreak > bestSessionStreak) setBestSessionStreak(newStreak);
       recordAnswer(true, newStreak);
       if (newStreak === 10) {
         StoreReview.isAvailableAsync().then((available) => {
@@ -232,6 +241,35 @@ export default function QuizScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
     setSelectedAnswer(null);
+  };
+
+  const handleEndSession = () => {
+    if (sessionTotal > 0) {
+      saveSession({
+        total: sessionTotal,
+        correct: sessionScore,
+        streak: bestSessionStreak,
+        durationMs: Date.now() - sessionStart.current,
+      });
+    }
+    setShowResults(true);
+  };
+
+  const handleNewSession = () => {
+    setShowResults(false);
+    setSessionScore(0);
+    setSessionTotal(0);
+    setStreak(0);
+    setBestSessionStreak(0);
+    sessionStart.current = Date.now();
+    setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
+    setSelectedAnswer(null);
+  };
+
+  const formatDuration = (ms: number) => {
+    const mins = Math.floor(ms / 60000);
+    const secs = Math.floor((ms % 60000) / 1000);
+    return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
   };
 
   const getOptionStyle = (option: string) => {
@@ -403,6 +441,75 @@ export default function QuizScreen() {
           <Ionicons name="arrow-forward" size={18} color="#fff" />
         </TouchableOpacity>
       )}
+
+      {/* End session button */}
+      {sessionTotal > 0 && (
+        <TouchableOpacity
+          style={[styles.endSessionButton, { borderColor: colors.border }]}
+          onPress={handleEndSession}
+          activeOpacity={0.7}
+        >
+          <Text style={[styles.endSessionText, { color: colors.textMuted }]}>세션 종료</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* Session history */}
+      {sessions.length > 0 && sessionTotal === 0 && (
+        <View style={styles.historySection}>
+          <Text style={[styles.historyTitle, { color: colors.textSecondary }]}>지난 세션</Text>
+          {sessions.slice(0, 5).map((s, i) => (
+            <View key={i} style={[styles.historyRow, { backgroundColor: colors.card }]}>
+              <Text style={[styles.historyDate, { color: colors.textMuted }]}>
+                {new Date(s.date).toLocaleDateString('ko-KR')}
+              </Text>
+              <Text style={[styles.historyStat, { color: colors.textPrimary }]}>
+                {s.correct}/{s.total} ({Math.round((s.correct / s.total) * 100)}%)
+              </Text>
+              <Text style={[styles.historyStat, { color: colors.textMuted }]}>
+                {formatDuration(s.durationMs)}
+              </Text>
+            </View>
+          ))}
+        </View>
+      )}
+
+      {/* Results modal */}
+      <Modal visible={showResults} transparent animationType="fade">
+        <Pressable style={styles.modalOverlay} onPress={() => setShowResults(false)}>
+          <Pressable style={[styles.modalContent, { backgroundColor: colors.card }]}>
+            <Text style={[styles.modalTitle, { color: colors.primary }]}>세션 완료!</Text>
+            <View style={styles.modalStats}>
+              <View style={styles.modalStatItem}>
+                <Text style={[styles.modalStatValue, { color: colors.primary }]}>
+                  {sessionScore}/{sessionTotal}
+                </Text>
+                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>점수</Text>
+              </View>
+              <View style={styles.modalStatItem}>
+                <Text style={[styles.modalStatValue, { color: colors.accent }]}>
+                  {sessionTotal > 0 ? Math.round((sessionScore / sessionTotal) * 100) : 0}%
+                </Text>
+                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>정확도</Text>
+              </View>
+              <View style={styles.modalStatItem}>
+                <Text style={[styles.modalStatValue, { color: colors.textSecondary }]}>
+                  {bestSessionStreak}
+                </Text>
+                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>최고 연속</Text>
+              </View>
+            </View>
+            <Text style={[styles.modalDuration, { color: colors.textMuted }]}>
+              {formatDuration(Date.now() - sessionStart.current)}
+            </Text>
+            <TouchableOpacity
+              style={[styles.modalButton, { backgroundColor: colors.primary }]}
+              onPress={handleNewSession}
+            >
+              <Text style={styles.modalButtonText}>새 세션</Text>
+            </TouchableOpacity>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </ScrollView>
   );
 }
@@ -503,6 +610,101 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
   },
   nextButtonText: {
+    color: '#fff',
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.bold,
+  },
+  endSessionButton: {
+    alignItems: 'center',
+    marginTop: spacing.md,
+    padding: spacing.sm,
+    borderRadius: radius.md,
+    borderWidth: 1,
+  },
+  endSessionText: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.medium,
+  },
+  historySection: {
+    marginTop: spacing.lg,
+  },
+  historyTitle: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.semibold,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: spacing.sm,
+  },
+  historyRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: spacing.md,
+    borderRadius: radius.md,
+    marginBottom: spacing.xs,
+  },
+  historyDate: {
+    fontSize: fonts.sizes.sm,
+    flex: 1,
+  },
+  historyStat: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.semibold,
+    marginLeft: spacing.md,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '80%',
+    borderRadius: radius.lg,
+    padding: spacing.xl,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  modalTitle: {
+    fontSize: fonts.sizes.xl,
+    fontWeight: fonts.weights.bold,
+    marginBottom: spacing.lg,
+  },
+  modalStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginBottom: spacing.md,
+  },
+  modalStatItem: {
+    alignItems: 'center',
+  },
+  modalStatValue: {
+    fontSize: 28,
+    fontWeight: fonts.weights.bold,
+  },
+  modalStatLabel: {
+    fontSize: fonts.sizes.xs,
+    marginTop: 4,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  modalDuration: {
+    fontSize: fonts.sizes.sm,
+    marginBottom: spacing.lg,
+  },
+  modalButton: {
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+    borderRadius: radius.md,
+    width: '100%',
+    alignItems: 'center',
+  },
+  modalButtonText: {
     color: '#fff',
     fontSize: fonts.sizes.md,
     fontWeight: fonts.weights.bold,
