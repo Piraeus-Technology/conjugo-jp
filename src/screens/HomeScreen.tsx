@@ -344,6 +344,18 @@ export default function HomeScreen() {
             <Text style={[styles.vodVerb, { color: colors.primary }]}>{vodVerb}</Text>
             <Text style={[styles.vodReading, { color: colors.textSecondary }]}>{vodData.reading}</Text>
             <Text style={[styles.vodTranslation, { color: colors.textPrimary }]}>{vodData.translation}</Text>
+            <View style={styles.vodBadgeRow}>
+              <View style={[styles.vodBadge, { backgroundColor: groupTagColors[vodData.group as VerbGroup]?.bg }]}>
+                <Text style={[styles.vodBadgeText, { color: groupTagColors[vodData.group as VerbGroup]?.text }]}>
+                  {groupColors[vodData.group as VerbGroup]?.label}
+                </Text>
+              </View>
+              <View style={[styles.vodBadge, { backgroundColor: (colors as any)[`${vodData.jlpt.toLowerCase()}Bg`] || colors.pillBg }]}>
+                <Text style={[styles.vodBadgeText, { color: (colors as any)[`${vodData.jlpt.toLowerCase()}Text`] || colors.textMuted }]}>
+                  {vodData.jlpt}
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
 
           {/* Favorites */}
@@ -359,6 +371,17 @@ export default function HomeScreen() {
             <View style={styles.section}>
               <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Recent</Text>
               {history.slice(0, 10).map((verb) => renderSwipeableRow(verb, 'history'))}
+            </View>
+          )}
+
+          {/* Empty state */}
+          {favorites.length === 0 && history.length === 0 && (
+            <View style={styles.emptyContainer}>
+              <Text style={styles.heroEmoji}>📖</Text>
+              <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>ConjuGo JP</Text>
+              <Text style={[styles.heroSubtitle, { color: colors.textSecondary }]}>
+                Search for any Japanese verb or conjugation
+              </Text>
             </View>
           )}
 
@@ -413,6 +436,20 @@ const styles = StyleSheet.create({
   vodVerb: { fontSize: fonts.sizes.hero, fontWeight: fonts.weights.bold },
   vodReading: { fontSize: fonts.sizes.lg, marginTop: spacing.xs },
   vodTranslation: { fontSize: fonts.sizes.md, marginTop: spacing.sm },
+  vodBadgeRow: {
+    flexDirection: 'row',
+    gap: spacing.xs,
+    marginTop: spacing.md,
+  },
+  vodBadge: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: 4,
+    borderRadius: radius.full,
+  },
+  vodBadgeText: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: fonts.weights.semibold,
+  },
   section: { marginTop: spacing.lg },
   sectionTitle: {
     fontSize: fonts.sizes.sm,
@@ -432,6 +469,10 @@ const styles = StyleSheet.create({
   historyReading: { fontSize: fonts.sizes.xs },
   historyTranslation: { flex: 1, fontSize: fonts.sizes.sm },
   emptyText: { textAlign: 'center', marginTop: spacing.xl, fontSize: fonts.sizes.md },
+  emptyContainer: { alignItems: 'center', paddingTop: spacing.xl },
+  heroEmoji: { fontSize: 48 },
+  heroTitle: { fontSize: fonts.sizes.hero, fontWeight: fonts.weights.bold, marginTop: spacing.md },
+  heroSubtitle: { fontSize: fonts.sizes.md, marginTop: spacing.xs },
   deleteAction: {
     backgroundColor: '#E53935',
     justifyContent: 'center',

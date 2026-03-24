@@ -13,6 +13,7 @@ import {
   Switch,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useThemeStore } from '../store/themeStore';
 
@@ -20,6 +21,7 @@ const APP_VERSION = '1.0.0';
 
 export default function FeedbackScreen() {
   const colors = useColors();
+  const navigation = useNavigation<any>();
   const { isDark, toggleTheme } = useThemeStore();
 
   const handleRateApp = () => {
@@ -51,8 +53,22 @@ export default function FeedbackScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.content}>
+        {/* Quiz Stats */}
+        <TouchableOpacity
+          style={[styles.rowCard, { backgroundColor: colors.card, marginTop: 0 }]}
+          onPress={() => navigation.navigate('Stats')}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.rowEmoji}>📊</Text>
+          <View style={styles.rowInfo}>
+            <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Quiz Stats</Text>
+            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>View your quiz progress and streaks</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
+        </TouchableOpacity>
+
         {/* Settings section */}
-        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Settings</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary, marginTop: spacing.lg }]}>Settings</Text>
         <View style={[styles.settingsCard, { backgroundColor: colors.card }]}>
           <View style={[styles.settingRow, { borderBottomColor: colors.divider }]}>
             <Ionicons name={isDark ? 'moon' : 'sunny'} size={20} color={colors.textSecondary} />

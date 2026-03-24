@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect, useLayoutEffect } from 'react';
 import {
   View,
   Text,
@@ -6,12 +6,12 @@ import {
   StyleSheet,
   Animated,
   Dimensions,
-  FlatList,
   Modal,
   Pressable,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import verbs from '../data/verbs.json';
 import {
   conjugateReading,
@@ -22,6 +22,7 @@ import {
 } from '../utils/conjugate';
 import { speak } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
+import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -39,14 +40,15 @@ interface Card {
   answer: string;
 }
 
-function generateCard(entries: [string, VerbData][]): Card {
+function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): Card {
   const verbEntries = entries.length > 0 ? entries : allVerbEntries;
+  const activeForms = forms.length > 0 ? forms : flashcardForms;
   const commonCount = Math.min(200, verbEntries.length);
   const idx = Math.random() < 0.7
     ? Math.floor(Math.random() * commonCount)
     : Math.floor(Math.random() * verbEntries.length);
   const [verb, data] = verbEntries[idx];
-  const form = flashcardForms[Math.floor(Math.random() * flashcardForms.length)];
+  const form = activeForms[Math.floor(Math.random() * activeForms.length)];
   const answer = conjugateReading(data, form);
   return {
     verb,
@@ -59,17 +61,37 @@ function generateCard(entries: [string, VerbData][]): Card {
 
 export default function FlashcardScreen() {
   const colors = useColors();
-  const [activeLevels, setActiveLevels] = useState<JLPTLevel[]>([...jlptLevels]);
+  const navigation = useNavigation<any>();
+  const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
   );
-  const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries));
+  const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries, flashcardForms));
   const [flipped, setFlipped] = useState(false);
   const [count, setCount] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const sessionStart = useRef(Date.now());
+
+  useEffect(() => {
+    loadPracticeSettings();
+  }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('PracticeSettings', { mode: 'flashcards' })}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginRight: 8 }}
+        >
+          <Text style={{ color: colors.primary, fontSize: 14, fontWeight: '600' }}>Forms</Text>
+          <Ionicons name="options-outline" size={18} color={colors.primary} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, colors]);
 
   const formatDuration = (ms: number) => {
     const mins = Math.floor(ms / 60000);
@@ -85,31 +107,9 @@ export default function FlashcardScreen() {
     setShowResults(false);
     setCount(0);
     sessionStart.current = Date.now();
-    setCard(generateCard(filteredEntries));
+    setCard(generateCard(filteredEntries, activeForms));
     setFlipped(false);
     flipAnim.setValue(0);
-  };
-
-  const allLevelsSelected = activeLevels.length === jlptLevels.length;
-
-  const toggleLevel = (level: JLPTLevel) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setActiveLevels(prev => {
-      if (prev.includes(level)) {
-        if (prev.length <= 1) return prev;
-        return prev.filter(l => l !== level);
-      }
-      return [...prev, level];
-    });
-  };
-
-  const toggleAllLevels = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (allLevelsSelected) {
-      setActiveLevels(['N5']);
-    } else {
-      setActiveLevels([...jlptLevels]);
-    }
   };
 
   const flip = () => {
@@ -120,7 +120,7 @@ export default function FlashcardScreen() {
         duration: 200,
         useNativeDriver: true,
       }).start(() => {
-        setCard(generateCard(filteredEntries));
+        setCard(generateCard(filteredEntries, activeForms));
         setFlipped(false);
         setCount(c => c + 1);
       });
@@ -147,39 +147,6 @@ export default function FlashcardScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      {/* JLPT level chips */}
-      <View style={styles.chipBarWrapper}>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={[{ key: 'all', label: 'All' }, ...jlptLevels.map(l => ({ key: l, label: l }))]}
-          keyExtractor={(item) => 'jlpt-' + item.key}
-          contentContainerStyle={styles.chipBar}
-          renderItem={({ item }) => {
-            const isAll = item.key === 'all';
-            const active = isAll ? allLevelsSelected : activeLevels.includes(item.key as JLPTLevel);
-            return (
-              <TouchableOpacity
-                style={[
-                  styles.chip,
-                  active
-                    ? { backgroundColor: colors.accent, borderColor: colors.accent }
-                    : { backgroundColor: 'transparent', borderColor: colors.border, borderStyle: 'dashed' as const },
-                ]}
-                onPress={() => isAll ? toggleAllLevels() : toggleLevel(item.key as JLPTLevel)}
-              >
-                <Text style={[
-                  styles.chipText,
-                  { color: active ? '#fff' : colors.textMuted },
-                ]}>
-                  {item.label}
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-        />
-      </View>
-
       <Text style={[styles.counter, { color: colors.textMuted }]}>
         {count} cards reviewed
       </Text>
@@ -244,7 +211,7 @@ export default function FlashcardScreen() {
           onPress={handleEndSession}
           activeOpacity={0.7}
         >
-          <Text style={[styles.endSessionText, { color: colors.textMuted }]}>세션 종료</Text>
+          <Text style={[styles.endSessionText, { color: colors.textMuted }]}>End Session</Text>
         </TouchableOpacity>
       )}
 
@@ -252,24 +219,24 @@ export default function FlashcardScreen() {
       <Modal visible={showResults} transparent animationType="fade">
         <Pressable style={styles.modalOverlay} onPress={() => setShowResults(false)}>
           <Pressable style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <Text style={[styles.modalTitle, { color: colors.primary }]}>세션 완료!</Text>
+            <Text style={[styles.modalTitle, { color: colors.primary }]}>Session Complete!</Text>
             <View style={styles.modalStats}>
               <View style={styles.modalStatItem}>
                 <Text style={[styles.modalStatValue, { color: colors.primary }]}>{count}</Text>
-                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>카드</Text>
+                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Cards</Text>
               </View>
               <View style={styles.modalStatItem}>
                 <Text style={[styles.modalStatValue, { color: colors.textSecondary }]}>
                   {formatDuration(Date.now() - sessionStart.current)}
                 </Text>
-                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>시간</Text>
+                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Time</Text>
               </View>
             </View>
             <TouchableOpacity
               style={[styles.modalButton, { backgroundColor: colors.primary }]}
               onPress={handleNewSession}
             >
-              <Text style={styles.modalButtonText}>새 세션</Text>
+              <Text style={styles.modalButtonText}>New Session</Text>
             </TouchableOpacity>
           </Pressable>
         </Pressable>
@@ -287,30 +254,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing.lg,
   },
-  chipBarWrapper: {
-    position: 'absolute',
-    top: spacing.sm,
-    left: 0,
-    right: 0,
-  },
-  chipBar: {
-    gap: spacing.xs,
-    paddingHorizontal: spacing.md,
-  },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderRadius: radius.full,
-    borderWidth: 1,
-  },
-  chipText: {
-    fontSize: fonts.sizes.xs,
-    fontWeight: fonts.weights.semibold,
-  },
   counter: {
     fontSize: fonts.sizes.sm,
     position: 'absolute',
-    top: spacing.lg + 40,
+    top: spacing.sm,
   },
   cardContainer: {
     width: width - spacing.lg * 2,
