@@ -23,6 +23,7 @@ import {
 import { speak } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
+import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -63,6 +64,7 @@ export default function FlashcardScreen() {
   const colors = useColors();
   const navigation = useNavigation<any>();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
+  const { saveSession } = useFlashcardSessionStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
@@ -100,6 +102,9 @@ export default function FlashcardScreen() {
   };
 
   const handleEndSession = () => {
+    if (reviewed > 0) {
+      saveSession({ reviewed, correct });
+    }
     setShowResults(true);
   };
 

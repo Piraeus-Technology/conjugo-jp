@@ -67,6 +67,20 @@ export default function FeedbackScreen() {
           <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
         </TouchableOpacity>
 
+        {/* Flashcard Stats */}
+        <TouchableOpacity
+          style={[styles.rowCard, { backgroundColor: colors.card }]}
+          onPress={() => navigation.navigate('FlashcardStats')}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.rowEmoji}>🃏</Text>
+          <View style={styles.rowInfo}>
+            <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Flashcard Stats</Text>
+            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>View your flashcard progress</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
+        </TouchableOpacity>
+
         {/* Settings section */}
         <Text style={[styles.sectionTitle, { color: colors.textSecondary, marginTop: spacing.lg }]}>Settings</Text>
         <View style={[styles.settingsCard, { backgroundColor: colors.card }]}>

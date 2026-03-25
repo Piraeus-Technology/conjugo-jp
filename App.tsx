@@ -13,6 +13,7 @@ import FeedbackScreen from './src/screens/FeedbackScreen';
 import FlashcardScreen from './src/screens/FlashcardScreen';
 import QuizScreen from './src/screens/QuizScreen';
 import StatsScreen from './src/screens/StatsScreen';
+import FlashcardStatsScreen from './src/screens/FlashcardStatsScreen';
 import PracticeSettingsScreen from './src/screens/PracticeSettingsScreen';
 import { useThemeStore } from './src/store/themeStore';
 import { useColors, fonts } from './src/utils/theme';
@@ -122,6 +123,7 @@ function MoreStackScreen() {
     >
       <MoreStack.Screen name="MoreMain" component={FeedbackScreen} options={{ title: 'More' }} />
       <MoreStack.Screen name="Stats" component={StatsScreen} options={{ title: 'Quiz Stats' }} />
+      <MoreStack.Screen name="FlashcardStats" component={FlashcardStatsScreen} options={{ title: 'Flashcard Stats' }} />
     </MoreStack.Navigator>
   );
 }
