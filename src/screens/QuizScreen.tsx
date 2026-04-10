@@ -200,14 +200,14 @@ export default function QuizScreen() {
       if (newStreak === 10) {
         StoreReview.isAvailableAsync().then((available) => {
           if (available) StoreReview.requestReview();
-        });
+        }).catch(() => {});
       }
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setStreak(0);
       recordAnswer(false, 0);
     }
-    recordResult(question.verb, correct);
+    recordResult(question.verb, correct).catch(() => {});
   };
 
   const handleNext = () => {
@@ -222,7 +222,6 @@ export default function QuizScreen() {
         total: sessionTotal,
         correct: sessionScore,
         streak: bestSessionStreak,
-        durationMs: Date.now() - sessionStart.current,
       });
     }
     setShowResults(true);

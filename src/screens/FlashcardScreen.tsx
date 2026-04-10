@@ -22,6 +22,7 @@ import {
 } from '../utils/conjugate';
 import { speak } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
+import { useThemeStore } from '../store/themeStore';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 
@@ -62,6 +63,7 @@ function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): 
 
 export default function FlashcardScreen() {
   const colors = useColors();
+  const isDark = useThemeStore((s) => s.isDark);
   const navigation = useNavigation<any>();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
   const { saveSession } = useFlashcardSessionStore();
@@ -72,6 +74,8 @@ export default function FlashcardScreen() {
   const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries, flashcardForms));
   const [flipped, setFlipped] = useState(false);
   const [count, setCount] = useState(0);
+  const [reviewed, setReviewed] = useState(0);
+  const [correct, setCorrect] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const sessionStart = useRef(Date.now());
@@ -111,25 +115,29 @@ export default function FlashcardScreen() {
   const handleNewSession = () => {
     setShowResults(false);
     setCount(0);
+    setReviewed(0);
+    setCorrect(0);
     sessionStart.current = Date.now();
     setCard(generateCard(filteredEntries, activeForms));
     setFlipped(false);
     flipAnim.setValue(0);
   };
 
+  const flipToFront = () => {
+    Animated.timing(flipAnim, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      setCard(generateCard(filteredEntries, activeForms));
+      setFlipped(false);
+      setCount(c => c + 1);
+    });
+  };
+
   const flip = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (flipped) {
-      Animated.timing(flipAnim, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }).start(() => {
-        setCard(generateCard(filteredEntries, activeForms));
-        setFlipped(false);
-        setCount(c => c + 1);
-      });
-    } else {
+    if (!flipped) {
       setFlipped(true);
       Animated.timing(flipAnim, {
         toValue: 1,
@@ -137,6 +145,19 @@ export default function FlashcardScreen() {
         useNativeDriver: true,
       }).start();
     }
+  };
+
+  const handleGotIt = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    setReviewed(r => r + 1);
+    setCorrect(c => c + 1);
+    flipToFront();
+  };
+
+  const handleMissed = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    setReviewed(r => r + 1);
+    flipToFront();
   };
 
   const frontOpacity = flipAnim.interpolate({
@@ -203,11 +224,28 @@ export default function FlashcardScreen() {
           >
             <Ionicons name="volume-medium" size={20} color="#fff" />
           </TouchableOpacity>
-          <Text style={[styles.tapHint, { color: colors.textMuted }]}>
-            Tap for next card
-          </Text>
         </Animated.View>
       </TouchableOpacity>
+
+      {/* Got it / Missed buttons */}
+      <View style={[styles.buttonRow, { opacity: flipped ? 1 : 0 }]} pointerEvents={flipped ? 'auto' : 'none'}>
+        <TouchableOpacity
+          style={[styles.actionButton, { backgroundColor: isDark ? '#3E1A1A' : '#FFEBEE', borderColor: isDark ? '#EF5350' : '#C62828' }]}
+          onPress={handleMissed}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="close" size={20} color={isDark ? '#EF5350' : '#C62828'} />
+          <Text style={[styles.actionButtonText, { color: isDark ? '#EF5350' : '#C62828' }]}>Missed</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.actionButton, { backgroundColor: isDark ? '#1A3E1A' : '#E8F5E9', borderColor: isDark ? '#66BB6A' : '#2E7D32' }]}
+          onPress={handleGotIt}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="checkmark" size={20} color={isDark ? '#66BB6A' : '#2E7D32'} />
+          <Text style={[styles.actionButtonText, { color: isDark ? '#66BB6A' : '#2E7D32' }]}>Got it</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* End session button */}
       {count > 0 && (
@@ -334,6 +372,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: spacing.lg,
   },
+  buttonRow: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.lg },
+  actionButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.xs, paddingVertical: spacing.sm + 2, paddingHorizontal: spacing.xl, borderRadius: radius.md, borderWidth: 1.5 },
+  actionButtonText: { fontSize: fonts.sizes.md, fontWeight: fonts.weights.bold },
   endSessionButton: {
     position: 'absolute',
     bottom: spacing.lg + 20,

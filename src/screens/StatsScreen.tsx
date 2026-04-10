@@ -25,13 +25,10 @@ export default function StatsScreen() {
     loadSessions();
   }, []);
 
-  // Aggregate sessions by day
+  // Build daily map from day-keyed sessions
   const dailyMap: Record<string, { total: number; correct: number }> = {};
   sessions.forEach(s => {
-    const key = new Date(s.date).toLocaleDateString('en-CA');
-    if (!dailyMap[key]) dailyMap[key] = { total: 0, correct: 0 };
-    dailyMap[key].total += s.total;
-    dailyMap[key].correct += s.correct;
+    dailyMap[s.day] = { total: s.total, correct: s.correct };
   });
 
   // Today stats

@@ -22,13 +22,10 @@ export default function FlashcardStatsScreen() {
     loadSessions();
   }, []);
 
-  // Aggregate sessions by day
+  // Build daily map from day-keyed sessions
   const dailyMap: Record<string, { reviewed: number; correct: number }> = {};
   sessions.forEach(s => {
-    const key = new Date(s.date).toLocaleDateString('en-CA');
-    if (!dailyMap[key]) dailyMap[key] = { reviewed: 0, correct: 0 };
-    dailyMap[key].reviewed += s.reviewed;
-    dailyMap[key].correct += s.correct;
+    dailyMap[s.day] = { reviewed: s.reviewed, correct: s.correct };
   });
 
   // All-time totals
