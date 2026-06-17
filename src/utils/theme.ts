@@ -31,6 +31,18 @@ const lightColors = {
   irregularTag: '#FFF3E0',
   irregularTagText: '#E65100',
 
+  successBg: '#E8F5E9',
+  successText: '#2E7D32',
+  errorBg: '#FFEBEE',
+  errorText: '#C62828',
+
+  calHigh: '#E8F5E9',
+  calHighText: '#2E7D32',
+  calMid: '#FFF8E1',
+  calMidText: '#F57F17',
+  calLow: '#FFEBEE',
+  calLowText: '#C62828',
+
   n5Bg: '#E0F7FA', n5Text: '#00838F',
   n4Bg: '#E0F2F1', n4Text: '#00695C',
   n3Bg: '#EDE7F6', n3Text: '#4527A0',
@@ -68,6 +80,18 @@ const darkColors = {
   ichidanTagText: '#64B5F6',
   irregularTag: '#3E2200',
   irregularTagText: '#FFB74D',
+
+  successBg: '#1B3A1B',
+  successText: '#66BB6A',
+  errorBg: '#3E1A1A',
+  errorText: '#EF5350',
+
+  calHigh: '#1B3A1B',
+  calHighText: '#66BB6A',
+  calMid: '#3E3308',
+  calMidText: '#FFB74D',
+  calLow: '#3E1A1A',
+  calLowText: '#EF5350',
 
   n5Bg: '#0A2E30', n5Text: '#4DD0E1',
   n4Bg: '#0D2E2B', n4Text: '#4DB6AC',

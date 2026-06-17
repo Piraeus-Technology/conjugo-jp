@@ -104,6 +104,13 @@ function conjugateGodanReading(reading: string, row: GodanRow, form: Conjugation
   const stem = getStem(reading);
   const rowKana = kanaRows[row];
 
+  // 行く and 〜いく compounds: irregular te/ta/tara (って/った/ったら, not いて/いた)
+  if (row === 'ku' && reading.endsWith('いく')) {
+    if (form === 'te') return stem + 'って';
+    if (form === 'ta') return stem + 'った';
+    if (form === 'conditional_tara') return stem + 'ったら';
+  }
+
   switch (form) {
     case 'dictionary':
       return reading;
@@ -284,6 +291,16 @@ export function conjugateReading(verb: VerbData, form: ConjugationForm): string 
 // e.g., verb=飲む, reading=のむ, conjugated=のみます → 飲みます
 export function deriveKanjiForm(verb: string, reading: string, conjugated: string): string {
   if (conjugated === reading) return verb; // dictionary form
+
+  if (verb === '来る' && reading === 'くる') {
+    if (/^[きこく]/.test(conjugated)) return '来' + conjugated.slice(1);
+  }
+  if (verb.endsWith('来る') && reading.endsWith('くる')) {
+    const pv = verb.slice(0, -2), pr = reading.slice(0, -2);
+    const suf = conjugated.slice(pr.length);
+    if (/^[きこく]/.test(suf)) return pv + '来' + suf.slice(1);
+  }
+
   let sharedSuffix = 0;
   for (let i = 1; i <= Math.min(verb.length, reading.length); i++) {
     if (verb[verb.length - i] === reading[reading.length - i]) {

@@ -77,10 +77,10 @@ export default function FlashcardStatsScreen() {
     const key = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const data = dailyMap[key];
     if (!data) return null;
-    const pct = Math.round((data.correct / data.reviewed) * 100);
-    if (pct >= 80) return { bg: '#E8F5E9', text: '#2E7D32' };
-    if (pct >= 50) return { bg: '#FFF8E1', text: '#F57F17' };
-    return { bg: '#FFEBEE', text: '#C62828' };
+    const pct = data.reviewed > 0 ? Math.round((data.correct / data.reviewed) * 100) : 0;
+    if (pct >= 80) return { bg: colors.calHigh, text: colors.calHighText };
+    if (pct >= 50) return { bg: colors.calMid, text: colors.calMidText };
+    return { bg: colors.calLow, text: colors.calLowText };
   };
 
   const getDayKey = (day: number) =>
@@ -140,7 +140,7 @@ export default function FlashcardStatsScreen() {
               </View>
               <View style={styles.statItem}>
                 <Text style={[styles.statValue, { color: colors.primary }]}>
-                  {Math.round((todayData.correct / todayData.reviewed) * 100)}%
+                  {todayData.reviewed > 0 ? Math.round((todayData.correct / todayData.reviewed) * 100) : 0}%
                 </Text>
                 <Text style={[styles.statLabel, { color: colors.textMuted }]}>Accuracy</Text>
               </View>
@@ -202,7 +202,7 @@ export default function FlashcardStatsScreen() {
               {new Date(selectedDay + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
             </Text>
             <Text style={[styles.selectedStat, { color: colors.textSecondary }]}>
-              {selectedData.correct}/{selectedData.reviewed} · {Math.round((selectedData.correct / selectedData.reviewed) * 100)}% accuracy
+              {selectedData.correct}/{selectedData.reviewed} · {selectedData.reviewed > 0 ? Math.round((selectedData.correct / selectedData.reviewed) * 100) : 0}% accuracy
             </Text>
           </View>
         )}
@@ -211,15 +211,15 @@ export default function FlashcardStatsScreen() {
       {/* Legend */}
       <View style={styles.legend}>
         <View style={styles.legendItem}>
-          <View style={[styles.legendDot, { backgroundColor: '#E8F5E9' }]} />
+          <View style={[styles.legendDot, { backgroundColor: colors.calHigh }]} />
           <Text style={[styles.legendText, { color: colors.textMuted }]}>≥80%</Text>
         </View>
         <View style={styles.legendItem}>
-          <View style={[styles.legendDot, { backgroundColor: '#FFF8E1' }]} />
+          <View style={[styles.legendDot, { backgroundColor: colors.calMid }]} />
           <Text style={[styles.legendText, { color: colors.textMuted }]}>≥50%</Text>
         </View>
         <View style={styles.legendItem}>
-          <View style={[styles.legendDot, { backgroundColor: '#FFEBEE' }]} />
+          <View style={[styles.legendDot, { backgroundColor: colors.calLow }]} />
           <Text style={[styles.legendText, { color: colors.textMuted }]}>&lt;50%</Text>
         </View>
       </View>
