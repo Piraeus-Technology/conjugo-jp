@@ -17,7 +17,7 @@ interface SessionStore {
   loaded: boolean;
   loadError: boolean;
   loadSessions: () => Promise<void>;
-  saveSession: (session: Omit<Session, 'day'>) => Promise<void>;
+  saveSession: (session: Omit<Session, 'day'>) => Promise<boolean>;
   clearSessions: () => Promise<void>;
 }
 
@@ -72,15 +72,16 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
     });
   },
 
-  saveSession: async (session) => {
+  saveSession: async (session): Promise<boolean> => {
     if (!get().loaded) {
       await get().loadSessions();
     }
     if (!get().loaded) {
       console.warn('Skipping quiz session save: store never loaded');
-      return;
+      return false;
     }
-    return queue.enqueue(async () => {
+    let ok = false;
+    await queue.enqueue(async () => {
       const today = getTodayKey();
       const current = get().sessions;
       const existingIndex = current.findIndex(s => s.day === today);
@@ -104,7 +105,9 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
         return;
       }
       set({ sessions: updated });
+      ok = true;
     });
+    return ok;
   },
 
   clearSessions: async () => {

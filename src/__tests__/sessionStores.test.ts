@@ -93,7 +93,7 @@ describe('session store day keys and persistence', () => {
     const savePromise = useSessionStore.getState().saveSession({ total: 2, correct: 1, streak: 1 });
 
     load.resolve(JSON.stringify([{ day: today, total: 5, correct: 4, streak: 3 }]));
-    await Promise.all([loadPromise, savePromise]);
+    const [, saveResult] = await Promise.all([loadPromise, savePromise]);
 
     expect(useSessionStore.getState().sessions).toEqual([
       { day: today, total: 7, correct: 5, streak: 3 },
@@ -101,6 +101,7 @@ describe('session store day keys and persistence', () => {
     expect(JSON.parse(mockStorage.get('sessions')!)).toEqual([
       { day: today, total: 7, correct: 5, streak: 3 },
     ]);
+    expect(saveResult).toBe(true);
   });
 
   test('flashcard save after failed load refuses to clobber disk', async () => {
@@ -108,11 +109,40 @@ describe('session store day keys and persistence', () => {
     mockStorage.set('flashcardSessions', JSON.stringify([{ day: today, reviewed: 80, correct: 60 }]));
     jest.mocked(AsyncStorage.getItem).mockRejectedValueOnce(new Error('disk locked'));
 
-    await useFlashcardSessionStore.getState().saveSession({ reviewed: 1, correct: 1 });
+    const saveResult = await useFlashcardSessionStore.getState().saveSession({ reviewed: 1, correct: 1 });
 
     expect(JSON.parse(mockStorage.get('flashcardSessions')!)).toEqual([
       { day: today, reviewed: 80, correct: 60 },
     ]);
     expect(useFlashcardSessionStore.getState()).toMatchObject({ loaded: false, loadError: true });
+    expect(saveResult).toBe(false);
+  });
+
+  test('quiz save returns false and preserves memory when persistence fails', async () => {
+    const today = getTodayKey();
+    const stored = [{ day: today, total: 5, correct: 4, streak: 3 }];
+    mockStorage.set('sessions', JSON.stringify(stored));
+    await useSessionStore.getState().loadSessions();
+    jest.mocked(AsyncStorage.setItem).mockRejectedValueOnce(new Error('disk full'));
+
+    const saveResult = await useSessionStore.getState().saveSession({ total: 2, correct: 1, streak: 4 });
+
+    expect(saveResult).toBe(false);
+    expect(useSessionStore.getState().sessions).toEqual(stored);
+    expect(JSON.parse(mockStorage.get('sessions')!)).toEqual(stored);
+  });
+
+  test('flashcard save returns false and preserves memory when persistence fails', async () => {
+    const today = getTodayKey();
+    const stored = [{ day: today, reviewed: 5, correct: 4 }];
+    mockStorage.set('flashcardSessions', JSON.stringify(stored));
+    await useFlashcardSessionStore.getState().loadSessions();
+    jest.mocked(AsyncStorage.setItem).mockRejectedValueOnce(new Error('disk full'));
+
+    const saveResult = await useFlashcardSessionStore.getState().saveSession({ reviewed: 2, correct: 1 });
+
+    expect(saveResult).toBe(false);
+    expect(useFlashcardSessionStore.getState().sessions).toEqual(stored);
+    expect(JSON.parse(mockStorage.get('flashcardSessions')!)).toEqual(stored);
   });
 });

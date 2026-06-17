@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  Modal,
-  Pressable,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,6 +21,8 @@ import {
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
+import { useSessionAutosave } from '../hooks/useSessionAutosave';
+import { getTodayKey } from '../utils/dayKey';
 import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 import { useSessionStore } from '../store/sessionStore';
@@ -128,16 +128,15 @@ export default function QuizScreen() {
   const { totalQuestions, totalCorrect, bestStreak, loadStats, recordAnswer } = useQuizStore();
   const { loaded: weightsLoaded, loadWeights, recordResult, getWeight } = useSpacedRepStore();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
-  const { loadSessions, saveSession } = useSessionStore();
+  const { sessions, loadSessions, saveSession } = useSessionStore();
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [sessionScore, setSessionScore] = useState(0);
-  const [sessionTotal, setSessionTotal] = useState(0);
+  // This-visit answers (monotonic); persisted as deltas by useSessionAutosave.
+  const [newCorrect, setNewCorrect] = useState(0);
+  const [newTotal, setNewTotal] = useState(0);
   const [streak, setStreak] = useState(0);
   const [bestSessionStreak, setBestSessionStreak] = useState(0);
-  const [showResults, setShowResults] = useState(false);
   const [showHint, setShowHint] = useState(true);
-  const sessionStart = useRef(Date.now());
 
   useEffect(() => {
     loadStats();
@@ -183,12 +182,12 @@ export default function QuizScreen() {
   const handleAnswer = (answer: string) => {
     if (answered || !question) return;
     setSelectedAnswer(answer);
-    setSessionTotal(t => t + 1);
+    setNewTotal(t => t + 1);
 
     const correct = answer === question.correctAnswer;
     if (correct) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setSessionScore(s => s + 1);
+      setNewCorrect(s => s + 1);
       const newStreak = streak + 1;
       setStreak(newStreak);
       if (newStreak > bestSessionStreak) setBestSessionStreak(newStreak);
@@ -214,28 +213,22 @@ export default function QuizScreen() {
     setShowHint(true);
   };
 
-  const handleEndSession = () => {
-    if (sessionTotal > 0) {
-      saveSession({
-        total: sessionTotal,
-        correct: sessionScore,
-        streak: bestSessionStreak,
-      });
-    }
-    setShowResults(true);
-  };
+  // Auto-save new answers on blur / background / unmount (delta-based).
+  const { unsavedCount, unsavedCorrect } = useSessionAutosave({
+    count: newTotal,
+    correct: newCorrect,
+    bestStreak: bestSessionStreak,
+    save: async ({ count, correct, bestStreak }) => {
+      if (!(await saveSession({ total: count, correct, streak: bestStreak }))) {
+        throw new Error('quiz session save failed');
+      }
+    },
+  });
 
-  const handleNewSession = () => {
-    setShowResults(false);
-    setSessionScore(0);
-    setSessionTotal(0);
-    setStreak(0);
-    setBestSessionStreak(0);
-    sessionStart.current = Date.now();
-    setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
-    setSelectedAnswer(null);
-    setShowHint(true);
-  };
+  // Today's cumulative totals plus any unsaved in-memory progress.
+  const todaySession = sessions.find(s => s.day === getTodayKey());
+  const sessionTotal = (todaySession?.total || 0) + unsavedCount;
+  const sessionScore = (todaySession?.correct || 0) + unsavedCorrect;
 
   const getOptionStyle = (option: string) => {
     if (!answered || !question) {
@@ -274,7 +267,7 @@ export default function QuizScreen() {
           <View style={styles.scoreRow}>
             <View style={styles.scoreItem}>
               <Text style={[styles.scoreValue, { color: colors.primary }]}>{sessionScore}/{sessionTotal}</Text>
-              <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Session</Text>
+              <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Today</Text>
             </View>
             <View style={styles.scoreItem}>
               <Text style={[styles.scoreValue, { color: colors.accent }]}>{streak}</Text>
@@ -374,7 +367,7 @@ export default function QuizScreen() {
           </View>
         )}
 
-        {/* Next + End Session — same row */}
+        {/* Next */}
         <View style={[styles.bottomRow, { opacity: answered ? 1 : 0 }]} pointerEvents={answered ? 'auto' : 'none'}>
           <TouchableOpacity
             style={[styles.bottomButton, { backgroundColor: colors.primary }]}
@@ -387,57 +380,8 @@ export default function QuizScreen() {
             <Text style={styles.bottomButtonText}>Next</Text>
             <Ionicons name="arrow-forward" size={16} color="#fff" />
           </TouchableOpacity>
-          {sessionTotal > 0 && (
-            <TouchableOpacity
-              style={[styles.bottomButton, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border }]}
-              onPress={handleEndSession}
-              activeOpacity={0.7}
-              accessibilityRole="button"
-              accessibilityLabel="End quiz session"
-              accessibilityState={{ disabled: !answered }}
-            >
-              <Text style={[styles.bottomButtonText, { color: colors.textMuted }]}>End</Text>
-            </TouchableOpacity>
-          )}
         </View>
       </View>
-
-      {/* Results modal */}
-      <Modal visible={showResults} transparent animationType="fade">
-        <Pressable style={styles.modalOverlay} onPress={() => setShowResults(false)}>
-          <Pressable style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <Text style={[styles.modalTitle, { color: colors.primary }]}>Session Complete!</Text>
-            <View style={styles.modalStats}>
-              <View style={styles.modalStatItem}>
-                <Text style={[styles.modalStatValue, { color: colors.primary }]}>
-                  {sessionScore}/{sessionTotal}
-                </Text>
-                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Score</Text>
-              </View>
-              <View style={styles.modalStatItem}>
-                <Text style={[styles.modalStatValue, { color: colors.accent }]}>
-                  {sessionTotal > 0 ? Math.round((sessionScore / sessionTotal) * 100) : 0}%
-                </Text>
-                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Accuracy</Text>
-              </View>
-              <View style={styles.modalStatItem}>
-                <Text style={[styles.modalStatValue, { color: colors.textSecondary }]}>
-                  {bestSessionStreak}
-                </Text>
-                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Best Streak</Text>
-              </View>
-            </View>
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: colors.primary }]}
-              onPress={handleNewSession}
-              accessibilityRole="button"
-              accessibilityLabel="Start new quiz session"
-            >
-              <Text style={styles.modalButtonText}>New Session</Text>
-            </TouchableOpacity>
-          </Pressable>
-        </Pressable>
-      </Modal>
     </View>
   );
 }
@@ -556,59 +500,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
   },
   bottomButtonText: {
-    color: '#fff',
-    fontSize: fonts.sizes.md,
-    fontWeight: fonts.weights.bold,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '80%',
-    borderRadius: radius.lg,
-    padding: spacing.xl,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 8,
-  },
-  modalTitle: {
-    fontSize: fonts.sizes.xl,
-    fontWeight: fonts.weights.bold,
-    marginBottom: spacing.lg,
-  },
-  modalStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginBottom: spacing.md,
-  },
-  modalStatItem: {
-    alignItems: 'center',
-  },
-  modalStatValue: {
-    fontSize: 28,
-    fontWeight: fonts.weights.bold,
-  },
-  modalStatLabel: {
-    fontSize: fonts.sizes.xs,
-    marginTop: 4,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  modalButton: {
-    paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.md,
-    borderRadius: radius.md,
-    width: '100%',
-    alignItems: 'center',
-  },
-  modalButtonText: {
     color: '#fff',
     fontSize: fonts.sizes.md,
     fontWeight: fonts.weights.bold,

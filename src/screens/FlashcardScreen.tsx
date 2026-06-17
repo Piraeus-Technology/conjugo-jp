@@ -5,9 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
-  Dimensions,
-  Modal,
-  Pressable,
+  useWindowDimensions,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
@@ -26,6 +24,8 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
+import { useSessionAutosave } from '../hooks/useSessionAutosave';
+import { getTodayKey } from '../utils/dayKey';
 import type { FlashcardStackParamList } from '../types/navigation';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
@@ -64,9 +64,10 @@ function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): 
 
 export default function FlashcardScreen() {
   const colors = useColors();
+  const { width } = useWindowDimensions();
   const navigation = useNavigation<NativeStackNavigationProp<FlashcardStackParamList, 'FlashcardMain'>>();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
-  const { loadSessions, saveSession } = useFlashcardSessionStore();
+  const { sessions, loadSessions, saveSession } = useFlashcardSessionStore();
   const { recordResult } = useSpacedRepStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
@@ -74,11 +75,11 @@ export default function FlashcardScreen() {
   );
   const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries, flashcardForms));
   const [flipped, setFlipped] = useState(false);
-  const [reviewed, setReviewed] = useState(0);
-  const [correct, setCorrect] = useState(0);
-  const [showResults, setShowResults] = useState(false);
+  // This-visit answers (monotonic); persisted as deltas by useSessionAutosave.
+  const [newReviewed, setNewReviewed] = useState(0);
+  const [newCorrect, setNewCorrect] = useState(0);
   const flipAnim = useRef(new Animated.Value(0)).current;
-  const sessionStart = useRef(Date.now());
+  const isAnimating = useRef(false);
 
   useEffect(() => {
     loadPracticeSettings();
@@ -104,30 +105,8 @@ export default function FlashcardScreen() {
     });
   }, [navigation, colors]);
 
-  const formatDuration = (ms: number) => {
-    const mins = Math.floor(ms / 60000);
-    const secs = Math.floor((ms % 60000) / 1000);
-    return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
-  };
-
-  const handleEndSession = () => {
-    if (reviewed > 0) {
-      saveSession({ reviewed, correct });
-    }
-    setShowResults(true);
-  };
-
-  const handleNewSession = () => {
-    setShowResults(false);
-    setReviewed(0);
-    setCorrect(0);
-    sessionStart.current = Date.now();
-    setCard(generateCard(filteredEntries, activeForms));
-    setFlipped(false);
-    flipAnim.setValue(0);
-  };
-
   const flipToFront = () => {
+    isAnimating.current = true;
     Animated.timing(flipAnim, {
       toValue: 0,
       duration: 200,
@@ -135,35 +114,60 @@ export default function FlashcardScreen() {
     }).start(() => {
       setCard(generateCard(filteredEntries, activeForms));
       setFlipped(false);
+      isAnimating.current = false;
     });
   };
 
   const flip = () => {
+    if (isAnimating.current || flipped) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (!flipped) {
-      setFlipped(true);
-      Animated.timing(flipAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
+    setFlipped(true);
+    isAnimating.current = true;
+    Animated.timing(flipAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      isAnimating.current = false;
+    });
   };
 
   const handleGotIt = () => {
+    // The flipped gate also guards re-entry: the buttons stay tappable during
+    // the flip-back animation, and a double-tap would record the card twice.
+    if (!flipped) return;
+    setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    setReviewed(r => r + 1);
-    setCorrect(c => c + 1);
+    setNewReviewed(r => r + 1);
+    setNewCorrect(c => c + 1);
     recordResult(card.verb, true).catch(() => {});
     flipToFront();
   };
 
   const handleMissed = () => {
+    if (!flipped) return;
+    setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    setReviewed(r => r + 1);
+    setNewReviewed(r => r + 1);
     recordResult(card.verb, false).catch(() => {});
     flipToFront();
   };
+
+  // Auto-save new answers on blur / background / unmount (delta-based).
+  const { unsavedCount, unsavedCorrect } = useSessionAutosave({
+    count: newReviewed,
+    correct: newCorrect,
+    save: async ({ count, correct }) => {
+      if (!(await saveSession({ reviewed: count, correct }))) {
+        throw new Error('flashcard session save failed');
+      }
+    },
+  });
+
+  // Today's cumulative totals plus any unsaved in-memory progress.
+  const todaySession = sessions.find(s => s.day === getTodayKey());
+  const reviewed = (todaySession?.reviewed || 0) + unsavedCount;
+  const correct = (todaySession?.correct || 0) + unsavedCorrect;
 
   const frontRotateY = flipAnim.interpolate({
     inputRange: [0, 1],
@@ -178,7 +182,7 @@ export default function FlashcardScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      {/* In-session score bar */}
+      {/* Today's score bar */}
       <View style={[styles.scoreBar, { backgroundColor: colors.card }]}>
         <View style={styles.scoreRow}>
           <View style={styles.scoreItem}>
@@ -204,7 +208,7 @@ export default function FlashcardScreen() {
 
       <View style={styles.practiceArea}>
         <TouchableOpacity
-          style={styles.cardContainer}
+          style={[styles.cardContainer, { width: width - spacing.lg * 2 }]}
           onPress={flip}
           activeOpacity={0.95}
           accessibilityRole="button"
@@ -304,53 +308,9 @@ export default function FlashcardScreen() {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* End session button */}
-      {reviewed > 0 && (
-        <TouchableOpacity
-          style={[styles.endSessionButton, { borderColor: colors.border }]}
-          onPress={handleEndSession}
-          activeOpacity={0.7}
-          accessibilityRole="button"
-          accessibilityLabel="End flashcard session"
-        >
-          <Text style={[styles.endSessionText, { color: colors.textMuted }]}>End Session</Text>
-        </TouchableOpacity>
-      )}
-
-      {/* Results modal */}
-      <Modal visible={showResults} transparent animationType="fade">
-        <Pressable style={styles.modalOverlay} onPress={() => setShowResults(false)}>
-          <Pressable style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <Text style={[styles.modalTitle, { color: colors.primary }]}>Session Complete!</Text>
-            <View style={styles.modalStats}>
-              <View style={styles.modalStatItem}>
-                <Text style={[styles.modalStatValue, { color: colors.primary }]}>{reviewed}</Text>
-                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Cards</Text>
-              </View>
-              <View style={styles.modalStatItem}>
-                <Text style={[styles.modalStatValue, { color: colors.textSecondary }]}>
-                  {formatDuration(Date.now() - sessionStart.current)}
-                </Text>
-                <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Time</Text>
-              </View>
-            </View>
-            <TouchableOpacity
-              style={[styles.modalButton, { backgroundColor: colors.primary }]}
-              onPress={handleNewSession}
-              accessibilityRole="button"
-              accessibilityLabel="Start new flashcard session"
-            >
-              <Text style={styles.modalButtonText}>New Session</Text>
-            </TouchableOpacity>
-          </Pressable>
-        </Pressable>
-      </Modal>
     </View>
   );
 }
-
-const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -381,7 +341,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cardContainer: {
-    width: width - spacing.lg * 2,
     height: 360,
   },
   card: {
@@ -454,64 +413,4 @@ const styles = StyleSheet.create({
   buttonRow: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.lg },
   actionButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.xs, paddingVertical: spacing.sm + 2, paddingHorizontal: spacing.xl, borderRadius: radius.md, borderWidth: 1.5 },
   actionButtonText: { fontSize: fonts.sizes.md, fontWeight: fonts.weights.bold },
-  endSessionButton: {
-    position: 'absolute',
-    bottom: spacing.lg + 20,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
-    borderRadius: radius.md,
-    borderWidth: 1,
-  },
-  endSessionText: {
-    fontSize: fonts.sizes.sm,
-    fontWeight: fonts.weights.medium,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '80%',
-    borderRadius: radius.lg,
-    padding: spacing.xl,
-    alignItems: 'center',
-  },
-  modalTitle: {
-    fontSize: fonts.sizes.xl,
-    fontWeight: fonts.weights.bold,
-    marginBottom: spacing.lg,
-  },
-  modalStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginBottom: spacing.lg,
-  },
-  modalStatItem: {
-    alignItems: 'center',
-  },
-  modalStatValue: {
-    fontSize: 28,
-    fontWeight: fonts.weights.bold,
-  },
-  modalStatLabel: {
-    fontSize: fonts.sizes.xs,
-    marginTop: 4,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  modalButton: {
-    paddingHorizontal: spacing.xl,
-    paddingVertical: spacing.md,
-    borderRadius: radius.md,
-    width: '100%',
-    alignItems: 'center',
-  },
-  modalButtonText: {
-    color: '#fff',
-    fontSize: fonts.sizes.md,
-    fontWeight: fonts.weights.bold,
-  },
 });
