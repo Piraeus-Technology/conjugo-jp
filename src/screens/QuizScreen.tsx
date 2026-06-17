@@ -21,11 +21,13 @@ import {
   JLPTLevel,
 } from '../utils/conjugate';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 import { useSessionStore } from '../store/sessionStore';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
+import type { QuizStackParamList } from '../types/navigation';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 
@@ -122,7 +124,7 @@ function generateQuestion(
 
 export default function QuizScreen() {
   const colors = useColors();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<QuizStackParamList, 'QuizMain'>>();
   const { totalQuestions, totalCorrect, bestStreak, loadStats, recordAnswer } = useQuizStore();
   const { loaded: weightsLoaded, loadWeights, recordResult, getWeight } = useSpacedRepStore();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
@@ -153,6 +155,8 @@ export default function QuizScreen() {
           onPress={() => navigation.navigate('PracticeSettings', { mode: 'quiz' })}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginRight: 8 }}
+          accessibilityRole="button"
+          accessibilityLabel="Open form and level settings"
         >
           <Text style={{ color: colors.primary, fontSize: 14, fontWeight: '600' }}>Forms</Text>
           <Ionicons name="options-outline" size={18} color={colors.primary} />
@@ -319,6 +323,9 @@ export default function QuizScreen() {
               onPress={() => handleAnswer(option)}
               activeOpacity={answered ? 1 : 0.7}
               disabled={answered}
+              accessibilityRole="button"
+              accessibilityLabel={`Answer: ${option}`}
+              accessibilityState={{ disabled: answered, selected: selectedAnswer === option }}
             >
               <Text
                 style={[styles.optionText, { color: getOptionTextColor(option) }]}
@@ -344,6 +351,10 @@ export default function QuizScreen() {
               style={styles.hintHeader}
               onPress={() => setShowHint(v => !v)}
               activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel="Show conjugation rule"
+              accessibilityHint={showHint ? 'Collapses the rule explanation' : 'Expands the rule explanation'}
+              accessibilityState={{ expanded: showHint }}
             >
               <View style={styles.hintTitleRow}>
                 <Ionicons name="help-circle-outline" size={18} color={colors.primary} />
@@ -369,6 +380,9 @@ export default function QuizScreen() {
             style={[styles.bottomButton, { backgroundColor: colors.primary }]}
             onPress={handleNext}
             activeOpacity={0.8}
+            accessibilityRole="button"
+            accessibilityLabel="Next question"
+            accessibilityState={{ disabled: !answered }}
           >
             <Text style={styles.bottomButtonText}>Next</Text>
             <Ionicons name="arrow-forward" size={16} color="#fff" />
@@ -378,6 +392,9 @@ export default function QuizScreen() {
               style={[styles.bottomButton, { backgroundColor: colors.card, borderWidth: 1, borderColor: colors.border }]}
               onPress={handleEndSession}
               activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel="End quiz session"
+              accessibilityState={{ disabled: !answered }}
             >
               <Text style={[styles.bottomButtonText, { color: colors.textMuted }]}>End</Text>
             </TouchableOpacity>
@@ -413,6 +430,8 @@ export default function QuizScreen() {
             <TouchableOpacity
               style={[styles.modalButton, { backgroundColor: colors.primary }]}
               onPress={handleNewSession}
+              accessibilityRole="button"
+              accessibilityLabel="Start new quiz session"
             >
               <Text style={styles.modalButtonText}>New Session</Text>
             </TouchableOpacity>

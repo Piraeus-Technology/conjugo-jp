@@ -12,6 +12,7 @@ import {
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import verbs from '../data/verbs.json';
 import {
   conjugateReading,
@@ -25,6 +26,7 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
+import type { FlashcardStackParamList } from '../types/navigation';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 
@@ -62,7 +64,7 @@ function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): 
 
 export default function FlashcardScreen() {
   const colors = useColors();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<FlashcardStackParamList, 'FlashcardMain'>>();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
   const { loadSessions, saveSession } = useFlashcardSessionStore();
   const { recordResult } = useSpacedRepStore();
@@ -93,6 +95,8 @@ export default function FlashcardScreen() {
           onPress={() => navigation.navigate('PracticeSettings', { mode: 'flashcards' })}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginRight: 8 }}
+          accessibilityRole="button"
+          accessibilityLabel="Open form and level settings"
         >
           <Text style={{ color: colors.primary, fontSize: 14, fontWeight: '600' }}>Forms</Text>
           <Ionicons name="options-outline" size={18} color={colors.primary} />
@@ -185,6 +189,12 @@ export default function FlashcardScreen() {
         style={styles.cardContainer}
         onPress={flip}
         activeOpacity={0.95}
+        accessibilityRole="button"
+        accessibilityLabel={flipped
+          ? `${card.verb}, ${card.reading}, ${formLabel.en} answer: ${card.answer}`
+          : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}`}
+        accessibilityHint={flipped ? 'Use Got it or Missed to grade this card' : 'Flips the card to reveal the answer'}
+        accessibilityState={{ disabled: flipped }}
       >
         {/* Front */}
         <Animated.View
@@ -242,6 +252,8 @@ export default function FlashcardScreen() {
               e.stopPropagation?.();
               speak(card.answer);
             }}
+            accessibilityRole="button"
+            accessibilityLabel={`Play pronunciation of ${card.answer}`}
           >
             <Ionicons name="volume-medium" size={20} color="#fff" />
           </TouchableOpacity>
@@ -254,6 +266,9 @@ export default function FlashcardScreen() {
           style={[styles.actionButton, { backgroundColor: colors.errorBg, borderColor: colors.errorText }]}
           onPress={handleMissed}
           activeOpacity={0.8}
+          accessibilityRole="button"
+          accessibilityLabel="Mark card as missed"
+          accessibilityState={{ disabled: !flipped }}
         >
           <Ionicons name="close" size={20} color={colors.errorText} />
           <Text style={[styles.actionButtonText, { color: colors.errorText }]}>Missed</Text>
@@ -262,6 +277,9 @@ export default function FlashcardScreen() {
           style={[styles.actionButton, { backgroundColor: colors.successBg, borderColor: colors.successText }]}
           onPress={handleGotIt}
           activeOpacity={0.8}
+          accessibilityRole="button"
+          accessibilityLabel="Mark card as got it"
+          accessibilityState={{ disabled: !flipped }}
         >
           <Ionicons name="checkmark" size={20} color={colors.successText} />
           <Text style={[styles.actionButtonText, { color: colors.successText }]}>Got it</Text>
@@ -274,6 +292,8 @@ export default function FlashcardScreen() {
           style={[styles.endSessionButton, { borderColor: colors.border }]}
           onPress={handleEndSession}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="End flashcard session"
         >
           <Text style={[styles.endSessionText, { color: colors.textMuted }]}>End Session</Text>
         </TouchableOpacity>
@@ -299,6 +319,8 @@ export default function FlashcardScreen() {
             <TouchableOpacity
               style={[styles.modalButton, { backgroundColor: colors.primary }]}
               onPress={handleNewSession}
+              accessibilityRole="button"
+              accessibilityLabel="Start new flashcard session"
             >
               <Text style={styles.modalButtonText}>New Session</Text>
             </TouchableOpacity>

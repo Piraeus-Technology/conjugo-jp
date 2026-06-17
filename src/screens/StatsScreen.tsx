@@ -174,11 +174,21 @@ export default function StatsScreen() {
       <View style={[styles.calendarCard, { backgroundColor: colors.card }]}>
         {/* Month navigation */}
         <View style={styles.calendarHeader}>
-          <TouchableOpacity onPress={prevMonth} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+          <TouchableOpacity
+            onPress={prevMonth}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            accessibilityRole="button"
+            accessibilityLabel="Previous month"
+          >
             <Ionicons name="chevron-back" size={20} color={colors.primary} />
           </TouchableOpacity>
           <Text style={[styles.calendarMonth, { color: colors.textPrimary }]}>{monthName}</Text>
-          <TouchableOpacity onPress={nextMonth} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+          <TouchableOpacity
+            onPress={nextMonth}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            accessibilityRole="button"
+            accessibilityLabel="Next month"
+          >
             <Ionicons name="chevron-forward" size={20} color={colors.primary} />
           </TouchableOpacity>
         </View>
@@ -199,6 +209,7 @@ export default function StatsScreen() {
               }
               const dayColor = getDayColor(day);
               const key = getDayKey(day);
+              const data = dailyMap[key];
               const isSelected = selectedDay === key;
               const isToday = key === todayStr;
 
@@ -215,6 +226,9 @@ export default function StatsScreen() {
                     if (dailyMap[key]) setSelectedDay(isSelected ? null : key);
                   }}
                   activeOpacity={dailyMap[key] ? 0.7 : 1}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${new Date(key + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}: ${data ? `${data.total} questions, ${data.correct} correct` : 'no activity'}`}
+                  accessibilityState={{ selected: isSelected, disabled: !data }}
                 >
                   <Text style={[
                     styles.calendarDay,
