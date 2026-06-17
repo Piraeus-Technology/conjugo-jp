@@ -36,9 +36,9 @@ export default function FeedbackScreen() {
 
   const handleRateApp = () => {
     const url = Platform.select({
-      ios: 'https://apps.apple.com/app/conjugo-jp', // TODO: update with real App Store ID
+      ios: 'https://apps.apple.com/app/id6781443990?action=write-review',
       android: 'market://details?id=com.piraeus.conjugojp',
-      default: 'https://apps.apple.com/app/conjugo-jp',
+      default: 'https://apps.apple.com/app/id6781443990',
     });
     Linking.openURL(url).catch(() => {
       Alert.alert('Not Available Yet', 'Rating will be available once the app is on the App Store.');
