@@ -1780,7 +1780,7 @@
     "group": "irregular",
     "translation": "to graduate",
     "jlpt": "N4",
-    "transitive": true,
+    "transitive": false,
     "examples": [
       {
         "ja": "大学を卒業する。",
@@ -5545,7 +5545,7 @@
     "group": "irregular",
     "translation": "to reverse, to turn around",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "形勢が逆転する。", "en": "The situation is reversed." }]
   },
   "共感する": {
@@ -6364,7 +6364,7 @@
     "godanRow": "tsu",
     "translation": "to last, to hold up",
     "jlpt": "N5",
-    "transitive": true,
+    "transitive": false,
     "examples": [{ "ja": "電池がもつ。", "en": "The battery lasts." }]
   },
   "頑張る": {
@@ -6624,7 +6624,7 @@
     "group": "ichidan",
     "translation": "to transfer (trains), to switch",
     "jlpt": "N3",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "電車を乗り換える。", "en": "I transfer trains." }]
   },
   "当てはまる": {
@@ -7097,7 +7097,7 @@
     "group": "irregular",
     "translation": "to restore, to recover",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "電力が復旧する。", "en": "Power is restored." }]
   },
   "保管する": {
@@ -7166,7 +7166,7 @@
     "group": "ichidan",
     "translation": "to make excuses, to evade",
     "jlpt": "N1",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "責任から言い逃れる。", "en": "I evade responsibility." }]
   },
   "読み取る": {
@@ -7296,7 +7296,7 @@
     "group": "irregular",
     "translation": "to hesitate",
     "jlpt": "N1",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "返事を躊躇する。", "en": "I hesitate to reply." }]
   },
   "捏造する": {
@@ -8209,7 +8209,7 @@
     "godanRow": "u",
     "translation": "to be wrong, to make a mistake",
     "jlpt": "N4",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "道を間違う。", "en": "I take the wrong road." }]
   },
   "足りる": {
@@ -8641,7 +8641,7 @@
     "group": "irregular",
     "translation": "to be thorough, to enforce strictly",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "管理を徹底する。", "en": "I enforce management thoroughly." }]
   },
   "定着する": {
@@ -9192,14 +9192,6 @@
     "transitive": true,
     "examples": [{ "ja": "関係を見切る。", "en": "I give up on the relationship." }]
   },
-  "歯止めをかける": {
-    "reading": "はどめをかける",
-    "group": "ichidan",
-    "translation": "to put a stop to, to curb",
-    "jlpt": "N2",
-    "transitive": true,
-    "examples": [{ "ja": "支出に歯止めをかける。", "en": "I curb spending." }]
-  },
   "持て余す": {
     "reading": "もてあます",
     "group": "godan",
@@ -9232,15 +9224,6 @@
     "jlpt": "N2",
     "transitive": false,
     "examples": [{ "ja": "説明が腑に落ちる。", "en": "The explanation makes sense." }]
-  },
-  "筋を通す": {
-    "reading": "すじをとおす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to be consistent, to do the right thing",
-    "jlpt": "N2",
-    "transitive": true,
-    "examples": [{ "ja": "最後まで筋を通す。", "en": "I stay consistent to the end." }]
   },
   "裁く": {
     "reading": "さばく",
@@ -9580,14 +9563,6 @@
     "transitive": false,
     "examples": [{ "ja": "文献が散逸する。", "en": "Documents are scattered and lost." }]
   },
-  "覇を唱える": {
-    "reading": "はをとなえる",
-    "group": "ichidan",
-    "translation": "to reign supreme, to claim supremacy",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "業界で覇を唱える。", "en": "I reign supreme in the industry." }]
-  },
   "名乗る": {
     "reading": "なのる",
     "group": "godan",
@@ -9784,7 +9759,7 @@
     "group": "irregular",
     "translation": "to understand, to be convinced",
     "jlpt": "N3",
-    "transitive": true,
+    "transitive": false,
     "examples": [{ "ja": "説明に納得する。", "en": "I am convinced by the explanation." }]
   },
   "運営する": {
@@ -10326,7 +10301,7 @@
     "godanRow": "mu",
     "translation": "to be prejudiced, to be envious",
     "jlpt": "N1",
-    "transitive": true,
+    "transitive": false,
     "examples": [{ "ja": "他人の成功を僻む。", "en": "I am envious of others' success." }]
   },
   "蔑む": {
@@ -10863,7 +10838,7 @@
     "godanRow": "ru",
     "translation": "to reconsider, to give up the idea",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "退職を思い留まる。", "en": "I reconsider quitting." }]
   },
   "売り込む": {
@@ -11689,7 +11664,7 @@
     "group": "irregular",
     "translation": "to debate, to discuss",
     "jlpt": "N3",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "政策を討論する。", "en": "I debate the policy." }]
   },
   "交渉する": {
@@ -11697,7 +11672,7 @@
     "group": "irregular",
     "translation": "to negotiate",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "条件を交渉する。", "en": "I negotiate the terms." }]
   },
   "合意する": {
@@ -12113,7 +12088,7 @@
     "group": "ichidan",
     "translation": "to be lazy, to slack off",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "宿題を怠ける。", "en": "I slack off on homework." }]
   },
   "叱る": {
@@ -12884,7 +12859,7 @@
     "godanRow": "ku",
     "translation": "to grumble, to complain",
     "jlpt": "N3",
-    "transitive": true,
+    "transitive": false,
     "examples": [{ "ja": "給料が安いとぼやく。", "en": "I grumble that the salary is low." }]
   },
   "たかる": {
@@ -13151,15 +13126,6 @@
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "感謝してこうべを垂れる。", "en": "I bow my head in gratitude." }]
-  },
-  "たゆまぬ": {
-    "reading": "たゆまぬ",
-    "group": "godan",
-    "godanRow": "nu",
-    "translation": "to be untiring, to be ceaseless",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "たゆまぬ努力。", "en": "Untiring effort." }]
   },
   "物怖じする": {
     "reading": "ものおじする",
@@ -13608,7 +13574,7 @@
     "group": "irregular",
     "translation": "to doubt, to be skeptical",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "情報を懐疑する。", "en": "I am skeptical of the information." }]
   },
   "喝采する": {
@@ -13912,7 +13878,7 @@
     "group": "ichidan",
     "translation": "to feel ashamed",
     "jlpt": "N3",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "自分の行いを恥じる。", "en": "I feel ashamed of my actions." }]
   },
   "恥じらう": {
@@ -14079,7 +14045,7 @@
     "godanRow": "su",
     "translation": "to set out, to lean forward",
     "jlpt": "N2",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "身を乗り出す。", "en": "I lean forward." }]
   },
   "燃え上がる": {
@@ -14228,7 +14194,7 @@
     "group": "irregular",
     "translation": "to evade taxes",
     "jlpt": "N2",
-    "transitive": true,
+    "transitive": false,
     "examples": [{ "ja": "所得を隠して脱税する。", "en": "I evade taxes by hiding income." }]
   },
   "溢れ返る": {
@@ -14884,15 +14850,6 @@
     "jlpt": "N1",
     "transitive": false,
     "examples": [{ "ja": "態度が目に余る。", "en": "The attitude is intolerable." }]
-  },
-  "歯に衣着せぬ": {
-    "reading": "はにきぬきせぬ",
-    "group": "godan",
-    "godanRow": "nu",
-    "translation": "to speak bluntly, to not mince words",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "歯に衣着せぬ発言。", "en": "Blunt remarks." }]
   },
   "鼻を折る": {
     "reading": "はなをおる",
@@ -15769,14 +15726,6 @@
     "transitive": true,
     "examples": [{ "ja": "大手を振って歩く。", "en": "I walk with confidence." }]
   },
-  "肩身が狭い思いをする": {
-    "reading": "かたみがせまいおもいをする",
-    "group": "irregular",
-    "translation": "to feel ashamed, to feel small",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "失敗して肩身が狭い。", "en": "I feel small after the failure." }]
-  },
   "涙を呑む": {
     "reading": "なみだをのむ",
     "group": "godan",
@@ -16458,7 +16407,7 @@
     "group": "irregular",
     "translation": "to exchange (blows/words)",
     "jlpt": "N1",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "言葉を応酬する。", "en": "We exchange words." }]
   },
   "牽制する": {
@@ -16546,7 +16495,7 @@
     "group": "irregular",
     "translation": "to reconstruct, to revive",
     "jlpt": "N1",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "街を復興する。", "en": "I reconstruct the town." }]
   },
   "興隆する": {
@@ -16998,7 +16947,7 @@
     "godanRow": "mu",
     "translation": "to agonize, to worry deeply",
     "jlpt": "N1",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "将来を思い悩む。", "en": "I agonize about the future." }]
   },
   "思い焦がれる": {
@@ -17014,7 +16963,7 @@
     "group": "ichidan",
     "translation": "to let one's thoughts wander to",
     "jlpt": "N1",
-    "transitive": true,
+    "transitive": false,
     "examples": [{ "ja": "遠い昔に思い馳せる。", "en": "I let my thoughts wander to the distant past." }]
   },
   "思い詰める": {
@@ -17564,14 +17513,6 @@
     "transitive": true,
     "examples": [{ "ja": "結論を玉虫色にする。", "en": "I leave the conclusion ambiguous." }]
   },
-  "一矢報いる": {
-    "reading": "いっしむくいる",
-    "group": "ichidan",
-    "translation": "to fight back, to get a hit in",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "強敵に一矢報いる。", "en": "I fight back against the powerful enemy." }]
-  },
   "汚名を返上する": {
     "reading": "おめいをへんじょうする",
     "group": "irregular",
@@ -17693,15 +17634,6 @@
     "transitive": true,
     "examples": [{ "ja": "光景に目を疑う。", "en": "I can't believe my eyes at the sight." }]
   },
-  "手に汗握る": {
-    "reading": "てにあせにぎる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to be on the edge of one's seat",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "手に汗握る展開。", "en": "A thrilling development." }]
-  },
   "手を拱く": {
     "reading": "てをこまねく",
     "group": "godan",
@@ -17807,14 +17739,6 @@
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "法律を盾に取る。", "en": "I hide behind the law." }]
-  },
-  "煮え湯を飲まされる": {
-    "reading": "にえゆをのまされる",
-    "group": "ichidan",
-    "translation": "to be betrayed by a trusted person",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "味方に煮え湯を飲まされる。", "en": "I am betrayed by an ally." }]
   },
   "一線を画す": {
     "reading": "いっせんをかくす",
@@ -17943,7 +17867,7 @@
     "group": "irregular",
     "translation": "to grope in the dark, to search blindly",
     "jlpt": "N1",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "解決策を暗中模索する。", "en": "I search blindly for a solution." }]
   },
   "試行錯誤する": {
@@ -18116,14 +18040,6 @@
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "質問にお茶を濁す。", "en": "I dodge the question." }]
-  },
-  "阿吽の呼吸で合わせる": {
-    "reading": "あうんのこきゅうであわせる",
-    "group": "ichidan",
-    "translation": "to be in perfect sync",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "阿吽の呼吸で合わせる。", "en": "We act in perfect sync." }]
   },
   "異彩を放つ": {
     "reading": "いさいをはなつ",
