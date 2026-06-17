@@ -149,17 +149,20 @@ describe('store persistence hardening', () => {
     expect(mockStorage.get('practiceSettings')).toBeUndefined();
   });
 
-  test('theme load failure leaves loaded false and toggle refuses to write', async () => {
+  test('theme load failure falls back to defaults and still marks loaded', async () => {
     mockStorage.set('theme_mode', 'dark');
+    mockStorage.set('auto_tts', 'true');
     jest.mocked(AsyncStorage.getItem).mockRejectedValue(new Error('disk locked'));
 
-    await useThemeStore.getState().toggleTheme();
+    await useThemeStore.getState().loadTheme();
 
     expect(useThemeStore.getState()).toMatchObject({
       isDark: false,
-      loaded: false,
+      autoTTS: false,
+      loaded: true,
       loadError: true,
     });
     expect(mockStorage.get('theme_mode')).toBe('dark');
+    expect(mockStorage.get('auto_tts')).toBe('true');
   });
 });

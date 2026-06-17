@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
+  AppState,
   useWindowDimensions,
 } from 'react-native';
+import type { AppStateStatus } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -24,6 +26,7 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
+import { useThemeStore } from '../store/themeStore';
 import { useSessionAutosave } from '../hooks/useSessionAutosave';
 import { getTodayKey } from '../utils/dayKey';
 import type { FlashcardStackParamList } from '../types/navigation';
@@ -69,6 +72,7 @@ export default function FlashcardScreen() {
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
   const { sessions, loadSessions, saveSession } = useFlashcardSessionStore();
   const { recordResult } = useSpacedRepStore();
+  const { autoTTS } = useThemeStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
@@ -80,13 +84,33 @@ export default function FlashcardScreen() {
   const [newCorrect, setNewCorrect] = useState(0);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
+  const speechGate = useRef({
+    focused: true,
+    appState: AppState.currentState as AppStateStatus,
+  });
 
   useEffect(() => {
     loadPracticeSettings();
     loadSessions();
   }, []);
 
-  useFocusEffect(useCallback(() => () => stopSpeech(), []));
+  useFocusEffect(useCallback(() => {
+    speechGate.current.focused = true;
+    return () => {
+      speechGate.current.focused = false;
+      stopSpeech();
+    };
+  }, []));
+
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      speechGate.current.appState = state;
+      if (state === 'background' || state === 'inactive') {
+        stopSpeech();
+      }
+    });
+    return () => sub.remove();
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -127,8 +151,16 @@ export default function FlashcardScreen() {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => {
+    }).start(({ finished }) => {
+      if (!finished) return;
       isAnimating.current = false;
+      if (
+        autoTTS &&
+        speechGate.current.focused &&
+        speechGate.current.appState === 'active'
+      ) {
+        speak(card.answer);
+      }
     });
   };
 
