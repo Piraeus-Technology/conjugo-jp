@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 
 import verbs from '../data/verbs.json';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { conjugate, FORM_GROUPS, VerbData } from '../utils/conjugate';
-import { speak } from '../utils/speech';
+import { speak, stopSpeech } from '../utils/speech';
 
 export default function ConjugationScreen() {
   const colors = useColors();
@@ -22,6 +22,8 @@ export default function ConjugationScreen() {
   React.useEffect(() => {
     loadFavorites();
   }, []);
+
+  useFocusEffect(useCallback(() => () => stopSpeech(), []));
 
   const highlightRef = useRef<View>(null);
   const scrollContentRef = useRef<View>(null);
