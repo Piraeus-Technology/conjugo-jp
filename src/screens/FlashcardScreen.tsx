@@ -181,9 +181,29 @@ export default function FlashcardScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      <Text style={[styles.counter, { color: colors.textMuted }]}>
-        {count} cards reviewed
-      </Text>
+      {/* In-session score bar */}
+      <View style={[styles.scoreBar, { backgroundColor: colors.card }]}>
+        <View style={styles.scoreRow}>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.primary }]}>{reviewed}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Reviewed</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.successText }]}>{correct}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Got It</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.errorText }]}>{reviewed - correct}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Missed</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.textSecondary }]}>
+              {reviewed > 0 ? Math.round((correct / reviewed) * 100) : 0}%
+            </Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Accuracy</Text>
+          </View>
+        </View>
+      </View>
 
       <TouchableOpacity
         style={styles.cardContainer}
@@ -340,11 +360,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing.lg,
   },
-  counter: {
-    fontSize: fonts.sizes.sm,
+  scoreBar: {
     position: 'absolute',
     top: spacing.sm,
+    left: spacing.lg,
+    right: spacing.lg,
+    zIndex: 1,
+    padding: spacing.sm,
+    borderRadius: radius.md,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
+  scoreRow: { flexDirection: 'row', justifyContent: 'space-around' },
+  scoreItem: { alignItems: 'center' },
+  scoreValue: { fontSize: fonts.sizes.lg, fontWeight: fonts.weights.bold },
+  scoreLabel: { fontSize: fonts.sizes.xs, marginTop: 2, textTransform: 'uppercase', letterSpacing: 0.5 },
   cardContainer: {
     width: width - spacing.lg * 2,
     height: 360,
