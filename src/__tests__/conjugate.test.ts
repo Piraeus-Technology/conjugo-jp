@@ -1,4 +1,4 @@
-import { conjugate, conjugateReading, VerbData } from '../utils/conjugate';
+import { conjugate, conjugateReading, getConjugationHint, VerbData } from '../utils/conjugate';
 
 // Helper to make verb data concise in tests
 function godan(reading: string, row: string, overrides?: any): VerbData {
@@ -311,5 +311,33 @@ describe('Special verb: ある negative override', () => {
 
   test('nakatta override: なかった', () => {
     expect(conjugateReading(aru, 'nakatta')).toBe('なかった');
+  });
+});
+
+describe('Conjugation rule hints', () => {
+  test('godan ku te-form mentions the row rule and 行く exception', () => {
+    const v = godan('かく', 'ku');
+    expect(getConjugationHint(v, 'te')).toContain('く → replace with いて');
+    expect(getConjugationHint(v, 'te')).toContain('行く is the exception');
+  });
+
+  test('godan u-row negative uses わ', () => {
+    const v = godan('かう', 'u');
+    expect(getConjugationHint(v, 'nai')).toBe('Godan う-verbs: negative replaces う with わ + ない.');
+  });
+
+  test('ichidan masu form explains the dropped る stem', () => {
+    const v = ichidan('たべる');
+    expect(getConjugationHint(v, 'masu')).toBe('Ichidan: drop る, add ます.');
+  });
+
+  test('irregular する potential uses できる', () => {
+    const v = irregular('する');
+    expect(getConjugationHint(v, 'potential')).toBe('する → できる (irregular).');
+  });
+
+  test('irregular くる negative uses こない', () => {
+    const v = irregular('くる');
+    expect(getConjugationHint(v, 'nai')).toBe('くる → こない (irregular).');
   });
 });

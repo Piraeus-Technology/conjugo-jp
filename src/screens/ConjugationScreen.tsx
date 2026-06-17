@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
@@ -17,7 +17,7 @@ export default function ConjugationScreen() {
   const verbData = (verbs as Record<string, VerbData>)[verb];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();
   const scrollRef = useRef<ScrollView>(null);
-  const highlightY = useRef<number | null>(null);
+  const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
 
   React.useEffect(() => {
     loadFavorites();
@@ -35,6 +35,12 @@ export default function ConjugationScreen() {
   }
 
   const groupLabel = verbData.group === 'godan' ? '五段' : verbData.group === 'ichidan' ? '一段' : '不規則';
+  const transitivity = verbData.transitive === undefined ? null : verbData.transitive
+    ? { bg: colors.transitiveBg, text: colors.transitiveText, label: '他動詞' }
+    : { bg: colors.intransitiveBg, text: colors.intransitiveText, label: '自動詞' };
+  const toggleGroup = (title: string) => {
+    setCollapsedGroups(current => ({ ...current, [title]: !current[title] }));
+  };
 
   return (
     <ScrollView ref={scrollRef} style={[styles.container, { backgroundColor: colors.bg }]}>
@@ -65,65 +71,86 @@ export default function ConjugationScreen() {
           <View style={[styles.tag, { backgroundColor: (colors as any)[`${verbData.jlpt.toLowerCase()}Bg`] || colors.pillBg }]}>
             <Text style={[styles.tagText, { color: (colors as any)[`${verbData.jlpt.toLowerCase()}Text`] || colors.textSecondary }]}>{verbData.jlpt}</Text>
           </View>
+          {transitivity && (
+            <View style={[styles.tag, { backgroundColor: transitivity.bg }]}>
+              <Text style={[styles.tagText, { color: transitivity.text }]}>{transitivity.label}</Text>
+            </View>
+          )}
         </View>
       </View>
 
       {/* Conjugation Groups */}
-      {FORM_GROUPS.map((group) => (
-        <View key={group.title} style={styles.groupSection}>
-          <Text style={[styles.groupTitle, { color: colors.textSecondary }]}>
-            {group.title} ({group.titleJa})
-          </Text>
-          <View style={[styles.groupCard, { backgroundColor: colors.card }]}>
-            {group.forms.map((form) => {
-              const result = conjugate(verb, verbData, form);
-              const isHighlighted = form === highlightForm && highlightForm !== 'dictionary';
-              return (
-                <TouchableOpacity
-                  key={form}
-                  ref={isHighlighted ? highlightRef as any : undefined}
-                  onLayout={isHighlighted ? () => {
-                    setTimeout(() => {
-                      if (highlightRef.current && scrollContentRef.current) {
-                        highlightRef.current.measureLayout(
-                          scrollContentRef.current as any,
-                          (_x, y) => {
-                            scrollRef.current?.scrollTo({ y: Math.max(0, y - 150), animated: true });
-                          },
-                          () => {},
-                        );
-                      }
-                    }, 400);
-                  } : undefined}
-                  style={[
-                    styles.formRow,
-                    { borderBottomColor: colors.divider },
-                    isHighlighted && { backgroundColor: colors.primary + '15' },
-                  ]}
-                  onPress={() => speak(result.reading)}
-                  activeOpacity={0.7}
-                >
-                  <View style={styles.formLabel}>
-                    <Text style={[styles.formLabelJa, { color: colors.textMuted }]}>{result.labelJa}</Text>
-                    <Text style={[styles.formLabelEn, { color: colors.textMuted }]}>{result.labelEn}</Text>
-                  </View>
-                  <View style={styles.formValue}>
-                    {result.value !== result.reading ? (
-                      <>
-                        <Text style={[styles.formText, { color: colors.textPrimary }]}>{result.value}</Text>
-                        <Text style={[styles.formReading, { color: colors.textMuted }]}>{result.reading}</Text>
-                      </>
-                    ) : (
-                      <Text style={[styles.formText, { color: colors.textPrimary }]}>{result.reading}</Text>
-                    )}
-                  </View>
-                  <Ionicons name="volume-medium-outline" size={16} color={colors.textMuted} />
-                </TouchableOpacity>
-              );
-            })}
+      {FORM_GROUPS.map((group) => {
+        const isCollapsed = !!collapsedGroups[group.title];
+        return (
+          <View key={group.title} style={styles.groupSection}>
+            <TouchableOpacity
+              style={styles.groupHeader}
+              onPress={() => toggleGroup(group.title)}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.groupTitle, { color: colors.textSecondary }]}>
+                {group.title} ({group.titleJa})
+              </Text>
+              <Ionicons
+                name={isCollapsed ? 'chevron-down' : 'chevron-up'}
+                size={18}
+                color={colors.textMuted}
+              />
+            </TouchableOpacity>
+            {!isCollapsed && (
+              <View style={[styles.groupCard, { backgroundColor: colors.card }]}>
+                {group.forms.map((form) => {
+                  const result = conjugate(verb, verbData, form);
+                  const isHighlighted = form === highlightForm && highlightForm !== 'dictionary';
+                  return (
+                    <TouchableOpacity
+                      key={form}
+                      ref={isHighlighted ? highlightRef as any : undefined}
+                      onLayout={isHighlighted ? () => {
+                        setTimeout(() => {
+                          if (highlightRef.current && scrollContentRef.current) {
+                            highlightRef.current.measureLayout(
+                              scrollContentRef.current as any,
+                              (_x, y) => {
+                                scrollRef.current?.scrollTo({ y: Math.max(0, y - 150), animated: true });
+                              },
+                              () => {},
+                            );
+                          }
+                        }, 400);
+                      } : undefined}
+                      style={[
+                        styles.formRow,
+                        { borderBottomColor: colors.divider },
+                        isHighlighted && { backgroundColor: colors.primary + '15' },
+                      ]}
+                      onPress={() => speak(result.reading)}
+                      activeOpacity={0.7}
+                    >
+                      <View style={styles.formLabel}>
+                        <Text style={[styles.formLabelJa, { color: colors.textMuted }]}>{result.labelJa}</Text>
+                        <Text style={[styles.formLabelEn, { color: colors.textMuted }]}>{result.labelEn}</Text>
+                      </View>
+                      <View style={styles.formValue}>
+                        {result.value !== result.reading ? (
+                          <>
+                            <Text style={[styles.formText, { color: colors.textPrimary }]}>{result.value}</Text>
+                            <Text style={[styles.formReading, { color: colors.textMuted }]}>{result.reading}</Text>
+                          </>
+                        ) : (
+                          <Text style={[styles.formText, { color: colors.textPrimary }]}>{result.reading}</Text>
+                        )}
+                      </View>
+                      <Ionicons name="volume-medium-outline" size={16} color={colors.textMuted} />
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            )}
           </View>
-        </View>
-      ))}
+        );
+      })}
 
       {/* Examples */}
       {verbData.examples && verbData.examples.length > 0 && (
@@ -175,10 +202,15 @@ const styles = StyleSheet.create({
   tag: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.full },
   tagText: { fontSize: fonts.sizes.xs, fontWeight: fonts.weights.medium },
   groupSection: { marginTop: spacing.md, paddingHorizontal: spacing.md },
+  groupHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: spacing.sm,
+  },
   groupTitle: {
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,
-    marginBottom: spacing.sm,
   },
   groupCard: {
     borderRadius: radius.md,

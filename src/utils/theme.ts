@@ -30,6 +30,10 @@ const lightColors = {
   ichidanTagText: '#1565C0',
   irregularTag: '#FFF3E0',
   irregularTagText: '#E65100',
+  transitiveBg: '#E3F2FD',
+  transitiveText: '#1565C0',
+  intransitiveBg: '#FFF8E1',
+  intransitiveText: '#F57F17',
 
   successBg: '#E8F5E9',
   successText: '#2E7D32',
@@ -80,6 +84,10 @@ const darkColors = {
   ichidanTagText: '#64B5F6',
   irregularTag: '#3E2200',
   irregularTagText: '#FFB74D',
+  transitiveBg: '#0D2137',
+  transitiveText: '#64B5F6',
+  intransitiveBg: '#3E3308',
+  intransitiveText: '#FFB74D',
 
   successBg: '#1B3A1B',
   successText: '#66BB6A',

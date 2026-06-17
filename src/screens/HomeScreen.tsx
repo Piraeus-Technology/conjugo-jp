@@ -22,7 +22,7 @@ import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { romajiToHiragana } from '../utils/kana';
 import type { RootStackParamList } from '../types/navigation';
-import { conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, ConjugationForm } from '../utils/conjugate';
+import { conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, JLPTLevel, ConjugationForm } from '../utils/conjugate';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -35,6 +35,7 @@ const searchData = verbList.map(([verb, data]) => ({
   translation: data.translation,
   jlpt: data.jlpt,
   group: data.group,
+  transitive: data.transitive,
 }));
 
 const fuse = new Fuse(searchData, {
@@ -101,6 +102,7 @@ interface SearchResult {
   translation: string;
   jlpt: string;
   group: string;
+  transitive?: boolean;
   matchType: 'verb' | 'conjugation';
   matchDetail?: string;
   matchForm?: ConjugationForm;
@@ -111,20 +113,64 @@ function getVerbOfTheDay(): [string, VerbData] {
   return verbList[dayIndex];
 }
 
+const levelFilters: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
+const groupFilters: { value: VerbGroup; label: string }[] = [
+  { value: 'godan', label: '五段 (Godan)' },
+  { value: 'ichidan', label: '一段 (Ichidan)' },
+  { value: 'irregular', label: '不規則 (Irregular)' },
+];
+
 export default function HomeScreen() {
   const colors = useColors();
   const navigation = useNavigation<NavProp>();
   const { history, loadHistory, addToHistory, removeFromHistory } = useHistoryStore();
   const { favorites, loadFavorites, toggleFavorite } = useFavoritesStore();
   const [query, setQuery] = useState('');
+  const [selectedLevels, setSelectedLevels] = useState<JLPTLevel[]>([]);
+  const [selectedGroups, setSelectedGroups] = useState<VerbGroup[]>([]);
 
   useEffect(() => {
     loadHistory();
     loadFavorites();
   }, []);
 
+  const hasActiveFilters = selectedLevels.length > 0 || selectedGroups.length > 0;
+
+  const toggleLevel = useCallback((level: JLPTLevel) => {
+    setSelectedLevels(current =>
+      current.includes(level) ? current.filter(item => item !== level) : [...current, level]
+    );
+  }, []);
+
+  const toggleGroup = useCallback((group: VerbGroup) => {
+    setSelectedGroups(current =>
+      current.includes(group) ? current.filter(item => item !== group) : [...current, group]
+    );
+  }, []);
+
+  const passesFilters = useCallback((item: { jlpt?: string; group?: string }) => {
+    const matchesLevel = selectedLevels.length === 0 || selectedLevels.includes(item.jlpt as JLPTLevel);
+    const matchesGroup = selectedGroups.length === 0 || selectedGroups.includes(item.group as VerbGroup);
+    return matchesLevel && matchesGroup;
+  }, [selectedLevels, selectedGroups]);
+
+  const filteredVerbResults = useMemo((): SearchResult[] => {
+    if (!hasActiveFilters) return [];
+    return verbList
+      .filter(([, data]) => passesFilters(data))
+      .map(([verb, data]) => ({
+        verb,
+        reading: data.reading,
+        translation: data.translation,
+        jlpt: data.jlpt,
+        group: data.group,
+        transitive: data.transitive,
+        matchType: 'verb',
+      }));
+  }, [hasActiveFilters, passesFilters]);
+
   const results = useMemo((): SearchResult[] => {
-    if (!query.trim()) return [];
+    if (!query.trim()) return hasActiveFilters ? filteredVerbResults : [];
     const q = query.trim();
     const hiraganaQuery = romajiToHiragana(q);
 
@@ -140,13 +186,15 @@ export default function HomeScreen() {
       exactConjMatches.forEach((c) => {
         if (!seen.has(c.verb)) {
           seen.add(c.verb);
+          const data = (verbs as Record<string, VerbData>)[c.verb];
           const label = FORM_LABELS[c.form];
           out.push({
             verb: c.verb,
             reading: c.reading,
             translation: c.translation,
-            jlpt: (verbs as Record<string, VerbData>)[c.verb]?.jlpt || '',
-            group: (verbs as Record<string, VerbData>)[c.verb]?.group || '',
+            jlpt: data?.jlpt || '',
+            group: data?.group || '',
+            transitive: data?.transitive,
             matchType: 'conjugation',
             matchDetail: `「${c.conjugated}」— ${label.ja} (${label.en})`,
             matchForm: c.form,
@@ -174,13 +222,15 @@ export default function HomeScreen() {
       conjResults.forEach((r) => {
         if (!seen.has(r.item.verb)) {
           seen.add(r.item.verb);
+          const data = (verbs as Record<string, VerbData>)[r.item.verb];
           const label = FORM_LABELS[r.item.form];
           out.push({
             verb: r.item.verb,
             reading: r.item.reading,
             translation: r.item.translation,
-            jlpt: (verbs as Record<string, VerbData>)[r.item.verb]?.jlpt || '',
-            group: (verbs as Record<string, VerbData>)[r.item.verb]?.group || '',
+            jlpt: data?.jlpt || '',
+            group: data?.group || '',
+            transitive: data?.transitive,
             matchType: 'conjugation',
             matchDetail: `「${r.item.conjugated}」— ${label.ja} (${label.en})`,
             matchForm: r.item.form,
@@ -189,8 +239,8 @@ export default function HomeScreen() {
       });
     }
 
-    return out.slice(0, 20);
-  }, [query]);
+    return out.filter(passesFilters).slice(0, 20);
+  }, [query, hasActiveFilters, filteredVerbResults, passesFilters]);
 
   const handleVerbPress = useCallback((verb: string, highlightForm?: string) => {
     addToHistory(verb);
@@ -204,6 +254,34 @@ export default function HomeScreen() {
     ichidan: { bg: colors.ichidanTag, text: colors.ichidanTagText },
     irregular: { bg: colors.irregularTag, text: colors.irregularTagText },
   };
+
+  const getTransitivityColors = (transitive: boolean) => transitive
+    ? { bg: colors.transitiveBg, text: colors.transitiveText, label: '他動詞' }
+    : { bg: colors.intransitiveBg, text: colors.intransitiveText, label: '自動詞' };
+
+  const renderFilterChip = (
+    key: string,
+    label: string,
+    active: boolean,
+    onPress: () => void,
+  ) => (
+    <TouchableOpacity
+      key={key}
+      style={[
+        styles.filterChip,
+        {
+          backgroundColor: active ? colors.pillActiveBg : colors.pillBg,
+          borderColor: active ? colors.pillActiveBg : colors.border,
+        },
+      ]}
+      onPress={onPress}
+      activeOpacity={0.75}
+    >
+      <Text style={[styles.filterChipText, { color: active ? colors.pillActiveText : colors.pillText }]}>
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
 
   const renderDeleteAction = (
     _progress: Animated.AnimatedInterpolation<number>,
@@ -253,6 +331,14 @@ export default function HomeScreen() {
             <View style={[styles.tag, { backgroundColor: (colors as any)[`${item.jlpt.toLowerCase()}Bg`] || colors.pillBg }]}>
               <Text style={[styles.tagText, { color: (colors as any)[`${item.jlpt.toLowerCase()}Text`] || colors.textMuted }]}>{item.jlpt}</Text>
             </View>
+            {item.transitive !== undefined && (() => {
+              const transitivity = getTransitivityColors(item.transitive);
+              return (
+                <View style={[styles.tag, { backgroundColor: transitivity.bg }]}>
+                  <Text style={[styles.tagText, { color: transitivity.text }]}>{transitivity.label}</Text>
+                </View>
+              );
+            })()}
           </View>
         </View>
       </TouchableOpacity>
@@ -322,7 +408,21 @@ export default function HomeScreen() {
         )}
       </View>
 
-      {query.trim() ? (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.filterContent}
+        style={styles.filterScroll}
+      >
+        {levelFilters.map(level =>
+          renderFilterChip(level, level, selectedLevels.includes(level), () => toggleLevel(level))
+        )}
+        {groupFilters.map(group =>
+          renderFilterChip(group.value, group.label, selectedGroups.includes(group.value), () => toggleGroup(group.value))
+        )}
+      </ScrollView>
+
+      {query.trim() || hasActiveFilters ? (
         <FlatList
           data={results}
           keyExtractor={(item) => item.verb + item.matchType}
@@ -355,6 +455,16 @@ export default function HomeScreen() {
                   {vodData.jlpt}
                 </Text>
               </View>
+              {vodData.transitive !== undefined && (() => {
+                const transitivity = getTransitivityColors(vodData.transitive);
+                return (
+                  <View style={[styles.vodBadge, { backgroundColor: transitivity.bg }]}>
+                    <Text style={[styles.vodBadgeText, { color: transitivity.text }]}>
+                      {transitivity.label}
+                    </Text>
+                  </View>
+                );
+              })()}
             </View>
           </TouchableOpacity>
 
@@ -404,6 +514,26 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   searchInput: { flex: 1, fontSize: fonts.sizes.md },
+  filterScroll: {
+    maxHeight: 38,
+    marginTop: -spacing.xs,
+    marginBottom: spacing.sm,
+  },
+  filterContent: {
+    paddingHorizontal: spacing.md,
+    gap: spacing.xs,
+    alignItems: 'center',
+  },
+  filterChip: {
+    borderWidth: 1,
+    borderRadius: radius.full,
+    paddingHorizontal: spacing.md,
+    paddingVertical: 6,
+  },
+  filterChipText: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: fonts.weights.semibold,
+  },
   listContent: { paddingHorizontal: spacing.md },
   resultItem: {
     flexDirection: 'row',

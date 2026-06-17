@@ -59,7 +59,7 @@ export default function FeedbackScreen() {
           onPress={() => navigation.navigate('Stats')}
           activeOpacity={0.7}
         >
-          <Text style={styles.rowEmoji}>📊</Text>
+          <Ionicons name="bar-chart-outline" size={24} color={colors.primary} style={{ marginRight: spacing.md }} />
           <View style={styles.rowInfo}>
             <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Quiz Stats</Text>
             <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>View your quiz progress and streaks</Text>
@@ -73,7 +73,7 @@ export default function FeedbackScreen() {
           onPress={() => navigation.navigate('FlashcardStats')}
           activeOpacity={0.7}
         >
-          <Text style={styles.rowEmoji}>🃏</Text>
+          <Ionicons name="layers-outline" size={24} color={colors.primary} style={{ marginRight: spacing.md }} />
           <View style={styles.rowInfo}>
             <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Flashcard Stats</Text>
             <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>View your flashcard progress</Text>

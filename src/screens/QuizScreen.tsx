@@ -14,6 +14,7 @@ import { speak } from '../utils/speech';
 import verbs from '../data/verbs.json';
 import {
   conjugateReading,
+  getConjugationHint,
   FORM_LABELS,
   ConjugationForm,
   VerbData,
@@ -35,6 +36,7 @@ interface Question {
   form: ConjugationForm;
   correctAnswer: string;
   options: string[];
+  verbData: VerbData;
 }
 
 function generateQuestion(
@@ -114,6 +116,7 @@ function generateQuestion(
     form,
     correctAnswer,
     options,
+    verbData: data,
   };
 }
 
@@ -131,6 +134,7 @@ export default function QuizScreen() {
   const [streak, setStreak] = useState(0);
   const [bestSessionStreak, setBestSessionStreak] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [showHint, setShowHint] = useState(true);
   const sessionStart = useRef(Date.now());
 
   useEffect(() => {
@@ -190,6 +194,7 @@ export default function QuizScreen() {
       }
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      setShowHint(true);
       setStreak(0);
       recordAnswer(false, 0);
     }
@@ -200,6 +205,7 @@ export default function QuizScreen() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
     setSelectedAnswer(null);
+    setShowHint(true);
   };
 
   const handleEndSession = () => {
@@ -222,6 +228,7 @@ export default function QuizScreen() {
     sessionStart.current = Date.now();
     setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
     setSelectedAnswer(null);
+    setShowHint(true);
   };
 
   const getOptionStyle = (option: string) => {
@@ -251,6 +258,7 @@ export default function QuizScreen() {
   );
 
   const formLabel = FORM_LABELS[question.form];
+  const hint = getConjugationHint(question.verbData, question.form);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
@@ -327,6 +335,31 @@ export default function QuizScreen() {
             </TouchableOpacity>
           ))}
         </View>
+
+        {answered && !isCorrect && (
+          <View style={[styles.hintCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <TouchableOpacity
+              style={styles.hintHeader}
+              onPress={() => setShowHint(v => !v)}
+              activeOpacity={0.7}
+            >
+              <View style={styles.hintTitleRow}>
+                <Ionicons name="help-circle-outline" size={18} color={colors.primary} />
+                <Text style={[styles.hintTitle, { color: colors.textPrimary }]}>Why?</Text>
+              </View>
+              <Ionicons
+                name={showHint ? 'chevron-up' : 'chevron-down'}
+                size={18}
+                color={colors.textMuted}
+              />
+            </TouchableOpacity>
+            {showHint && (
+              <Text style={[styles.hintText, { color: colors.textSecondary }]}>
+                {hint}
+              </Text>
+            )}
+          </View>
+        )}
 
         {/* Next + End Session — same row */}
         <View style={[styles.bottomRow, { opacity: answered ? 1 : 0 }]} pointerEvents={answered ? 'auto' : 'none'}>
@@ -451,6 +484,30 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     gap: spacing.xs,
+  },
+  hintCard: {
+    borderWidth: 1,
+    borderRadius: radius.md,
+    padding: spacing.sm,
+  },
+  hintHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  hintTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+  hintTitle: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.bold,
+  },
+  hintText: {
+    fontSize: fonts.sizes.sm,
+    lineHeight: 19,
+    marginTop: spacing.xs,
   },
   optionButton: {
     flexDirection: 'row',
