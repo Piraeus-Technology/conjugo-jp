@@ -8,8 +8,8 @@
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#BC002D"
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
     },
     "ios": {
       "supportsTablet": false,
@@ -23,7 +23,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#BC002D"
+        "backgroundColor": "#FFFFFF"
       },
       "package": "com.piraeus.conjugojp",
       "versionCode": 1,
