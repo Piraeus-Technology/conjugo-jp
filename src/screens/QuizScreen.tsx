@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 import * as StoreReview from 'expo-store-review';
-import { speak } from '../utils/speech';
+import { stopSpeech } from '../utils/speech';
 import verbs from '../data/verbs.json';
 import {
   conjugateReading,
@@ -20,7 +20,7 @@ import {
   VerbData,
   JLPTLevel,
 } from '../utils/conjugate';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
@@ -143,6 +143,8 @@ export default function QuizScreen() {
     loadPracticeSettings();
     loadSessions();
   }, []);
+
+  useFocusEffect(useCallback(() => () => stopSpeech(), []));
 
   useLayoutEffect(() => {
     navigation.setOptions({

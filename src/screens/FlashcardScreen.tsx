@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useRef, useMemo, useEffect, useLayoutEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import verbs from '../data/verbs.json';
 import {
   conjugateReading,
@@ -20,10 +20,11 @@ import {
   VerbData,
   JLPTLevel,
 } from '../utils/conjugate';
-import { speak } from '../utils/speech';
+import { speak, stopSpeech } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
+import { useSpacedRepStore } from '../store/spacedRepStore';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 
@@ -64,6 +65,7 @@ export default function FlashcardScreen() {
   const navigation = useNavigation<any>();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
   const { loadSessions, saveSession } = useFlashcardSessionStore();
+  const { recordResult } = useSpacedRepStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
@@ -81,6 +83,8 @@ export default function FlashcardScreen() {
     loadPracticeSettings();
     loadSessions();
   }, []);
+
+  useFocusEffect(useCallback(() => () => stopSpeech(), []));
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -149,12 +153,14 @@ export default function FlashcardScreen() {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setReviewed(r => r + 1);
     setCorrect(c => c + 1);
+    recordResult(card.verb, true).catch(() => {});
     flipToFront();
   };
 
   const handleMissed = () => {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     setReviewed(r => r + 1);
+    recordResult(card.verb, false).catch(() => {});
     flipToFront();
   };
 
