@@ -119,6 +119,10 @@ const groupFilters: { value: VerbGroup; label: string }[] = [
   { value: 'ichidan', label: '一段 (Ichidan)' },
   { value: 'irregular', label: '不規則 (Irregular)' },
 ];
+const transitivityFilters: { value: boolean; label: string }[] = [
+  { value: true, label: '他動詞 (Trans.)' },
+  { value: false, label: '自動詞 (Intr.)' },
+];
 
 export default function HomeScreen() {
   const colors = useColors();
@@ -129,6 +133,7 @@ export default function HomeScreen() {
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedLevels, setSelectedLevels] = useState<JLPTLevel[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<VerbGroup[]>([]);
+  const [selectedTransitivity, setSelectedTransitivity] = useState<boolean[]>([]);
 
   useEffect(() => {
     loadHistory();
@@ -144,7 +149,7 @@ export default function HomeScreen() {
     return () => clearTimeout(timeout);
   }, [query]);
 
-  const hasActiveFilters = selectedLevels.length > 0 || selectedGroups.length > 0;
+  const hasActiveFilters = selectedLevels.length > 0 || selectedGroups.length > 0 || selectedTransitivity.length > 0;
 
   const toggleLevel = useCallback((level: JLPTLevel) => {
     setSelectedLevels(current =>
@@ -158,11 +163,19 @@ export default function HomeScreen() {
     );
   }, []);
 
-  const passesFilters = useCallback((item: { jlpt?: string; group?: string }) => {
+  const toggleTransitivity = useCallback((value: boolean) => {
+    setSelectedTransitivity(current =>
+      current.includes(value) ? current.filter(item => item !== value) : [...current, value]
+    );
+  }, []);
+
+  const passesFilters = useCallback((item: { jlpt?: string; group?: string; transitive?: boolean }) => {
     const matchesLevel = selectedLevels.length === 0 || selectedLevels.includes(item.jlpt as JLPTLevel);
     const matchesGroup = selectedGroups.length === 0 || selectedGroups.includes(item.group as VerbGroup);
-    return matchesLevel && matchesGroup;
-  }, [selectedLevels, selectedGroups]);
+    const matchesTransitivity = selectedTransitivity.length === 0 ||
+      (item.transitive !== undefined && selectedTransitivity.includes(item.transitive));
+    return matchesLevel && matchesGroup && matchesTransitivity;
+  }, [selectedLevels, selectedGroups, selectedTransitivity]);
 
   const filteredVerbResults = useMemo((): SearchResult[] => {
     if (!hasActiveFilters) return [];
@@ -464,6 +477,9 @@ export default function HomeScreen() {
         )}
         {groupFilters.map(group =>
           renderFilterChip(group.value, group.label, selectedGroups.includes(group.value), () => toggleGroup(group.value))
+        )}
+        {transitivityFilters.map(t =>
+          renderFilterChip(t.label, t.label, selectedTransitivity.includes(t.value), () => toggleTransitivity(t.value))
         )}
       </ScrollView>
 
