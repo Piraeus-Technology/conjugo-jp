@@ -25,7 +25,7 @@ const APP_VERSION = '1.0.0';
 export default function FeedbackScreen() {
   const colors = useColors();
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList, 'MoreMain'>>();
-  const { isDark, toggleTheme } = useThemeStore();
+  const { isDark, autoTTS, toggleTheme, toggleAutoTTS } = useThemeStore();
   const {
     products,
     loading: tipLoading,
@@ -109,6 +109,19 @@ export default function FeedbackScreen() {
               accessibilityRole="switch"
               accessibilityLabel="Dark Mode"
               accessibilityState={{ checked: isDark }}
+            />
+          </View>
+          <View style={[styles.settingRow, { borderBottomWidth: 0 }]}>
+            <Ionicons name="volume-medium-outline" size={20} color={colors.textSecondary} />
+            <Text style={[styles.settingLabel, { color: colors.textPrimary }]}>Auto-Play Audio</Text>
+            <Switch
+              value={autoTTS}
+              onValueChange={toggleAutoTTS}
+              trackColor={{ false: isDark ? colors.border : '#C5C0BA', true: colors.primary }}
+              thumbColor="#fff"
+              accessibilityRole="switch"
+              accessibilityLabel="Auto-Play Audio"
+              accessibilityState={{ checked: autoTTS }}
             />
           </View>
         </View>

@@ -24,6 +24,7 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
+import { useThemeStore } from '../store/themeStore';
 import { useSessionAutosave } from '../hooks/useSessionAutosave';
 import { getTodayKey } from '../utils/dayKey';
 import type { FlashcardStackParamList } from '../types/navigation';
@@ -69,6 +70,7 @@ export default function FlashcardScreen() {
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
   const { sessions, loadSessions, saveSession } = useFlashcardSessionStore();
   const { recordResult } = useSpacedRepStore();
+  const { autoTTS } = useThemeStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
@@ -122,6 +124,7 @@ export default function FlashcardScreen() {
     if (isAnimating.current || flipped) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setFlipped(true);
+    if (autoTTS) speak(card.answer);
     isAnimating.current = true;
     Animated.timing(flipAnim, {
       toValue: 1,
