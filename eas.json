@@ -25,6 +25,9 @@
   },
   "submit": {
     "production": {
+      "android": {
+        "track": "production"
+      },
       "ios": {
         "appleId": "lkh9596@icloud.com",
         "ascAppId": "",
