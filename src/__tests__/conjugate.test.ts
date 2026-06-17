@@ -1,4 +1,4 @@
-import { conjugateReading, VerbData } from '../utils/conjugate';
+import { conjugate, conjugateReading, VerbData } from '../utils/conjugate';
 
 // Helper to make verb data concise in tests
 function godan(reading: string, row: string, overrides?: any): VerbData {
@@ -79,6 +79,13 @@ describe('Godan te/ta-form sound changes by row', () => {
     const v = godan('かく', 'ku');
     expect(conjugateReading(v, 'te')).toBe('かいて');
     expect(conjugateReading(v, 'ta')).toBe('かいた');
+  });
+
+  test('iku compounds use 行く te/ta irregular forms', () => {
+    const v = godan('もっていく', 'ku');
+    expect(conjugateReading(v, 'te')).toBe('もっていって');
+    expect(conjugateReading(v, 'ta')).toBe('もっていった');
+    expect(conjugateReading(v, 'conditional_tara')).toBe('もっていったら');
   });
 
   test('gu row: 泳ぐ → およいで/およいだ', () => {
@@ -255,6 +262,11 @@ describe('Irregular verb 来る', () => {
 
   test('volitional form', () => {
     expect(conjugateReading(kuru, 'volitional')).toBe('こよう');
+  });
+
+  test('kanji forms keep 来 for shifted readings', () => {
+    expect(conjugate('来る', kuru, 'masu').value).toBe('来ます');
+    expect(conjugate('来る', kuru, 'nai').value).toBe('来ない');
   });
 });
 

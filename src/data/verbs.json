@@ -336,20 +336,6 @@
       }
     ]
   },
-  "働く": {
-    "reading": "はたらく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to work",
-    "jlpt": "N5",
-    "transitive": false,
-    "examples": [
-      {
-        "ja": "毎日働く。",
-        "en": "I work every day."
-      }
-    ]
-  },
   "遊ぶ": {
     "reading": "あそぶ",
     "group": "godan",
@@ -858,20 +844,6 @@
       }
     ]
   },
-  "咲く": {
-    "reading": "さく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to bloom",
-    "jlpt": "N5",
-    "transitive": false,
-    "examples": [
-      {
-        "ja": "桜が咲く。",
-        "en": "Cherry blossoms bloom."
-      }
-    ]
-  },
   "かける": {
     "reading": "かける",
     "group": "ichidan",
@@ -1033,20 +1005,6 @@
       }
     ]
   },
-  "引く": {
-    "reading": "ひく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to pull, to draw",
-    "jlpt": "N5",
-    "transitive": true,
-    "examples": [
-      {
-        "ja": "ドアを引く。",
-        "en": "I pull the door."
-      }
-    ]
-  },
   "歌う": {
     "reading": "うたう",
     "group": "godan",
@@ -1058,20 +1016,6 @@
       {
         "ja": "歌を歌う。",
         "en": "I sing a song."
-      }
-    ]
-  },
-  "弾く": {
-    "reading": "ひく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to play (instrument)",
-    "jlpt": "N5",
-    "transitive": true,
-    "examples": [
-      {
-        "ja": "ピアノを弾く。",
-        "en": "I play the piano."
       }
     ]
   },
@@ -1375,19 +1319,6 @@
       }
     ]
   },
-  "運ぶ": {
-    "reading": "はこぶ",
-    "group": "godan",
-    "godanRow": "bu",
-    "translation": "to carry",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "荷物を運ぶ。",
-        "en": "I carry luggage."
-      }
-    ]
-  },
   "捨てる": {
     "reading": "すてる",
     "group": "ichidan",
@@ -1400,19 +1331,6 @@
       }
     ]
   },
-  "拾う": {
-    "reading": "ひろう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to pick up",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "お金を拾った。",
-        "en": "I picked up money."
-      }
-    ]
-  },
   "育てる": {
     "reading": "そだてる",
     "group": "ichidan",
@@ -1422,19 +1340,6 @@
       {
         "ja": "子供を育てる。",
         "en": "I raise children."
-      }
-    ]
-  },
-  "育つ": {
-    "reading": "そだつ",
-    "group": "godan",
-    "godanRow": "tsu",
-    "translation": "to grow up",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "東京で育った。",
-        "en": "I grew up in Tokyo."
       }
     ]
   },
@@ -1472,19 +1377,6 @@
       {
         "ja": "いい店を見つけた。",
         "en": "I found a good shop."
-      }
-    ]
-  },
-  "見つかる": {
-    "reading": "みつかる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to be found",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "鍵が見つかった。",
-        "en": "The keys were found."
       }
     ]
   },
@@ -1540,18 +1432,6 @@
       }
     ]
   },
-  "慣れる": {
-    "reading": "なれる",
-    "group": "ichidan",
-    "translation": "to get used to",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "新しい生活に慣れた。",
-        "en": "I got used to the new life."
-      }
-    ]
-  },
   "信じる": {
     "reading": "しんじる",
     "group": "ichidan",
@@ -1561,30 +1441,6 @@
       {
         "ja": "友達を信じる。",
         "en": "I believe in my friend."
-      }
-    ]
-  },
-  "比べる": {
-    "reading": "くらべる",
-    "group": "ichidan",
-    "translation": "to compare",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "値段を比べる。",
-        "en": "I compare prices."
-      }
-    ]
-  },
-  "続ける": {
-    "reading": "つづける",
-    "group": "ichidan",
-    "translation": "to continue (transitive)",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "勉強を続ける。",
-        "en": "I continue studying."
       }
     ]
   },
@@ -1622,30 +1478,6 @@
       {
         "ja": "将来について考える。",
         "en": "I think about the future."
-      }
-    ]
-  },
-  "調べる": {
-    "reading": "しらべる",
-    "group": "ichidan",
-    "translation": "to investigate, to look up",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "意味を調べる。",
-        "en": "I look up the meaning."
-      }
-    ]
-  },
-  "足りる": {
-    "reading": "たりる",
-    "group": "ichidan",
-    "translation": "to be enough",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "お金が足りない。",
-        "en": "There isn't enough money."
       }
     ]
   },
@@ -1911,18 +1743,6 @@
       }
     ]
   },
-  "翻訳する": {
-    "reading": "ほんやくする",
-    "group": "irregular",
-    "translation": "to translate",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "英語に翻訳する。",
-        "en": "I translate into English."
-      }
-    ]
-  },
   "故障する": {
     "reading": "こしょうする",
     "group": "irregular",
@@ -2092,69 +1912,6 @@
       }
     ]
   },
-  "片付ける": {
-    "reading": "かたづける",
-    "group": "ichidan",
-    "translation": "to tidy up",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "部屋を片付ける。",
-        "en": "I tidy up the room."
-      }
-    ]
-  },
-  "怒る": {
-    "reading": "おこる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to get angry",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "先生が怒った。",
-        "en": "The teacher got angry."
-      }
-    ]
-  },
-  "謝る": {
-    "reading": "あやまる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to apologize",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "遅れて謝る。",
-        "en": "I apologize for being late."
-      }
-    ]
-  },
-  "褒める": {
-    "reading": "ほめる",
-    "group": "ichidan",
-    "translation": "to praise",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "子供を褒める。",
-        "en": "I praise the child."
-      }
-    ]
-  },
-  "叱る": {
-    "reading": "しかる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to scold",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "子供を叱る。",
-        "en": "I scold the child."
-      }
-    ]
-  },
   "喜ぶ": {
     "reading": "よろこぶ",
     "group": "godan",
@@ -2181,19 +1938,6 @@
       }
     ]
   },
-  "驚く": {
-    "reading": "おどろく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to be surprised",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "結果に驚いた。",
-        "en": "I was surprised by the result."
-      }
-    ]
-  },
   "迷う": {
     "reading": "まよう",
     "group": "godan",
@@ -2204,44 +1948,6 @@
       {
         "ja": "道に迷った。",
         "en": "I got lost."
-      }
-    ]
-  },
-  "困る": {
-    "reading": "こまる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to be troubled",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "お金がなくて困る。",
-        "en": "I'm troubled because I have no money."
-      }
-    ]
-  },
-  "太る": {
-    "reading": "ふとる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to gain weight",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "最近太った。",
-        "en": "I gained weight recently."
-      }
-    ]
-  },
-  "痩せる": {
-    "reading": "やせる",
-    "group": "ichidan",
-    "translation": "to lose weight",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "五キロ痩せた。",
-        "en": "I lost five kilos."
       }
     ]
   },
@@ -2271,19 +1977,6 @@
       }
     ]
   },
-  "光る": {
-    "reading": "ひかる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to shine",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "星が光る。",
-        "en": "Stars shine."
-      }
-    ]
-  },
   "濡れる": {
     "reading": "ぬれる",
     "group": "ichidan",
@@ -2296,58 +1989,6 @@
       }
     ]
   },
-  "乾く": {
-    "reading": "かわく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to dry",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "洗濯物が乾いた。",
-        "en": "The laundry dried."
-      }
-    ]
-  },
-  "沸かす": {
-    "reading": "わかす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to boil (transitive)",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "お湯を沸かす。",
-        "en": "I boil water."
-      }
-    ]
-  },
-  "焼く": {
-    "reading": "やく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to grill, to bake",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "パンを焼く。",
-        "en": "I bake bread."
-      }
-    ]
-  },
-  "冷やす": {
-    "reading": "ひやす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to cool",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "ビールを冷やす。",
-        "en": "I chill the beer."
-      }
-    ]
-  },
   "温める": {
     "reading": "あたためる",
     "group": "ichidan",
@@ -2357,68 +1998,6 @@
       {
         "ja": "スープを温める。",
         "en": "I warm up the soup."
-      }
-    ]
-  },
-  "包む": {
-    "reading": "つつむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to wrap",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "プレゼントを包む。",
-        "en": "I wrap a present."
-      }
-    ]
-  },
-  "混ぜる": {
-    "reading": "まぜる",
-    "group": "ichidan",
-    "translation": "to mix",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "材料を混ぜる。",
-        "en": "I mix the ingredients."
-      }
-    ]
-  },
-  "数える": {
-    "reading": "かぞえる",
-    "group": "ichidan",
-    "translation": "to count",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "お金を数える。",
-        "en": "I count the money."
-      }
-    ]
-  },
-  "植える": {
-    "reading": "うえる",
-    "group": "ichidan",
-    "translation": "to plant",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "花を植える。",
-        "en": "I plant flowers."
-      }
-    ]
-  },
-  "祈る": {
-    "reading": "いのる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to pray",
-    "jlpt": "N4",
-    "examples": [
-      {
-        "ja": "平和を祈る。",
-        "en": "I pray for peace."
       }
     ]
   },
@@ -2534,18 +2113,6 @@
       }
     ]
   },
-  "支える": {
-    "reading": "ささえる",
-    "group": "ichidan",
-    "translation": "to support",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "家族を支える。",
-        "en": "I support my family."
-      }
-    ]
-  },
   "保つ": {
     "reading": "たもつ",
     "group": "godan",
@@ -2556,19 +2123,6 @@
       {
         "ja": "健康を保つ。",
         "en": "I maintain my health."
-      }
-    ]
-  },
-  "果たす": {
-    "reading": "はたす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to fulfill, to accomplish",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "役割を果たす。",
-        "en": "I fulfill my role."
       }
     ]
   },
@@ -2633,31 +2187,6 @@
       }
     ]
   },
-  "叫ぶ": {
-    "reading": "さけぶ",
-    "group": "godan",
-    "godanRow": "bu",
-    "translation": "to shout, to scream",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "助けを叫ぶ。",
-        "en": "I shout for help."
-      }
-    ]
-  },
-  "震える": {
-    "reading": "ふるえる",
-    "group": "ichidan",
-    "translation": "to tremble, to shiver",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "寒さで震える。",
-        "en": "I shiver from the cold."
-      }
-    ]
-  },
   "眠る": {
     "reading": "ねむる",
     "group": "godan",
@@ -2668,18 +2197,6 @@
       {
         "ja": "ぐっすり眠る。",
         "en": "I sleep soundly."
-      }
-    ]
-  },
-  "疲れる": {
-    "reading": "つかれる",
-    "group": "ichidan",
-    "translation": "to get tired",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "仕事で疲れた。",
-        "en": "I got tired from work."
       }
     ]
   },
@@ -2756,18 +2273,6 @@
       {
         "ja": "相手を倒す。",
         "en": "I defeat the opponent."
-      }
-    ]
-  },
-  "倒れる": {
-    "reading": "たおれる",
-    "group": "ichidan",
-    "translation": "to collapse, to fall down",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "木が倒れた。",
-        "en": "The tree fell down."
       }
     ]
   },
@@ -2859,19 +2364,6 @@
       {
         "ja": "友達に頼る。",
         "en": "I rely on my friend."
-      }
-    ]
-  },
-  "断る": {
-    "reading": "ことわる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to refuse, to decline",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "誘いを断る。",
-        "en": "I decline the invitation."
       }
     ]
   },
@@ -3000,56 +2492,6 @@
       {
         "ja": "星が輝く。",
         "en": "The stars sparkle."
-      }
-    ]
-  },
-  "溶ける": {
-    "reading": "とける",
-    "group": "ichidan",
-    "translation": "to melt, to dissolve",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "氷が溶ける。",
-        "en": "The ice melts."
-      }
-    ]
-  },
-  "凍る": {
-    "reading": "こおる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to freeze",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "水が凍る。",
-        "en": "The water freezes."
-      }
-    ]
-  },
-  "枯れる": {
-    "reading": "かれる",
-    "group": "ichidan",
-    "translation": "to wither",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "花が枯れた。",
-        "en": "The flower withered."
-      }
-    ]
-  },
-  "腐る": {
-    "reading": "くさる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to rot, to go bad",
-    "jlpt": "N3",
-    "examples": [
-      {
-        "ja": "食べ物が腐った。",
-        "en": "The food went bad."
       }
     ]
   },
@@ -3211,19 +2653,6 @@
       }
     ]
   },
-  "抱く": {
-    "reading": "いだく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to hold, to embrace",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "希望を抱く。",
-        "en": "I hold onto hope."
-      }
-    ]
-  },
   "築く": {
     "reading": "きずく",
     "group": "godan",
@@ -3263,19 +2692,6 @@
       }
     ]
   },
-  "潜む": {
-    "reading": "ひそむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to lurk, to be hidden",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "危険が潜む。",
-        "en": "Danger lurks."
-      }
-    ]
-  },
   "悟る": {
     "reading": "さとる",
     "group": "godan",
@@ -3286,19 +2702,6 @@
       {
         "ja": "真実を悟る。",
         "en": "I realize the truth."
-      }
-    ]
-  },
-  "誓う": {
-    "reading": "ちかう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to swear, to vow",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "永遠の愛を誓う。",
-        "en": "I vow eternal love."
       }
     ]
   },
@@ -3426,19 +2829,6 @@
       }
     ]
   },
-  "覗く": {
-    "reading": "のぞく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to peek",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "窓から覗く。",
-        "en": "I peek through the window."
-      }
-    ]
-  },
   "握る": {
     "reading": "にぎる",
     "group": "godan",
@@ -3478,45 +2868,6 @@
       }
     ]
   },
-  "磨く": {
-    "reading": "みがく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to polish, to brush",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "歯を磨く。",
-        "en": "I brush my teeth."
-      }
-    ]
-  },
-  "縮む": {
-    "reading": "ちぢむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to shrink",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "服が縮んだ。",
-        "en": "The clothes shrank."
-      }
-    ]
-  },
-  "膨らむ": {
-    "reading": "ふくらむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to swell, to expand",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "風船が膨らむ。",
-        "en": "The balloon inflates."
-      }
-    ]
-  },
   "染める": {
     "reading": "そめる",
     "group": "ichidan",
@@ -3526,71 +2877,6 @@
       {
         "ja": "髪を染める。",
         "en": "I dye my hair."
-      }
-    ]
-  },
-  "干す": {
-    "reading": "ほす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to dry (clothes/laundry)",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "洗濯物を干す。",
-        "en": "I hang out the laundry."
-      }
-    ]
-  },
-  "縫う": {
-    "reading": "ぬう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to sew",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "ボタンを縫う。",
-        "en": "I sew a button."
-      }
-    ]
-  },
-  "刻む": {
-    "reading": "きざむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to chop, to carve",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "野菜を刻む。",
-        "en": "I chop vegetables."
-      }
-    ]
-  },
-  "削る": {
-    "reading": "けずる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to shave, to scrape",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "鉛筆を削る。",
-        "en": "I sharpen a pencil."
-      }
-    ]
-  },
-  "注ぐ": {
-    "reading": "そそぐ",
-    "group": "godan",
-    "godanRow": "gu",
-    "translation": "to pour",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "お茶を注ぐ。",
-        "en": "I pour tea."
       }
     ]
   },
@@ -3629,30 +2915,6 @@
       {
         "ja": "走って転んだ。",
         "en": "I fell while running."
-      }
-    ]
-  },
-  "把握する": {
-    "reading": "はあくする",
-    "group": "irregular",
-    "translation": "to grasp, to comprehend",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "状況を把握する。",
-        "en": "I grasp the situation."
-      }
-    ]
-  },
-  "達成する": {
-    "reading": "たっせいする",
-    "group": "irregular",
-    "translation": "to achieve",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "目標を達成する。",
-        "en": "I achieve my goal."
       }
     ]
   },
@@ -3728,18 +2990,6 @@
       }
     ]
   },
-  "交渉する": {
-    "reading": "こうしょうする",
-    "group": "irregular",
-    "translation": "to negotiate",
-    "jlpt": "N2",
-    "examples": [
-      {
-        "ja": "条件を交渉する。",
-        "en": "I negotiate terms."
-      }
-    ]
-  },
   "主張する": {
     "reading": "しゅちょうする",
     "group": "irregular",
@@ -3764,19 +3014,6 @@
       }
     ]
   },
-  "潤う": {
-    "reading": "うるおう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to be moistened, to profit",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "肌が潤う。",
-        "en": "The skin is moistened."
-      }
-    ]
-  },
   "諭す": {
     "reading": "さとす",
     "group": "godan",
@@ -3787,82 +3024,6 @@
       {
         "ja": "子供を諭す。",
         "en": "I admonish the child."
-      }
-    ]
-  },
-  "嘆く": {
-    "reading": "なげく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to lament, to grieve",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "運命を嘆く。",
-        "en": "I lament my fate."
-      }
-    ]
-  },
-  "蔑む": {
-    "reading": "さげすむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to despise, to scorn",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "弱い者を蔑む。",
-        "en": "I scorn the weak."
-      }
-    ]
-  },
-  "慈しむ": {
-    "reading": "いつくしむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to love, to cherish",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "自然を慈しむ。",
-        "en": "I cherish nature."
-      }
-    ]
-  },
-  "培う": {
-    "reading": "つちかう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to cultivate, to foster",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "能力を培う。",
-        "en": "I cultivate my abilities."
-      }
-    ]
-  },
-  "廃れる": {
-    "reading": "すたれる",
-    "group": "ichidan",
-    "translation": "to fall into disuse",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "古い習慣が廃れる。",
-        "en": "Old customs fall into disuse."
-      }
-    ]
-  },
-  "栄える": {
-    "reading": "さかえる",
-    "group": "ichidan",
-    "translation": "to prosper, to flourish",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "国が栄える。",
-        "en": "The nation prospers."
       }
     ]
   },
@@ -3879,18 +3040,6 @@
       }
     ]
   },
-  "遂げる": {
-    "reading": "とげる",
-    "group": "ichidan",
-    "translation": "to accomplish",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "目的を遂げる。",
-        "en": "I accomplish my purpose."
-      }
-    ]
-  },
   "企てる": {
     "reading": "くわだてる",
     "group": "ichidan",
@@ -3900,32 +3049,6 @@
       {
         "ja": "脱出を企てる。",
         "en": "I plan an escape."
-      }
-    ]
-  },
-  "覆す": {
-    "reading": "くつがえす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to overturn",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "判決を覆す。",
-        "en": "I overturn the verdict."
-      }
-    ]
-  },
-  "翻す": {
-    "reading": "ひるがえす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to wave, to reverse",
-    "jlpt": "N1",
-    "examples": [
-      {
-        "ja": "旗を翻す。",
-        "en": "I wave a flag."
       }
     ]
   },
@@ -4132,14 +3255,6 @@
     "translation": "to live, to make a living",
     "jlpt": "N3",
     "examples": [{ "ja": "東京で暮らす。", "en": "I live in Tokyo." }]
-  },
-  "騒ぐ": {
-    "reading": "さわぐ",
-    "group": "godan",
-    "godanRow": "gu",
-    "translation": "to make noise, to be rowdy",
-    "jlpt": "N3",
-    "examples": [{ "ja": "子供が騒ぐ。", "en": "The children are noisy." }]
   },
   "叶う": {
     "reading": "かなう",
@@ -4456,20 +3571,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "貧しい人に恵む。", "en": "I give to the poor." }]
   },
-  "鍛える": {
-    "reading": "きたえる",
-    "group": "ichidan",
-    "translation": "to train, to forge",
-    "jlpt": "N2",
-    "examples": [{ "ja": "体を鍛える。", "en": "I train my body." }]
-  },
-  "衰える": {
-    "reading": "おとろえる",
-    "group": "ichidan",
-    "translation": "to decline, to weaken",
-    "jlpt": "N2",
-    "examples": [{ "ja": "体力が衰える。", "en": "Physical strength declines." }]
-  },
   "唱える": {
     "reading": "となえる",
     "group": "ichidan",
@@ -4483,14 +3584,6 @@
     "translation": "to hold up, to put up (a flag)",
     "jlpt": "N2",
     "examples": [{ "ja": "旗を掲げる。", "en": "I raise a flag." }]
-  },
-  "費やす": {
-    "reading": "ついやす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to spend, to devote",
-    "jlpt": "N2",
-    "examples": [{ "ja": "時間を費やす。", "en": "I spend time." }]
   },
   "促す": {
     "reading": "うながす",
@@ -4570,13 +3663,6 @@
     "translation": "to feel nostalgic",
     "jlpt": "N2",
     "examples": [{ "ja": "昔を懐かしむ。", "en": "I feel nostalgic about the past." }]
-  },
-  "蓄積する": {
-    "reading": "ちくせきする",
-    "group": "irregular",
-    "translation": "to accumulate, to build up",
-    "jlpt": "N2",
-    "examples": [{ "ja": "データを蓄積する。", "en": "I accumulate data." }]
   },
   "処理する": {
     "reading": "しょりする",
@@ -4697,13 +3783,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "速度を制限する。", "en": "I limit the speed." }]
   },
-  "想像する": {
-    "reading": "そうぞうする",
-    "group": "irregular",
-    "translation": "to imagine",
-    "jlpt": "N2",
-    "examples": [{ "ja": "未来を想像する。", "en": "I imagine the future." }]
-  },
   "分類する": {
     "reading": "ぶんるいする",
     "group": "irregular",
@@ -4765,22 +3844,6 @@
     "translation": "to refuse, to reject",
     "jlpt": "N1",
     "examples": [{ "ja": "申し出を拒む。", "en": "I refuse the offer." }]
-  },
-  "偲ぶ": {
-    "reading": "しのぶ",
-    "group": "godan",
-    "godanRow": "bu",
-    "translation": "to reminisce, to remember fondly",
-    "jlpt": "N1",
-    "examples": [{ "ja": "故人を偲ぶ。", "en": "I remember the deceased fondly." }]
-  },
-  "嘆く": {
-    "reading": "なげく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to lament, to grieve",
-    "jlpt": "N1",
-    "examples": [{ "ja": "運命を嘆く。", "en": "I lament my fate." }]
   },
   "騙す": {
     "reading": "だます",
@@ -4952,14 +4015,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "課題に取り組む。", "en": "I tackle the assignment." }]
   },
-  "取り戻す": {
-    "reading": "とりもどす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to take back, to recover",
-    "jlpt": "N1",
-    "examples": [{ "ja": "自信を取り戻す。", "en": "I regain confidence." }]
-  },
   "取り除く": {
     "reading": "とりのぞく",
     "group": "godan",
@@ -5006,14 +4061,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "参加を申し込む。", "en": "I apply for participation." }]
   },
-  "繰り返す": {
-    "reading": "くりかえす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to repeat",
-    "jlpt": "N1",
-    "examples": [{ "ja": "同じ失敗を繰り返す。", "en": "I repeat the same mistake." }]
-  },
   "振り返る": {
     "reading": "ふりかえる",
     "group": "godan",
@@ -5057,14 +4104,6 @@
     "translation": "to be mixed up in, to be diverted",
     "jlpt": "N1",
     "examples": [{ "ja": "人混みに紛れる。", "en": "I blend into the crowd." }]
-  },
-  "廃る": {
-    "reading": "すたる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to go out of use, to decline",
-    "jlpt": "N1",
-    "examples": [{ "ja": "伝統が廃る。", "en": "The tradition falls into disuse." }]
   },
   "寄与する": {
     "reading": "きよする",
@@ -5310,13 +4349,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "歴史を遡る。", "en": "I trace back through history." }]
   },
-  "怠ける": {
-    "reading": "なまける",
-    "group": "ichidan",
-    "translation": "to be lazy, to slack off",
-    "jlpt": "N2",
-    "examples": [{ "ja": "仕事を怠ける。", "en": "I slack off at work." }]
-  },
   "逆らう": {
     "reading": "さからう",
     "group": "godan",
@@ -5355,21 +4387,6 @@
     "translation": "to incite, to fan",
     "jlpt": "N1",
     "examples": [{ "ja": "不安を煽る。", "en": "I incite anxiety." }]
-  },
-  "翻る": {
-    "reading": "ひるがえる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to flutter, to wave",
-    "jlpt": "N1",
-    "examples": [{ "ja": "旗が翻る。", "en": "The flag flutters." }]
-  },
-  "蔑ろにする": {
-    "reading": "ないがしろにする",
-    "group": "irregular",
-    "translation": "to neglect, to disregard",
-    "jlpt": "N1",
-    "examples": [{ "ja": "約束を蔑ろにする。", "en": "I disregard a promise." }]
   },
   "暴く": {
     "reading": "あばく",
@@ -5597,14 +4614,6 @@
     "translation": "to pass (an exam)",
     "jlpt": "N4",
     "examples": [{ "ja": "試験に受かる。", "en": "I pass the exam." }]
-  },
-  "落ち込む": {
-    "reading": "おちこむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to feel depressed",
-    "jlpt": "N4",
-    "examples": [{ "ja": "失敗して落ち込む。", "en": "I feel depressed after failing." }]
   },
   "世話する": {
     "reading": "せわする",
@@ -5925,14 +4934,6 @@
     "jlpt": "N3",
     "examples": [{ "ja": "期限を延ばす。", "en": "I extend the deadline." }]
   },
-  "省く": {
-    "reading": "はぶく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to omit, to cut out",
-    "jlpt": "N3",
-    "examples": [{ "ja": "手間を省く。", "en": "I cut out the hassle." }]
-  },
   "拾う": {
     "reading": "ひろう",
     "group": "godan",
@@ -6019,14 +5020,6 @@
     "jlpt": "N3",
     "examples": [{ "ja": "田中と申す。", "en": "My name is Tanaka (humble)." }]
   },
-  "参る": {
-    "reading": "まいる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to go/come (humble)",
-    "jlpt": "N3",
-    "examples": [{ "ja": "明日参る。", "en": "I will come tomorrow (humble)." }]
-  },
   "いただく": {
     "reading": "いただく",
     "group": "godan",
@@ -6084,28 +5077,12 @@
     "jlpt": "N3",
     "examples": [{ "ja": "頭が痛む。", "en": "My head aches." }]
   },
-  "噛む": {
-    "reading": "かむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to bite, to chew",
-    "jlpt": "N3",
-    "examples": [{ "ja": "よく噛む。", "en": "I chew well." }]
-  },
   "飢える": {
     "reading": "うえる",
     "group": "ichidan",
     "translation": "to starve, to go hungry",
     "jlpt": "N2",
     "examples": [{ "ja": "子供が飢える。", "en": "Children go hungry." }]
-  },
-  "潤う": {
-    "reading": "うるおう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to be moistened, to profit",
-    "jlpt": "N2",
-    "examples": [{ "ja": "肌が潤う。", "en": "My skin becomes moistened." }]
   },
   "赴く": {
     "reading": "おもむく",
@@ -6244,14 +5221,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "条件を満たす。", "en": "I satisfy the conditions." }]
   },
-  "陰る": {
-    "reading": "かげる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to become cloudy, to darken",
-    "jlpt": "N2",
-    "examples": [{ "ja": "空が陰る。", "en": "The sky darkens." }]
-  },
   "滞る": {
     "reading": "とどこおる",
     "group": "godan",
@@ -6368,14 +5337,6 @@
     "translation": "to pretend, to dress up as",
     "jlpt": "N1",
     "examples": [{ "ja": "平静を装う。", "en": "I pretend to be calm." }]
-  },
-  "漲る": {
-    "reading": "みなぎる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to overflow with, to be brimming",
-    "jlpt": "N1",
-    "examples": [{ "ja": "力が漲る。", "en": "I am brimming with energy." }]
   },
   "滅ぼす": {
     "reading": "ほろぼす",
@@ -6538,14 +5499,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "人を見下す。", "en": "I look down on people." }]
   },
-  "見守る": {
-    "reading": "みまもる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to watch over, to guard",
-    "jlpt": "N1",
-    "examples": [{ "ja": "子供を見守る。", "en": "I watch over the children." }]
-  },
   "見逃す": {
     "reading": "みのがす",
     "group": "godan",
@@ -6560,13 +5513,6 @@
     "translation": "to postpone, to refrain from",
     "jlpt": "N1",
     "examples": [{ "ja": "出発を見合わせる。", "en": "I postpone the departure." }]
-  },
-  "打ち明ける": {
-    "reading": "うちあける",
-    "group": "ichidan",
-    "translation": "to confide, to confess",
-    "jlpt": "N1",
-    "examples": [{ "ja": "秘密を打ち明ける。", "en": "I confide a secret." }]
   },
   "打ち切る": {
     "reading": "うちきる",
@@ -6645,14 +5591,6 @@
     "translation": "to close, to shut tight",
     "jlpt": "N1",
     "examples": [{ "ja": "応募を締め切る。", "en": "I close the applications." }]
-  },
-  "追い越す": {
-    "reading": "おいこす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to overtake, to pass",
-    "jlpt": "N1",
-    "examples": [{ "ja": "車を追い越す。", "en": "I overtake the car." }]
   },
   "飲み込む": {
     "reading": "のみこむ",
@@ -6791,14 +5729,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "礼儀を弁える。", "en": "I know proper etiquette." }]
   },
-  "嗜む": {
-    "reading": "たしなむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to have a taste for, to enjoy (modestly)",
-    "jlpt": "N1",
-    "examples": [{ "ja": "茶道を嗜む。", "en": "I enjoy the tea ceremony." }]
-  },
   "窘める": {
     "reading": "たしなめる",
     "group": "ichidan",
@@ -6821,33 +5751,12 @@
     "jlpt": "N1",
     "examples": [{ "ja": "話が纏まる。", "en": "The discussion is settled." }]
   },
-  "蔓延する": {
-    "reading": "まんえんする",
-    "group": "irregular",
-    "translation": "to spread (disease), to be rampant",
-    "jlpt": "N1",
-    "examples": [{ "ja": "感染症が蔓延する。", "en": "The disease spreads." }]
-  },
   "没頭する": {
     "reading": "ぼっとうする",
     "group": "irregular",
     "translation": "to be absorbed in",
     "jlpt": "N1",
     "examples": [{ "ja": "研究に没頭する。", "en": "I am absorbed in research." }]
-  },
-  "網羅する": {
-    "reading": "もうらする",
-    "group": "irregular",
-    "translation": "to cover comprehensively",
-    "jlpt": "N1",
-    "examples": [{ "ja": "全分野を網羅する。", "en": "I cover all fields comprehensively." }]
-  },
-  "台頭する": {
-    "reading": "たいとうする",
-    "group": "irregular",
-    "translation": "to rise to prominence",
-    "jlpt": "N1",
-    "examples": [{ "ja": "新勢力が台頭する。", "en": "A new force rises to prominence." }]
   },
   "破綻する": {
     "reading": "はたんする",
@@ -6876,13 +5785,6 @@
     "translation": "to come to a standstill, to stall",
     "jlpt": "N1",
     "examples": [{ "ja": "計画が頓挫する。", "en": "The plan stalls." }]
-  },
-  "凌駕する": {
-    "reading": "りょうがする",
-    "group": "irregular",
-    "translation": "to surpass, to outdo",
-    "jlpt": "N1",
-    "examples": [{ "ja": "期待を凌駕する。", "en": "I surpass expectations." }]
   },
   "傍観する": {
     "reading": "ぼうかんする",
@@ -6918,13 +5820,6 @@
     "translation": "to hesitate, to waver",
     "jlpt": "N1",
     "examples": [{ "ja": "決断に逡巡する。", "en": "I hesitate over the decision." }]
-  },
-  "邁進する": {
-    "reading": "まいしんする",
-    "group": "irregular",
-    "translation": "to push forward, to press on",
-    "jlpt": "N1",
-    "examples": [{ "ja": "目標に邁進する。", "en": "I press on toward the goal." }]
   },
   "なくす": {
     "reading": "なくす",
@@ -7330,14 +6225,6 @@
     "jlpt": "N3",
     "examples": [{ "ja": "正しいと思い込む。", "en": "I assume it is correct." }]
   },
-  "行き届く": {
-    "reading": "いきとどく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to be thorough, to be attentive",
-    "jlpt": "N3",
-    "examples": [{ "ja": "サービスが行き届く。", "en": "The service is thorough." }]
-  },
   "申し上げる": {
     "reading": "もうしあげる",
     "group": "ichidan",
@@ -7352,13 +6239,6 @@
     "translation": "to be (humble for いる)",
     "jlpt": "N3",
     "examples": [{ "ja": "東京におる。", "en": "I am in Tokyo (humble)." }]
-  },
-  "存じる": {
-    "reading": "ぞんじる",
-    "group": "ichidan",
-    "translation": "to know (humble)",
-    "jlpt": "N3",
-    "examples": [{ "ja": "存じております。", "en": "I know (humble)." }]
   },
   "拝見する": {
     "reading": "はいけんする",
@@ -7406,14 +6286,6 @@
     "translation": "to be jealous of, to envy",
     "jlpt": "N2",
     "examples": [{ "ja": "成功を妬む。", "en": "I envy the success." }]
-  },
-  "蔑む": {
-    "reading": "さげすむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to despise, to scorn",
-    "jlpt": "N2",
-    "examples": [{ "ja": "弱者を蔑む。", "en": "I despise the weak." }]
   },
   "嫉む": {
     "reading": "そねむ",
@@ -7541,13 +6413,6 @@
     "translation": "to assign, to allocate",
     "jlpt": "N2",
     "examples": [{ "ja": "役割を割り当てる。", "en": "I assign roles." }]
-  },
-  "繰り上げる": {
-    "reading": "くりあげる",
-    "group": "ichidan",
-    "translation": "to move up (a date), to advance",
-    "jlpt": "N2",
-    "examples": [{ "ja": "日程を繰り上げる。", "en": "I move up the schedule." }]
   },
   "繰り下げる": {
     "reading": "くりさげる",
@@ -7802,13 +6667,6 @@
     "translation": "to hesitate",
     "jlpt": "N1",
     "examples": [{ "ja": "返事を躊躇する。", "en": "I hesitate to reply." }]
-  },
-  "糾弾する": {
-    "reading": "きゅうだんする",
-    "group": "irregular",
-    "translation": "to denounce, to condemn",
-    "jlpt": "N1",
-    "examples": [{ "ja": "不正を糾弾する。", "en": "I denounce the fraud." }]
   },
   "捏造する": {
     "reading": "ねつぞうする",
@@ -8099,14 +6957,6 @@
     "jlpt": "N3",
     "examples": [{ "ja": "スマホを弄る。", "en": "I fiddle with my phone." }]
   },
-  "齧る": {
-    "reading": "かじる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to gnaw, to nibble",
-    "jlpt": "N3",
-    "examples": [{ "ja": "りんごを齧る。", "en": "I bite into an apple." }]
-  },
   "捲る": {
     "reading": "めくる",
     "group": "godan",
@@ -8152,14 +7002,6 @@
     "translation": "to bounce, to be lively",
     "jlpt": "N3",
     "examples": [{ "ja": "会話が弾む。", "en": "The conversation is lively." }]
-  },
-  "靡く": {
-    "reading": "なびく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to flutter, to sway",
-    "jlpt": "N3",
-    "examples": [{ "ja": "髪が風に靡く。", "en": "Hair sways in the wind." }]
   },
   "仕切る": {
     "reading": "しきる",
@@ -8261,22 +7103,6 @@
     "translation": "to trouble, to bother",
     "jlpt": "N2",
     "examples": [{ "ja": "手を煩わす。", "en": "I trouble someone." }]
-  },
-  "弔う": {
-    "reading": "とむらう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to mourn, to hold a funeral",
-    "jlpt": "N2",
-    "examples": [{ "ja": "死者を弔う。", "en": "I mourn the dead." }]
-  },
-  "慈しむ": {
-    "reading": "いつくしむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to love dearly, to cherish",
-    "jlpt": "N2",
-    "examples": [{ "ja": "子供を慈しむ。", "en": "I cherish my child." }]
   },
   "蘇る": {
     "reading": "よみがえる",
@@ -8458,14 +7284,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "約束を蔑ろにする。", "en": "I make light of a promise." }]
   },
-  "翳す": {
-    "reading": "かざす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to hold up (to the light), to shade",
-    "jlpt": "N1",
-    "examples": [{ "ja": "手を翳す。", "en": "I hold up my hand." }]
-  },
   "繕う": {
     "reading": "つくろう",
     "group": "godan",
@@ -8490,14 +7308,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "神前に跪く。", "en": "I kneel before the altar." }]
   },
-  "佇む": {
-    "reading": "たたずむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to stand still, to linger",
-    "jlpt": "N1",
-    "examples": [{ "ja": "窓辺に佇む。", "en": "I stand still by the window." }]
-  },
   "彷彿とさせる": {
     "reading": "ほうふつとさせる",
     "group": "ichidan",
@@ -8513,14 +7323,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "子供が逞しくなる。", "en": "The child becomes strong." }]
   },
-  "蠢く": {
-    "reading": "うごめく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to squirm, to stir",
-    "jlpt": "N1",
-    "examples": [{ "ja": "闇の中で蠢く。", "en": "It stirs in the darkness." }]
-  },
   "顧みる": {
     "reading": "かえりみる",
     "group": "ichidan",
@@ -8535,20 +7337,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "運命に翻弄される。", "en": "I am tossed about by fate." }]
   },
-  "蹂躙する": {
-    "reading": "じゅうりんする",
-    "group": "irregular",
-    "translation": "to trample, to violate",
-    "jlpt": "N1",
-    "examples": [{ "ja": "権利を蹂躙する。", "en": "I violate rights." }]
-  },
-  "払拭する": {
-    "reading": "ふっしょくする",
-    "group": "irregular",
-    "translation": "to dispel, to wipe away",
-    "jlpt": "N1",
-    "examples": [{ "ja": "不安を払拭する。", "en": "I dispel anxiety." }]
-  },
   "吟味する": {
     "reading": "ぎんみする",
     "group": "irregular",
@@ -8556,47 +7344,12 @@
     "jlpt": "N1",
     "examples": [{ "ja": "素材を吟味する。", "en": "I carefully examine the materials." }]
   },
-  "網羅する": {
-    "reading": "もうらする",
-    "group": "irregular",
-    "translation": "to cover comprehensively",
-    "jlpt": "N1",
-    "examples": [{ "ja": "全項目を網羅する。", "en": "I cover all items comprehensively." }]
-  },
   "刷新する": {
     "reading": "さっしんする",
     "group": "irregular",
     "translation": "to reform, to renovate",
     "jlpt": "N1",
     "examples": [{ "ja": "体制を刷新する。", "en": "I reform the system." }]
-  },
-  "粛清する": {
-    "reading": "しゅくせいする",
-    "group": "irregular",
-    "translation": "to purge",
-    "jlpt": "N1",
-    "examples": [{ "ja": "反対派を粛清する。", "en": "I purge the opposition." }]
-  },
-  "弾劾する": {
-    "reading": "だんがいする",
-    "group": "irregular",
-    "translation": "to impeach",
-    "jlpt": "N1",
-    "examples": [{ "ja": "大統領を弾劾する。", "en": "I impeach the president." }]
-  },
-  "瓦解する": {
-    "reading": "がかいする",
-    "group": "irregular",
-    "translation": "to collapse, to disintegrate",
-    "jlpt": "N1",
-    "examples": [{ "ja": "組織が瓦解する。", "en": "The organization collapses." }]
-  },
-  "懐柔する": {
-    "reading": "かいじゅうする",
-    "group": "irregular",
-    "translation": "to win over, to appease",
-    "jlpt": "N1",
-    "examples": [{ "ja": "反対派を懐柔する。", "en": "I win over the opposition." }]
   },
   "傾倒する": {
     "reading": "けいとうする",
@@ -8873,13 +7626,6 @@
     "jlpt": "N3",
     "examples": [{ "ja": "答えに辿り着く。", "en": "I finally reach the answer." }]
   },
-  "繰り広げる": {
-    "reading": "くりひろげる",
-    "group": "ichidan",
-    "translation": "to unfold, to develop (a story/battle)",
-    "jlpt": "N3",
-    "examples": [{ "ja": "激しい戦いを繰り広げる。", "en": "They wage a fierce battle." }]
-  },
   "差し掛かる": {
     "reading": "さしかかる",
     "group": "godan",
@@ -8925,14 +7671,6 @@
     "translation": "to pursue, to seek after",
     "jlpt": "N3",
     "examples": [{ "ja": "理想を追い求める。", "en": "I pursue the ideal." }]
-  },
-  "乗り出す": {
-    "reading": "のりだす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to lean forward, to embark on",
-    "jlpt": "N3",
-    "examples": [{ "ja": "新事業に乗り出す。", "en": "I embark on a new business." }]
   },
   "浮き上がる": {
     "reading": "うきあがる",
@@ -9132,13 +7870,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "発言を撤回する。", "en": "I retract my statement." }]
   },
-  "撤退する": {
-    "reading": "てったいする",
-    "group": "irregular",
-    "translation": "to withdraw, to retreat",
-    "jlpt": "N2",
-    "examples": [{ "ja": "市場から撤退する。", "en": "I withdraw from the market." }]
-  },
   "転換する": {
     "reading": "てんかんする",
     "group": "irregular",
@@ -9258,13 +7989,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "相手を論破する。", "en": "I refute the opponent." }]
   },
-  "紛糾する": {
-    "reading": "ふんきゅうする",
-    "group": "irregular",
-    "translation": "to become complicated, to be entangled",
-    "jlpt": "N1",
-    "examples": [{ "ja": "議論が紛糾する。", "en": "The debate becomes complicated." }]
-  },
   "献身する": {
     "reading": "けんしんする",
     "group": "irregular",
@@ -9292,13 +8016,6 @@
     "translation": "to imply, to hint",
     "jlpt": "N1",
     "examples": [{ "ja": "未来を暗示する。", "en": "It hints at the future." }]
-  },
-  "略奪する": {
-    "reading": "りゃくだつする",
-    "group": "irregular",
-    "translation": "to plunder, to loot",
-    "jlpt": "N1",
-    "examples": [{ "ja": "財宝を略奪する。", "en": "I plunder the treasure." }]
   },
   "迫害する": {
     "reading": "はくがいする",
@@ -9651,14 +8368,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "事前に根回しする。", "en": "I lay the groundwork in advance." }]
   },
-  "釘を刺す": {
-    "reading": "くぎをさす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to warn, to give a heads-up",
-    "jlpt": "N2",
-    "examples": [{ "ja": "部下に釘を刺す。", "en": "I warn my subordinate." }]
-  },
   "腑に落ちる": {
     "reading": "ふにおちる",
     "group": "ichidan",
@@ -9767,14 +8476,6 @@
     "translation": "to surround, to enclose",
     "jlpt": "N2",
     "examples": [{ "ja": "テーブルを囲む。", "en": "I sit around the table." }]
-  },
-  "佇む": {
-    "reading": "たたずむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to stand, to linger",
-    "jlpt": "N2",
-    "examples": [{ "ja": "公園に佇む。", "en": "I stand in the park." }]
   },
   "介入する": {
     "reading": "かいにゅうする",
@@ -9980,20 +8681,6 @@
     "translation": "to be scattered and lost",
     "jlpt": "N1",
     "examples": [{ "ja": "文献が散逸する。", "en": "Documents are scattered and lost." }]
-  },
-  "踏襲する": {
-    "reading": "とうしゅうする",
-    "group": "irregular",
-    "translation": "to follow (tradition), to inherit",
-    "jlpt": "N1",
-    "examples": [{ "ja": "伝統を踏襲する。", "en": "I follow the tradition." }]
-  },
-  "逸する": {
-    "reading": "いっする",
-    "group": "irregular",
-    "translation": "to miss, to lose (an opportunity)",
-    "jlpt": "N1",
-    "examples": [{ "ja": "機会を逸する。", "en": "I miss the opportunity." }]
   },
   "覇を唱える": {
     "reading": "はをとなえる",
@@ -11105,13 +9792,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "拳を握りしめる。", "en": "I clench my fist." }]
   },
-  "打ち解ける": {
-    "reading": "うちとける",
-    "group": "ichidan",
-    "translation": "to open up, to become friendly",
-    "jlpt": "N2",
-    "examples": [{ "ja": "友人と打ち解ける。", "en": "I open up to my friend." }]
-  },
   "踏み倒す": {
     "reading": "ふみたおす",
     "group": "godan",
@@ -12029,14 +10709,6 @@
     "jlpt": "N2",
     "examples": [{ "ja": "台風が暴れる。", "en": "The typhoon rages." }]
   },
-  "漲る": {
-    "reading": "みなぎる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to overflow with, to be filled with",
-    "jlpt": "N2",
-    "examples": [{ "ja": "自信が漲る。", "en": "I am filled with confidence." }]
-  },
   "弾ける": {
     "reading": "はじける",
     "group": "ichidan",
@@ -12185,34 +10857,6 @@
     "translation": "to be eaten away, to be eroded",
     "jlpt": "N1",
     "examples": [{ "ja": "心が蝕まれる。", "en": "My heart is eaten away." }]
-  },
-  "紛糾する": {
-    "reading": "ふんきゅうする",
-    "group": "irregular",
-    "translation": "to become entangled, to be confused",
-    "jlpt": "N1",
-    "examples": [{ "ja": "事態が紛糾する。", "en": "The situation becomes entangled." }]
-  },
-  "陥落する": {
-    "reading": "かんらくする",
-    "group": "irregular",
-    "translation": "to fall (a castle/city), to capitulate",
-    "jlpt": "N1",
-    "examples": [{ "ja": "城が陥落する。", "en": "The castle falls." }]
-  },
-  "殲滅する": {
-    "reading": "せんめつする",
-    "group": "irregular",
-    "translation": "to annihilate",
-    "jlpt": "N1",
-    "examples": [{ "ja": "敵を殲滅する。", "en": "I annihilate the enemy." }]
-  },
-  "蹂躙する": {
-    "reading": "じゅうりんする",
-    "group": "irregular",
-    "translation": "to trample, to ravage",
-    "jlpt": "N1",
-    "examples": [{ "ja": "人権を蹂躙する。", "en": "I trample human rights." }]
   },
   "鍛錬する": {
     "reading": "たんれんする",
@@ -12420,12 +11064,13 @@
     "examples": [{ "ja": "互いに譲り合う。", "en": "We give way to each other." }]
   },
   "弾く": {
-    "reading": "はじく",
+    "reading": "ひく",
     "group": "godan",
     "godanRow": "ku",
-    "translation": "to flick, to repel",
-    "jlpt": "N3",
-    "examples": [{ "ja": "水を弾く。", "en": "It repels water." }]
+    "translation": "to play (instrument)",
+    "jlpt": "N5",
+    "transitive": true,
+    "examples": [{ "ja": "ピアノを弾く。", "en": "I play the piano." }]
   },
   "張る": {
     "reading": "はる",
@@ -13282,14 +11927,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "子供に手を焼く。", "en": "I have trouble with the child." }]
   },
-  "目を見張る": {
-    "reading": "めをみはる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to stare in wonder, to be astonished",
-    "jlpt": "N1",
-    "examples": [{ "ja": "成長に目を見張る。", "en": "I am astonished by the growth." }]
-  },
   "耳を疑う": {
     "reading": "みみをうたがう",
     "group": "godan",
@@ -13388,13 +12025,6 @@
     "translation": "to be considerate of, to sympathize with",
     "jlpt": "N3",
     "examples": [{ "ja": "他人を思いやる。", "en": "I am considerate of others." }]
-  },
-  "打ち解ける": {
-    "reading": "うちとける",
-    "group": "ichidan",
-    "translation": "to open up, to be frank",
-    "jlpt": "N3",
-    "examples": [{ "ja": "初対面でも打ち解ける。", "en": "I open up even on first meeting." }]
   },
   "話し掛ける": {
     "reading": "はなしかける",
@@ -13638,14 +12268,6 @@
     "translation": "to become blurry, to be overshadowed",
     "jlpt": "N1",
     "examples": [{ "ja": "目が翳む。", "en": "My eyes become blurry." }]
-  },
-  "佇む": {
-    "reading": "たたずむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to stand still quietly",
-    "jlpt": "N1",
-    "examples": [{ "ja": "街角に佇む。", "en": "I stand still on the street corner." }]
   },
   "漂わせる": {
     "reading": "ただよわせる",
@@ -15365,13 +13987,6 @@
     "jlpt": "N1",
     "examples": [{ "ja": "病気を根絶する。", "en": "I eradicate the disease." }]
   },
-  "壟断する": {
-    "reading": "ろうだんする",
-    "group": "irregular",
-    "translation": "to monopolize",
-    "jlpt": "N1",
-    "examples": [{ "ja": "利益を壟断する。", "en": "I monopolize the profits." }]
-  },
   "凌辱する": {
     "reading": "りょうじょくする",
     "group": "irregular",
@@ -15425,14 +14040,6 @@
     "translation": "to celebrate (formal), to be delighted",
     "jlpt": "N1",
     "examples": [{ "ja": "ご結婚を慶ぶ。", "en": "I celebrate the marriage." }]
-  },
-  "弔う": {
-    "reading": "とむらう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to mourn, to hold a funeral for",
-    "jlpt": "N1",
-    "examples": [{ "ja": "故人を弔う。", "en": "I mourn the deceased." }]
   },
   "詣でる": {
     "reading": "もうでる",
@@ -15971,13 +14578,6 @@
     "translation": "to spread (disease), to become widespread",
     "jlpt": "N1",
     "examples": [{ "ja": "ウイルスが蔓延する。", "en": "The virus spreads." }]
-  },
-  "蹂躙する": {
-    "reading": "じゅうりんする",
-    "group": "irregular",
-    "translation": "to trample on, to ravage",
-    "jlpt": "N1",
-    "examples": [{ "ja": "尊厳を蹂躙する。", "en": "I trample on dignity." }]
   },
   "粛清する": {
     "reading": "しゅくせいする",
@@ -16795,14 +15395,6 @@
     "translation": "to boss around",
     "jlpt": "N1",
     "examples": [{ "ja": "部下を顎で使う。", "en": "I boss around my subordinates." }]
-  },
-  "舌を振るう": {
-    "reading": "したをふるう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to be eloquent",
-    "jlpt": "N1",
-    "examples": [{ "ja": "弁舌を振るう。", "en": "I display eloquence." }]
   },
   "腕を撫す": {
     "reading": "うでをぶす",

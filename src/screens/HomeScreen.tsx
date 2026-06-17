@@ -325,7 +325,7 @@ export default function HomeScreen() {
       {query.trim() ? (
         <FlatList
           data={results}
-          keyExtractor={(item, i) => item.verb + item.matchType + i}
+          keyExtractor={(item) => item.verb + item.matchType}
           renderItem={renderVerbItem}
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={

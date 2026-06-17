@@ -22,12 +22,10 @@ import {
 } from '../utils/conjugate';
 import { speak } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
-import { useThemeStore } from '../store/themeStore';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
-const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
 
 const flashcardForms: ConjugationForm[] = [
   'masu', 'te', 'ta', 'nai', 'potential', 'passive',
@@ -63,10 +61,9 @@ function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): 
 
 export default function FlashcardScreen() {
   const colors = useColors();
-  const isDark = useThemeStore((s) => s.isDark);
   const navigation = useNavigation<any>();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
-  const { saveSession } = useFlashcardSessionStore();
+  const { loadSessions, saveSession } = useFlashcardSessionStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
@@ -82,6 +79,7 @@ export default function FlashcardScreen() {
 
   useEffect(() => {
     loadPracticeSettings();
+    loadSessions();
   }, []);
 
   useLayoutEffect(() => {
@@ -230,20 +228,20 @@ export default function FlashcardScreen() {
       {/* Got it / Missed buttons */}
       <View style={[styles.buttonRow, { opacity: flipped ? 1 : 0 }]} pointerEvents={flipped ? 'auto' : 'none'}>
         <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: isDark ? '#3E1A1A' : '#FFEBEE', borderColor: isDark ? '#EF5350' : '#C62828' }]}
+          style={[styles.actionButton, { backgroundColor: colors.errorBg, borderColor: colors.errorText }]}
           onPress={handleMissed}
           activeOpacity={0.8}
         >
-          <Ionicons name="close" size={20} color={isDark ? '#EF5350' : '#C62828'} />
-          <Text style={[styles.actionButtonText, { color: isDark ? '#EF5350' : '#C62828' }]}>Missed</Text>
+          <Ionicons name="close" size={20} color={colors.errorText} />
+          <Text style={[styles.actionButtonText, { color: colors.errorText }]}>Missed</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: isDark ? '#1A3E1A' : '#E8F5E9', borderColor: isDark ? '#66BB6A' : '#2E7D32' }]}
+          style={[styles.actionButton, { backgroundColor: colors.successBg, borderColor: colors.successText }]}
           onPress={handleGotIt}
           activeOpacity={0.8}
         >
-          <Ionicons name="checkmark" size={20} color={isDark ? '#66BB6A' : '#2E7D32'} />
-          <Text style={[styles.actionButtonText, { color: isDark ? '#66BB6A' : '#2E7D32' }]}>Got it</Text>
+          <Ionicons name="checkmark" size={20} color={colors.successText} />
+          <Text style={[styles.actionButtonText, { color: colors.successText }]}>Got it</Text>
         </TouchableOpacity>
       </View>
 

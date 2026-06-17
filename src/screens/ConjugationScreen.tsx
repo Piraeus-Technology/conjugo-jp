@@ -12,7 +12,7 @@ import { speak } from '../utils/speech';
 export default function ConjugationScreen() {
   const colors = useColors();
   const route = useRoute<any>();
-  const verb: string = route.params.verb;
+  const verb: string = route.params?.verb;
   const highlightForm: string | undefined = route.params?.highlightForm;
   const verbData = (verbs as Record<string, VerbData>)[verb];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();

@@ -30,29 +30,6 @@ export function getStem(reading: string): string {
   return reading.slice(0, -1);
 }
 
-// Get the kanji stem (everything except the last character of the reading mapped to the verb)
-// For verbs like 食べる (たべる), kanji stem = 食べ, kana ending = る
-// For verbs like 書く (かく), kanji stem = 書, kana ending = く
-export function getKanjiStem(verb: string, reading: string): string {
-  // Find how many trailing kana the verb has that match the reading
-  let matchLen = 0;
-  for (let i = 1; i <= Math.min(verb.length, reading.length); i++) {
-    if (verb[verb.length - i] === reading[reading.length - i]) {
-      matchLen = i;
-    } else {
-      break;
-    }
-  }
-  // The kanji part is everything before the matching kana tail
-  // We need to remove the last kana (the conjugating character)
-  if (matchLen <= 1) {
-    // Only the last char matches (e.g., 書く -> く matches)
-    return verb.slice(0, -1);
-  }
-  // Multiple chars match (e.g., 食べる -> べる matches)
-  return verb.slice(0, -(matchLen)) + reading.slice(reading.length - matchLen, -1);
-}
-
 // Romaji to hiragana conversion table
 const romajiMap: [string, string][] = [
   ['sha', 'しゃ'], ['shi', 'し'], ['shu', 'しゅ'], ['sho', 'しょ'],
@@ -91,7 +68,7 @@ export function romajiToHiragana(input: string): string {
 
   while (remaining.length > 0) {
     // Handle double consonant (っ)
-    if (remaining.length >= 2 && remaining[0] === remaining[1] && 'bcdfghjklmpqrstvwxyz'.includes(remaining[0])) {
+    if (remaining.length >= 2 && remaining[0] === remaining[1] && 'bcdfghjklmpqrstvwxyz'.includes(remaining[0]) && remaining[0] !== 'n') {
       result += 'っ';
       remaining = remaining.slice(1);
       continue;

@@ -27,21 +27,6 @@ import { useSessionStore } from '../store/sessionStore';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
-const jlptLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
-
-const quizzableForms: { key: ConjugationForm; label: string }[] = [
-  { key: 'masu', label: 'ます' },
-  { key: 'te', label: 'て形' },
-  { key: 'ta', label: 'た形' },
-  { key: 'nai', label: 'ない' },
-  { key: 'potential', label: '可能' },
-  { key: 'passive', label: '受身' },
-  { key: 'causative', label: '使役' },
-  { key: 'conditional_ba', label: 'ば形' },
-  { key: 'conditional_tara', label: 'たら形' },
-  { key: 'volitional', label: '意向' },
-  { key: 'imperative', label: '命令' },
-];
 
 interface Question {
   verb: string;
@@ -138,7 +123,7 @@ export default function QuizScreen() {
   const { totalQuestions, totalCorrect, bestStreak, loadStats, recordAnswer } = useQuizStore();
   const { loaded: weightsLoaded, loadWeights, recordResult, getWeight } = useSpacedRepStore();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
-  const { saveSession } = useSessionStore();
+  const { loadSessions, saveSession } = useSessionStore();
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [sessionScore, setSessionScore] = useState(0);
@@ -152,6 +137,7 @@ export default function QuizScreen() {
     loadStats();
     loadWeights();
     loadPracticeSettings();
+    loadSessions();
   }, []);
 
   useLayoutEffect(() => {
@@ -243,18 +229,18 @@ export default function QuizScreen() {
       return { backgroundColor: colors.card, borderColor: colors.border };
     }
     if (option === question.correctAnswer) {
-      return { backgroundColor: '#E8F5E9', borderColor: '#4CAF50' };
+      return { backgroundColor: colors.successBg, borderColor: colors.successText };
     }
     if (option === selectedAnswer && !isCorrect) {
-      return { backgroundColor: '#FFEBEE', borderColor: '#E53935' };
+      return { backgroundColor: colors.errorBg, borderColor: colors.errorText };
     }
     return { backgroundColor: colors.card, borderColor: colors.border, opacity: 0.4 };
   };
 
   const getOptionTextColor = (option: string) => {
     if (!answered || !question) return colors.textPrimary;
-    if (option === question.correctAnswer) return '#2E7D32';
-    if (option === selectedAnswer && !isCorrect) return '#C62828';
+    if (option === question.correctAnswer) return colors.successText;
+    if (option === selectedAnswer && !isCorrect) return colors.errorText;
     return colors.textMuted;
   };
 
@@ -333,10 +319,10 @@ export default function QuizScreen() {
                 {option}
               </Text>
               {answered && option === question.correctAnswer && (
-                <Ionicons name="checkmark-circle" size={22} color="#4CAF50" style={{ marginLeft: 8 }} />
+                <Ionicons name="checkmark-circle" size={22} color={colors.successText} style={{ marginLeft: 8 }} />
               )}
               {answered && option === selectedAnswer && !isCorrect && option !== question.correctAnswer && (
-                <Ionicons name="close-circle" size={22} color="#E53935" style={{ marginLeft: 8 }} />
+                <Ionicons name="close-circle" size={22} color={colors.errorText} style={{ marginLeft: 8 }} />
               )}
             </TouchableOpacity>
           ))}
