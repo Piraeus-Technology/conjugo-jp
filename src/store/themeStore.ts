@@ -34,7 +34,9 @@ export const useThemeStore = create<ThemeStore>((set, get) => ({
         set({ isDark: stored === 'dark', autoTTS: tts === 'true', loaded: true, loadError: false });
       } catch (e) {
         console.warn('Failed to load theme:', e);
-        set({ loadError: true });
+        // Theme gates App.tsx's first render, so recoverable preference-load
+        // failures must still mark loaded and fall back to defaults.
+        set({ loaded: true, loadError: true });
       }
     });
   },

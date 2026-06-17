@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
+  AppState,
   useWindowDimensions,
 } from 'react-native';
+import type { AppStateStatus } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -82,13 +84,33 @@ export default function FlashcardScreen() {
   const [newCorrect, setNewCorrect] = useState(0);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
+  const speechGate = useRef({
+    focused: true,
+    appState: AppState.currentState as AppStateStatus,
+  });
 
   useEffect(() => {
     loadPracticeSettings();
     loadSessions();
   }, []);
 
-  useFocusEffect(useCallback(() => () => stopSpeech(), []));
+  useFocusEffect(useCallback(() => {
+    speechGate.current.focused = true;
+    return () => {
+      speechGate.current.focused = false;
+      stopSpeech();
+    };
+  }, []));
+
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      speechGate.current.appState = state;
+      if (state === 'background' || state === 'inactive') {
+        stopSpeech();
+      }
+    });
+    return () => sub.remove();
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -124,14 +146,21 @@ export default function FlashcardScreen() {
     if (isAnimating.current || flipped) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setFlipped(true);
-    if (autoTTS) speak(card.answer);
     isAnimating.current = true;
     Animated.timing(flipAnim, {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => {
+    }).start(({ finished }) => {
+      if (!finished) return;
       isAnimating.current = false;
+      if (
+        autoTTS &&
+        speechGate.current.focused &&
+        speechGate.current.appState === 'active'
+      ) {
+        speak(card.answer);
+      }
     });
   };
 
