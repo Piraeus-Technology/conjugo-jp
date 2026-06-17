@@ -7,7 +7,7 @@ import {
   waitForPendingIapEnd,
 } from './iapLifecycle';
 
-const TIP_SKUS = ['tip_small'];
+const TIP_SKUS = ['conjugojp_tip_small'];
 
 type TipTransactionLike = {
   transactionId?: string | null;

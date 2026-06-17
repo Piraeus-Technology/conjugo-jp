@@ -25,9 +25,12 @@
   },
   "submit": {
     "production": {
+      "android": {
+        "track": "production"
+      },
       "ios": {
         "appleId": "lkh9596@icloud.com",
-        "ascAppId": "",
+        "ascAppId": "6781443990",
         "appleTeamId": "25MJJZZAWU"
       }
     }
