@@ -74,7 +74,6 @@ export default function FlashcardScreen() {
   );
   const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries, flashcardForms));
   const [flipped, setFlipped] = useState(false);
-  const [count, setCount] = useState(0);
   const [reviewed, setReviewed] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [showResults, setShowResults] = useState(false);
@@ -120,7 +119,6 @@ export default function FlashcardScreen() {
 
   const handleNewSession = () => {
     setShowResults(false);
-    setCount(0);
     setReviewed(0);
     setCorrect(0);
     sessionStart.current = Date.now();
@@ -137,7 +135,6 @@ export default function FlashcardScreen() {
     }).start(() => {
       setCard(generateCard(filteredEntries, activeForms));
       setFlipped(false);
-      setCount(c => c + 1);
     });
   };
 
@@ -181,113 +178,135 @@ export default function FlashcardScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      <Text style={[styles.counter, { color: colors.textMuted }]}>
-        {count} cards reviewed
-      </Text>
+      {/* In-session score bar */}
+      <View style={[styles.scoreBar, { backgroundColor: colors.card }]}>
+        <View style={styles.scoreRow}>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.primary }]}>{reviewed}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Reviewed</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.successText }]}>{correct}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Got It</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.errorText }]}>{reviewed - correct}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Missed</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.textSecondary }]}>
+              {reviewed > 0 ? Math.round((correct / reviewed) * 100) : 0}%
+            </Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Accuracy</Text>
+          </View>
+        </View>
+      </View>
 
-      <TouchableOpacity
-        style={styles.cardContainer}
-        onPress={flip}
-        activeOpacity={0.95}
-        accessibilityRole="button"
-        accessibilityLabel={flipped
-          ? `${card.verb}, ${card.reading}, ${formLabel.en} answer: ${card.answer}`
-          : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}`}
-        accessibilityHint={flipped ? 'Use Got it or Missed to grade this card' : 'Flips the card to reveal the answer'}
-        accessibilityState={{ disabled: flipped }}
-      >
-        {/* Front */}
-        <Animated.View
-          style={[
-            styles.card,
-            {
-              backgroundColor: colors.card,
-              transform: [{ perspective: 1000 }, { rotateY: frontRotateY }],
-            },
-          ]}
+      <View style={styles.practiceArea}>
+        <TouchableOpacity
+          style={styles.cardContainer}
+          onPress={flip}
+          activeOpacity={0.95}
+          accessibilityRole="button"
+          accessibilityLabel={flipped
+            ? `${card.verb}, ${card.reading}, ${formLabel.en} answer: ${card.answer}`
+            : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}`}
+          accessibilityHint={flipped ? 'Use Got it or Missed to grade this card' : 'Flips the card to reveal the answer'}
+          accessibilityState={{ disabled: flipped }}
         >
-          <Text style={[styles.formLabel, { color: colors.textMuted }]}>
-            {formLabel.ja} — {formLabel.en}
-          </Text>
-          <Text style={[styles.verbText, { color: colors.primary }]}>
-            {card.verb}
-          </Text>
-          <Text style={[styles.readingText, { color: colors.textSecondary }]}>
-            {card.reading}
-          </Text>
-          <Text style={[styles.translationText, { color: colors.textSecondary }]}>
-            {card.translation}
-          </Text>
-          <Text style={[styles.tapHint, { color: colors.textMuted }]}>
-            Tap to reveal
-          </Text>
-        </Animated.View>
-
-        {/* Back */}
-        <Animated.View
-          style={[
-            styles.card,
-            styles.cardBack,
-            {
-              backgroundColor: colors.primary + '10',
-              transform: [{ perspective: 1000 }, { rotateY: backRotateY }],
-            },
-          ]}
-        >
-          <Text style={[styles.formLabel, { color: colors.textMuted }]}>
-            {formLabel.ja} — {formLabel.en}
-          </Text>
-          <Text style={[styles.answerText, { color: colors.primary }]}>
-            {card.answer}
-          </Text>
-          <Text style={[styles.contextText, { color: colors.textSecondary }]}>
-            {card.verb} · {card.reading}
-          </Text>
-          <Text style={[styles.answerTranslation, { color: colors.textMuted }]}>
-            {card.translation}
-          </Text>
-          <TouchableOpacity
-            style={[styles.speakButton, { backgroundColor: colors.primary }]}
-            onPress={(e) => {
-              e.stopPropagation?.();
-              speak(card.answer);
-            }}
-            accessibilityRole="button"
-            accessibilityLabel={`Play pronunciation of ${card.answer}`}
+          {/* Front */}
+          <Animated.View
+            style={[
+              styles.card,
+              {
+                backgroundColor: colors.card,
+                transform: [{ perspective: 1000 }, { rotateY: frontRotateY }],
+              },
+            ]}
           >
-            <Ionicons name="volume-medium" size={20} color="#fff" />
-          </TouchableOpacity>
-        </Animated.View>
-      </TouchableOpacity>
+            <Text style={[styles.formLabel, { color: colors.textMuted }]}>
+              {formLabel.ja} — {formLabel.en}
+            </Text>
+            <Text style={[styles.verbText, { color: colors.primary }]}>
+              {card.verb}
+            </Text>
+            <Text style={[styles.readingText, { color: colors.textSecondary }]}>
+              {card.reading}
+            </Text>
+            <Text style={[styles.translationText, { color: colors.textSecondary }]}>
+              {card.translation}
+            </Text>
+            <Text style={[styles.tapHint, { color: colors.textMuted }]}>
+              Tap to reveal
+            </Text>
+          </Animated.View>
 
-      {/* Got it / Missed buttons */}
-      <View style={[styles.buttonRow, { opacity: flipped ? 1 : 0 }]} pointerEvents={flipped ? 'auto' : 'none'}>
-        <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: colors.errorBg, borderColor: colors.errorText }]}
-          onPress={handleMissed}
-          activeOpacity={0.8}
-          accessibilityRole="button"
-          accessibilityLabel="Mark card as missed"
-          accessibilityState={{ disabled: !flipped }}
-        >
-          <Ionicons name="close" size={20} color={colors.errorText} />
-          <Text style={[styles.actionButtonText, { color: colors.errorText }]}>Missed</Text>
+          {/* Back */}
+          <Animated.View
+            style={[
+              styles.card,
+              styles.cardBack,
+              {
+                backgroundColor: colors.primary + '10',
+                transform: [{ perspective: 1000 }, { rotateY: backRotateY }],
+              },
+            ]}
+          >
+            <Text style={[styles.formLabel, { color: colors.textMuted }]}>
+              {formLabel.ja} — {formLabel.en}
+            </Text>
+            <Text style={[styles.answerText, { color: colors.primary }]}>
+              {card.answer}
+            </Text>
+            <Text style={[styles.contextText, { color: colors.textSecondary }]}>
+              {card.verb} · {card.reading}
+            </Text>
+            <Text style={[styles.answerTranslation, { color: colors.textMuted }]}>
+              {card.translation}
+            </Text>
+            <TouchableOpacity
+              style={[styles.speakButton, { backgroundColor: colors.primary }]}
+              onPress={(e) => {
+                e.stopPropagation?.();
+                speak(card.answer);
+              }}
+              accessibilityRole="button"
+              accessibilityLabel={`Play pronunciation of ${card.answer}`}
+            >
+              <Ionicons name="volume-medium" size={20} color="#fff" />
+            </TouchableOpacity>
+          </Animated.View>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: colors.successBg, borderColor: colors.successText }]}
-          onPress={handleGotIt}
-          activeOpacity={0.8}
-          accessibilityRole="button"
-          accessibilityLabel="Mark card as got it"
-          accessibilityState={{ disabled: !flipped }}
-        >
-          <Ionicons name="checkmark" size={20} color={colors.successText} />
-          <Text style={[styles.actionButtonText, { color: colors.successText }]}>Got it</Text>
-        </TouchableOpacity>
+
+        {/* Got it / Missed buttons */}
+        <View style={[styles.buttonRow, { opacity: flipped ? 1 : 0 }]} pointerEvents={flipped ? 'auto' : 'none'}>
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colors.errorBg, borderColor: colors.errorText }]}
+            onPress={handleMissed}
+            activeOpacity={0.8}
+            accessibilityRole="button"
+            accessibilityLabel="Mark card as missed"
+            accessibilityState={{ disabled: !flipped }}
+          >
+            <Ionicons name="close" size={20} color={colors.errorText} />
+            <Text style={[styles.actionButtonText, { color: colors.errorText }]}>Missed</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.actionButton, { backgroundColor: colors.successBg, borderColor: colors.successText }]}
+            onPress={handleGotIt}
+            activeOpacity={0.8}
+            accessibilityRole="button"
+            accessibilityLabel="Mark card as got it"
+            accessibilityState={{ disabled: !flipped }}
+          >
+            <Ionicons name="checkmark" size={20} color={colors.successText} />
+            <Text style={[styles.actionButtonText, { color: colors.successText }]}>Got it</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* End session button */}
-      {count > 0 && (
+      {reviewed > 0 && (
         <TouchableOpacity
           style={[styles.endSessionButton, { borderColor: colors.border }]}
           onPress={handleEndSession}
@@ -306,7 +325,7 @@ export default function FlashcardScreen() {
             <Text style={[styles.modalTitle, { color: colors.primary }]}>Session Complete!</Text>
             <View style={styles.modalStats}>
               <View style={styles.modalStatItem}>
-                <Text style={[styles.modalStatValue, { color: colors.primary }]}>{count}</Text>
+                <Text style={[styles.modalStatValue, { color: colors.primary }]}>{reviewed}</Text>
                 <Text style={[styles.modalStatLabel, { color: colors.textMuted }]}>Cards</Text>
               </View>
               <View style={styles.modalStatItem}>
@@ -340,10 +359,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: spacing.lg,
   },
-  counter: {
-    fontSize: fonts.sizes.sm,
-    position: 'absolute',
-    top: spacing.sm,
+  scoreBar: {
+    alignSelf: 'stretch',
+    padding: spacing.sm,
+    marginBottom: spacing.md,
+    borderRadius: radius.md,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  scoreRow: { flexDirection: 'row', justifyContent: 'space-around' },
+  scoreItem: { alignItems: 'center' },
+  scoreValue: { fontSize: fonts.sizes.lg, fontWeight: fonts.weights.bold },
+  scoreLabel: { fontSize: fonts.sizes.xs, marginTop: 2, textTransform: 'uppercase', letterSpacing: 0.5 },
+  practiceArea: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   cardContainer: {
     width: width - spacing.lg * 2,
