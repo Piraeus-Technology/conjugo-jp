@@ -9,6 +9,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
+import { dateToDayKey, getTodayKey } from '../utils/dayKey';
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -33,19 +34,19 @@ export default function FlashcardStatsScreen() {
   const totalCorrect = sessions.reduce((sum, s) => sum + s.correct, 0);
 
   // Today
-  const todayStr = new Date().toLocaleDateString('en-CA');
+  const todayStr = getTodayKey();
   const todayData = dailyMap[todayStr];
 
   // Streak
   let streak = 0;
   const yesterdayDate = new Date();
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-  const yesterdayStr = yesterdayDate.toLocaleDateString('en-CA');
+  const yesterdayStr = dateToDayKey(yesterdayDate);
   if (dailyMap[todayStr] || dailyMap[yesterdayStr]) {
     let checkDate = new Date();
     if (!dailyMap[todayStr]) checkDate.setDate(checkDate.getDate() - 1);
     while (true) {
-      const key = checkDate.toLocaleDateString('en-CA');
+      const key = dateToDayKey(checkDate);
       if (dailyMap[key]) {
         streak++;
         checkDate.setDate(checkDate.getDate() - 1);
