@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import verbs from '../data/verbs.json';
 
 type VerbEntry = {
@@ -66,5 +68,25 @@ describe('Verb data integrity', () => {
     const keys = Object.keys(verbs);
     const uniqueKeys = new Set(keys);
     expect(keys.length).toBe(uniqueKeys.size);
+  });
+
+  test('raw verbs json has no duplicate top-level keys', () => {
+    const raw = readFileSync(join(process.cwd(), 'src/data/verbs.json'), 'utf8');
+    const keys = Array.from(raw.matchAll(/^  "((?:[^"\\]|\\.)+)": \{/gm), (match) =>
+      JSON.parse(`"${match[1]}"`)
+    );
+    const seen = new Set<string>();
+    const duplicates = new Set<string>();
+
+    for (const key of keys) {
+      if (seen.has(key)) {
+        duplicates.add(key);
+      } else {
+        seen.add(key);
+      }
+    }
+
+    expect(Array.from(duplicates).sort()).toEqual([]);
+    expect(keys.length).toBe(seen.size);
   });
 });
