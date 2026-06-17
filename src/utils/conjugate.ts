@@ -285,6 +285,192 @@ export function conjugateReading(verb: VerbData, form: ConjugationForm): string 
   }
 }
 
+function godanEnding(row: GodanRow): string {
+  return kanaRows[row].u;
+}
+
+function godanAStem(row: GodanRow): string {
+  return row === 'u' ? 'わ' : kanaRows[row].a;
+}
+
+function godanKuException(form: ConjugationForm): string {
+  if (form === 'te') return ' (行く is the exception → いって).';
+  if (form === 'ta') return ' (行く is the exception → いった).';
+  if (form === 'conditional_tara') return ' (行く is the exception → いったら).';
+  return '';
+}
+
+function getGodanConjugationHint(verb: VerbData, form: ConjugationForm): string {
+  const row = verb.godanRow || 'ru';
+  const ending = godanEnding(row);
+  const iStem = kanaRows[row].i;
+  const eStem = kanaRows[row].e;
+  const oStem = kanaRows[row].o;
+  const aStem = godanAStem(row);
+  const negativeStem = row === 'u' ? 'う with わ' : `${ending} with ${aStem}`;
+
+  switch (form) {
+    case 'dictionary':
+      return `Godan dictionary form keeps the verb ending in the う-row kana ${ending}.`;
+    case 'masu':
+      return `Godan verbs ending in ${ending}: replace ${ending} with ${iStem} + ます.`;
+    case 'masu_negative':
+      return `Godan polite negative: replace ${ending} with ${iStem} + ません.`;
+    case 'masu_past':
+      return `Godan polite past: replace ${ending} with ${iStem} + ました.`;
+    case 'masu_past_negative':
+      return `Godan polite past negative: replace ${ending} with ${iStem} + ませんでした.`;
+    case 'te':
+      return `Godan verbs ending in ${ending} → replace with ${teFormRules[row].te}.${row === 'ku' ? godanKuException(form) : ''}`;
+    case 'ta':
+      return `Godan past plain form follows the te-form sound change: ${ending} → ${teFormRules[row].ta}.${row === 'ku' ? godanKuException(form) : ''}`;
+    case 'nai':
+      return `Godan ${ending}-verbs: negative replaces ${negativeStem} + ない.`;
+    case 'nakatta':
+      return `Godan past negative replaces ${negativeStem} + なかった.`;
+    case 'potential':
+      return `Godan potential: replace ${ending} with ${eStem} + る.`;
+    case 'passive':
+      return `Godan passive: replace ${negativeStem} + れる.`;
+    case 'causative':
+      return `Godan causative: replace ${negativeStem} + せる.`;
+    case 'causative_passive':
+      return `Godan causative-passive: replace ${negativeStem} + せられる.`;
+    case 'imperative':
+      return `Godan imperative: replace ${ending} with the え-row kana ${eStem}.`;
+    case 'prohibitive':
+      return 'Godan prohibitive keeps the dictionary form and adds な.';
+    case 'conditional_ba':
+      return `Godan ば conditional: replace ${ending} with ${eStem} + ば.`;
+    case 'conditional_tara':
+      return `Godan たら conditional: make the た-form (${ending} → ${teFormRules[row].ta}) and add ら.${row === 'ku' ? godanKuException(form) : ''}`;
+    case 'volitional':
+      return `Godan volitional: replace ${ending} with ${oStem} + う.`;
+    default:
+      return 'Use the godan row ending to shift the final kana for this form.';
+  }
+}
+
+function getIchidanConjugationHint(form: ConjugationForm): string {
+  switch (form) {
+    case 'dictionary':
+      return 'Ichidan dictionary form keeps the final る.';
+    case 'masu':
+      return 'Ichidan: drop る, add ます.';
+    case 'masu_negative':
+      return 'Ichidan polite negative: drop る, add ません.';
+    case 'masu_past':
+      return 'Ichidan polite past: drop る, add ました.';
+    case 'masu_past_negative':
+      return 'Ichidan polite past negative: drop る, add ませんでした.';
+    case 'te':
+      return 'Ichidan te-form: drop る, add て.';
+    case 'ta':
+      return 'Ichidan past plain form: drop る, add た.';
+    case 'nai':
+      return 'Ichidan negative: drop る, add ない.';
+    case 'nakatta':
+      return 'Ichidan past negative: drop る, add なかった.';
+    case 'potential':
+      return 'Ichidan potential: drop る, add られる.';
+    case 'passive':
+      return 'Ichidan passive: drop る, add られる.';
+    case 'causative':
+      return 'Ichidan causative: drop る, add させる.';
+    case 'causative_passive':
+      return 'Ichidan causative-passive: drop る, add させられる.';
+    case 'imperative':
+      return 'Ichidan imperative: drop る, add ろ.';
+    case 'prohibitive':
+      return 'Ichidan prohibitive keeps the dictionary form and adds な.';
+    case 'conditional_ba':
+      return 'Ichidan ば conditional: drop る, add れば.';
+    case 'conditional_tara':
+      return 'Ichidan たら conditional: drop る, add たら.';
+    case 'volitional':
+      return 'Ichidan volitional: drop る, add よう.';
+    default:
+      return 'Ichidan forms use the stem made by dropping the final る.';
+  }
+}
+
+function getIrregularConjugationHint(verb: VerbData, form: ConjugationForm): string {
+  if (verb.overrides && verb.overrides[form]) {
+    return `This form is irregular: use ${verb.overrides[form]}.`;
+  }
+
+  if (verb.reading === 'くる' || verb.reading.endsWith('くる')) {
+    const target = kuruForms[form];
+    switch (form) {
+      case 'dictionary':
+        return '来る is irregular; memorize the dictionary form くる.';
+      case 'masu':
+      case 'masu_negative':
+      case 'masu_past':
+      case 'masu_past_negative':
+      case 'te':
+      case 'ta':
+      case 'nai':
+      case 'nakatta':
+      case 'potential':
+      case 'passive':
+      case 'causative':
+      case 'causative_passive':
+      case 'imperative':
+      case 'prohibitive':
+      case 'conditional_ba':
+      case 'conditional_tara':
+      case 'volitional':
+        return `くる → ${target} (irregular).`;
+      default:
+        return '来る conjugates irregularly.';
+    }
+  }
+
+  if (verb.reading === 'する' || verb.reading.endsWith('する')) {
+    const target = suruForms[form];
+    switch (form) {
+      case 'dictionary':
+        return 'する is irregular; compound する verbs keep the noun/base + する.';
+      case 'masu':
+      case 'masu_negative':
+      case 'masu_past':
+      case 'masu_past_negative':
+      case 'te':
+      case 'ta':
+      case 'nai':
+      case 'nakatta':
+      case 'potential':
+      case 'passive':
+      case 'causative':
+      case 'causative_passive':
+      case 'imperative':
+      case 'prohibitive':
+      case 'conditional_ba':
+      case 'conditional_tara':
+      case 'volitional':
+        return `する → ${target} (irregular).`;
+      default:
+        return 'する conjugates irregularly.';
+    }
+  }
+
+  return 'This verb uses an irregular conjugation pattern for this form.';
+}
+
+export function getConjugationHint(verb: VerbData, form: ConjugationForm): string {
+  switch (verb.group) {
+    case 'godan':
+      return getGodanConjugationHint(verb, form);
+    case 'ichidan':
+      return getIchidanConjugationHint(form);
+    case 'irregular':
+      return getIrregularConjugationHint(verb, form);
+    default:
+      return 'Review the verb group and apply its conjugation pattern.';
+  }
+}
+
 // Build the display form with kanji where possible
 // For now, return the reading (hiragana) — kanji display can be enhanced later
 // Derive kanji conjugated form from verb kanji + reading + conjugated reading

@@ -158,13 +158,13 @@ export default function FlashcardScreen() {
     flipToFront();
   };
 
-  const frontOpacity = flipAnim.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [1, 0, 0],
+  const frontRotateY = flipAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '180deg'],
   });
-  const backOpacity = flipAnim.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [0, 0, 1],
+  const backRotateY = flipAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['180deg', '360deg'],
   });
 
   const formLabel = FORM_LABELS[card.form];
@@ -181,7 +181,15 @@ export default function FlashcardScreen() {
         activeOpacity={0.95}
       >
         {/* Front */}
-        <Animated.View style={[styles.card, { backgroundColor: colors.card, opacity: frontOpacity }]}>
+        <Animated.View
+          style={[
+            styles.card,
+            {
+              backgroundColor: colors.card,
+              transform: [{ perspective: 1000 }, { rotateY: frontRotateY }],
+            },
+          ]}
+        >
           <Text style={[styles.formLabel, { color: colors.textMuted }]}>
             {formLabel.ja} — {formLabel.en}
           </Text>
@@ -200,7 +208,16 @@ export default function FlashcardScreen() {
         </Animated.View>
 
         {/* Back */}
-        <Animated.View style={[styles.card, styles.cardBack, { backgroundColor: colors.primary + '10', opacity: backOpacity }]}>
+        <Animated.View
+          style={[
+            styles.card,
+            styles.cardBack,
+            {
+              backgroundColor: colors.primary + '10',
+              transform: [{ perspective: 1000 }, { rotateY: backRotateY }],
+            },
+          ]}
+        >
           <Text style={[styles.formLabel, { color: colors.textMuted }]}>
             {formLabel.ja} — {formLabel.en}
           </Text>
@@ -319,6 +336,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 4,
+    backfaceVisibility: 'hidden',
   },
   cardBack: {
     borderWidth: 2,

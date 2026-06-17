@@ -77,9 +77,8 @@ export default function FlashcardStatsScreen() {
     const key = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const data = dailyMap[key];
     if (!data) return null;
-    const pct = data.reviewed > 0 ? Math.round((data.correct / data.reviewed) * 100) : 0;
-    if (pct >= 80) return { bg: colors.calHigh, text: colors.calHighText };
-    if (pct >= 50) return { bg: colors.calMid, text: colors.calMidText };
+    if (data.reviewed >= 30) return { bg: colors.calHigh, text: colors.calHighText };
+    if (data.reviewed >= 11) return { bg: colors.calMid, text: colors.calMidText };
     return { bg: colors.calLow, text: colors.calLowText };
   };
 
@@ -212,15 +211,15 @@ export default function FlashcardStatsScreen() {
       <View style={styles.legend}>
         <View style={styles.legendItem}>
           <View style={[styles.legendDot, { backgroundColor: colors.calHigh }]} />
-          <Text style={[styles.legendText, { color: colors.textMuted }]}>≥80%</Text>
+          <Text style={[styles.legendText, { color: colors.textMuted }]}>30+</Text>
         </View>
         <View style={styles.legendItem}>
           <View style={[styles.legendDot, { backgroundColor: colors.calMid }]} />
-          <Text style={[styles.legendText, { color: colors.textMuted }]}>≥50%</Text>
+          <Text style={[styles.legendText, { color: colors.textMuted }]}>11–29</Text>
         </View>
         <View style={styles.legendItem}>
           <View style={[styles.legendDot, { backgroundColor: colors.calLow }]} />
-          <Text style={[styles.legendText, { color: colors.textMuted }]}>&lt;50%</Text>
+          <Text style={[styles.legendText, { color: colors.textMuted }]}>1–10</Text>
         </View>
       </View>
 
