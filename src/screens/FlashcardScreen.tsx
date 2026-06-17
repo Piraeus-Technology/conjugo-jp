@@ -79,6 +79,7 @@ export default function FlashcardScreen() {
   const [newReviewed, setNewReviewed] = useState(0);
   const [newCorrect, setNewCorrect] = useState(0);
   const flipAnim = useRef(new Animated.Value(0)).current;
+  const isAnimating = useRef(false);
 
   useEffect(() => {
     loadPracticeSettings();
@@ -105,6 +106,7 @@ export default function FlashcardScreen() {
   }, [navigation, colors]);
 
   const flipToFront = () => {
+    isAnimating.current = true;
     Animated.timing(flipAnim, {
       toValue: 0,
       duration: 200,
@@ -112,19 +114,22 @@ export default function FlashcardScreen() {
     }).start(() => {
       setCard(generateCard(filteredEntries, activeForms));
       setFlipped(false);
+      isAnimating.current = false;
     });
   };
 
   const flip = () => {
+    if (isAnimating.current || flipped) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (!flipped) {
-      setFlipped(true);
-      Animated.timing(flipAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
+    setFlipped(true);
+    isAnimating.current = true;
+    Animated.timing(flipAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      isAnimating.current = false;
+    });
   };
 
   const handleGotIt = () => {
@@ -152,7 +157,11 @@ export default function FlashcardScreen() {
   const { unsavedCount, unsavedCorrect } = useSessionAutosave({
     count: newReviewed,
     correct: newCorrect,
-    save: ({ count, correct }) => saveSession({ reviewed: count, correct }),
+    save: async ({ count, correct }) => {
+      if (!(await saveSession({ reviewed: count, correct }))) {
+        throw new Error('flashcard session save failed');
+      }
+    },
   });
 
   // Today's cumulative totals plus any unsaved in-memory progress.

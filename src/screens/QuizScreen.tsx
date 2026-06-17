@@ -218,8 +218,11 @@ export default function QuizScreen() {
     count: newTotal,
     correct: newCorrect,
     bestStreak: bestSessionStreak,
-    save: ({ count, correct, bestStreak }) =>
-      saveSession({ total: count, correct, streak: bestStreak }),
+    save: async ({ count, correct, bestStreak }) => {
+      if (!(await saveSession({ total: count, correct, streak: bestStreak }))) {
+        throw new Error('quiz session save failed');
+      }
+    },
   });
 
   // Today's cumulative totals plus any unsaved in-memory progress.

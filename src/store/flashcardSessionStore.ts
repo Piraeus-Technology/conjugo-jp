@@ -16,7 +16,7 @@ interface FlashcardSessionStore {
   loaded: boolean;
   loadError: boolean;
   loadSessions: () => Promise<void>;
-  saveSession: (session: Omit<FlashcardSession, 'day'>) => Promise<void>;
+  saveSession: (session: Omit<FlashcardSession, 'day'>) => Promise<boolean>;
   clearSessions: () => Promise<void>;
 }
 
@@ -70,15 +70,16 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
     });
   },
 
-  saveSession: async (session) => {
+  saveSession: async (session): Promise<boolean> => {
     if (!get().loaded) {
       await get().loadSessions();
     }
     if (!get().loaded) {
       console.warn('Skipping flashcard session save: store never loaded');
-      return;
+      return false;
     }
-    return queue.enqueue(async () => {
+    let ok = false;
+    await queue.enqueue(async () => {
       const today = getTodayKey();
       const current = get().sessions;
       const existingIndex = current.findIndex(s => s.day === today);
@@ -101,7 +102,9 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
         return;
       }
       set({ sessions: updated });
+      ok = true;
     });
+    return ok;
   },
 
   clearSessions: async () => {
