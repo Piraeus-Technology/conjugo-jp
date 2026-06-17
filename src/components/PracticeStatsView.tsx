@@ -39,6 +39,12 @@ export interface PracticeStatsLabels {
   emptySubtitle: string;
 }
 
+interface AllTimeOverride {
+  count: number;
+  correct: number;
+  thirdStat: { value: number; label: string };
+}
+
 interface PracticeStatsViewProps {
   sessions: DayCounts[];
   sessionsLoaded: boolean;
@@ -48,6 +54,7 @@ interface PracticeStatsViewProps {
   weightsLoadError: boolean;
   onRetry: () => void;
   labels: PracticeStatsLabels;
+  allTimeOverride?: AllTimeOverride;
 }
 
 export default function PracticeStatsView({
@@ -56,9 +63,9 @@ export default function PracticeStatsView({
   sessionsLoadError,
   weights,
   weightsLoaded,
-  weightsLoadError,
   onRetry,
   labels,
+  allTimeOverride,
 }: PracticeStatsViewProps) {
   const colors = useColors();
   const [calendarDate, setCalendarDate] = useState(new Date());
@@ -82,6 +89,9 @@ export default function PracticeStatsView({
   // All-time totals
   const totalCount = React.useMemo(() => sessions.reduce((sum, s) => sum + s.count, 0), [sessions]);
   const totalCorrect = React.useMemo(() => sessions.reduce((sum, s) => sum + s.correct, 0), [sessions]);
+  const allTimeCount = allTimeOverride?.count ?? totalCount;
+  const allTimeCorrect = allTimeOverride?.correct ?? totalCorrect;
+  const allTimeThirdStat = allTimeOverride?.thirdStat ?? { value: sessions.length, label: labels.daysLabel };
 
   // Today stats
   const todayStr = getTodayKey();
@@ -125,8 +135,17 @@ export default function PracticeStatsView({
 
   const selectedData = selectedDay ? dailyMap[selectedDay] : null;
   const selectedAccuracy = selectedData ? getAccuracyPercent(selectedData.correct, selectedData.count) : null;
+  const selectedDateLabel = React.useMemo(() => {
+    if (!selectedDay) return null;
+    const [y, m, d] = selectedDay.split('-').map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  }, [selectedDay]);
 
-  if ((sessionsLoadError && !sessionsLoaded) || (weightsLoadError && !weightsLoaded)) {
+  if (sessionsLoadError && !sessionsLoaded) {
     return (
       <View style={[styles.container, styles.loadingContainer, styles.statusContainer, { backgroundColor: colors.bg }]}>
         <Text style={[styles.statusText, { color: colors.textMuted }]}>{labels.errorText}</Text>
@@ -142,7 +161,7 @@ export default function PracticeStatsView({
     );
   }
 
-  if (!sessionsLoaded || !weightsLoaded) {
+  if (!sessionsLoaded) {
     return (
       <View style={[styles.container, styles.loadingContainer, { backgroundColor: colors.bg }]}>
         <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>{labels.loadingText}</Text>
@@ -170,18 +189,18 @@ export default function PracticeStatsView({
       <View style={[styles.statsCard, { backgroundColor: colors.card }]}>
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
-            <Text style={[styles.statValue, { color: colors.primary }]}>{totalCount}</Text>
+            <Text style={[styles.statValue, { color: colors.primary }]}>{allTimeCount}</Text>
             <Text style={[styles.statLabel, { color: colors.textMuted }]}>{labels.countLabel}</Text>
           </View>
           <View style={styles.statItem}>
             <Text style={[styles.statValue, { color: colors.primary }]}>
-              {getAccuracyPercent(totalCorrect, totalCount) ?? 0}%
+              {getAccuracyPercent(allTimeCorrect, allTimeCount) ?? 0}%
             </Text>
             <Text style={[styles.statLabel, { color: colors.textMuted }]}>Accuracy</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={[styles.statValue, { color: colors.accent }]}>{sessions.length}</Text>
-            <Text style={[styles.statLabel, { color: colors.textMuted }]}>{labels.daysLabel}</Text>
+            <Text style={[styles.statValue, { color: colors.accent }]}>{allTimeThirdStat.value}</Text>
+            <Text style={[styles.statLabel, { color: colors.textMuted }]}>{allTimeThirdStat.label}</Text>
           </View>
         </View>
       </View>
@@ -255,8 +274,14 @@ export default function PracticeStatsView({
               const key = getDayKey(day);
               const isSelected = selectedDay === key;
               const isToday = key === todayStr;
-              const dayCount = dailyMap[key]?.count;
+              const dayData = dailyMap[key];
+              const dayCount = dayData?.count;
               const hasActivity = hasPositiveCount(dayCount);
+              const dateLabel = new Date(calYear, calMonth, day).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              });
 
               return (
                 <TouchableOpacity
@@ -273,8 +298,11 @@ export default function PracticeStatsView({
                   activeOpacity={hasActivity ? 0.7 : 1}
                   accessibilityRole={hasActivity ? 'button' : 'text'}
                   accessibilityLabel={
-                    hasActivity ? `${key}, ${dayCount} ${labels.countLabel.toLowerCase()}` : undefined
+                    hasActivity
+                      ? `${dateLabel}: ${dayCount} ${labels.countLabel.toLowerCase()}, ${dayData?.correct ?? 0} correct`
+                      : `${dateLabel}: no activity`
                   }
+                  accessibilityState={{ selected: isSelected, disabled: !hasActivity }}
                 >
                   <Text style={[
                     styles.calendarDay,
@@ -292,7 +320,7 @@ export default function PracticeStatsView({
         {selectedDay && selectedData && selectedAccuracy !== null && (
           <View style={[styles.selectedDetail, { borderTopColor: colors.divider }]}>
             <Text style={[styles.selectedDate, { color: colors.textPrimary }]}>
-              {new Date(selectedDay + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              {selectedDateLabel}
             </Text>
             <Text style={[styles.selectedStat, { color: colors.textSecondary }]}>
               {selectedData.correct}/{selectedData.count} · {selectedAccuracy}% accuracy
@@ -337,7 +365,7 @@ export default function PracticeStatsView({
       )}
 
       {/* Empty state */}
-      {totalCount === 0 && (
+      {allTimeCount === 0 && (
         <View style={styles.emptyContainer}>
           <Ionicons name={labels.emptyIcon} size={48} color={colors.textMuted} />
           <Text style={[styles.emptyTitle, { color: colors.textPrimary }]}>No stats yet</Text>

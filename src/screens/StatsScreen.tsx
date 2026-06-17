@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSessionStore } from '../store/sessionStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
+import { useQuizStore } from '../store/quizStore';
 import PracticeStatsView, { DayCounts } from '../components/PracticeStatsView';
 
 export default function StatsScreen() {
@@ -16,11 +17,18 @@ export default function StatsScreen() {
     loadError: weightsLoadError,
     loadWeights,
   } = useSpacedRepStore();
+  const {
+    totalQuestions,
+    totalCorrect,
+    bestStreak,
+    loadStats,
+  } = useQuizStore();
 
   React.useEffect(() => {
     loadSessions();
     loadWeights();
-  }, [loadSessions, loadWeights]);
+    loadStats();
+  }, [loadSessions, loadWeights, loadStats]);
 
   const dayCounts: DayCounts[] = React.useMemo(
     () => sessions.map(s => ({ day: s.day, count: s.total, correct: s.correct })),
@@ -35,9 +43,15 @@ export default function StatsScreen() {
       weights={weights}
       weightsLoaded={weightsLoaded}
       weightsLoadError={weightsLoadError}
+      allTimeOverride={{
+        count: totalQuestions,
+        correct: totalCorrect,
+        thirdStat: { value: bestStreak, label: 'Best Streak' },
+      }}
       onRetry={() => {
         loadSessions();
         loadWeights();
+        loadStats();
       }}
       labels={{
         countLabel: 'Questions',
