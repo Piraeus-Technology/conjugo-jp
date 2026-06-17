@@ -1,17 +1,22 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+export type PracticeSettingsParams = { mode: 'quiz' | 'flashcards' };
 
-export type RootStackParamList = {
-  Search: undefined;
-  Conjugation: {
-    verb: string;
-    initialForm?: string;
-    highlightForm?: string;
-  };
-  Feedback: undefined;
-  Quiz: undefined;
+export type SearchStackParamList = {
+  SearchHome: undefined;
+  Conjugation: { verb: string; highlightForm?: string };
 };
 
-export type SearchScreenProps = NativeStackScreenProps<RootStackParamList, 'Search'>;
-export type ConjugationScreenProps = NativeStackScreenProps<RootStackParamList, 'Conjugation'>;
-export type FeedbackScreenProps = NativeStackScreenProps<RootStackParamList, 'Feedback'>;
-export type QuizScreenProps = NativeStackScreenProps<RootStackParamList, 'Quiz'>;
+export type QuizStackParamList = {
+  QuizMain: undefined;
+  PracticeSettings: PracticeSettingsParams;
+};
+
+export type FlashcardStackParamList = {
+  FlashcardMain: undefined;
+  PracticeSettings: PracticeSettingsParams;
+};
+
+export type MoreStackParamList = {
+  MoreMain: undefined;
+  Stats: undefined;
+  FlashcardStats: undefined;
+};

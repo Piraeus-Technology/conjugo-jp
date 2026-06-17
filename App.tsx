@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback } from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar, TouchableOpacity, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
@@ -17,13 +18,19 @@ import FlashcardStatsScreen from './src/screens/FlashcardStatsScreen';
 import PracticeSettingsScreen from './src/screens/PracticeSettingsScreen';
 import { useThemeStore } from './src/store/themeStore';
 import { useColors, fonts } from './src/utils/theme';
+import type {
+  FlashcardStackParamList,
+  MoreStackParamList,
+  QuizStackParamList,
+  SearchStackParamList,
+} from './src/types/navigation';
 
 SplashScreen.preventAutoHideAsync();
 
-const SearchStack = createNativeStackNavigator();
-const QuizStack = createNativeStackNavigator();
-const FlashcardStack = createNativeStackNavigator();
-const MoreStack = createNativeStackNavigator();
+const SearchStack = createNativeStackNavigator<SearchStackParamList>();
+const QuizStack = createNativeStackNavigator<QuizStackParamList>();
+const FlashcardStack = createNativeStackNavigator<FlashcardStackParamList>();
+const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const Tab = createBottomTabNavigator();
 
 function SearchStackScreen() {
@@ -54,7 +61,7 @@ function SearchStackScreen() {
       <SearchStack.Screen
         name="Conjugation"
         component={ConjugationScreen}
-        options={({ route }: any) => ({
+        options={({ route }: { route: RouteProp<SearchStackParamList, 'Conjugation'> }) => ({
           title: route.params.verb,
         })}
       />
@@ -129,7 +136,7 @@ function MoreStackScreen() {
 }
 
 export default function App() {
-  const { isDark, loaded, loadTheme, toggleTheme } = useThemeStore();
+  const { isDark, loaded, loadTheme } = useThemeStore();
   const colors = useColors();
 
   useEffect(() => {

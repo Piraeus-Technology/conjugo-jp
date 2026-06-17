@@ -21,10 +21,10 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { romajiToHiragana } from '../utils/kana';
-import type { RootStackParamList } from '../types/navigation';
+import type { SearchStackParamList } from '../types/navigation';
 import { conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, JLPTLevel, ConjugationForm } from '../utils/conjugate';
 
-type NavProp = NativeStackNavigationProp<RootStackParamList>;
+type NavProp = NativeStackNavigationProp<SearchStackParamList>;
 
 const verbList = Object.entries(verbs as Record<string, VerbData>);
 
@@ -126,6 +126,7 @@ export default function HomeScreen() {
   const { history, loadHistory, addToHistory, removeFromHistory } = useHistoryStore();
   const { favorites, loadFavorites, toggleFavorite } = useFavoritesStore();
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedLevels, setSelectedLevels] = useState<JLPTLevel[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<VerbGroup[]>([]);
 
@@ -133,6 +134,15 @@ export default function HomeScreen() {
     loadHistory();
     loadFavorites();
   }, []);
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setDebouncedQuery('');
+      return;
+    }
+    const timeout = setTimeout(() => setDebouncedQuery(query), 120);
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   const hasActiveFilters = selectedLevels.length > 0 || selectedGroups.length > 0;
 
@@ -170,8 +180,8 @@ export default function HomeScreen() {
   }, [hasActiveFilters, passesFilters]);
 
   const results = useMemo((): SearchResult[] => {
-    if (!query.trim()) return hasActiveFilters ? filteredVerbResults : [];
-    const q = query.trim();
+    if (!debouncedQuery.trim()) return !query.trim() && hasActiveFilters ? filteredVerbResults : [];
+    const q = debouncedQuery.trim();
     const hiraganaQuery = romajiToHiragana(q);
 
     // Check for exact conjugation matches first (hiragana or kanji)
@@ -240,7 +250,7 @@ export default function HomeScreen() {
     }
 
     return out.filter(passesFilters).slice(0, 20);
-  }, [query, hasActiveFilters, filteredVerbResults, passesFilters]);
+  }, [query, debouncedQuery, hasActiveFilters, filteredVerbResults, passesFilters]);
 
   const handleVerbPress = useCallback((verb: string, highlightForm?: string) => {
     addToHistory(verb);
@@ -249,10 +259,21 @@ export default function HomeScreen() {
 
   const [vodVerb, vodData] = getVerbOfTheDay();
 
-  const groupTagColors = {
+  const groupTagColors: Record<VerbGroup, { bg: string; text: string }> = {
     godan: { bg: colors.godanTag, text: colors.godanTagText },
     ichidan: { bg: colors.ichidanTag, text: colors.ichidanTagText },
     irregular: { bg: colors.irregularTag, text: colors.irregularTagText },
+  };
+
+  const getLevelTagColors = (level: string) => {
+    switch (level) {
+      case 'N5': return { bg: colors.n5Bg, text: colors.n5Text };
+      case 'N4': return { bg: colors.n4Bg, text: colors.n4Text };
+      case 'N3': return { bg: colors.n3Bg, text: colors.n3Text };
+      case 'N2': return { bg: colors.n2Bg, text: colors.n2Text };
+      case 'N1': return { bg: colors.n1Bg, text: colors.n1Text };
+      default: return { bg: colors.pillBg, text: colors.textMuted };
+    }
   };
 
   const getTransitivityColors = (transitive: boolean) => transitive
@@ -276,6 +297,9 @@ export default function HomeScreen() {
       ]}
       onPress={onPress}
       activeOpacity={0.75}
+      accessibilityRole="button"
+      accessibilityLabel={`Filter by ${label}`}
+      accessibilityState={{ selected: active }}
     >
       <Text style={[styles.filterChipText, { color: active ? colors.pillActiveText : colors.pillText }]}>
         {label}
@@ -303,11 +327,15 @@ export default function HomeScreen() {
 
   const renderVerbItem = ({ item }: { item: SearchResult }) => {
     const tagColor = groupTagColors[item.group as VerbGroup];
+    const levelTagColor = getLevelTagColors(item.jlpt);
     return (
       <TouchableOpacity
         style={[styles.resultItem, { backgroundColor: colors.card }]}
         onPress={() => handleVerbPress(item.verb, item.matchForm)}
         activeOpacity={0.7}
+        accessibilityRole="button"
+        accessibilityLabel={`${item.verb}, ${item.reading}, ${item.translation}`}
+        accessibilityHint={item.matchDetail || 'Opens conjugation table'}
       >
         <View style={styles.resultLeft}>
           <Text style={[styles.resultVerb, { color: colors.textPrimary }]}>{item.verb}</Text>
@@ -328,14 +356,19 @@ export default function HomeScreen() {
                 {groupColors[item.group as VerbGroup].label}
               </Text>
             </View>
-            <View style={[styles.tag, { backgroundColor: (colors as any)[`${item.jlpt.toLowerCase()}Bg`] || colors.pillBg }]}>
-              <Text style={[styles.tagText, { color: (colors as any)[`${item.jlpt.toLowerCase()}Text`] || colors.textMuted }]}>{item.jlpt}</Text>
+            <View style={[styles.tag, { backgroundColor: levelTagColor.bg }]}>
+              <Text style={[styles.tagText, { color: levelTagColor.text }]}>{item.jlpt}</Text>
             </View>
             {item.transitive !== undefined && (() => {
               const transitivity = getTransitivityColors(item.transitive);
               return (
                 <View style={[styles.tag, { backgroundColor: transitivity.bg }]}>
-                  <Text style={[styles.tagText, { color: transitivity.text }]}>{transitivity.label}</Text>
+                  <Text
+                    style={[styles.tagText, { color: transitivity.text }]}
+                    accessibilityLabel={item.transitive ? 'Transitive verb' : 'Intransitive verb'}
+                  >
+                    {transitivity.label}
+                  </Text>
                 </View>
               );
             })()}
@@ -369,6 +402,9 @@ export default function HomeScreen() {
           style={[styles.historyItem, { backgroundColor: colors.bg }]}
           onPress={() => handleVerbPress(verb)}
           activeOpacity={0.6}
+          accessibilityRole="button"
+          accessibilityLabel={`${verb}, ${data.reading}, ${data.translation}`}
+          accessibilityHint="Opens conjugation table"
         >
           <View style={styles.historyLeft}>
             <Text style={[styles.historyVerb, { color: colors.textPrimary }]}>{verb}</Text>
@@ -387,6 +423,8 @@ export default function HomeScreen() {
     );
   };
 
+  const vodLevelTagColor = getLevelTagColors(vodData.jlpt);
+
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
       {/* Search bar */}
@@ -400,9 +438,16 @@ export default function HomeScreen() {
           onChangeText={setQuery}
           autoCorrect={false}
           autoCapitalize="none"
+          accessibilityLabel="Search Japanese verbs"
+          accessibilityHint="Search by kanji, hiragana, romaji, English, or conjugated form"
         />
         {query.length > 0 && (
-          <TouchableOpacity onPress={() => setQuery('')}>
+          <TouchableOpacity
+            onPress={() => setQuery('')}
+            accessibilityRole="button"
+            accessibilityLabel="Clear search"
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
             <Ionicons name="close-circle" size={18} color={colors.textMuted} />
           </TouchableOpacity>
         )}
@@ -439,19 +484,22 @@ export default function HomeScreen() {
             style={[styles.vodCard, { backgroundColor: colors.card }]}
             onPress={() => handleVerbPress(vodVerb)}
             activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={`Verb of the Day: ${vodVerb}, ${vodData.reading}, ${vodData.translation}`}
+            accessibilityHint="Opens conjugation table"
           >
             <Text style={[styles.vodLabel, { color: colors.textMuted }]}>Verb of the Day</Text>
             <Text style={[styles.vodVerb, { color: colors.primary }]}>{vodVerb}</Text>
             <Text style={[styles.vodReading, { color: colors.textSecondary }]}>{vodData.reading}</Text>
             <Text style={[styles.vodTranslation, { color: colors.textPrimary }]}>{vodData.translation}</Text>
             <View style={styles.vodBadgeRow}>
-              <View style={[styles.vodBadge, { backgroundColor: groupTagColors[vodData.group as VerbGroup]?.bg }]}>
-                <Text style={[styles.vodBadgeText, { color: groupTagColors[vodData.group as VerbGroup]?.text }]}>
-                  {groupColors[vodData.group as VerbGroup]?.label}
+              <View style={[styles.vodBadge, { backgroundColor: groupTagColors[vodData.group].bg }]}>
+                <Text style={[styles.vodBadgeText, { color: groupTagColors[vodData.group].text }]}>
+                  {groupColors[vodData.group].label}
                 </Text>
               </View>
-              <View style={[styles.vodBadge, { backgroundColor: (colors as any)[`${vodData.jlpt.toLowerCase()}Bg`] || colors.pillBg }]}>
-                <Text style={[styles.vodBadgeText, { color: (colors as any)[`${vodData.jlpt.toLowerCase()}Text`] || colors.textMuted }]}>
+              <View style={[styles.vodBadge, { backgroundColor: vodLevelTagColor.bg }]}>
+                <Text style={[styles.vodBadgeText, { color: vodLevelTagColor.text }]}>
                   {vodData.jlpt}
                 </Text>
               </View>
@@ -459,7 +507,10 @@ export default function HomeScreen() {
                 const transitivity = getTransitivityColors(vodData.transitive);
                 return (
                   <View style={[styles.vodBadge, { backgroundColor: transitivity.bg }]}>
-                    <Text style={[styles.vodBadgeText, { color: transitivity.text }]}>
+                    <Text
+                      style={[styles.vodBadgeText, { color: transitivity.text }]}
+                      accessibilityLabel={vodData.transitive ? 'Transitive verb' : 'Intransitive verb'}
+                    >
                       {transitivity.label}
                     </Text>
                   </View>

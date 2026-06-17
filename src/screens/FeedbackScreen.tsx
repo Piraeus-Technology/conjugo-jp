@@ -14,14 +14,16 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useThemeStore } from '../store/themeStore';
+import type { MoreStackParamList } from '../types/navigation';
 
 const APP_VERSION = '1.0.0';
 
 export default function FeedbackScreen() {
   const colors = useColors();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList, 'MoreMain'>>();
   const { isDark, toggleTheme } = useThemeStore();
 
   const handleRateApp = () => {
@@ -58,6 +60,8 @@ export default function FeedbackScreen() {
           style={[styles.rowCard, { backgroundColor: colors.card, marginTop: 0 }]}
           onPress={() => navigation.navigate('Stats')}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Open quiz stats"
         >
           <Ionicons name="bar-chart-outline" size={24} color={colors.primary} style={{ marginRight: spacing.md }} />
           <View style={styles.rowInfo}>
@@ -72,6 +76,8 @@ export default function FeedbackScreen() {
           style={[styles.rowCard, { backgroundColor: colors.card }]}
           onPress={() => navigation.navigate('FlashcardStats')}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Open flashcard stats"
         >
           <Ionicons name="layers-outline" size={24} color={colors.primary} style={{ marginRight: spacing.md }} />
           <View style={styles.rowInfo}>
@@ -92,6 +98,9 @@ export default function FeedbackScreen() {
               onValueChange={toggleTheme}
               trackColor={{ false: isDark ? colors.border : '#C5C0BA', true: colors.primary }}
               thumbColor="#fff"
+              accessibilityRole="switch"
+              accessibilityLabel="Dark Mode"
+              accessibilityState={{ checked: isDark }}
             />
           </View>
         </View>
@@ -102,6 +111,8 @@ export default function FeedbackScreen() {
           style={[styles.rowCard, { backgroundColor: colors.card }]}
           onPress={handleSendEmail}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Send feedback email"
         >
           <Text style={styles.rowEmoji}>💬</Text>
           <View style={styles.rowInfo}>
@@ -115,6 +126,8 @@ export default function FeedbackScreen() {
           style={[styles.rowCard, { backgroundColor: colors.card }]}
           onPress={handleRateApp}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Rate ConjuGo JP on the App Store"
         >
           <Text style={styles.rowEmoji}>⭐</Text>
           <View style={styles.rowInfo}>
@@ -132,6 +145,8 @@ export default function FeedbackScreen() {
             });
           }}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Share ConjuGo JP"
         >
           <Text style={styles.rowEmoji}>🔗</Text>
           <View style={styles.rowInfo}>
@@ -145,6 +160,8 @@ export default function FeedbackScreen() {
           style={[styles.rowCard, { backgroundColor: colors.card }]}
           onPress={() => Linking.openURL('https://piraeus-technology.github.io/conjugo-jp/')}
           activeOpacity={0.7}
+          accessibilityRole="link"
+          accessibilityLabel="Open privacy policy"
         >
           <Ionicons name="shield-checkmark-outline" size={20} color={colors.textSecondary} style={{ marginRight: spacing.md }} />
           <Text style={[styles.linkText, { color: colors.textPrimary }]}>Privacy Policy</Text>

@@ -9,15 +9,22 @@ import {
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { FORM_LABELS, FORM_GROUPS, ConjugationForm, JLPTLevel } from '../utils/conjugate';
 import { usePracticeSettingsStore, allForms, allLevels } from '../store/practiceSettingsStore';
+import type { PracticeSettingsParams, QuizStackParamList } from '../types/navigation';
+
+type PracticeSettingsRouteParamList = {
+  PracticeSettings: PracticeSettingsParams;
+};
 
 export default function PracticeSettingsScreen() {
   const colors = useColors();
-  const navigation = useNavigation<any>();
-  const route = useRoute<any>();
-  const mode = route.params?.mode || 'quiz';
+  const navigation = useNavigation<NativeStackNavigationProp<QuizStackParamList, 'PracticeSettings'>>();
+  const route = useRoute<RouteProp<PracticeSettingsRouteParamList, 'PracticeSettings'>>();
+  const mode = route.params.mode;
 
   const {
     activeForms, activeLevels,
@@ -58,6 +65,8 @@ export default function PracticeSettingsScreen() {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             setActiveForms(allFormsSelected ? ['masu'] : [...allForms]);
           }}
+          accessibilityRole="button"
+          accessibilityLabel={allFormsSelected ? 'Deselect all forms' : 'Select all forms'}
         >
           <Text style={[styles.selectAllText, { color: colors.primary }]}>
             {allFormsSelected ? 'Deselect All' : 'Select All'}
@@ -82,6 +91,9 @@ export default function PracticeSettingsScreen() {
                     toggleForm(item.key);
                   }}
                   activeOpacity={0.7}
+                  accessibilityRole="checkbox"
+                  accessibilityLabel={item.label}
+                  accessibilityState={{ checked: active }}
                 >
                   <Text style={[styles.rowText, { color: colors.textPrimary }]}>{item.label}</Text>
                   <Ionicons
@@ -104,6 +116,8 @@ export default function PracticeSettingsScreen() {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             setActiveLevels(allLevelsSelected ? ['N5'] : [...allLevels]);
           }}
+          accessibilityRole="button"
+          accessibilityLabel={allLevelsSelected ? 'Deselect all JLPT levels' : 'Select all JLPT levels'}
         >
           <Text style={[styles.selectAllText, { color: colors.primary }]}>
             {allLevelsSelected ? 'Deselect All' : 'Select All'}
@@ -125,6 +139,9 @@ export default function PracticeSettingsScreen() {
                 toggleLevel(level);
               }}
               activeOpacity={0.7}
+              accessibilityRole="checkbox"
+              accessibilityLabel={`JLPT ${level}`}
+              accessibilityState={{ checked: active }}
             >
               <Text style={[styles.rowText, { color: colors.textPrimary }]}>{level}</Text>
               <Ionicons
@@ -142,6 +159,8 @@ export default function PracticeSettingsScreen() {
         style={[styles.startButton, { backgroundColor: colors.primary }]}
         onPress={handleStart}
         activeOpacity={0.8}
+        accessibilityRole="button"
+        accessibilityLabel={mode === 'quiz' ? 'Start quiz' : 'Start flashcards'}
       >
         <Ionicons name="play" size={20} color="#fff" />
         <Text style={styles.startButtonText}>

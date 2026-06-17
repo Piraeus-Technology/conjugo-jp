@@ -1,15 +1,22 @@
-import { conjugate, conjugateReading, getConjugationHint, VerbData } from '../utils/conjugate';
+import {
+  conjugate,
+  conjugateReading,
+  getConjugationHint,
+  ConjugationForm,
+  GodanRow,
+  VerbData,
+} from '../utils/conjugate';
 
 // Helper to make verb data concise in tests
-function godan(reading: string, row: string, overrides?: any): VerbData {
-  return { reading, group: 'godan', godanRow: row as any, translation: '', jlpt: 'N5', overrides };
+function godan(reading: string, row: GodanRow, overrides?: Partial<Record<ConjugationForm, string>>): VerbData {
+  return { reading, group: 'godan', godanRow: row, translation: '', jlpt: 'N5', overrides };
 }
 
 function ichidan(reading: string): VerbData {
   return { reading, group: 'ichidan', translation: '', jlpt: 'N5' };
 }
 
-function irregular(reading: string, overrides?: any): VerbData {
+function irregular(reading: string, overrides?: Partial<Record<ConjugationForm, string>>): VerbData {
   return { reading, group: 'irregular', translation: '', jlpt: 'N5', overrides };
 }
 
