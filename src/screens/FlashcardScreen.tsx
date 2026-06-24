@@ -17,7 +17,6 @@ import verbs from '../data/verbs.json';
 import {
   conjugateReading,
   FORM_LABELS,
-  getFormExampleHint,
   ConjugationForm,
   VerbData,
   JLPTLevel,
@@ -213,7 +212,6 @@ export default function FlashcardScreen() {
   });
 
   const formLabel = FORM_LABELS[card.form];
-  const formHint = getFormExampleHint(card.form);
   const exampleSentence = getExampleSentence(card.verb, card.form);
 
   return (
@@ -249,8 +247,8 @@ export default function FlashcardScreen() {
           activeOpacity={0.95}
           accessibilityRole="button"
           accessibilityLabel={flipped
-            ? `${card.verb}, ${card.reading}, ${formLabel.en}, ${formLabel.meaning}. Answer: ${card.answer}${exampleSentence ? `. Example: ${exampleSentence}` : ''}`
-            : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}. Meaning: ${formLabel.meaning}`}
+            ? `${card.verb}, ${card.reading}, ${formLabel.en}${formLabel.meaning ? `, ${formLabel.meaning}` : ''}. Answer: ${card.answer}${exampleSentence ? `. Example: ${exampleSentence}` : ''}`
+            : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}.${formLabel.meaning ? ` Meaning: ${formLabel.meaning}` : ''}`}
           accessibilityHint={flipped ? 'Use Got it or Missed to grade this card' : 'Flips the card to reveal the answer'}
           accessibilityState={{ disabled: flipped }}
         >
@@ -267,10 +265,16 @@ export default function FlashcardScreen() {
             <Text style={[styles.formLabel, { color: colors.textSecondary }]}>
               {formLabel.ja} — {formLabel.en}
             </Text>
-            <Text style={[styles.formHint, { color: colors.textSecondary }]}>
-              {formHint}
-            </Text>
-            <Text style={[styles.verbText, { color: colors.primary }]}>
+            {formLabel.meaning ? (
+              <Text style={[styles.formHint, { color: colors.textSecondary }]}>
+                {formLabel.meaning}
+              </Text>
+            ) : null}
+            <Text
+              style={[styles.verbText, { color: colors.primary }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
               {card.verb}
             </Text>
             <Text style={[styles.readingText, { color: colors.textSecondary }]}>
@@ -298,22 +302,33 @@ export default function FlashcardScreen() {
             <Text style={[styles.formLabel, { color: colors.textSecondary }]}>
               {formLabel.ja} — {formLabel.en}
             </Text>
-            <Text style={[styles.formHint, { color: colors.textSecondary }]}>
-              {formHint}
-            </Text>
-            <Text style={[styles.answerText, { color: colors.primary }]}>
+            {formLabel.meaning ? (
+              <Text style={[styles.formHint, { color: colors.textSecondary }]}>
+                {formLabel.meaning}
+              </Text>
+            ) : null}
+            <Text
+              style={[styles.answerText, { color: colors.primary }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+            >
               {card.answer}
             </Text>
             <Text style={[styles.contextText, { color: colors.textSecondary }]}>
-              {card.verb} · {card.reading}
+              {card.verb}
             </Text>
             <Text style={[styles.answerTranslation, { color: colors.textMuted }]}>
               {card.translation}
             </Text>
             {exampleSentence && (
-              <Text style={[styles.exampleText, { color: colors.textSecondary }]}>
-                {exampleSentence}
-              </Text>
+              <>
+                <Text style={[styles.exampleLabel, { color: colors.textMuted }]}>
+                  Example
+                </Text>
+                <Text style={[styles.exampleText, { color: colors.textSecondary }]}>
+                  {exampleSentence}
+                </Text>
+              </>
             )}
             <TouchableOpacity
               style={[styles.speakButton, { backgroundColor: colors.primary }]}
@@ -429,6 +444,9 @@ const styles = StyleSheet.create({
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
     textAlign: 'center',
+    // Full width so adjustsFontSizeToFit has a bound to shrink within
+    // (in a centered column it would otherwise overflow instead of scaling).
+    alignSelf: 'stretch',
   },
   readingText: {
     fontSize: fonts.sizes.lg,
@@ -445,6 +463,8 @@ const styles = StyleSheet.create({
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
     textAlign: 'center',
+    // Full width so adjustsFontSizeToFit has a bound to shrink within.
+    alignSelf: 'stretch',
   },
   answerTranslation: {
     fontSize: fonts.sizes.md,
@@ -455,6 +475,14 @@ const styles = StyleSheet.create({
   contextText: {
     fontSize: fonts.sizes.sm,
     marginBottom: spacing.sm,
+    textAlign: 'center',
+  },
+  exampleLabel: {
+    fontSize: fonts.sizes.xs,
+    fontWeight: fonts.weights.semibold,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 2,
     textAlign: 'center',
   },
   exampleText: {
