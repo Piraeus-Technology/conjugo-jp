@@ -53,4 +53,17 @@ describe('verb list contains no phrase idioms', () => {
       expect(verbs[k]).toBeDefined();
     }
   });
+
+  it('only uses the nu godan row for 死ぬ-family verbs', () => {
+    const invalidNuRowKeys = Object.entries(
+      verbsJson as Record<string, { godanRow?: string }>,
+    )
+      .filter(
+        ([key, data]) =>
+          data.godanRow === 'nu' && key !== '死ぬ' && !key.endsWith('死ぬ'),
+      )
+      .map(([key]) => key);
+
+    expect(invalidNuRowKeys).toEqual([]);
+  });
 });

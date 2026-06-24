@@ -7998,15 +7998,6 @@
     "transitive": false,
     "examples": [{ "ja": "神前に跪く。", "en": "I kneel before the altar." }]
   },
-  "逞しくなる": {
-    "reading": "たくましくなる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to become strong, to toughen up",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "子供が逞しくなる。", "en": "The child becomes strong." }]
-  },
   "顧みる": {
     "reading": "かえりみる",
     "group": "ichidan",
@@ -14539,15 +14530,6 @@
     "transitive": false,
     "examples": [{ "ja": "交渉が紆余曲折する。", "en": "The negotiations undergo complications." }]
   },
-  "煮え切らぬ": {
-    "reading": "にえきらぬ",
-    "group": "godan",
-    "godanRow": "nu",
-    "translation": "to be indecisive, to be wishy-washy",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "煮え切らぬ態度。", "en": "An indecisive attitude." }]
-  },
   "一蹴する": {
     "reading": "いっしゅうする",
     "group": "irregular",
@@ -15637,23 +15619,6 @@
     "transitive": true,
     "examples": [{ "ja": "覚悟を思い定める。", "en": "I firmly make up my mind." }]
   },
-  "顧みず突き進む": {
-    "reading": "かえりみずつきすすむ",
-    "group": "godan",
-    "godanRow": "mu",
-    "translation": "to push forward without looking back",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "危険を顧みず突き進む。", "en": "I push forward regardless of danger." }]
-  },
-  "丸く収める": {
-    "reading": "まるくおさめる",
-    "group": "ichidan",
-    "translation": "to settle amicably",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "問題を丸く収める。", "en": "I settle the problem amicably." }]
-  },
   "紐解く": {
     "reading": "ひもとく",
     "group": "godan",
@@ -15662,15 +15627,6 @@
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "歴史を紐解く。", "en": "I trace back through history." }]
-  },
-  "一役買う": {
-    "reading": "ひとやくかう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to play a part in, to contribute to",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "成功に一役買う。", "en": "I play a part in the success." }]
   },
   "錆び付く": {
     "reading": "さびつく",
