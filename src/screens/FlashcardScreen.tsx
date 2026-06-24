@@ -49,8 +49,8 @@ interface Card {
 }
 
 function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): Card | null {
-  const verbEntries = entries.length > 0 ? entries : allVerbEntries;
-  const activeForms = forms.length > 0 ? forms : flashcardForms;
+  const verbEntries = entries;
+  const activeForms = forms;
   const commonCount = Math.min(200, verbEntries.length);
   const selection = chooseQuizzableEntry(verbEntries, activeForms, () => {
     const idx = Math.random() < 0.7
@@ -136,13 +136,27 @@ export default function FlashcardScreen() {
     });
   }, [navigation, colors]);
 
+  useEffect(() => {
+    if (!settingsLoaded) return;
+    flipAnim.stopAnimation(() => {
+      flipAnim.setValue(0);
+      isAnimating.current = false;
+      setFlipped(false);
+      setCard(generateCard(filteredEntries, activeForms));
+    });
+  }, [settingsLoaded, activeForms, filteredEntries, flipAnim]);
+
   const flipToFront = () => {
     isAnimating.current = true;
     Animated.timing(flipAnim, {
       toValue: 0,
       duration: 200,
       useNativeDriver: true,
-    }).start(() => {
+    }).start(({ finished }) => {
+      if (!finished) {
+        isAnimating.current = false;
+        return;
+      }
       setCard(generateCard(filteredEntries, activeForms));
       setFlipped(false);
       isAnimating.current = false;
