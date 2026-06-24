@@ -444,6 +444,9 @@ const styles = StyleSheet.create({
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
     textAlign: 'center',
+    // Full width so adjustsFontSizeToFit has a bound to shrink within
+    // (in a centered column it would otherwise overflow instead of scaling).
+    alignSelf: 'stretch',
   },
   readingText: {
     fontSize: fonts.sizes.lg,
@@ -460,6 +463,8 @@ const styles = StyleSheet.create({
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
     textAlign: 'center',
+    // Full width so adjustsFontSizeToFit has a bound to shrink within.
+    alignSelf: 'stretch',
   },
   answerTranslation: {
     fontSize: fonts.sizes.md,
