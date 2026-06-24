@@ -22,6 +22,7 @@ import {
   VerbData,
   JLPTLevel,
 } from '../utils/conjugate';
+import { getExampleSentence } from '../utils/formExamples';
 import { speak, stopSpeech } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
@@ -213,6 +214,7 @@ export default function FlashcardScreen() {
 
   const formLabel = FORM_LABELS[card.form];
   const formHint = getFormExampleHint(card.form);
+  const exampleSentence = getExampleSentence(card.verb, card.form);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
@@ -247,7 +249,7 @@ export default function FlashcardScreen() {
           activeOpacity={0.95}
           accessibilityRole="button"
           accessibilityLabel={flipped
-            ? `${card.verb}, ${card.reading}, ${formLabel.en}, ${formLabel.meaning}. Answer: ${card.answer}`
+            ? `${card.verb}, ${card.reading}, ${formLabel.en}, ${formLabel.meaning}. Answer: ${card.answer}${exampleSentence ? `. Example: ${exampleSentence}` : ''}`
             : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}. Meaning: ${formLabel.meaning}`}
           accessibilityHint={flipped ? 'Use Got it or Missed to grade this card' : 'Flips the card to reveal the answer'}
           accessibilityState={{ disabled: flipped }}
@@ -308,6 +310,11 @@ export default function FlashcardScreen() {
             <Text style={[styles.answerTranslation, { color: colors.textMuted }]}>
               {card.translation}
             </Text>
+            {exampleSentence && (
+              <Text style={[styles.exampleText, { color: colors.textSecondary }]}>
+                {exampleSentence}
+              </Text>
+            )}
             <TouchableOpacity
               style={[styles.speakButton, { backgroundColor: colors.primary }]}
               onPress={(e) => {
@@ -381,7 +388,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cardContainer: {
-    height: 360,
+    height: 400,
   },
   card: {
     position: 'absolute',
@@ -442,13 +449,20 @@ const styles = StyleSheet.create({
   answerTranslation: {
     fontSize: fonts.sizes.md,
     fontStyle: 'italic',
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
     textAlign: 'center',
   },
   contextText: {
     fontSize: fonts.sizes.sm,
-    marginBottom: spacing.lg,
+    marginBottom: spacing.sm,
     textAlign: 'center',
+  },
+  exampleText: {
+    fontSize: fonts.sizes.md,
+    lineHeight: 24,
+    textAlign: 'center',
+    marginBottom: spacing.md,
+    paddingHorizontal: spacing.sm,
   },
   speakButton: {
     width: 44,
