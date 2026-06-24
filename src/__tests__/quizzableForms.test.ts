@@ -21,6 +21,7 @@ const stativeExcludeForms: ConjugationForm[] = [
   'causative_passive',
   'volitional',
   'imperative',
+  'prohibitive',
 ];
 
 const expectedExcludeForms: Record<string, ConjugationForm[]> = {
@@ -52,12 +53,19 @@ const expectedExcludeForms: Record<string, ConjugationForm[]> = {
   'おっしゃる': honorificExcludeForms,
   '仰る': honorificExcludeForms,
   // 分かる keeps causative (分からせる "make understand" is real)
-  '分かる': ['potential', 'passive', 'causative_passive', 'volitional', 'imperative'],
+  '分かる': ['potential', 'passive', 'causative_passive', 'volitional', 'imperative', 'prohibitive'],
   'できる': stativeExcludeForms,
   '出来る': stativeExcludeForms,
   '見える': stativeExcludeForms,
   '聞こえる': stativeExcludeForms,
   '要る': stativeExcludeForms,
+  'みえる': stativeExcludeForms,
+  'きこえる': stativeExcludeForms,
+  '足りる': stativeExcludeForms,
+  '似る': stativeExcludeForms,
+  '異なる': stativeExcludeForms,
+  '適する': stativeExcludeForms,
+  '属する': stativeExcludeForms,
 };
 
 describe('quizzableForms', () => {
@@ -98,15 +106,17 @@ describe('quizzableForms', () => {
     ]);
   });
 
-  it('drops spontaneous/stative potential/imperative but 分かる keeps causative', () => {
+  it('drops spontaneous/stative potential/imperative/prohibitive but 分かる keeps causative', () => {
     const wakaru = quizzableForms(verbs['分かる'], ALL_FORMS);
     expect(wakaru).not.toContain('potential'); // 分かれる collides with 分かれる (to split)
     expect(wakaru).not.toContain('imperative');
+    expect(wakaru).not.toContain('prohibitive');
     expect(wakaru).toContain('causative'); // 分からせる is real
-    for (const v of ['できる', '見える', '聞こえる', '要る']) {
+    for (const v of ['できる', '見える', '聞こえる', '要る', 'みえる', 'きこえる', '足りる', '似る', '異なる', '適する', '属する']) {
       const q = quizzableForms(verbs[v], ALL_FORMS);
       expect(q).not.toContain('potential');
       expect(q).not.toContain('imperative');
+      expect(q).not.toContain('prohibitive');
       expect(q).toContain('masu');
     }
   });

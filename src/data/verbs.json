@@ -399,7 +399,7 @@
     "godanRow": "ru",
     "translation": "to understand",
     "jlpt": "N5",
-    "excludeForms": ["potential", "passive", "causative_passive", "volitional", "imperative"],
+    "excludeForms": ["potential", "passive", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [
       {
@@ -1512,7 +1512,7 @@
     "group": "ichidan",
     "translation": "to be visible",
     "jlpt": "N4",
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative"],
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [
       {
@@ -1526,7 +1526,7 @@
     "group": "ichidan",
     "translation": "to be audible",
     "jlpt": "N4",
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative"],
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [
       {
@@ -3363,6 +3363,7 @@
     "group": "ichidan",
     "translation": "to resemble",
     "jlpt": "N3",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "母に似る。", "en": "I resemble my mother." }]
   },
@@ -3372,6 +3373,7 @@
     "godanRow": "ru",
     "translation": "to differ, to vary",
     "jlpt": "N3",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "意見が異なる。", "en": "Opinions differ." }]
   },
@@ -4827,7 +4829,7 @@
     "group": "ichidan",
     "translation": "to be able to, to be completed",
     "jlpt": "N5",
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative"],
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "日本語が出来る。", "en": "I can speak Japanese." }]
   },
@@ -4846,7 +4848,7 @@
     "godanRow": "ru",
     "translation": "to need",
     "jlpt": "N5",
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative"],
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "お金が要る。", "en": "I need money." }]
   },
@@ -8185,6 +8187,7 @@
     "group": "ichidan",
     "translation": "to be sufficient, to be enough",
     "jlpt": "N4",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "お金が足りる。", "en": "The money is enough." }]
   },
@@ -9734,6 +9737,7 @@
     "group": "irregular",
     "translation": "to be suitable for",
     "jlpt": "N3",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "条件に適する。", "en": "It is suitable for the conditions." }]
   },
@@ -9742,6 +9746,7 @@
     "group": "irregular",
     "translation": "to belong to",
     "jlpt": "N3",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "チームに属する。", "en": "I belong to the team." }]
   },
@@ -11216,7 +11221,7 @@
     "group": "ichidan",
     "translation": "to be able to, to be ready",
     "jlpt": "N5",
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative"],
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "料理ができる。", "en": "I can cook." }]
   },
@@ -11242,6 +11247,7 @@
     "group": "ichidan",
     "translation": "to be visible, to be able to see",
     "jlpt": "N5",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "山がみえる。", "en": "The mountain is visible." }]
   },
@@ -11250,6 +11256,7 @@
     "group": "ichidan",
     "translation": "to be audible, to be able to hear",
     "jlpt": "N5",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "音がきこえる。", "en": "I can hear a sound." }]
   },
