@@ -17,12 +17,12 @@ import verbs from '../data/verbs.json';
 import {
   conjugateReading,
   FORM_LABELS,
-  quizzableForms,
   ConjugationForm,
   VerbData,
   JLPTLevel,
 } from '../utils/conjugate';
 import { getExampleSentence } from '../utils/formExamples';
+import { chooseQuizzableEntry } from '../utils/practiceSelection';
 import { speak, stopSpeech } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
@@ -48,15 +48,19 @@ interface Card {
   answer: string;
 }
 
-function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): Card {
+function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): Card | null {
   const verbEntries = entries.length > 0 ? entries : allVerbEntries;
   const activeForms = forms.length > 0 ? forms : flashcardForms;
   const commonCount = Math.min(200, verbEntries.length);
-  const idx = Math.random() < 0.7
-    ? Math.floor(Math.random() * commonCount)
-    : Math.floor(Math.random() * verbEntries.length);
-  const [verb, data] = verbEntries[idx];
-  const pool = quizzableForms(data, activeForms);
+  const selection = chooseQuizzableEntry(verbEntries, activeForms, () => {
+    const idx = Math.random() < 0.7
+      ? Math.floor(Math.random() * commonCount)
+      : Math.floor(Math.random() * verbEntries.length);
+    return verbEntries[idx];
+  });
+  if (!selection) return null;
+  const [verb, data] = selection.entry;
+  const pool = selection.forms;
   const form = pool[Math.floor(Math.random() * pool.length)];
   const answer = conjugateReading(data, form);
   return {
@@ -80,7 +84,7 @@ export default function FlashcardScreen() {
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
   );
-  const [card, setCard] = useState<Card>(() => generateCard(allVerbEntries, flashcardForms));
+  const [card, setCard] = useState<Card | null>(() => generateCard(allVerbEntries, flashcardForms));
   const [flipped, setFlipped] = useState(false);
   // This-visit answers (monotonic); persisted as deltas by useSessionAutosave.
   const [newReviewed, setNewReviewed] = useState(0);
@@ -146,7 +150,7 @@ export default function FlashcardScreen() {
   };
 
   const flip = () => {
-    if (isAnimating.current || flipped) return;
+    if (!card || isAnimating.current || flipped) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setFlipped(true);
     isAnimating.current = true;
@@ -170,7 +174,7 @@ export default function FlashcardScreen() {
   const handleGotIt = () => {
     // The flipped gate also guards re-entry: the buttons stay tappable during
     // the flip-back animation, and a double-tap would record the card twice.
-    if (!flipped) return;
+    if (!card || !flipped) return;
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setNewReviewed(r => r + 1);
@@ -180,7 +184,7 @@ export default function FlashcardScreen() {
   };
 
   const handleMissed = () => {
-    if (!flipped) return;
+    if (!card || !flipped) return;
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     setNewReviewed(r => r + 1);
@@ -212,6 +216,12 @@ export default function FlashcardScreen() {
     inputRange: [0, 1],
     outputRange: ['180deg', '360deg'],
   });
+
+  if (!card) return (
+    <View style={[styles.container, { backgroundColor: colors.bg, justifyContent: 'center', alignItems: 'center' }]}>
+      <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>No matching verbs</Text>
+    </View>
+  );
 
   const formLabel = FORM_LABELS[card.form];
   const exampleSentence = getExampleSentence(card.verb, card.form);

@@ -8909,7 +8909,7 @@
     "translation": "to be (polite form of ある)",
     "jlpt": "N5",
     "transitive": false,
-    "excludeForms": ["nai", "nakatta", "potential", "passive", "causative", "causative_passive", "imperative", "prohibitive", "volitional", "conditional_ba"],
+    "excludeForms": ["dictionary", "nai", "nakatta", "potential", "passive", "causative", "causative_passive", "imperative", "prohibitive", "volitional", "conditional_ba"],
     "overrides": { "dictionary": "ござる", "masu": "ございます", "masu_negative": "ございません", "masu_past": "ございました", "masu_past_negative": "ございませんでした" },
     "examples": [{ "ja": "こちらにございます。", "en": "It is here (polite)." }]
   },
