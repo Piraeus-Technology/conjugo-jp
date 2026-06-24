@@ -5449,7 +5449,7 @@
     "translation": "to be, to go (honorific)",
     "jlpt": "N3",
     "transitive": false,
-    "overrides": { "masu": "いらっしゃいます" },
+    "overrides": { "masu": "いらっしゃいます", "masu_negative": "いらっしゃいません", "masu_past": "いらっしゃいました", "masu_past_negative": "いらっしゃいませんでした", "imperative": "いらっしゃい" },
     "examples": [{ "ja": "先生がいらっしゃる。", "en": "The teacher is here (honorific)." }]
   },
   "おっしゃる": {
@@ -5459,7 +5459,7 @@
     "translation": "to say (honorific)",
     "jlpt": "N3",
     "transitive": true,
-    "overrides": { "masu": "おっしゃいます" },
+    "overrides": { "masu": "おっしゃいます", "masu_negative": "おっしゃいません", "masu_past": "おっしゃいました", "masu_past_negative": "おっしゃいませんでした", "imperative": "おっしゃい" },
     "examples": [{ "ja": "先生がおっしゃる。", "en": "The teacher says (honorific)." }]
   },
   "ご覧になる": {
@@ -8127,7 +8127,7 @@
     "translation": "to do (honorific)",
     "jlpt": "N5",
     "transitive": true,
-    "overrides": { "masu": "なさいます" },
+    "overrides": { "masu": "なさいます", "masu_negative": "なさいません", "masu_past": "なさいました", "masu_past_negative": "なさいませんでした", "imperative": "なさい" },
     "examples": [{ "ja": "何をなさる？", "en": "What will you do? (honorific)" }]
   },
   "くださる": {
@@ -8137,7 +8137,7 @@
     "translation": "to give (honorific)",
     "jlpt": "N5",
     "transitive": true,
-    "overrides": { "masu": "くださいます" },
+    "overrides": { "masu": "くださいます", "masu_negative": "くださいません", "masu_past": "くださいました", "masu_past_negative": "くださいませんでした", "imperative": "ください" },
     "examples": [{ "ja": "先生がくださる。", "en": "The teacher gives (honorific)." }]
   },
   "鳴る": {
@@ -8964,7 +8964,7 @@
     "translation": "to be (polite form of ある)",
     "jlpt": "N5",
     "transitive": false,
-    "overrides": { "dictionary": "ござる", "masu": "ございます" },
+    "overrides": { "dictionary": "ござる", "masu": "ございます", "masu_negative": "ございません", "masu_past": "ございました", "masu_past_negative": "ございませんでした" },
     "examples": [{ "ja": "こちらにございます。", "en": "It is here (polite)." }]
   },
   "伺う": {
@@ -8991,7 +8991,7 @@
     "translation": "to say (honorific)",
     "jlpt": "N4",
     "transitive": true,
-    "overrides": { "masu": "おっしゃいます" },
+    "overrides": { "masu": "おっしゃいます", "masu_negative": "おっしゃいません", "masu_past": "おっしゃいました", "masu_past_negative": "おっしゃいませんでした", "imperative": "おっしゃい" },
     "examples": [{ "ja": "先生が仰る。", "en": "The teacher says (honorific)." }]
   },
   "召す": {
@@ -11323,6 +11323,7 @@
     "translation": "to give (to me/us)",
     "jlpt": "N5",
     "transitive": true,
+    "overrides": { "imperative": "くれ" },
     "examples": [{ "ja": "友達がくれる。", "en": "My friend gives it to me." }]
   },
   "みえる": {
