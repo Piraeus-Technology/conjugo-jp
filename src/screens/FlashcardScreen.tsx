@@ -17,6 +17,7 @@ import verbs from '../data/verbs.json';
 import {
   conjugateReading,
   FORM_LABELS,
+  getFormExampleHint,
   ConjugationForm,
   VerbData,
   JLPTLevel,
@@ -211,6 +212,7 @@ export default function FlashcardScreen() {
   });
 
   const formLabel = FORM_LABELS[card.form];
+  const formHint = getFormExampleHint(card.form);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
@@ -245,8 +247,8 @@ export default function FlashcardScreen() {
           activeOpacity={0.95}
           accessibilityRole="button"
           accessibilityLabel={flipped
-            ? `${card.verb}, ${card.reading}, ${formLabel.en} answer: ${card.answer}`
-            : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}`}
+            ? `${card.verb}, ${card.reading}, ${formLabel.en}, ${formLabel.meaning}. Answer: ${card.answer}`
+            : `Tap to reveal ${formLabel.en} form of ${card.verb}, ${card.reading}. Meaning: ${formLabel.meaning}`}
           accessibilityHint={flipped ? 'Use Got it or Missed to grade this card' : 'Flips the card to reveal the answer'}
           accessibilityState={{ disabled: flipped }}
         >
@@ -260,8 +262,11 @@ export default function FlashcardScreen() {
               },
             ]}
           >
-            <Text style={[styles.formLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.formLabel, { color: colors.textSecondary }]}>
               {formLabel.ja} — {formLabel.en}
+            </Text>
+            <Text style={[styles.formHint, { color: colors.textSecondary }]}>
+              {formHint}
             </Text>
             <Text style={[styles.verbText, { color: colors.primary }]}>
               {card.verb}
@@ -288,8 +293,11 @@ export default function FlashcardScreen() {
               },
             ]}
           >
-            <Text style={[styles.formLabel, { color: colors.textMuted }]}>
+            <Text style={[styles.formLabel, { color: colors.textSecondary }]}>
               {formLabel.ja} — {formLabel.en}
+            </Text>
+            <Text style={[styles.formHint, { color: colors.textSecondary }]}>
+              {formHint}
             </Text>
             <Text style={[styles.answerText, { color: colors.primary }]}>
               {card.answer}
@@ -400,34 +408,47 @@ const styles = StyleSheet.create({
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,
     letterSpacing: 1,
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+  formHint: {
+    fontSize: fonts.sizes.xs,
+    lineHeight: 17,
+    textAlign: 'center',
     marginBottom: spacing.md,
   },
   verbText: {
     fontSize: 36,
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   readingText: {
     fontSize: fonts.sizes.lg,
     marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   translationText: {
     fontSize: fonts.sizes.md,
     fontStyle: 'italic',
+    textAlign: 'center',
   },
   answerText: {
     fontSize: 42,
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   answerTranslation: {
     fontSize: fonts.sizes.md,
     fontStyle: 'italic',
     marginBottom: spacing.md,
+    textAlign: 'center',
   },
   contextText: {
     fontSize: fonts.sizes.sm,
     marginBottom: spacing.lg,
+    textAlign: 'center',
   },
   speakButton: {
     width: 44,
