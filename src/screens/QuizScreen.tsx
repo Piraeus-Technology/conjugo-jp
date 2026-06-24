@@ -442,6 +442,10 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: fonts.weights.bold,
     marginBottom: 2,
+    // Centered + full width so adjustsFontSizeToFit shrinks long verbs to one
+    // line instead of overflowing in the centered column (matches FlashcardScreen).
+    textAlign: 'center',
+    alignSelf: 'stretch',
   },
   questionReading: {
     fontSize: fonts.sizes.lg,
