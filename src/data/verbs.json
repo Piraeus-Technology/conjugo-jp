@@ -15713,5 +15713,102 @@
     "jlpt": "N3",
     "transitive": false,
     "examples": [{ "ja": "お金が余る。", "en": "Money is left over." }]
+  },
+  "据える": {
+    "reading": "すえる",
+    "group": "ichidan",
+    "translation": "to set in place, to lay, to install",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "庭に石を据える。", "en": "I set a stone in the garden." }]
+  },
+  "尽くす": {
+    "reading": "つくす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to exhaust, to use up, to devote oneself",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "全力を尽くす。", "en": "I do my utmost." }]
+  },
+  "瞑る": {
+    "reading": "つぶる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to close (one's eyes)",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "そっと目を瞑る。", "en": "I gently close my eyes." }]
+  },
+  "噤む": {
+    "reading": "つぐむ",
+    "group": "godan",
+    "godanRow": "mu",
+    "translation": "to shut (one's mouth), to keep silent",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "彼は口を噤む。", "en": "He keeps his mouth shut." }]
+  },
+  "射る": {
+    "reading": "いる",
+    "group": "ichidan",
+    "translation": "to shoot (an arrow)",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "矢を射る。", "en": "I shoot an arrow." }]
+  },
+  "振るう": {
+    "reading": "ふるう",
+    "group": "godan",
+    "godanRow": "u",
+    "translation": "to wield, to exercise, to display",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "権力を振るう。", "en": "He wields power." }]
+  },
+  "括る": {
+    "reading": "くくる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to tie up, to bundle, to fasten",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "荷物を括る。", "en": "I bundle the luggage." }]
+  },
+  "分かつ": {
+    "reading": "わかつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to divide, to separate, to share",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "喜びを分かつ。", "en": "We share the joy." }]
+  },
+  "晒す": {
+    "reading": "さらす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to expose, to bleach",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "身を危険に晒す。", "en": "I expose myself to danger." }]
+  },
+  "見張る": {
+    "reading": "みはる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to watch, to keep watch, to stand guard",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "入り口を見張る。", "en": "I keep watch on the entrance." }]
+  },
+  "きたす": {
+    "reading": "きたす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to cause, to bring about",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [{ "ja": "混乱をきたす。", "en": "It causes confusion." }]
   }
 }
