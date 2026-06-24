@@ -147,6 +147,7 @@
     "translation": "to exist (inanimate)",
     "jlpt": "N5",
     "transitive": false,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "overrides": {
       "nai": "ない",
       "nakatta": "なかった"
@@ -5449,6 +5450,7 @@
     "translation": "to be, to go (honorific)",
     "jlpt": "N3",
     "transitive": false,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional"],
     "overrides": { "masu": "いらっしゃいます", "masu_negative": "いらっしゃいません", "masu_past": "いらっしゃいました", "masu_past_negative": "いらっしゃいませんでした", "imperative": "いらっしゃい" },
     "examples": [{ "ja": "先生がいらっしゃる。", "en": "The teacher is here (honorific)." }]
   },
@@ -5459,6 +5461,7 @@
     "translation": "to say (honorific)",
     "jlpt": "N3",
     "transitive": true,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional"],
     "overrides": { "masu": "おっしゃいます", "masu_negative": "おっしゃいません", "masu_past": "おっしゃいました", "masu_past_negative": "おっしゃいませんでした", "imperative": "おっしゃい" },
     "examples": [{ "ja": "先生がおっしゃる。", "en": "The teacher says (honorific)." }]
   },
@@ -8085,6 +8088,7 @@
     "translation": "to do (honorific)",
     "jlpt": "N5",
     "transitive": true,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional"],
     "overrides": { "masu": "なさいます", "masu_negative": "なさいません", "masu_past": "なさいました", "masu_past_negative": "なさいませんでした", "imperative": "なさい" },
     "examples": [{ "ja": "何をなさる？", "en": "What will you do? (honorific)" }]
   },
@@ -8095,6 +8099,7 @@
     "translation": "to give (honorific)",
     "jlpt": "N5",
     "transitive": true,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional"],
     "overrides": { "masu": "くださいます", "masu_negative": "くださいません", "masu_past": "くださいました", "masu_past_negative": "くださいませんでした", "imperative": "ください" },
     "examples": [{ "ja": "先生がくださる。", "en": "The teacher gives (honorific)." }]
   },
@@ -8904,6 +8909,7 @@
     "translation": "to be (polite form of ある)",
     "jlpt": "N5",
     "transitive": false,
+    "excludeForms": ["dictionary", "nai", "nakatta", "potential", "passive", "causative", "causative_passive", "imperative", "prohibitive", "volitional", "conditional_ba"],
     "overrides": { "dictionary": "ござる", "masu": "ございます", "masu_negative": "ございません", "masu_past": "ございました", "masu_past_negative": "ございませんでした" },
     "examples": [{ "ja": "こちらにございます。", "en": "It is here (polite)." }]
   },
@@ -8931,6 +8937,7 @@
     "translation": "to say (honorific)",
     "jlpt": "N4",
     "transitive": true,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional"],
     "overrides": { "masu": "おっしゃいます", "masu_negative": "おっしゃいません", "masu_past": "おっしゃいました", "masu_past_negative": "おっしゃいませんでした", "imperative": "おっしゃい" },
     "examples": [{ "ja": "先生が仰る。", "en": "The teacher says (honorific)." }]
   },

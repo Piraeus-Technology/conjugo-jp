@@ -11,13 +11,13 @@ import * as StoreReview from 'expo-store-review';
 import { stopSpeech } from '../utils/speech';
 import verbs from '../data/verbs.json';
 import {
-  conjugateReading,
   getConjugationHint,
   FORM_LABELS,
   ConjugationForm,
   VerbData,
   JLPTLevel,
 } from '../utils/conjugate';
+import { generateQuestion, Question } from '../utils/quizQuestion';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
@@ -30,97 +30,6 @@ import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import type { QuizStackParamList } from '../types/navigation';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
-
-interface Question {
-  verb: string;
-  reading: string;
-  translation: string;
-  form: ConjugationForm;
-  correctAnswer: string;
-  options: string[];
-  verbData: VerbData;
-}
-
-function generateQuestion(
-  activeForms: ConjugationForm[],
-  getWeight: (verb: string) => number,
-  filteredEntries: [string, VerbData][],
-): Question {
-  const verbEntries = filteredEntries.length > 0 ? filteredEntries : allVerbEntries;
-  // Weighted random verb selection with bias toward common verbs
-  const commonCount = Math.min(200, verbEntries.length);
-  const candidates: number[] = [];
-  for (let i = 0; i < 10; i++) {
-    if (Math.random() < 0.7) {
-      candidates.push(Math.floor(Math.random() * commonCount));
-    } else {
-      candidates.push(Math.floor(Math.random() * verbEntries.length));
-    }
-  }
-  const verbIndex = candidates.reduce((best, idx) => {
-    const bestWeight = getWeight(verbEntries[best][0]);
-    const thisWeight = getWeight(verbEntries[idx][0]);
-    return thisWeight > bestWeight ? idx : best;
-  }, candidates[0]);
-
-  const [verb, data] = verbEntries[verbIndex];
-  const form = activeForms[Math.floor(Math.random() * activeForms.length)];
-  const correctAnswer = conjugateReading(data, form);
-
-  // Generate wrong answers
-  const wrongAnswers = new Set<string>();
-
-  // Same verb, different forms
-  for (const f of activeForms) {
-    if (f === form) continue;
-    const wrong = conjugateReading(data, f);
-    if (wrong !== correctAnswer) {
-      wrongAnswers.add(wrong);
-    }
-  }
-
-  // Same form, different verbs
-  for (let i = 0; i < 20 && wrongAnswers.size < 6; i++) {
-    const [, otherData] = verbEntries[Math.floor(Math.random() * verbEntries.length)];
-    const wrong = conjugateReading(otherData, form);
-    if (wrong !== correctAnswer) {
-      wrongAnswers.add(wrong);
-    }
-  }
-
-  const wrongArray = Array.from(wrongAnswers);
-  const selected: string[] = [];
-  while (selected.length < 3 && wrongArray.length > 0) {
-    const idx = Math.floor(Math.random() * wrongArray.length);
-    selected.push(wrongArray.splice(idx, 1)[0]);
-  }
-
-  // Fallback if not enough wrong answers
-  while (selected.length < 3) {
-    const [, otherData] = allVerbEntries[Math.floor(Math.random() * allVerbEntries.length)];
-    const wrong = conjugateReading(otherData, form);
-    if (wrong !== correctAnswer && !selected.includes(wrong)) {
-      selected.push(wrong);
-    }
-  }
-
-  const options = [correctAnswer, ...selected];
-  // Shuffle
-  for (let i = options.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [options[i], options[j]] = [options[j], options[i]];
-  }
-
-  return {
-    verb,
-    reading: data.reading,
-    translation: data.translation,
-    form,
-    correctAnswer,
-    options,
-    verbData: data,
-  };
-}
 
 export default function QuizScreen() {
   const colors = useColors();
@@ -170,7 +79,7 @@ export default function QuizScreen() {
   );
 
   useEffect(() => {
-    if (weightsLoaded && settingsLoaded && activeForms.length > 0 && filteredEntries.length > 0) {
+    if (weightsLoaded && settingsLoaded) {
       setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
       setSelectedAnswer(null);
     }
