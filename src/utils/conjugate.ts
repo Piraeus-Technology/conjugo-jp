@@ -24,29 +24,25 @@ export type ConjugationForm =
   | 'conditional_tara'
   | 'volitional';
 
-// `gloss` is a learner-facing one-liner: a plain-English meaning plus the
-// ending pattern, so the card tells you what conjugation it's asking for
-// (e.g. "Volitional" → “let's / I'll” · ～おう / よう). Where godan and ichidan
-// endings differ, both are shown separated by a slash.
-export const FORM_LABELS: Record<ConjugationForm, { ja: string; en: string; gloss: string }> = {
-  dictionary: { ja: '辞書形', en: 'Dictionary', gloss: 'plain / base form · ～う / る' },
-  masu: { ja: 'ます形', en: 'Polite', gloss: 'polite · ～ます' },
-  masu_negative: { ja: 'ません', en: 'Polite Negative', gloss: 'polite negative · ～ません' },
-  masu_past: { ja: 'ました', en: 'Polite Past', gloss: 'polite past · ～ました' },
-  masu_past_negative: { ja: 'ませんでした', en: 'Polite Past Neg.', gloss: 'polite past negative · ～ませんでした' },
-  te: { ja: 'て形', en: 'Te-form', gloss: 'connective “and / please” · ～て' },
-  ta: { ja: 'た形', en: 'Ta-form (Past)', gloss: 'plain past · ～た' },
-  nai: { ja: 'ない形', en: 'Negative', gloss: 'plain negative “not” · ～ない' },
-  nakatta: { ja: 'なかった', en: 'Past Negative', gloss: 'plain past negative · ～なかった' },
-  potential: { ja: '可能形', en: 'Potential', gloss: '“can / be able to” · ～える / られる' },
-  passive: { ja: '受身形', en: 'Passive', gloss: '“is ～-ed” · ～れる / られる' },
-  causative: { ja: '使役形', en: 'Causative', gloss: '“make / let do” · ～せる / させる' },
-  causative_passive: { ja: '使役受身形', en: 'Causative Passive', gloss: '“is made to do” · ～せられる / させられる' },
-  imperative: { ja: '命令形', en: 'Imperative', gloss: 'command “do it!” · ～え / ろ' },
-  prohibitive: { ja: '禁止形', en: 'Prohibitive', gloss: '“don’t!” · ～な' },
-  conditional_ba: { ja: 'ば形', en: 'Conditional (ba)', gloss: '“if …” · ～えば / れば' },
-  conditional_tara: { ja: 'たら形', en: 'Conditional (tara)', gloss: '“when / if …” · ～たら' },
-  volitional: { ja: '意向形', en: 'Volitional', gloss: '“let’s / I’ll” · ～おう / よう' },
+export const FORM_LABELS: Record<ConjugationForm, { ja: string; en: string; meaning: string }> = {
+  dictionary: { ja: '辞書形', en: 'Dictionary', meaning: 'plain / dictionary form' },
+  masu: { ja: 'ます形', en: 'Polite', meaning: 'polite' },
+  masu_negative: { ja: 'ません', en: 'Polite Negative', meaning: 'polite negative' },
+  masu_past: { ja: 'ました', en: 'Polite Past', meaning: 'polite past' },
+  masu_past_negative: { ja: 'ませんでした', en: 'Polite Past Neg.', meaning: 'polite past negative' },
+  te: { ja: 'て形', en: 'Te-form', meaning: 'connective and / please' },
+  ta: { ja: 'た形', en: 'Ta-form (Past)', meaning: 'plain past' },
+  nai: { ja: 'ない形', en: 'Negative', meaning: 'plain negative' },
+  nakatta: { ja: 'なかった', en: 'Past Negative', meaning: 'plain past negative' },
+  potential: { ja: '可能形', en: 'Potential', meaning: 'can / be able to' },
+  passive: { ja: '受身形', en: 'Passive', meaning: 'is done to / is -ed' },
+  causative: { ja: '使役形', en: 'Causative', meaning: 'make / let someone do' },
+  causative_passive: { ja: '使役受身形', en: 'Causative Passive', meaning: 'is made to do' },
+  imperative: { ja: '命令形', en: 'Imperative', meaning: 'command to do it' },
+  prohibitive: { ja: '禁止形', en: 'Prohibitive', meaning: 'do not do it' },
+  conditional_ba: { ja: 'ば形', en: 'Conditional (ba)', meaning: 'if' },
+  conditional_tara: { ja: 'たら形', en: 'Conditional (tara)', meaning: 'when / if' },
+  volitional: { ja: '意向形', en: 'Volitional', meaning: "let's / I'll" },
 };
 
 export const ALL_FORMS: ConjugationForm[] = Object.keys(FORM_LABELS) as ConjugationForm[];
@@ -506,6 +502,21 @@ export function deriveKanjiForm(verb: string, reading: string, conjugated: strin
     return kanjiStem + conjugated.slice(readingStem.length);
   }
   return conjugated;
+}
+
+const FORM_HINT_EXAMPLES: { verb: string; data: VerbData }[] = [
+  { verb: '飲む', data: { reading: 'のむ', group: 'godan', godanRow: 'mu', translation: 'to drink', jlpt: 'N5' } },
+  { verb: '食べる', data: { reading: 'たべる', group: 'ichidan', translation: 'to eat', jlpt: 'N5' } },
+];
+
+function getFormExample({ verb, data }: { verb: string; data: VerbData }, form: ConjugationForm): string {
+  const reading = conjugateReading(data, form);
+  return `${verb}→${deriveKanjiForm(verb, data.reading, reading)}`;
+}
+
+export function getFormExampleHint(form: ConjugationForm): string {
+  const examples = FORM_HINT_EXAMPLES.map(example => getFormExample(example, form)).join(' / ');
+  return `${FORM_LABELS[form].meaning} · ${examples}`;
 }
 
 export function conjugate(verb: string, verbData: VerbData, form: ConjugationForm): ConjugationResult {

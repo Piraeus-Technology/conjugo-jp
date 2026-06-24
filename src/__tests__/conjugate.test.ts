@@ -2,6 +2,7 @@ import {
   conjugate,
   conjugateReading,
   getConjugationHint,
+  getFormExampleHint,
   ConjugationForm,
   GodanRow,
   VerbData,
@@ -346,5 +347,39 @@ describe('Conjugation rule hints', () => {
   test('irregular くる negative uses こない', () => {
     const v = irregular('くる');
     expect(getConjugationHint(v, 'nai')).toBe('くる → こない (irregular).');
+  });
+});
+
+describe('Form example hints', () => {
+  const expectedExamples: Record<ConjugationForm, string> = {
+    dictionary: '飲む→飲む / 食べる→食べる',
+    masu: '飲む→飲みます / 食べる→食べます',
+    masu_negative: '飲む→飲みません / 食べる→食べません',
+    masu_past: '飲む→飲みました / 食べる→食べました',
+    masu_past_negative: '飲む→飲みませんでした / 食べる→食べませんでした',
+    te: '飲む→飲んで / 食べる→食べて',
+    ta: '飲む→飲んだ / 食べる→食べた',
+    nai: '飲む→飲まない / 食べる→食べない',
+    nakatta: '飲む→飲まなかった / 食べる→食べなかった',
+    potential: '飲む→飲める / 食べる→食べられる',
+    passive: '飲む→飲まれる / 食べる→食べられる',
+    causative: '飲む→飲ませる / 食べる→食べさせる',
+    causative_passive: '飲む→飲ませられる / 食べる→食べさせられる',
+    imperative: '飲む→飲め / 食べる→食べろ',
+    prohibitive: '飲む→飲むな / 食べる→食べるな',
+    conditional_ba: '飲む→飲めば / 食べる→食べれば',
+    conditional_tara: '飲む→飲んだら / 食べる→食べたら',
+    volitional: '飲む→飲もう / 食べる→食べよう',
+  };
+
+  for (const form of Object.keys(expectedExamples) as ConjugationForm[]) {
+    test(`${form} hint uses engine-generated godan and ichidan examples`, () => {
+      expect(getFormExampleHint(form)).toContain(` · ${expectedExamples[form]}`);
+    });
+  }
+
+  test('irregular examples are intentionally omitted from form hints', () => {
+    expect(getFormExampleHint('potential')).not.toContain('できる');
+    expect(getFormExampleHint('imperative')).not.toContain('こい');
   });
 });
