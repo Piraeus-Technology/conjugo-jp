@@ -24,25 +24,29 @@ export type ConjugationForm =
   | 'conditional_tara'
   | 'volitional';
 
-export const FORM_LABELS: Record<ConjugationForm, { ja: string; en: string }> = {
-  dictionary: { ja: '辞書形', en: 'Dictionary' },
-  masu: { ja: 'ます形', en: 'Polite' },
-  masu_negative: { ja: 'ません', en: 'Polite Negative' },
-  masu_past: { ja: 'ました', en: 'Polite Past' },
-  masu_past_negative: { ja: 'ませんでした', en: 'Polite Past Neg.' },
-  te: { ja: 'て形', en: 'Te-form' },
-  ta: { ja: 'た形', en: 'Ta-form (Past)' },
-  nai: { ja: 'ない形', en: 'Negative' },
-  nakatta: { ja: 'なかった', en: 'Past Negative' },
-  potential: { ja: '可能形', en: 'Potential' },
-  passive: { ja: '受身形', en: 'Passive' },
-  causative: { ja: '使役形', en: 'Causative' },
-  causative_passive: { ja: '使役受身形', en: 'Causative Passive' },
-  imperative: { ja: '命令形', en: 'Imperative' },
-  prohibitive: { ja: '禁止形', en: 'Prohibitive' },
-  conditional_ba: { ja: 'ば形', en: 'Conditional (ba)' },
-  conditional_tara: { ja: 'たら形', en: 'Conditional (tara)' },
-  volitional: { ja: '意向形', en: 'Volitional' },
+// `gloss` is a learner-facing one-liner: a plain-English meaning plus the
+// ending pattern, so the card tells you what conjugation it's asking for
+// (e.g. "Volitional" → “let's / I'll” · ～おう / よう). Where godan and ichidan
+// endings differ, both are shown separated by a slash.
+export const FORM_LABELS: Record<ConjugationForm, { ja: string; en: string; gloss: string }> = {
+  dictionary: { ja: '辞書形', en: 'Dictionary', gloss: 'plain / base form · ～う / る' },
+  masu: { ja: 'ます形', en: 'Polite', gloss: 'polite · ～ます' },
+  masu_negative: { ja: 'ません', en: 'Polite Negative', gloss: 'polite negative · ～ません' },
+  masu_past: { ja: 'ました', en: 'Polite Past', gloss: 'polite past · ～ました' },
+  masu_past_negative: { ja: 'ませんでした', en: 'Polite Past Neg.', gloss: 'polite past negative · ～ませんでした' },
+  te: { ja: 'て形', en: 'Te-form', gloss: 'connective “and / please” · ～て' },
+  ta: { ja: 'た形', en: 'Ta-form (Past)', gloss: 'plain past · ～た' },
+  nai: { ja: 'ない形', en: 'Negative', gloss: 'plain negative “not” · ～ない' },
+  nakatta: { ja: 'なかった', en: 'Past Negative', gloss: 'plain past negative · ～なかった' },
+  potential: { ja: '可能形', en: 'Potential', gloss: '“can / be able to” · ～える / られる' },
+  passive: { ja: '受身形', en: 'Passive', gloss: '“is ～-ed” · ～れる / られる' },
+  causative: { ja: '使役形', en: 'Causative', gloss: '“make / let do” · ～せる / させる' },
+  causative_passive: { ja: '使役受身形', en: 'Causative Passive', gloss: '“is made to do” · ～せられる / させられる' },
+  imperative: { ja: '命令形', en: 'Imperative', gloss: 'command “do it!” · ～え / ろ' },
+  prohibitive: { ja: '禁止形', en: 'Prohibitive', gloss: '“don’t!” · ～な' },
+  conditional_ba: { ja: 'ば形', en: 'Conditional (ba)', gloss: '“if …” · ～えば / れば' },
+  conditional_tara: { ja: 'たら形', en: 'Conditional (tara)', gloss: '“when / if …” · ～たら' },
+  volitional: { ja: '意向形', en: 'Volitional', gloss: '“let’s / I’ll” · ～おう / よう' },
 };
 
 export const ALL_FORMS: ConjugationForm[] = Object.keys(FORM_LABELS) as ConjugationForm[];

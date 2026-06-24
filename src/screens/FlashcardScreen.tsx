@@ -263,6 +263,9 @@ export default function FlashcardScreen() {
             <Text style={[styles.formLabel, { color: colors.textMuted }]}>
               {formLabel.ja} — {formLabel.en}
             </Text>
+            <Text style={[styles.formHint, { color: colors.textMuted }]}>
+              {formLabel.gloss}
+            </Text>
             <Text style={[styles.verbText, { color: colors.primary }]}>
               {card.verb}
             </Text>
@@ -290,6 +293,9 @@ export default function FlashcardScreen() {
           >
             <Text style={[styles.formLabel, { color: colors.textMuted }]}>
               {formLabel.ja} — {formLabel.en}
+            </Text>
+            <Text style={[styles.formHint, { color: colors.textMuted }]}>
+              {formLabel.gloss}
             </Text>
             <Text style={[styles.answerText, { color: colors.primary }]}>
               {card.answer}
@@ -400,34 +406,46 @@ const styles = StyleSheet.create({
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,
     letterSpacing: 1,
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+  formHint: {
+    fontSize: fonts.sizes.xs,
+    textAlign: 'center',
     marginBottom: spacing.md,
   },
   verbText: {
     fontSize: 36,
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   readingText: {
     fontSize: fonts.sizes.lg,
     marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   translationText: {
     fontSize: fonts.sizes.md,
     fontStyle: 'italic',
+    textAlign: 'center',
   },
   answerText: {
     fontSize: 42,
     fontWeight: fonts.weights.bold,
     marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   answerTranslation: {
     fontSize: fonts.sizes.md,
     fontStyle: 'italic',
     marginBottom: spacing.md,
+    textAlign: 'center',
   },
   contextText: {
     fontSize: fonts.sizes.sm,
     marginBottom: spacing.lg,
+    textAlign: 'center',
   },
   speakButton: {
     width: 44,
