@@ -65,6 +65,19 @@ export interface VerbData {
   transitive?: boolean;
   examples?: VerbExample[];
   overrides?: Partial<Record<ConjugationForm, string>>;
+  // Forms that don't exist naturally for this verb and shouldn't be quizzed
+  // (e.g. ある has no potential あれる; ございます is a frozen polite form).
+  excludeForms?: ConjugationForm[];
+}
+
+// Filter a set of practice forms down to the ones worth quizzing for a verb,
+// dropping any in its excludeForms. Falls back to the full set if exclusion
+// would leave nothing (so the card/quiz pool is never empty).
+export function quizzableForms(verb: VerbData, forms: ConjugationForm[]): ConjugationForm[] {
+  if (!verb.excludeForms || verb.excludeForms.length === 0) return forms;
+  const excluded = new Set(verb.excludeForms);
+  const allowed = forms.filter((f) => !excluded.has(f));
+  return allowed.length > 0 ? allowed : forms;
 }
 
 export interface ConjugationResult {

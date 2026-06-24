@@ -14,6 +14,7 @@ import {
   conjugateReading,
   getConjugationHint,
   FORM_LABELS,
+  quizzableForms,
   ConjugationForm,
   VerbData,
   JLPTLevel,
@@ -64,14 +65,15 @@ function generateQuestion(
   }, candidates[0]);
 
   const [verb, data] = verbEntries[verbIndex];
-  const form = activeForms[Math.floor(Math.random() * activeForms.length)];
+  const pool = quizzableForms(data, activeForms);
+  const form = pool[Math.floor(Math.random() * pool.length)];
   const correctAnswer = conjugateReading(data, form);
 
   // Generate wrong answers
   const wrongAnswers = new Set<string>();
 
-  // Same verb, different forms
-  for (const f of activeForms) {
+  // Same verb, different forms (only natural ones, so distractors aren't non-words)
+  for (const f of pool) {
     if (f === form) continue;
     const wrong = conjugateReading(data, f);
     if (wrong !== correctAnswer) {

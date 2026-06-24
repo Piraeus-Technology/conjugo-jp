@@ -17,6 +17,7 @@ import verbs from '../data/verbs.json';
 import {
   conjugateReading,
   FORM_LABELS,
+  quizzableForms,
   ConjugationForm,
   VerbData,
   JLPTLevel,
@@ -55,7 +56,8 @@ function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): 
     ? Math.floor(Math.random() * commonCount)
     : Math.floor(Math.random() * verbEntries.length);
   const [verb, data] = verbEntries[idx];
-  const form = activeForms[Math.floor(Math.random() * activeForms.length)];
+  const pool = quizzableForms(data, activeForms);
+  const form = pool[Math.floor(Math.random() * pool.length)];
   const answer = conjugateReading(data, form);
   return {
     verb,
