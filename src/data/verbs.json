@@ -5739,15 +5739,6 @@
     "transitive": true,
     "examples": [{ "ja": "息を吐く。", "en": "I exhale." }]
   },
-  "穏やかになる": {
-    "reading": "おだやかになる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to become calm",
-    "jlpt": "N2",
-    "transitive": false,
-    "examples": [{ "ja": "海が穏やかになる。", "en": "The sea becomes calm." }]
-  },
   "抗う": {
     "reading": "あらがう",
     "group": "godan",
@@ -7888,14 +7879,6 @@
     "transitive": false,
     "examples": [{ "ja": "意見が食い違う。", "en": "Opinions conflict." }]
   },
-  "浮き彫りにする": {
-    "reading": "うきぼりにする",
-    "group": "irregular",
-    "translation": "to highlight, to bring to light",
-    "jlpt": "N2",
-    "transitive": true,
-    "examples": [{ "ja": "問題を浮き彫りにする。", "en": "I highlight the problem." }]
-  },
   "消耗する": {
     "reading": "しょうもうする",
     "group": "irregular",
@@ -7988,14 +7971,6 @@
     "transitive": true,
     "examples": [{ "ja": "相手を罵る。", "en": "I curse at the opponent." }]
   },
-  "蔑ろにする": {
-    "reading": "ないがしろにする",
-    "group": "irregular",
-    "translation": "to neglect, to make light of",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "約束を蔑ろにする。", "en": "I make light of a promise." }]
-  },
   "繕う": {
     "reading": "つくろう",
     "group": "godan",
@@ -8022,14 +7997,6 @@
     "jlpt": "N1",
     "transitive": false,
     "examples": [{ "ja": "神前に跪く。", "en": "I kneel before the altar." }]
-  },
-  "彷彿とさせる": {
-    "reading": "ほうふつとさせる",
-    "group": "ichidan",
-    "translation": "to be reminiscent of",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "昔を彷彿とさせる。", "en": "It is reminiscent of the past." }]
   },
   "逞しくなる": {
     "reading": "たくましくなる",
@@ -8340,15 +8307,6 @@
     "transitive": false,
     "examples": [{ "ja": "日が暮れる。", "en": "The sun sets." }]
   },
-  "溜息をつく": {
-    "reading": "ためいきをつく",
-    "group": "godan",
-    "godanRow": "ku",
-    "translation": "to sigh",
-    "jlpt": "N3",
-    "transitive": false,
-    "examples": [{ "ja": "疲れて溜息をつく。", "en": "I sigh from exhaustion." }]
-  },
   "居眠りする": {
     "reading": "いねむりする",
     "group": "irregular",
@@ -8364,15 +8322,6 @@
     "jlpt": "N3",
     "transitive": false,
     "examples": [{ "ja": "試合で油断する。", "en": "I let my guard down during the game." }]
-  },
-  "夢中になる": {
-    "reading": "むちゅうになる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to be absorbed in, to be crazy about",
-    "jlpt": "N3",
-    "transitive": false,
-    "examples": [{ "ja": "ゲームに夢中になる。", "en": "I get absorbed in the game." }]
   },
   "辿り着く": {
     "reading": "たどりつく",
@@ -9217,14 +9166,6 @@
     "transitive": false,
     "examples": [{ "ja": "事前に根回しする。", "en": "I lay the groundwork in advance." }]
   },
-  "腑に落ちる": {
-    "reading": "ふにおちる",
-    "group": "ichidan",
-    "translation": "to make sense, to be convincing",
-    "jlpt": "N2",
-    "transitive": false,
-    "examples": [{ "ja": "説明が腑に落ちる。", "en": "The explanation makes sense." }]
-  },
   "裁く": {
     "reading": "さばく",
     "group": "godan",
@@ -9963,14 +9904,6 @@
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "敵を退ける。", "en": "I repel the enemy." }]
-  },
-  "滑らかにする": {
-    "reading": "なめらかにする",
-    "group": "irregular",
-    "translation": "to smooth, to make smooth",
-    "jlpt": "N2",
-    "transitive": true,
-    "examples": [{ "ja": "肌を滑らかにする。", "en": "I smooth the skin." }]
   },
   "受理する": {
     "reading": "じゅりする",
@@ -11193,14 +11126,6 @@
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "世の中を慨嘆する。", "en": "I lament the state of the world." }]
-  },
-  "恍惚とする": {
-    "reading": "こうこつとする",
-    "group": "irregular",
-    "translation": "to be ecstatic, to be entranced",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "美に恍惚とする。", "en": "I am entranced by beauty." }]
   },
   "逼迫する": {
     "reading": "ひっぱくする",
@@ -13364,14 +13289,6 @@
     "transitive": false,
     "examples": [{ "ja": "準備不足で見切り発車する。", "en": "I go ahead despite being underprepared." }]
   },
-  "根絶やしにする": {
-    "reading": "ねだやしにする",
-    "group": "irregular",
-    "translation": "to eradicate, to wipe out completely",
-    "jlpt": "N2",
-    "transitive": true,
-    "examples": [{ "ja": "害虫を根絶やしにする。", "en": "I eradicate the pests." }]
-  },
   "逆上する": {
     "reading": "ぎゃくじょうする",
     "group": "irregular",
@@ -13723,15 +13640,6 @@
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "候補者を支持する。", "en": "I support the candidate." }]
-  },
-  "支障をきたす": {
-    "reading": "ししょうをきたす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to cause problems, to hinder",
-    "jlpt": "N3",
-    "transitive": true,
-    "examples": [{ "ja": "業務に支障をきたす。", "en": "It causes problems for operations." }]
   },
   "物足りる": {
     "reading": "ものたりる",
@@ -14403,14 +14311,6 @@
     "transitive": true,
     "examples": [{ "ja": "金を巻き上げる。", "en": "I swindle money." }]
   },
-  "巻き添えにする": {
-    "reading": "まきぞえにする",
-    "group": "irregular",
-    "translation": "to drag someone into",
-    "jlpt": "N2",
-    "transitive": true,
-    "examples": [{ "ja": "他人を巻き添えにする。", "en": "I drag others into it." }]
-  },
   "呼び戻す": {
     "reading": "よびもどす",
     "group": "godan",
@@ -14623,14 +14523,6 @@
     "transitive": false,
     "examples": [{ "ja": "議論が紛糾する。", "en": "The debate gets tangled." }]
   },
-  "台無しにする": {
-    "reading": "だいなしにする",
-    "group": "irregular",
-    "translation": "to ruin, to spoil",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "努力を台無しにする。", "en": "I ruin the effort." }]
-  },
   "尻拭いする": {
     "reading": "しりぬぐいする",
     "group": "irregular",
@@ -14813,15 +14705,6 @@
     "jlpt": "N2",
     "transitive": false,
     "examples": [{ "ja": "すぐに打ち解ける。", "en": "I quickly open up." }]
-  },
-  "血眼になる": {
-    "reading": "ちまなこになる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to become desperate, to search frantically",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "犯人を血眼になって探す。", "en": "I desperately search for the culprit." }]
   },
   "腐心する": {
     "reading": "ふしんする",
@@ -15471,15 +15354,6 @@
     "transitive": true,
     "examples": [{ "ja": "敵軍を殲滅する。", "en": "I annihilate the enemy forces." }]
   },
-  "焦土と化す": {
-    "reading": "しょうどとかす",
-    "group": "godan",
-    "godanRow": "su",
-    "translation": "to be reduced to scorched earth",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "街が焦土と化す。", "en": "The town is reduced to scorched earth." }]
-  },
   "蜂起する": {
     "reading": "ほうきする",
     "group": "irregular",
@@ -15772,24 +15646,6 @@
     "transitive": false,
     "examples": [{ "ja": "危険を顧みず突き進む。", "en": "I push forward regardless of danger." }]
   },
-  "居丈高になる": {
-    "reading": "いたけだかになる",
-    "group": "godan",
-    "godanRow": "ru",
-    "translation": "to become overbearing",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "権力を持つと居丈高になる。", "en": "I become overbearing with power." }]
-  },
-  "顎で使う": {
-    "reading": "あごでつかう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to boss around",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "部下を顎で使う。", "en": "I boss around my subordinates." }]
-  },
   "丸く収める": {
     "reading": "まるくおさめる",
     "group": "ichidan",
@@ -15797,14 +15653,6 @@
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "問題を丸く収める。", "en": "I settle the problem amicably." }]
-  },
-  "玉虫色にする": {
-    "reading": "たまむしいろにする",
-    "group": "irregular",
-    "translation": "to make ambiguous, to leave vague",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "結論を玉虫色にする。", "en": "I leave the conclusion ambiguous." }]
   },
   "紐解く": {
     "reading": "ひもとく",
@@ -15864,5 +15712,50 @@
     "jlpt": "N1",
     "transitive": false,
     "examples": [{ "ja": "敵と呉越同舟する。", "en": "I cooperate with rivals in the crisis." }]
+  },
+  "下ろす": {
+    "reading": "おろす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to take down, to lower, to withdraw (money)",
+    "jlpt": "N4",
+    "transitive": true,
+    "examples": [{ "ja": "銀行でお金を下ろす。", "en": "I withdraw money at the bank." }]
+  },
+  "折る": {
+    "reading": "おる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to break, to fold, to snap",
+    "jlpt": "N4",
+    "transitive": true,
+    "examples": [{ "ja": "木の枝を折る。", "en": "I break a tree branch." }]
+  },
+  "打つ": {
+    "reading": "うつ",
+    "group": "godan",
+    "godanRow": "tsu",
+    "translation": "to hit, to strike",
+    "jlpt": "N4",
+    "transitive": true,
+    "examples": [{ "ja": "ボールを打つ。", "en": "I hit the ball." }]
+  },
+  "割る": {
+    "reading": "わる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to break, to split, to divide",
+    "jlpt": "N4",
+    "transitive": true,
+    "examples": [{ "ja": "コップを割る。", "en": "I break a glass." }]
+  },
+  "余る": {
+    "reading": "あまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to remain, to be left over, to be in excess",
+    "jlpt": "N3",
+    "transitive": false,
+    "examples": [{ "ja": "お金が余る。", "en": "Money is left over." }]
   }
 }
