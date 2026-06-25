@@ -348,6 +348,7 @@ export default function FlashcardScreen() {
             </Text>
             {exampleSentence && (
               <>
+                <View style={[styles.exampleDivider, { backgroundColor: colors.border }]} />
                 <Text style={[styles.exampleLabel, { color: colors.textMuted }]}>
                   Example
                 </Text>
@@ -503,12 +504,19 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
     textAlign: 'center',
   },
+  exampleDivider: {
+    height: StyleSheet.hairlineWidth,
+    width: '50%',
+    alignSelf: 'center',
+    marginTop: spacing.md,
+    marginBottom: spacing.md,
+  },
   exampleLabel: {
     fontSize: fonts.sizes.xs,
     fontWeight: fonts.weights.semibold,
     textTransform: 'uppercase',
     letterSpacing: 1,
-    marginBottom: 2,
+    marginBottom: spacing.xs,
     textAlign: 'center',
   },
   exampleText: {
