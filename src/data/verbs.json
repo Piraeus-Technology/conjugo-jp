@@ -1568,6 +1568,7 @@
     "godanRow": "ru",
     "translation": "to be decided",
     "jlpt": "N4",
+    "excludeForms": ["passive", "causative"],
     "transitive": false,
     "examples": [
       {
@@ -1609,6 +1610,7 @@
     "group": "ichidan",
     "translation": "to receive, to take (exam)",
     "jlpt": "N4",
+    "excludeForms": ["passive"],
     "transitive": true,
     "examples": [
       {
@@ -1665,6 +1667,7 @@
     "godanRow": "ru",
     "translation": "to touch",
     "jlpt": "N4",
+    "excludeForms": ["potential"],
     "transitive": false,
     "examples": [
       {
@@ -1836,6 +1839,7 @@
     "group": "irregular",
     "translation": "to feel relieved",
     "jlpt": "N4",
+    "excludeForms": ["passive"],
     "transitive": false,
     "examples": [
       {
@@ -1888,6 +1892,7 @@
     "group": "irregular",
     "translation": "to participate",
     "jlpt": "N4",
+    "excludeForms": ["passive"],
     "transitive": false,
     "examples": [
       {
@@ -2050,6 +2055,7 @@
     "group": "ichidan",
     "translation": "to get wet",
     "jlpt": "N4",
+    "excludeForms": ["causative"],
     "transitive": false,
     "examples": [
       {
@@ -4883,6 +4889,7 @@
     "group": "ichidan",
     "translation": "to make a mistake",
     "jlpt": "N4",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "答えを間違える。", "en": "I get the answer wrong." }]
   },
@@ -5001,6 +5008,7 @@
     "group": "irregular",
     "translation": "to attend",
     "jlpt": "N4",
+    "excludeForms": ["passive"],
     "transitive": false,
     "examples": [{ "ja": "会議に出席する。", "en": "I attend the meeting." }]
   },
@@ -5009,6 +5017,7 @@
     "group": "irregular",
     "translation": "to leave the hospital",
     "jlpt": "N4",
+    "excludeForms": ["passive"],
     "transitive": false,
     "examples": [{ "ja": "来週退院する。", "en": "I leave the hospital next week." }]
   },
@@ -5017,6 +5026,7 @@
     "group": "irregular",
     "translation": "to be hospitalized",
     "jlpt": "N4",
+    "excludeForms": ["passive"],
     "transitive": false,
     "examples": [{ "ja": "父が入院する。", "en": "My father is hospitalized." }]
   },
@@ -8152,6 +8162,7 @@
     "godanRow": "ku",
     "translation": "to come up with, to think of",
     "jlpt": "N4",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "いい案を思い付く。", "en": "I come up with a good idea." }]
   },
@@ -8179,6 +8190,7 @@
     "godanRow": "u",
     "translation": "to be wrong, to make a mistake",
     "jlpt": "N4",
+    "excludeForms": ["passive", "volitional"],
     "transitive": true,
     "examples": [{ "ja": "道を間違う。", "en": "I take the wrong road." }]
   },
@@ -8266,6 +8278,7 @@
     "godanRow": "mu",
     "translation": "to be crowded",
     "jlpt": "N4",
+    "excludeForms": ["passive"],
     "transitive": false,
     "examples": [{ "ja": "電車が混む。", "en": "The train is crowded." }]
   },
@@ -8275,6 +8288,7 @@
     "godanRow": "ku",
     "translation": "to become empty, to become less crowded",
     "jlpt": "N4",
+    "excludeForms": ["potential", "passive", "causative", "volitional", "imperative"],
     "transitive": false,
     "examples": [{ "ja": "お腹が空く。", "en": "I get hungry." }]
   },
@@ -8927,6 +8941,7 @@
     "godanRow": "u",
     "translation": "to visit, to ask (humble)",
     "jlpt": "N4",
+    "excludeForms": ["passive", "imperative"],
     "transitive": true,
     "examples": [{ "ja": "明日伺う。", "en": "I will visit tomorrow (humble)." }]
   },
@@ -8955,6 +8970,7 @@
     "godanRow": "su",
     "translation": "to wear, to eat (honorific/archaic)",
     "jlpt": "N4",
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative"],
     "transitive": true,
     "examples": [{ "ja": "お召しになる。", "en": "You wear (honorific)." }]
   },
@@ -11316,6 +11332,7 @@
     "godanRow": "gu",
     "translation": "to connect, to tie",
     "jlpt": "N4",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "手を繋ぐ。", "en": "I hold hands." }]
   },
@@ -12601,6 +12618,7 @@
     "group": "ichidan",
     "translation": "to spill (intransitive), to overflow",
     "jlpt": "N4",
+    "excludeForms": ["causative"],
     "transitive": false,
     "examples": [{ "ja": "涙がこぼれる。", "en": "Tears overflow." }]
   },
@@ -12619,6 +12637,7 @@
     "godanRow": "ku",
     "translation": "to stumble, to trip",
     "jlpt": "N4",
+    "excludeForms": ["causative"],
     "transitive": false,
     "examples": [{ "ja": "石につまずく。", "en": "I trip on a stone." }]
   },
