@@ -1,6 +1,7 @@
 import { conjugate, conjugateReading, ConjugationForm, VerbData } from '../utils/conjugate';
 import { getExampleSentence } from '../utils/formExamples';
 import n5 from '../data/formExamples.n5.json';
+import n4 from '../data/formExamples.n4.json';
 import verbsJson from '../data/verbs.json';
 
 const verbs = verbsJson as Record<string, VerbData>;
@@ -99,5 +100,67 @@ describe('N5 form example sentences', () => {
     }
     // Unknown verb -> undefined, never throws.
     expect(getExampleSentence('存在しない動詞', 'masu')).toBeUndefined();
+  });
+});
+
+const n4dataset = n4 as Record<string, Partial<Record<ConjugationForm, string>>>;
+const n4ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
+  masu: 173,
+  te: 173,
+  ta: 173,
+  nai: 173,
+  potential: 125,
+  passive: 112,
+  causative: 147,
+  conditional_ba: 172,
+  conditional_tara: 173,
+  volitional: 134,
+  imperative: 148,
+};
+
+describe('N4 form example sentences', () => {
+  const entries: [string, ConjugationForm, string][] = [];
+  for (const [verb, forms] of Object.entries(n4dataset)) {
+    for (const [form, sentence] of Object.entries(forms)) {
+      entries.push([verb, form as ConjugationForm, sentence as string]);
+    }
+  }
+
+  it('covers a non-trivial number of sentences', () => {
+    expect(entries.length).toBeGreaterThan(1500);
+  });
+
+  it('matches the expected count by form', () => {
+    const counts: Partial<Record<ConjugationForm, number>> = {};
+    for (const [, form] of entries) {
+      counts[form] = (counts[form] || 0) + 1;
+    }
+    expect(counts).toEqual(n4ExpectedCountsByForm);
+  });
+
+  it('only references N4 verbs that exist', () => {
+    for (const verb of Object.keys(n4dataset)) {
+      expect(verbs[verb]).toBeDefined();
+      expect(verbs[verb].jlpt).toBe('N4');
+    }
+  });
+
+  it('each sentence contains its exact conjugated form (kanji or kana)', () => {
+    const offenders: string[] = [];
+    for (const [verb, form, sentence] of entries) {
+      const data = verbs[verb];
+      const kanji = conjugate(verb, data, form).value;
+      const kana = conjugateReading(data, form);
+      if (!sentence.includes(kanji) && !sentence.includes(kana)) {
+        offenders.push(`${verb}:${form} -> "${sentence}" (expected ${kanji}/${kana})`);
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
+  it('generates no examples for excludeForms forms', () => {
+    // 見える/聞こえる/足りる have excludeForms — those forms get no example.
+    expect(n4dataset['見える']?.['potential']).toBeUndefined();
+    expect(getExampleSentence('見える', 'potential')).toBeUndefined();
   });
 });

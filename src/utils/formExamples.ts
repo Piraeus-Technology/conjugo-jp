@@ -1,5 +1,6 @@
 import { ConjugationForm } from './conjugate';
 import n5 from '../data/formExamples.n5.json';
+import n4 from '../data/formExamples.n4.json';
 
 // Per-(verb, form) example sentences (Japanese only). A form is intentionally
 // absent when no natural example exists for that verb (e.g. the potential of
@@ -7,7 +8,7 @@ import n5 from '../data/formExamples.n5.json';
 export type ExampleMap = Record<string, Partial<Record<ConjugationForm, string>>>;
 
 // Add more JLPT levels here as they are generated; lookups fall through in order.
-const datasets: ExampleMap[] = [n5 as ExampleMap];
+const datasets: ExampleMap[] = [n5 as ExampleMap, n4 as ExampleMap];
 
 export function getExampleSentence(verb: string, form: ConjugationForm): string | undefined {
   for (const ds of datasets) {
