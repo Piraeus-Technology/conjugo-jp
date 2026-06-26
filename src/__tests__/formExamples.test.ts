@@ -1058,18 +1058,16 @@ const n2ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
   te: 478,
   ta: 478,
   nai: 478,
-  potential: 321,
-  passive: 315,
-  causative: 355,
-  conditional_ba: 469,
-  conditional_tara: 476,
-  volitional: 333,
-  imperative: 311,
+  potential: 322,
+  passive: 313,
+  causative: 356,
+  conditional_ba: 475,
+  conditional_tara: 478,
+  volitional: 334,
+  imperative: 314,
 };
 
 const n2IntentionalOmissions: [string, ConjugationForm][] = [
-  ['覆う', 'potential'],
-  ['覆う', 'imperative'],
   ['退く', 'potential'],
   ['退く', 'passive'],
   ['退く', 'causative'],
@@ -1146,7 +1144,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['省みる', 'causative'],
   ['漂う', 'potential'],
   ['漂う', 'passive'],
-  ['漂う', 'conditional_ba'],
   ['漂う', 'volitional'],
   ['漂う', 'imperative'],
   ['競う', 'passive'],
@@ -1209,7 +1206,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['遡る', 'volitional'],
   ['遡る', 'imperative'],
   ['挫く', 'potential'],
-  ['挫く', 'conditional_ba'],
   ['潜る', 'passive'],
   ['飢える', 'potential'],
   ['飢える', 'passive'],
@@ -1224,7 +1220,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['兼ねる', 'volitional'],
   ['兼ねる', 'imperative'],
   ['絡む', 'potential'],
-  ['絡む', 'conditional_ba'],
   ['絡む', 'volitional'],
   ['絡む', 'imperative'],
   ['凝る', 'potential'],
@@ -1331,8 +1326,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['滲む', 'potential'],
   ['滲む', 'passive'],
   ['滲む', 'causative'],
-  ['滲む', 'conditional_ba'],
-  ['滲む', 'conditional_tara'],
   ['滲む', 'volitional'],
   ['滲む', 'imperative'],
   ['剥がれる', 'potential'],
@@ -1424,6 +1417,7 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['儚む', 'causative'],
   ['儚む', 'volitional'],
   ['儚む', 'imperative'],
+  ['蓋する', 'passive'],
   ['定着する', 'potential'],
   ['定着する', 'passive'],
   ['定着する', 'causative'],
@@ -1440,7 +1434,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['唆す', 'imperative'],
   ['宿る', 'potential'],
   ['宿る', 'passive'],
-  ['宿る', 'causative'],
   ['宿る', 'volitional'],
   ['宿る', 'imperative'],
   ['授かる', 'potential'],
@@ -1458,8 +1451,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['衰える', 'volitional'],
   ['衰える', 'imperative'],
   ['抱く', 'potential'],
-  ['抱く', 'volitional'],
-  ['抱く', 'imperative'],
   ['突き進む', 'passive'],
   ['差し迫る', 'potential'],
   ['差し迫る', 'passive'],
@@ -1522,7 +1513,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['聞き入る', 'potential'],
   ['聞き入る', 'passive'],
   ['聞き入る', 'causative'],
-  ['聞き入る', 'conditional_ba'],
   ['聞き入る', 'imperative'],
   ['酔う', 'potential'],
   ['酔う', 'volitional'],
@@ -1620,7 +1610,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['広まる', 'imperative'],
   ['和解する', 'passive'],
   ['和解する', 'causative'],
-  ['和解する', 'imperative'],
   ['控訴する', 'passive'],
   ['控訴する', 'causative'],
   ['控訴する', 'imperative'],
@@ -1646,8 +1635,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['ほくそ笑む', 'potential'],
   ['ほくそ笑む', 'passive'],
   ['ほくそ笑む', 'causative'],
-  ['ほくそ笑む', 'conditional_ba'],
-  ['ほくそ笑む', 'conditional_tara'],
   ['ほくそ笑む', 'volitional'],
   ['ほくそ笑む', 'imperative'],
   ['でしゃばる', 'passive'],
@@ -1710,6 +1697,7 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['懐疑する', 'volitional'],
   ['懐疑する', 'imperative'],
   ['喝采する', 'potential'],
+  ['喝采する', 'passive'],
   ['喝采する', 'causative'],
   ['喝采する', 'volitional'],
   ['喝采する', 'imperative'],
@@ -1861,6 +1849,13 @@ describe('N2 form example sentences', () => {
       expect(verbs[verb]).toBeDefined();
       expect(verbs[verb].jlpt).toBe('N2');
     }
+  });
+
+  it('matches the N2 verb key set except intentionally absent 成り行く', () => {
+    const expectedN2VerbKeys = Object.keys(verbs).filter(
+      (verb) => verbs[verb].jlpt === 'N2' && verb !== '成り行く',
+    );
+    expect(Object.keys(n2dataset)).toEqual(expectedN2VerbKeys);
   });
 
   it('each sentence contains its exact conjugated form (kanji or kana)', () => {
