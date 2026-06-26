@@ -1,0 +1,66 @@
+# Fastfile — one-command App Store "Submit for Review", mirroring the hands-off
+# Android flow (`eas submit -p android --track production`).
+#
+# WHAT THIS DOES (and does NOT do):
+#   - EAS still builds + uploads the binary:  eas build -p ios --profile production
+#     then  eas submit -p ios --profile production --id <build>  (binary -> TestFlight/ASC).
+#   - THIS lane then submits that already-uploaded build for App Store review:
+#     it sets "What's New", answers the export-compliance / content-rights / IDFA
+#     questions, and submits. It does NOT upload a binary (skip_binary_upload).
+#
+# PREREQUISITES:
+#   1. The build is uploaded and finished processing in App Store Connect
+#      (check: the asc-build-check.js poller -> processingState VALID).
+#   2. An App Store Connect API key with **App Manager** role. A Developer-role key
+#      can upload to TestFlight but CANNOT submit for review or edit metadata.
+#      Create one in ASC: Users and Access -> Integrations -> App Store Connect API
+#      -> generate a key with App Manager access, download the .p8 once.
+#   3. Env vars pointing at that key:
+#        export ASC_KEY_ID=XXXXXXXXXX
+#        export ASC_ISSUER_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+#        export ASC_KEY_PATH=/absolute/path/AuthKey_XXXXXXXXXX.p8
+#   4. Release notes in fastlane/metadata/en-US/release_notes.txt (already provided).
+#
+# USAGE:
+#   bundle exec fastlane ios submit_review version:1.1.0
+#   bundle exec fastlane ios submit_review version:1.1.0 build_number:3   # pin a build
+#   AUTO_RELEASE=false bundle exec fastlane ios submit_review version:1.1.0  # manual release after approval
+
+default_platform(:ios)
+
+APP_ID = "com.lkh9596.conjugojp"
+
+platform :ios do
+  desc "Submit the uploaded build to App Store review (sets What's New + compliance answers)"
+  lane :submit_review do |options|
+    api_key = app_store_connect_api_key(
+      key_id: ENV.fetch("ASC_KEY_ID"),
+      issuer_id: ENV.fetch("ASC_ISSUER_ID"),
+      key_filepath: File.expand_path(ENV.fetch("ASC_KEY_PATH")),
+      duration: 1200,
+      in_house: false
+    )
+
+    UI.user_error!("Pass version: e.g. `fastlane ios submit_review version:1.1.0`") unless options[:version]
+
+    deliver(
+      api_key: api_key,
+      app_identifier: APP_ID,
+      app_version: options[:version],
+      build_number: options[:build_number],        # nil => latest processed build for the version
+      submit_for_review: true,
+      automatic_release: (ENV["AUTO_RELEASE"] != "false"),  # default: auto-release once Apple approves
+      skip_binary_upload: true,                     # EAS already uploaded the .ipa — never re-upload here
+      skip_screenshots: true,                       # leave existing screenshots untouched
+      skip_metadata: false,                         # upload only what's in fastlane/metadata (release notes)
+      force: true,                                  # no interactive HTML preview
+      run_precheck_before_submit: true,
+      precheck_include_in_app_purchases: false,     # the tip-jar IAP is reviewed separately
+      submission_information: {
+        export_compliance_uses_encryption: false,   # app uses only exempt (standard HTTPS) encryption
+        content_rights_contains_third_party_content: false,
+        add_id_info_uses_idfa: false
+      }
+    )
+  end
+end
