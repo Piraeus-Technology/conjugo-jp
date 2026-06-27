@@ -1,0 +1,4 @@
+# Auth is via the App Store Connect API key (see Fastfile / env vars), so apple_id
+# is intentionally omitted to avoid triggering an interactive Apple ID login.
+app_identifier("com.lkh9596.conjugojp")
+team_id("25MJJZZAWU") # PIRAEUS TECHNOLOGY LLC
