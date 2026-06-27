@@ -9745,6 +9745,7 @@
     "group": "irregular",
     "translation": "to sense, to guess",
     "jlpt": "N3",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "気持ちを察する。", "en": "I sense the feelings." }]
   },
@@ -10124,6 +10125,7 @@
     "group": "irregular",
     "translation": "to present, to show (symptoms)",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "症状を呈する。", "en": "It shows symptoms." }]
   },
@@ -10132,6 +10134,7 @@
     "group": "irregular",
     "translation": "to possess, to have",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "権利を有する。", "en": "I possess the right." }]
   },
@@ -10140,6 +10143,7 @@
     "group": "irregular",
     "translation": "to have, to possess (many)",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "多くの支持者を擁する。", "en": "I have many supporters." }]
   },
@@ -10148,6 +10152,7 @@
     "group": "irregular",
     "translation": "to deviate, to miss",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "常軌を逸する。", "en": "It deviates from normality." }]
   },
@@ -10173,6 +10178,7 @@
     "group": "irregular",
     "translation": "to conquer, to subjugate",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "敵を征する。", "en": "I conquer the enemy." }]
   },
@@ -11100,6 +11106,7 @@
     "group": "irregular",
     "translation": "to assassinate (one's lord/parent)",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "主君を弑する。", "en": "I assassinate my lord." }]
   },
@@ -12462,6 +12469,7 @@
     "group": "irregular",
     "translation": "to play (music), to achieve (results)",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "功を奏する。", "en": "It achieves results." }]
   },
@@ -12505,6 +12513,7 @@
     "group": "irregular",
     "translation": "to despise, to scorn",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "敵を蔑する。", "en": "I scorn the enemy." }]
   },
@@ -12513,6 +12522,7 @@
     "group": "irregular",
     "translation": "to play with, to tamper with",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "策を弄する。", "en": "I resort to tricks." }]
   },
@@ -12521,6 +12531,7 @@
     "group": "irregular",
     "translation": "to fall into, to degenerate",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "怠惰に堕する。", "en": "I fall into laziness." }]
   },
@@ -12529,6 +12540,7 @@
     "group": "irregular",
     "translation": "to result in, to be attributed to",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "失敗に帰する。", "en": "It results in failure." }]
   },
@@ -12537,6 +12549,7 @@
     "group": "irregular",
     "translation": "to contribute to, to be useful for",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "発展に資する。", "en": "It contributes to development." }]
   },
@@ -12545,6 +12558,7 @@
     "group": "irregular",
     "translation": "to deal with, to punish",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "厳罰に処する。", "en": "I punish severely." }]
   },
@@ -12553,6 +12567,7 @@
     "group": "irregular",
     "translation": "to serve, to submit to",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "刑に服する。", "en": "I serve a sentence." }]
   },
@@ -12561,6 +12576,7 @@
     "group": "irregular",
     "translation": "to conform to, to be in accordance with",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "実態に則する。", "en": "I conform to the actual situation." }]
   },
@@ -12569,6 +12585,7 @@
     "group": "irregular",
     "translation": "to resist, to oppose",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "権力に抗する。", "en": "I resist authority." }]
   },
@@ -12593,6 +12610,7 @@
     "group": "irregular",
     "translation": "to yield, to submit",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "圧力に屈する。", "en": "I yield to pressure." }]
   },
@@ -12601,6 +12619,7 @@
     "group": "irregular",
     "translation": "to decide, to determine",
     "jlpt": "N1",
+    "excludeForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "勝敗を決する。", "en": "I determine the outcome." }]
   },

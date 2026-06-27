@@ -309,6 +309,28 @@ describe('Special verb: 行く (iku) irregular te-form', () => {
   });
 });
 
+describe('〜ゆく compounds (成り行く) use the irregular 行く te/ta', () => {
+  // No overrides: the engine must detect the ゆく reading of 行く, not apply the
+  // regular godan-ku rule (which would give the wrong なりゆいて / なりゆいた).
+  const nariyuku = godan('なりゆく', 'ku');
+
+  test('te form: なりゆって (not なりゆいて)', () => {
+    expect(conjugateReading(nariyuku, 'te')).toBe('なりゆって');
+  });
+
+  test('ta form: なりゆった (not なりゆいた)', () => {
+    expect(conjugateReading(nariyuku, 'ta')).toBe('なりゆった');
+  });
+
+  test('conditional_tara: なりゆったら', () => {
+    expect(conjugateReading(nariyuku, 'conditional_tara')).toBe('なりゆったら');
+  });
+
+  test('masu form (regular): なりゆきます', () => {
+    expect(conjugateReading(nariyuku, 'masu')).toBe('なりゆきます');
+  });
+});
+
 describe('Special verb: ある negative override', () => {
   const aru = godan('ある', 'ru', { nai: 'ない', nakatta: 'なかった' });
 

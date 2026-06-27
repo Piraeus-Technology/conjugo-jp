@@ -120,8 +120,9 @@ function conjugateGodanReading(reading: string, row: GodanRow, form: Conjugation
   const stem = getStem(reading);
   const rowKana = kanaRows[row];
 
-  // 行く and 〜いく compounds: irregular te/ta/tara (って/った/ったら, not いて/いた)
-  if (row === 'ku' && reading.endsWith('いく')) {
+  // 行く and 〜いく/〜ゆく compounds: irregular te/ta/tara (って/った/ったら, not いて/いた).
+  // Covers both readings of 行く — いく (持って行く) and ゆく (成り行く).
+  if (row === 'ku' && (reading.endsWith('いく') || reading.endsWith('ゆく'))) {
     if (form === 'te') return stem + 'って';
     if (form === 'ta') return stem + 'った';
     if (form === 'conditional_tara') return stem + 'ったら';
