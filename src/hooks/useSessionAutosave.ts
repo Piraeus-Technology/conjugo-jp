@@ -1,11 +1,13 @@
 import React from 'react';
 import { AppState } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { getTodayKey } from '../utils/dayKey';
 
 interface SessionDelta {
   count: number;
   correct: number;
   bestStreak: number;
+  day: string;
 }
 
 // Auto-saves new answers when the screen blurs, the app backgrounds, or the
@@ -32,10 +34,22 @@ export function useSessionAutosave({
   const lastSavedCountRef = React.useRef(0);
   const lastSavedCorrectRef = React.useRef(0);
   const lastSavedBestStreakRef = React.useRef(0);
+  const attributionDayRef = React.useRef<string | null>(null);
   countRef.current = count;
   correctRef.current = correct;
   bestStreakRef.current = bestStreak;
   saveRef.current = save;
+
+  // Attribute an unsaved batch to the day of its first answer, not the
+  // (possibly post-midnight) flush time. Cleared once everything is saved so
+  // the next batch re-stamps with its own first-answer day.
+  if (count > lastSavedCountRef.current) {
+    if (attributionDayRef.current === null) {
+      attributionDayRef.current = getTodayKey();
+    }
+  } else {
+    attributionDayRef.current = null;
+  }
 
   const saveNow = React.useCallback(async () => {
     const snapshotCount = countRef.current;
@@ -43,6 +57,7 @@ export function useSessionAutosave({
     const unsavedCount = snapshotCount - lastSavedCountRef.current;
     const unsavedCorrect = snapshotCorrect - lastSavedCorrectRef.current;
     const unsavedBestStreak = Math.max(bestStreakRef.current, lastSavedBestStreakRef.current);
+    const day = attributionDayRef.current ?? getTodayKey();
 
     if (unsavedCount <= 0) return;
 
@@ -58,7 +73,11 @@ export function useSessionAutosave({
         count: unsavedCount,
         correct: unsavedCorrect,
         bestStreak: unsavedBestStreak,
+        day,
       });
+      // Answers that arrived during this save form the next batch; let it
+      // pick up its own first-answer day.
+      attributionDayRef.current = null;
     } catch (e) {
       // Roll back so the lost delta gets retried on the next save.
       lastSavedCountRef.current = prevSavedCount;
