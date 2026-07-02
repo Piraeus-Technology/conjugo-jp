@@ -27,6 +27,7 @@ import { speak, stopSpeech } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
+import { useFlashcardStatsStore } from '../store/flashcardStatsStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 import { useThemeStore } from '../store/themeStore';
 import { useSessionAutosave } from '../hooks/useSessionAutosave';
@@ -78,6 +79,7 @@ export default function FlashcardScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<FlashcardStackParamList, 'FlashcardMain'>>();
   const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
   const { sessions, loadSessions, saveSession } = useFlashcardSessionStore();
+  const { loadStats, recordReview } = useFlashcardStatsStore();
   const { recordResult } = useSpacedRepStore();
   const { autoTTS } = useThemeStore();
   const filteredEntries = useMemo(() =>
@@ -99,6 +101,7 @@ export default function FlashcardScreen() {
   useEffect(() => {
     loadPracticeSettings();
     loadSessions();
+    loadStats();
   }, []);
 
   useFocusEffect(useCallback(() => {
@@ -193,6 +196,7 @@ export default function FlashcardScreen() {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setNewReviewed(r => r + 1);
     setNewCorrect(c => c + 1);
+    recordReview(true).catch(() => {});
     recordResult(card.verb, true).catch(() => {});
     flipToFront();
   };
@@ -202,6 +206,7 @@ export default function FlashcardScreen() {
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     setNewReviewed(r => r + 1);
+    recordReview(false).catch(() => {});
     recordResult(card.verb, false).catch(() => {});
     flipToFront();
   };
@@ -210,8 +215,8 @@ export default function FlashcardScreen() {
   const { unsavedCount, unsavedCorrect } = useSessionAutosave({
     count: newReviewed,
     correct: newCorrect,
-    save: async ({ count, correct }) => {
-      if (!(await saveSession({ reviewed: count, correct }))) {
+    save: async ({ count, correct, day }) => {
+      if (!(await saveSession({ reviewed: count, correct }, day))) {
         throw new Error('flashcard session save failed');
       }
     },
