@@ -1,8 +1,7 @@
-Example sentences! Every flashcard now shows the conjugation used in a real, natural Japanese sentence — so you learn each form in context (N5–N3 verbs).
+Example sentences for every JLPT level! N2 and N1 verbs now have them too — every flashcard, from N5 to N1, shows the conjugation used in a real, natural Japanese sentence.
 
 Also in this update:
-• More accurate conjugations, including tricky honorific verbs like くださる and なさる.
-• Smarter practice: we no longer quiz unnatural or non-existent forms, so you only drill what real Japanese actually uses.
-• A cleaner verb list and a more polished flashcard layout.
+• Conjugation fixes for 〜ゆく compound verbs and rare single-kanji する verbs.
+• More accurate stats: practice now counts toward the day you actually studied, and flashcard stats include your all-time totals.
 
 Thanks for studying with ConjuGo!
