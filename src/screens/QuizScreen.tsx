@@ -46,6 +46,7 @@ export default function QuizScreen() {
   const [streak, setStreak] = useState(0);
   const [bestSessionStreak, setBestSessionStreak] = useState(0);
   const [showHint, setShowHint] = useState(true);
+  const hasRecordedAnswer = React.useRef(false);
 
   useEffect(() => {
     loadStats();
@@ -82,6 +83,7 @@ export default function QuizScreen() {
     if (weightsLoaded && settingsLoaded) {
       setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
       setSelectedAnswer(null);
+      hasRecordedAnswer.current = false;
     }
   }, [weightsLoaded, settingsLoaded, activeForms, activeLevels]);
 
@@ -89,7 +91,10 @@ export default function QuizScreen() {
   const answered = selectedAnswer !== null;
 
   const handleAnswer = (answer: string) => {
-    if (answered || !question) return;
+    // Synchronous ref guard: `answered` is stale state on a rapid double-tap,
+    // which would otherwise record the same question twice.
+    if (hasRecordedAnswer.current || !question) return;
+    hasRecordedAnswer.current = true;
     setSelectedAnswer(answer);
     setNewTotal(t => t + 1);
 
@@ -120,6 +125,7 @@ export default function QuizScreen() {
     setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
     setSelectedAnswer(null);
     setShowHint(true);
+    hasRecordedAnswer.current = false;
   };
 
   // Auto-save new answers on blur / background / unmount (delta-based).
