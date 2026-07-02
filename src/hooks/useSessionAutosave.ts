@@ -77,7 +77,9 @@ export function useSessionAutosave({
       });
       // Answers that arrived during this save form the next batch; let it
       // pick up its own first-answer day.
-      attributionDayRef.current = null;
+      if (countRef.current === snapshotCount) {
+        attributionDayRef.current = null;
+      }
     } catch (e) {
       // Roll back so the lost delta gets retried on the next save.
       lastSavedCountRef.current = prevSavedCount;
