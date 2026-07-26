@@ -13,6 +13,7 @@ export default function StatsScreen() {
   } = useSessionStore();
   const {
     weights,
+    lastPracticedAt,
     loaded: weightsLoaded,
     loadError: weightsLoadError,
     loadWeights,
@@ -43,6 +44,7 @@ export default function StatsScreen() {
       sessionsLoaded={sessionsLoaded && statsLoaded}
       sessionsLoadError={sessionsLoadError || statsLoadError}
       weights={weights}
+      lastPracticedAt={lastPracticedAt}
       weightsLoaded={weightsLoaded}
       weightsLoadError={weightsLoadError}
       allTimeOverride={{

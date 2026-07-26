@@ -2,13 +2,19 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { safeRemoveItem, safeSetItem } from '../utils/safeStorage';
 import { createStoreQueue } from '../utils/storeQueue';
-
-interface VerbWeight {
-  [verb: string]: number;
-}
+import {
+  DEFAULT_WEIGHT,
+  applyVerbResult,
+  decayWeight,
+  parseStoredWeights,
+  serializeWeights,
+  type VerbWeightMap,
+} from '../utils/spacedRepetition';
 
 interface SpacedRepStore {
-  weights: VerbWeight;
+  weights: VerbWeightMap;
+  /** Epoch ms of the last answer per verb; drives time decay. */
+  lastPracticedAt: VerbWeightMap;
   loaded: boolean;
   loadError: boolean;
   loadWeights: () => Promise<void>;
@@ -17,23 +23,13 @@ interface SpacedRepStore {
   resetWeights: () => Promise<boolean>;
 }
 
-const DEFAULT_WEIGHT = 1;
-const MIN_WEIGHT = 0.2;
-const MAX_WEIGHT = 5;
-
-export function applyVerbResult(weights: VerbWeight, verb: string, correct: boolean): VerbWeight {
-  const nextWeights = { ...weights };
-  const current = nextWeights[verb] || DEFAULT_WEIGHT;
-  nextWeights[verb] = correct
-    ? Math.max(MIN_WEIGHT, current * 0.7)
-    : Math.min(MAX_WEIGHT, current * 1.5);
-  return nextWeights;
-}
+const STORAGE_KEY = 'spaced_rep_weights';
 
 const queue = createStoreQueue();
 
 export const useSpacedRepStore = create<SpacedRepStore>((set, get) => ({
   weights: {},
+  lastPracticedAt: {},
   loaded: false,
   loadError: false,
 
@@ -43,12 +39,9 @@ export const useSpacedRepStore = create<SpacedRepStore>((set, get) => ({
     return queue.runLoad(async () => {
       if (get().loaded) return;
       try {
-        const stored = await AsyncStorage.getItem('spaced_rep_weights');
-        if (stored) {
-          set({ weights: JSON.parse(stored), loaded: true, loadError: false });
-        } else {
-          set({ loaded: true, loadError: false });
-        }
+        const stored = await AsyncStorage.getItem(STORAGE_KEY);
+        const { weights, lastPracticedAt } = parseStoredWeights(stored, Date.now());
+        set({ weights, lastPracticedAt, loaded: true, loadError: false });
       } catch (e) {
         console.warn('Failed to load spaced rep weights:', e);
         set({ loadError: true });
@@ -65,18 +58,27 @@ export const useSpacedRepStore = create<SpacedRepStore>((set, get) => ({
       return;
     }
     return queue.enqueue(async () => {
-      const weights = applyVerbResult(get().weights, verb, correct);
-      const persisted = await safeSetItem('spaced_rep_weights', JSON.stringify(weights));
+      const state = get();
+      const next = applyVerbResult(
+        { weights: state.weights, lastPracticedAt: state.lastPracticedAt },
+        verb,
+        correct,
+        Date.now(),
+      );
+      const persisted = await safeSetItem(STORAGE_KEY, serializeWeights(next));
       if (!persisted) {
         console.warn('Failed to persist spaced rep weights');
         return;
       }
-      set({ weights });
+      set({ weights: next.weights, lastPracticedAt: next.lastPracticedAt });
     });
   },
 
   getWeight: (verb: string) => {
-    return get().weights[verb] || DEFAULT_WEIGHT;
+    const { weights, lastPracticedAt } = get();
+    const stored = weights[verb];
+    if (!Number.isFinite(stored)) return DEFAULT_WEIGHT;
+    return decayWeight(stored, lastPracticedAt[verb], Date.now());
   },
 
   resetWeights: async (): Promise<boolean> => {
@@ -89,12 +91,12 @@ export const useSpacedRepStore = create<SpacedRepStore>((set, get) => ({
     }
     let cleared = false;
     await queue.enqueue(async () => {
-      const removed = await safeRemoveItem('spaced_rep_weights');
+      const removed = await safeRemoveItem(STORAGE_KEY);
       if (!removed) {
         console.warn('Failed to reset spaced rep weights');
         return;
       }
-      set({ weights: {}, loaded: true, loadError: false });
+      set({ weights: {}, lastPracticedAt: {}, loaded: true, loadError: false });
       cleared = true;
     });
     return cleared;
@@ -103,5 +105,10 @@ export const useSpacedRepStore = create<SpacedRepStore>((set, get) => ({
 
 export function __resetSpacedRepStoreForTests() {
   queue.reset();
-  useSpacedRepStore.setState({ weights: {}, loaded: false, loadError: false });
+  useSpacedRepStore.setState({
+    weights: {},
+    lastPracticedAt: {},
+    loaded: false,
+    loadError: false,
+  });
 }

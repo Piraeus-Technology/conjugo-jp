@@ -141,6 +141,7 @@ describe('store persistence hardening', () => {
 
     await useSpacedRepStore.getState().recordResult('書く', false);
     expect(useSpacedRepStore.getState()).toMatchObject({ loaded: false, loadError: true });
+    // Untouched on a failed load — still the v1 blob.
     expect(JSON.parse(mockStorage.get('spaced_rep_weights')!)).toEqual({ 書く: 4 });
 
     await useSpacedRepStore.getState().recordResult('書く', false);
@@ -150,7 +151,43 @@ describe('store persistence hardening', () => {
       loadError: false,
       weights: { 書く: 5 },
     });
-    expect(JSON.parse(mockStorage.get('spaced_rep_weights')!)).toEqual({ 書く: 5 });
+    const persisted = JSON.parse(mockStorage.get('spaced_rep_weights')!);
+    expect(persisted).toMatchObject({ version: 2, weights: { 書く: 5 } });
+    expect(persisted.lastPracticedAt.書く).toBeGreaterThan(0);
+  });
+
+  test('v1 weights migrate without losing learned difficulty', async () => {
+    mockStorage.set('spaced_rep_weights', JSON.stringify({ 書く: 4, 見る: 0.2 }));
+
+    await useSpacedRepStore.getState().loadWeights();
+
+    // Weights survive verbatim; the decay clock starts at the upgrade rather
+    // than resetting everyone to the default.
+    expect(useSpacedRepStore.getState().weights).toEqual({ 書く: 4, 見る: 0.2 });
+    const { lastPracticedAt } = useSpacedRepStore.getState();
+    expect(lastPracticedAt.書く).toBeGreaterThan(0);
+    expect(lastPracticedAt.見る).toBeGreaterThan(0);
+  });
+
+  test('getWeight decays a stale weight back toward the default', async () => {
+    const twentyEightDaysAgo = Date.now() - 28 * 24 * 60 * 60 * 1000;
+    mockStorage.set(
+      'spaced_rep_weights',
+      JSON.stringify({
+        version: 2,
+        weights: { 書く: 5, 見る: 0.2 },
+        lastPracticedAt: { 書く: twentyEightDaysAgo, 見る: twentyEightDaysAgo },
+      }),
+    );
+
+    await useSpacedRepStore.getState().loadWeights();
+    const { getWeight } = useSpacedRepStore.getState();
+
+    // Two half-lives → a quarter of the distance from 1 remains.
+    expect(getWeight('書く')).toBeCloseTo(2, 1);
+    expect(getWeight('見る')).toBeCloseTo(0.8, 1);
+    // Stored values are untouched; decay is applied at read time.
+    expect(useSpacedRepStore.getState().weights).toEqual({ 書く: 5, 見る: 0.2 });
   });
 
   test('practice settings drops unknown persisted values and refills empty subsets', async () => {

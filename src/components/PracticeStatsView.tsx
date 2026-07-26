@@ -50,6 +50,8 @@ interface PracticeStatsViewProps {
   sessionsLoaded: boolean;
   sessionsLoadError: boolean;
   weights: Record<string, number>;
+  /** Epoch ms per verb, so weak-area weights are decayed the same way selection decays them. */
+  lastPracticedAt?: Record<string, number>;
   weightsLoaded: boolean;
   weightsLoadError: boolean;
   onRetry: () => void;
@@ -62,6 +64,7 @@ export default function PracticeStatsView({
   sessionsLoaded,
   sessionsLoadError,
   weights,
+  lastPracticedAt,
   weightsLoaded,
   weightsLoadError,
   onRetry,
@@ -74,7 +77,10 @@ export default function PracticeStatsView({
 
   // jp weights are bare-verb and shared by quiz + flashcards, so the weakest
   // verbs are surfaced on both stats tabs.
-  const insights = React.useMemo(() => buildPracticeInsights(weights), [weights]);
+  const insights = React.useMemo(
+    () => buildPracticeInsights(weights, lastPracticedAt ?? {}, Date.now()),
+    [weights, lastPracticedAt],
+  );
 
   // Map sessions by day (each session is already one day)
   const dailyMap = React.useMemo(() => {
