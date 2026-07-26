@@ -29,6 +29,7 @@
 default_platform(:ios)
 
 APP_ID = "com.lkh9596.conjugojp"
+PACKAGE_NAME = "com.piraeus.conjugojp"
 
 platform :ios do
   desc "Submit the uploaded build to App Store review (sets What's New + compliance answers)"
@@ -61,6 +62,63 @@ platform :ios do
         content_rights_contains_third_party_content: false,
         add_id_info_uses_idfa: false
       }
+    )
+  end
+end
+
+# ── Android ──────────────────────────────────────────────────────────────────
+# Play Store LISTING + "What's new". The binary is a separate, already-automated
+# path: `eas submit -p android --profile production` (EAS holds the service
+# account). These lanes never touch the AAB.
+#
+# WHY THIS EXISTS: `eas submit` pushes a binary to a track and nothing else.
+# Store listing text (description, What's new) is a different Play surface and
+# used to be hand-edited in the console, which is how 1.3.0 shipped behind a
+# listing that still advertised "1,900+ verbs".
+#
+# SAFETY: both lanes DRY-RUN by default (`validate_only`). Nothing reaches the
+# store until you pass PUBLISH=true.
+#
+# USAGE:
+#   bundle exec fastlane android push_metadata                 # dry run
+#   PUBLISH=true bundle exec fastlane android push_metadata    # for real
+#
+# SEEDING (do this once, AFTER the pending console edits are live, so the repo
+# starts from the true listing rather than a guess):
+#   bundle exec fastlane supply init --package_name com.piraeus.conjugojp \
+#     --json_key ~/.credentials/play-service-account.json \
+#     --metadata_path fastlane/metadata/android
+# That writes title.txt / short_description.txt / full_description.txt into
+# fastlane/metadata/android/en-US/. Until those exist, supply simply doesn't
+# touch those fields — a partial metadata dir is safe, same semantics as the
+# iOS deliver lane.
+#
+# CHANGELOGS: fastlane/metadata/android/en-US/changelogs/default.txt applies to
+# whatever versionCode is being submitted. Prefer it over <versionCode>.txt,
+# since EAS assigns codes remotely and we can't know them at commit time.
+# Play caps "What's new" at 500 characters.
+platform :android do
+  desc "Push Play listing + What's New from fastlane/metadata/android (never uploads a binary)"
+  lane :push_metadata do
+    publish = ENV["PUBLISH"] == "true"
+    UI.important(publish ? "PUBLISHING to Google Play" : "DRY RUN — pass PUBLISH=true to actually publish")
+
+    supply(
+      package_name: PACKAGE_NAME,
+      json_key: File.expand_path(
+        ENV.fetch("PLAY_JSON_KEY", "~/.credentials/play-service-account.json")
+      ),
+      metadata_path: "fastlane/metadata/android",
+      # Binary comes from EAS — never from here.
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      # Leave store imagery alone; it isn't tracked in the repo.
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      # These two are the point of the lane.
+      skip_upload_metadata: false,
+      skip_upload_changelogs: false,
+      validate_only: !publish
     )
   end
 end

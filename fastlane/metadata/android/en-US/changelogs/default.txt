@@ -1,0 +1,9 @@
+Every form, now complete. The polite past (ました) has joined the conjugation table, and forms that don't exist for a verb no longer appear at all.
+
+Also in this update:
+• Flashcards adapt to you — verbs you struggle with come round more often, and ones you've mastered fade out, then return weeks later.
+• Reset your learning data any time from the More tab.
+• Stronger contrast in both light and dark mode, and larger tap targets.
+• Faster search.
+
+Thanks for studying with ConjuGo!
