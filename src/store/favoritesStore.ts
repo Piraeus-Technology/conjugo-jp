@@ -9,7 +9,7 @@ interface FavoritesStore {
   loadError: boolean;
   loadFavorites: () => Promise<void>;
   toggleFavorite: (verb: string) => Promise<void>;
-  clearFavorites: () => Promise<void>;
+  clearFavorites: () => Promise<boolean>;
   isFavorite: (verb: string) => boolean;
 }
 
@@ -57,22 +57,25 @@ export const useFavoritesStore = create<FavoritesStore>((set, get) => ({
     });
   },
 
-  clearFavorites: async () => {
+  clearFavorites: async (): Promise<boolean> => {
     if (!get().loaded) {
       await get().loadFavorites();
     }
     if (!get().loaded) {
       console.warn('Skipping favorites clear: store never loaded');
-      return;
+      return false;
     }
-    return queue.enqueue(async () => {
+    let cleared = false;
+    await queue.enqueue(async () => {
       const removed = await safeRemoveItem('favorites');
       if (!removed) {
         console.warn('Failed to clear favorites');
         return;
       }
       set({ favorites: [], loaded: true, loadError: false });
+      cleared = true;
     });
+    return cleared;
   },
 
   isFavorite: (verb: string) => {

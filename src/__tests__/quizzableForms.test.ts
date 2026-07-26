@@ -157,6 +157,47 @@ describe('quizzableForms', () => {
     }
   });
 
+  it('hides semantically impossible command and intent forms for stative verbs', () => {
+    for (const verb of [
+      '分かる',
+      '見える',
+      '聞こえる',
+      '似る',
+      '異なる',
+      '出来る',
+      '要る',
+      '足りる',
+      '適する',
+      '属する',
+      'できる',
+      'みえる',
+      'きこえる',
+    ]) {
+      const visible = availableForms(verbs[verb], ALL_FORMS);
+      expect(visible).not.toContain('volitional');
+      expect(visible).not.toContain('imperative');
+      expect(visible).not.toContain('prohibitive');
+    }
+    const suku = availableForms(verbs['空く'], ALL_FORMS);
+    expect(suku).not.toContain('volitional');
+    expect(suku).not.toContain('imperative');
+  });
+
+  it('keeps real literary and formal forms visible as explicit exceptions', () => {
+    const aru = availableForms(verbs['ある'], ALL_FORMS);
+    expect(aru).toEqual(expect.arrayContaining(['volitional', 'imperative', 'prohibitive']));
+
+    for (const verb of ['適する', '属する']) {
+      const visible = availableForms(verbs[verb], ALL_FORMS);
+      expect(visible).toEqual(expect.arrayContaining(['passive', 'causative']));
+    }
+
+    // These honorific/humble forms are unusual practice targets but valid
+    // Japanese, so excludeForms must not make them disappear from reference.
+    expect(availableForms(verbs['なさる'], ALL_FORMS)).toContain('volitional');
+    expect(availableForms(verbs['伺う'], ALL_FORMS)).toContain('imperative');
+  });
+
   it('returns empty when every active form is excluded', () => {
     const onlyExcluded: ConjugationForm[] = ['potential'];
     expect(quizzableForms(verbs['ある'], onlyExcluded)).toEqual([]);

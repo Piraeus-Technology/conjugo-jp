@@ -90,10 +90,23 @@ describe('store persistence hardening', () => {
     mockStorage.set('favorites', JSON.stringify(['書く']));
     await useFavoritesStore.getState().loadFavorites();
 
-    await useFavoritesStore.getState().clearFavorites();
+    const cleared = await useFavoritesStore.getState().clearFavorites();
 
+    expect(cleared).toBe(true);
     expect(useFavoritesStore.getState().favorites).toEqual([]);
     expect(mockStorage.has('favorites')).toBe(false);
+  });
+
+  test('favorites clear reports failure and preserves state when removal fails', async () => {
+    mockStorage.set('favorites', JSON.stringify(['書く']));
+    await useFavoritesStore.getState().loadFavorites();
+    jest.mocked(AsyncStorage.removeItem).mockRejectedValueOnce(new Error('disk unavailable'));
+
+    const cleared = await useFavoritesStore.getState().clearFavorites();
+
+    expect(cleared).toBe(false);
+    expect(useFavoritesStore.getState().favorites).toEqual(['書く']);
+    expect(mockStorage.has('favorites')).toBe(true);
   });
 
   test('history add/remove writes serialize in order', async () => {

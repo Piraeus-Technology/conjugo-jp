@@ -18,7 +18,7 @@ interface SessionStore {
   loadError: boolean;
   loadSessions: () => Promise<void>;
   saveSession: (session: Omit<Session, 'day'>, day?: string) => Promise<boolean>;
-  clearSessions: () => Promise<void>;
+  clearSessions: () => Promise<boolean>;
 }
 
 const queue = createStoreQueue();
@@ -112,22 +112,25 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
     return ok;
   },
 
-  clearSessions: async () => {
+  clearSessions: async (): Promise<boolean> => {
     if (!get().loaded) {
       await get().loadSessions();
     }
     if (!get().loaded) {
       console.warn('Skipping quiz session clear: store never loaded');
-      return;
+      return false;
     }
-    return queue.enqueue(async () => {
+    let cleared = false;
+    await queue.enqueue(async () => {
       const removed = await safeRemoveItem('sessions');
       if (!removed) {
         console.warn('Failed to clear quiz sessions');
         return;
       }
       set({ sessions: [], loaded: true, loadError: false });
+      cleared = true;
     });
+    return cleared;
   },
 }));
 

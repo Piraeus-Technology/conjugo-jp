@@ -17,7 +17,7 @@ interface FlashcardSessionStore {
   loadError: boolean;
   loadSessions: () => Promise<void>;
   saveSession: (session: Omit<FlashcardSession, 'day'>, day?: string) => Promise<boolean>;
-  clearSessions: () => Promise<void>;
+  clearSessions: () => Promise<boolean>;
 }
 
 const queue = createStoreQueue();
@@ -109,22 +109,25 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
     return ok;
   },
 
-  clearSessions: async () => {
+  clearSessions: async (): Promise<boolean> => {
     if (!get().loaded) {
       await get().loadSessions();
     }
     if (!get().loaded) {
       console.warn('Skipping flashcard session clear: store never loaded');
-      return;
+      return false;
     }
-    return queue.enqueue(async () => {
+    let cleared = false;
+    await queue.enqueue(async () => {
       const removed = await safeRemoveItem('flashcardSessions');
       if (!removed) {
         console.warn('Failed to clear flashcard sessions');
         return;
       }
       set({ sessions: [], loaded: true, loadError: false });
+      cleared = true;
     });
+    return cleared;
   },
 }));
 

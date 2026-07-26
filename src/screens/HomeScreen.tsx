@@ -66,7 +66,7 @@ interface ConjMatch {
 
 let conjugationIndex: Map<string, ConjMatch[]> | null = null;
 
-function getConjugationIndex(): Map<string, ConjMatch[]> {
+export function getConjugationIndex(): Map<string, ConjMatch[]> {
   if (conjugationIndex) return conjugationIndex;
   conjugationIndex = new Map();
   verbList.forEach(([verb, data]) => {
@@ -544,7 +544,7 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: { flex: 1 },
   searchBar: {
     flexDirection: 'row',

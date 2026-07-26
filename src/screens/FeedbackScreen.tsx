@@ -82,16 +82,36 @@ export default function FeedbackScreen() {
           text: 'Reset',
           style: 'destructive',
           onPress: async () => {
-            await Promise.all([
-              clearFavorites(),
-              clearHistory(),
-              resetQuizStats(),
-              clearQuizSessions(),
-              resetFlashcardStats(),
-              clearFlashcardSessions(),
-              resetWeights(),
-            ]);
-            Alert.alert('Learning data reset');
+            const operations = [
+              { label: 'favorites', run: clearFavorites },
+              { label: 'search history', run: clearHistory },
+              { label: 'quiz stats', run: resetQuizStats },
+              { label: 'quiz sessions', run: clearQuizSessions },
+              { label: 'flashcard stats', run: resetFlashcardStats },
+              { label: 'flashcard sessions', run: clearFlashcardSessions },
+              { label: 'adaptive weights', run: resetWeights },
+            ];
+            const results = await Promise.allSettled(
+              operations.map(operation => operation.run()),
+            );
+            const failed = operations.filter((_, index) => {
+              const result = results[index];
+              return result.status === 'rejected' || !result.value;
+            });
+
+            if (failed.length === 0) {
+              Alert.alert('Learning data reset');
+            } else if (failed.length === operations.length) {
+              Alert.alert(
+                'Reset failed',
+                'No learning data was cleared. Your data is still on this device. Please try again.',
+              );
+            } else {
+              Alert.alert(
+                'Reset incomplete',
+                `Some data was cleared, but these items remain: ${failed.map(item => item.label).join(', ')}. Please try again.`,
+              );
+            }
           },
         },
       ],
