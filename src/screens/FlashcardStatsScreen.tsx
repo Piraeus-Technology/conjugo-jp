@@ -46,8 +46,8 @@ export default function FlashcardStatsScreen() {
   return (
     <PracticeStatsView
       sessions={dayCounts}
-      sessionsLoaded={sessionsLoaded}
-      sessionsLoadError={sessionsLoadError}
+      sessionsLoaded={sessionsLoaded && statsLoaded}
+      sessionsLoadError={sessionsLoadError || statsLoadError}
       weights={weights}
       weightsLoaded={weightsLoaded}
       weightsLoadError={weightsLoadError}

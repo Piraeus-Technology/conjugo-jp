@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { buildPracticeInsights } from '../utils/practiceInsights';
 import { getAccuracyPercent, hasPositiveCount } from '../utils/statsMath';
@@ -63,6 +63,7 @@ export default function PracticeStatsView({
   sessionsLoadError,
   weights,
   weightsLoaded,
+  weightsLoadError,
   onRetry,
   labels,
   allTimeOverride,
@@ -145,7 +146,10 @@ export default function PracticeStatsView({
     });
   }, [selectedDay]);
 
-  if (sessionsLoadError && !sessionsLoaded) {
+  if (
+    (sessionsLoadError && !sessionsLoaded) ||
+    (weightsLoadError && !weightsLoaded)
+  ) {
     return (
       <View style={[styles.container, styles.loadingContainer, styles.statusContainer, { backgroundColor: colors.bg }]}>
         <Text style={[styles.statusText, { color: colors.textMuted }]}>{labels.errorText}</Text>
@@ -161,10 +165,22 @@ export default function PracticeStatsView({
     );
   }
 
-  if (!sessionsLoaded) {
+  if (!sessionsLoaded || !weightsLoaded) {
     return (
       <View style={[styles.container, styles.loadingContainer, { backgroundColor: colors.bg }]}>
         <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>{labels.loadingText}</Text>
+      </View>
+    );
+  }
+
+  if (allTimeCount === 0) {
+    return (
+      <View style={[styles.container, styles.emptyContainer, { backgroundColor: colors.bg }]}>
+        <Ionicons name={labels.emptyIcon} size={48} color={colors.textMuted} />
+        <Text style={[styles.emptyTitle, { color: colors.textPrimary }]}>No stats yet</Text>
+        <Text style={[styles.emptySubtitle, { color: colors.textMuted }]}>
+          {labels.emptySubtitle}
+        </Text>
       </View>
     );
   }
@@ -178,7 +194,7 @@ export default function PracticeStatsView({
       {streak > 0 && (
         <View style={[styles.streakCard, { backgroundColor: colors.card }]}>
           <Text style={styles.streakEmoji}>🔥</Text>
-          <Text style={[styles.streakText, { color: colors.primary }]}>
+          <Text style={[styles.streakText, { color: colors.primaryText }]}>
             {streak} day streak
           </Text>
         </View>
@@ -189,11 +205,11 @@ export default function PracticeStatsView({
       <View style={[styles.statsCard, { backgroundColor: colors.card }]}>
         <View style={styles.statsRow}>
           <View style={styles.statItem}>
-            <Text style={[styles.statValue, { color: colors.primary }]}>{allTimeCount}</Text>
+            <Text style={[styles.statValue, { color: colors.primaryText }]}>{allTimeCount}</Text>
             <Text style={[styles.statLabel, { color: colors.textMuted }]}>{labels.countLabel}</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={[styles.statValue, { color: colors.primary }]}>
+            <Text style={[styles.statValue, { color: colors.primaryText }]}>
               {getAccuracyPercent(allTimeCorrect, allTimeCount) ?? 0}%
             </Text>
             <Text style={[styles.statLabel, { color: colors.textMuted }]}>Accuracy</Text>
@@ -212,11 +228,11 @@ export default function PracticeStatsView({
           <View style={[styles.statsCard, { backgroundColor: colors.card }]}>
             <View style={styles.statsRow}>
               <View style={styles.statItem}>
-                <Text style={[styles.statValue, { color: colors.primary }]}>{todayData.count}</Text>
+                <Text style={[styles.statValue, { color: colors.primaryText }]}>{todayData.count}</Text>
                 <Text style={[styles.statLabel, { color: colors.textMuted }]}>{labels.countLabel}</Text>
               </View>
               <View style={styles.statItem}>
-                <Text style={[styles.statValue, { color: colors.primary }]}>
+                <Text style={[styles.statValue, { color: colors.primaryText }]}>
                   {getAccuracyPercent(todayData.correct, todayData.count) ?? 0}%
                 </Text>
                 <Text style={[styles.statLabel, { color: colors.textMuted }]}>Accuracy</Text>
@@ -243,7 +259,7 @@ export default function PracticeStatsView({
             accessibilityRole="button"
             accessibilityLabel="Previous month"
           >
-            <Ionicons name="chevron-back" size={20} color={colors.primary} />
+            <Ionicons name="chevron-back" size={20} color={colors.primaryText} />
           </TouchableOpacity>
           <Text style={[styles.calendarMonth, { color: colors.textPrimary }]}>{monthName}</Text>
           <TouchableOpacity
@@ -252,7 +268,7 @@ export default function PracticeStatsView({
             accessibilityRole="button"
             accessibilityLabel="Next month"
           >
-            <Ionicons name="chevron-forward" size={20} color={colors.primary} />
+            <Ionicons name="chevron-forward" size={20} color={colors.primaryText} />
           </TouchableOpacity>
         </View>
 
@@ -289,7 +305,7 @@ export default function PracticeStatsView({
                   style={[
                     styles.calendarCell,
                     dayColor && { backgroundColor: dayColor.bg },
-                    isSelected && { borderWidth: 2, borderColor: colors.primary },
+                    isSelected && { borderWidth: 2, borderColor: colors.primaryText },
                     isToday && !dayColor && { borderWidth: 1, borderColor: colors.border },
                   ]}
                   onPress={() => {
@@ -357,23 +373,13 @@ export default function PracticeStatsView({
                 <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>
                   {item.verb} · {item.reading}
                 </Text>
-                <Text style={[styles.insightValue, { color: colors.primary }]}>{item.weight.toFixed(1)}x</Text>
+                <Text style={[styles.insightValue, { color: colors.primaryText }]}>{item.weight.toFixed(1)}x</Text>
               </View>
             ))}
           </View>
         </>
       )}
 
-      {/* Empty state */}
-      {allTimeCount === 0 && (
-        <View style={styles.emptyContainer}>
-          <Ionicons name={labels.emptyIcon} size={48} color={colors.textMuted} />
-          <Text style={[styles.emptyTitle, { color: colors.textPrimary }]}>No stats yet</Text>
-          <Text style={[styles.emptySubtitle, { color: colors.textMuted }]}>
-            {labels.emptySubtitle}
-          </Text>
-        </View>
-      )}
     </ScrollView>
   );
 }

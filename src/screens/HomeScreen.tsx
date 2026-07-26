@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
 import Fuse from 'fuse.js';
 import { useNavigation } from '@react-navigation/native';
@@ -22,7 +22,7 @@ import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { romajiToHiragana } from '../utils/kana';
 import type { SearchStackParamList } from '../types/navigation';
-import { conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, JLPTLevel, ConjugationForm } from '../utils/conjugate';
+import { availableForms, conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, JLPTLevel, ConjugationForm } from '../utils/conjugate';
 
 type NavProp = NativeStackNavigationProp<SearchStackParamList>;
 
@@ -64,36 +64,31 @@ interface ConjMatch {
   conjugatedKanji: string;
 }
 
-let conjugationIndex: ConjMatch[] | null = null;
-let conjFuse: Fuse<ConjMatch> | null = null;
+let conjugationIndex: Map<string, ConjMatch[]> | null = null;
 
-function getConjugationIndex(): ConjMatch[] {
+function getConjugationIndex(): Map<string, ConjMatch[]> {
   if (conjugationIndex) return conjugationIndex;
-  conjugationIndex = [];
+  conjugationIndex = new Map();
   verbList.forEach(([verb, data]) => {
-    ALL_FORMS.forEach((form) => {
+    availableForms(data, ALL_FORMS).forEach((form) => {
       const reading = conjugateReading(data, form);
       const kanji = deriveKanjiForm(verb, data.reading, reading);
-      conjugationIndex!.push({
+      const match: ConjMatch = {
         verb,
         reading: data.reading,
         translation: data.translation,
         form,
         conjugated: reading,
         conjugatedKanji: kanji,
-      });
+      };
+      for (const key of new Set([reading, kanji])) {
+        const current = conjugationIndex!.get(key) ?? [];
+        current.push(match);
+        conjugationIndex!.set(key, current);
+      }
     });
   });
   return conjugationIndex;
-}
-
-function getConjFuse(): Fuse<ConjMatch> {
-  if (conjFuse) return conjFuse;
-  conjFuse = new Fuse(getConjugationIndex(), {
-    keys: ['conjugated', 'conjugatedKanji'],
-    threshold: 0.2,
-  });
-  return conjFuse;
 }
 
 interface SearchResult {
@@ -138,7 +133,7 @@ export default function HomeScreen() {
   useEffect(() => {
     loadHistory();
     loadFavorites();
-  }, []);
+  }, [loadHistory, loadFavorites]);
 
   useEffect(() => {
     if (!query.trim()) {
@@ -197,10 +192,13 @@ export default function HomeScreen() {
     const q = debouncedQuery.trim();
     const hiraganaQuery = romajiToHiragana(q);
 
-    // Check for exact conjugation matches first (hiragana or kanji)
-    const exactConjMatches = getConjugationIndex().filter(
-      (c) => c.conjugated === hiraganaQuery || c.conjugated === q || c.conjugatedKanji === q
-    );
+    // Exact conjugated-form lookup is O(1). Typo tolerance remains on the much
+    // smaller headword index, avoiding a 30k-item synchronous Fuse scan.
+    const conjugations = getConjugationIndex();
+    const exactConjMatches = [
+      ...(conjugations.get(hiraganaQuery) ?? []),
+      ...(hiraganaQuery === q ? [] : conjugations.get(q) ?? []),
+    ];
 
     const seen = new Set<string>();
     const out: SearchResult[] = [];
@@ -227,8 +225,8 @@ export default function HomeScreen() {
     }
 
     // Verb name/reading/translation search
-    const results1 = fuse.search(q);
-    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery) : [];
+    const results1 = fuse.search(q, { limit: 40 });
+    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery, { limit: 40 }) : [];
     for (const r of [...results1, ...results2]) {
       if (!seen.has(r.item.verb)) {
         seen.add(r.item.verb);
@@ -239,36 +237,13 @@ export default function HomeScreen() {
       }
     }
 
-    // Fuzzy conjugation matches (if no exact matches found)
-    if (exactConjMatches.length === 0) {
-      const conjResults = getConjFuse().search(hiraganaQuery || q);
-      conjResults.forEach((r) => {
-        if (!seen.has(r.item.verb)) {
-          seen.add(r.item.verb);
-          const data = (verbs as Record<string, VerbData>)[r.item.verb];
-          const label = FORM_LABELS[r.item.form];
-          out.push({
-            verb: r.item.verb,
-            reading: r.item.reading,
-            translation: r.item.translation,
-            jlpt: data?.jlpt || '',
-            group: data?.group || '',
-            transitive: data?.transitive,
-            matchType: 'conjugation',
-            matchDetail: `「${r.item.conjugated}」— ${label.ja} (${label.en})`,
-            matchForm: r.item.form,
-          });
-        }
-      });
-    }
-
     return out.filter(passesFilters).slice(0, 20);
   }, [query, debouncedQuery, hasActiveFilters, filteredVerbResults, passesFilters]);
 
   const handleVerbPress = useCallback((verb: string, highlightForm?: string) => {
     addToHistory(verb);
     navigation.navigate('Conjugation', { verb, highlightForm });
-  }, [navigation]);
+  }, [addToHistory, navigation]);
 
   const [vodVerb, vodData] = getVerbOfTheDay();
 
@@ -359,7 +334,7 @@ export default function HomeScreen() {
             {item.translation}
           </Text>
           {item.matchType === 'conjugation' && item.matchDetail && (
-            <Text style={[styles.matchDetail, { color: colors.primary }]} numberOfLines={1}>
+            <Text style={[styles.matchDetail, { color: colors.primaryText }]} numberOfLines={1}>
               {item.matchDetail}
             </Text>
           )}
@@ -505,7 +480,7 @@ export default function HomeScreen() {
             accessibilityHint="Opens conjugation table"
           >
             <Text style={[styles.vodLabel, { color: colors.textMuted }]}>Verb of the Day</Text>
-            <Text style={[styles.vodVerb, { color: colors.primary }]}>{vodVerb}</Text>
+            <Text style={[styles.vodVerb, { color: colors.primaryText }]}>{vodVerb}</Text>
             <Text style={[styles.vodReading, { color: colors.textSecondary }]}>{vodData.reading}</Text>
             <Text style={[styles.vodTranslation, { color: colors.textPrimary }]}>{vodData.translation}</Text>
             <View style={styles.vodBadgeRow}>
@@ -582,7 +557,7 @@ const styles = StyleSheet.create({
   },
   searchInput: { flex: 1, fontSize: fonts.sizes.md },
   filterScroll: {
-    maxHeight: 38,
+    maxHeight: 48,
     marginTop: -spacing.xs,
     marginBottom: spacing.sm,
   },
@@ -592,10 +567,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   filterChip: {
+    minHeight: 44,
+    justifyContent: 'center',
     borderWidth: 1,
     borderRadius: radius.full,
     paddingHorizontal: spacing.md,
-    paddingVertical: 6,
+    paddingVertical: spacing.sm,
   },
   filterChipText: {
     fontSize: fonts.sizes.xs,

@@ -11,6 +11,7 @@ import { __resetQuizStoreForTests, useQuizStore } from '../store/quizStore';
 import { __resetFlashcardStatsStoreForTests, useFlashcardStatsStore } from '../store/flashcardStatsStore';
 import { __resetSpacedRepStoreForTests, useSpacedRepStore } from '../store/spacedRepStore';
 import { __resetThemeStoreForTests, useThemeStore } from '../store/themeStore';
+import { FORM_GROUPS } from '../utils/conjugate';
 
 const mockStorage = new Map<string, string>();
 
@@ -85,6 +86,16 @@ describe('store persistence hardening', () => {
     expect(mockStorage.get('favorites')).toBe(JSON.stringify(['飲む', '書く']));
   });
 
+  test('favorites can be cleared for the learning-data reset', async () => {
+    mockStorage.set('favorites', JSON.stringify(['書く']));
+    await useFavoritesStore.getState().loadFavorites();
+
+    await useFavoritesStore.getState().clearFavorites();
+
+    expect(useFavoritesStore.getState().favorites).toEqual([]);
+    expect(mockStorage.has('favorites')).toBe(false);
+  });
+
   test('history add/remove writes serialize in order', async () => {
     await useHistoryStore.getState().loadHistory();
     await Promise.all([
@@ -139,6 +150,13 @@ describe('store persistence hardening', () => {
 
     expect(usePracticeSettingsStore.getState().activeForms).toEqual(['te']);
     expect(usePracticeSettingsStore.getState().activeLevels).toEqual(allLevels);
+  });
+
+  test('selectable forms are derived from the shared display groups', () => {
+    expect(allForms).toEqual(
+      FORM_GROUPS.flatMap(group => group.forms).filter(form => form !== 'dictionary'),
+    );
+    expect(allForms).toContain('masu_past');
   });
 
   test('practice settings write failure leaves in-memory state unchanged', async () => {

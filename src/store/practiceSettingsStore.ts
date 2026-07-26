@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ALL_FORMS } from '../utils/conjugate';
+import { ALL_FORMS, FORM_GROUPS } from '../utils/conjugate';
 import type { ConjugationForm, JLPTLevel } from '../utils/conjugate';
 import { safeSetItem } from '../utils/safeStorage';
 import { createStoreQueue } from '../utils/storeQueue';
@@ -17,13 +17,10 @@ interface PracticeSettingsStore {
   toggleLevel: (level: JLPTLevel) => Promise<void>;
 }
 
-const allForms: ConjugationForm[] = [
-  'masu', 'te', 'ta', 'nai', 'nakatta',
-  'masu_negative', 'masu_past', 'masu_past_negative',
-  'potential', 'passive', 'causative', 'causative_passive',
-  'conditional_ba', 'conditional_tara', 'volitional',
-  'imperative', 'prohibitive',
-];
+// Keep the settings model and the reference table on one source of truth.
+const allForms: ConjugationForm[] = Array.from(new Set(
+  FORM_GROUPS.flatMap(group => group.forms).filter(form => form !== 'dictionary'),
+));
 
 const allLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const validForms: ConjugationForm[] = [...ALL_FORMS];

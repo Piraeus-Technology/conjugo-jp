@@ -1,4 +1,11 @@
-import { quizzableForms, ALL_FORMS, ConjugationForm, VerbData } from '../utils/conjugate';
+import {
+  availableForms,
+  quizzableForms,
+  ALL_FORMS,
+  FORM_GROUPS,
+  ConjugationForm,
+  VerbData,
+} from '../utils/conjugate';
 import { addSameFormDistractors, chooseQuizzableEntry, VerbEntry } from '../utils/practiceSelection';
 import verbsJson from '../data/verbs.json';
 
@@ -126,6 +133,30 @@ describe('quizzableForms', () => {
     expect(verbs['食べる'].excludeForms).toBeUndefined();
   });
 
+  it('keeps every selectable form in the shared display groups exactly once', () => {
+    const groupedForms = FORM_GROUPS.flatMap(group => group.forms);
+    expect(new Set(groupedForms)).toEqual(new Set(ALL_FORMS));
+    expect(groupedForms).toHaveLength(ALL_FORMS.length);
+    expect(groupedForms).toContain('masu_past');
+  });
+
+  it('distinguishes invalid forms from valid forms omitted only from quizzes', () => {
+    expect(availableForms(verbs['ある'], ALL_FORMS)).not.toContain('potential');
+    expect(availableForms(verbs['ある'], ALL_FORMS)).toContain('volitional');
+
+    // 受ける has a valid passive that collides with its potential. It is a poor
+    // quiz target, but it belongs in reference views.
+    expect(quizzableForms(verbs['受ける'], ALL_FORMS)).not.toContain('passive');
+    expect(availableForms(verbs['受ける'], ALL_FORMS)).toContain('passive');
+  });
+
+  it('hides double-passive derivatives of the passive headword 騙される', () => {
+    const visible = availableForms(verbs['騙される'], ALL_FORMS);
+    for (const form of ['potential', 'passive', 'causative', 'causative_passive'] as ConjugationForm[]) {
+      expect(visible).not.toContain(form);
+    }
+  });
+
   it('returns empty when every active form is excluded', () => {
     const onlyExcluded: ConjugationForm[] = ['potential'];
     expect(quizzableForms(verbs['ある'], onlyExcluded)).toEqual([]);
@@ -181,6 +212,10 @@ describe('quizzableForms', () => {
     for (const data of Object.values(verbs)) {
       for (const f of data.excludeForms ?? []) {
         expect(valid.has(f)).toBe(true);
+      }
+      for (const f of data.unavailableForms ?? []) {
+        expect(valid.has(f)).toBe(true);
+        expect(data.excludeForms).toContain(f);
       }
     }
   });

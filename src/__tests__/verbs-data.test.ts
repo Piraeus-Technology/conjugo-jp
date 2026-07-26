@@ -9,7 +9,7 @@ type VerbEntry = {
   translation: string;
   jlpt: string;
   overrides?: Record<string, string>;
-  examples?: Array<{ ja: string; en: string }>;
+  examples?: { ja: string; en: string }[];
 };
 
 const verbEntries = Object.entries(verbs) as [string, VerbEntry][];
@@ -20,7 +20,7 @@ describe('Verb data integrity', () => {
   });
 
   test('all verbs have required fields', () => {
-    for (const [verb, data] of verbEntries) {
+    for (const [, data] of verbEntries) {
       expect(data.reading).toBeTruthy();
       expect(['godan', 'ichidan', 'irregular']).toContain(data.group);
       expect(data.translation).toBeTruthy();
@@ -30,7 +30,7 @@ describe('Verb data integrity', () => {
 
   test('all godan verbs have godanRow', () => {
     const validRows = ['u', 'ku', 'gu', 'su', 'tsu', 'nu', 'bu', 'mu', 'ru'];
-    for (const [verb, data] of verbEntries) {
+    for (const [, data] of verbEntries) {
       if (data.group === 'godan') {
         expect(validRows).toContain(data.godanRow);
       }
@@ -39,7 +39,7 @@ describe('Verb data integrity', () => {
 
   test('godan verb readings end with u-row kana', () => {
     const uRowKana = 'うくぐすつぬぶむる';
-    for (const [verb, data] of verbEntries) {
+    for (const [, data] of verbEntries) {
       if (data.group === 'godan') {
         const lastKana = data.reading[data.reading.length - 1];
         expect(uRowKana).toContain(lastKana);
@@ -48,7 +48,7 @@ describe('Verb data integrity', () => {
   });
 
   test('ichidan verb readings end with る', () => {
-    for (const [verb, data] of verbEntries) {
+    for (const [, data] of verbEntries) {
       if (data.group === 'ichidan') {
         expect(data.reading.endsWith('る')).toBe(true);
       }
@@ -56,7 +56,7 @@ describe('Verb data integrity', () => {
   });
 
   test('irregular verbs end with する or くる', () => {
-    for (const [verb, data] of verbEntries) {
+    for (const [, data] of verbEntries) {
       if (data.group === 'irregular') {
         const endsCorrectly = data.reading.endsWith('する') || data.reading.endsWith('くる');
         expect(endsCorrectly).toBe(true);

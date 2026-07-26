@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { safeSetItem } from '../utils/safeStorage';
+import { safeRemoveItem, safeSetItem } from '../utils/safeStorage';
 import { createStoreQueue, parseStoredStringArray } from '../utils/storeQueue';
 
 interface FavoritesStore {
@@ -9,6 +9,7 @@ interface FavoritesStore {
   loadError: boolean;
   loadFavorites: () => Promise<void>;
   toggleFavorite: (verb: string) => Promise<void>;
+  clearFavorites: () => Promise<void>;
   isFavorite: (verb: string) => boolean;
 }
 
@@ -53,6 +54,24 @@ export const useFavoritesStore = create<FavoritesStore>((set, get) => ({
         return;
       }
       set({ favorites: updated });
+    });
+  },
+
+  clearFavorites: async () => {
+    if (!get().loaded) {
+      await get().loadFavorites();
+    }
+    if (!get().loaded) {
+      console.warn('Skipping favorites clear: store never loaded');
+      return;
+    }
+    return queue.enqueue(async () => {
+      const removed = await safeRemoveItem('favorites');
+      if (!removed) {
+        console.warn('Failed to clear favorites');
+        return;
+      }
+      set({ favorites: [], loaded: true, loadError: false });
     });
   },
 

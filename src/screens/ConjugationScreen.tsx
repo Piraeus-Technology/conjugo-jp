@@ -1,13 +1,13 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 
 import verbs from '../data/verbs.json';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useFavoritesStore } from '../store/favoritesStore';
-import { conjugate, FORM_GROUPS, VerbData } from '../utils/conjugate';
+import { availableForms, conjugate, FORM_GROUPS, VerbData } from '../utils/conjugate';
 import { speak, stopSpeech } from '../utils/speech';
 import type { SearchStackParamList } from '../types/navigation';
 
@@ -23,7 +23,7 @@ export default function ConjugationScreen() {
 
   React.useEffect(() => {
     loadFavorites();
-  }, []);
+  }, [loadFavorites]);
 
   useFocusEffect(useCallback(() => () => stopSpeech(), []));
 
@@ -64,14 +64,14 @@ export default function ConjugationScreen() {
       <View style={[styles.header, { backgroundColor: colors.card }]}>
         <View style={styles.headerTop}>
           <View style={styles.verbRow}>
-            <Text style={[styles.verb, { color: colors.primary }]}>{verb}</Text>
+            <Text style={[styles.verb, { color: colors.primaryText }]}>{verb}</Text>
             <TouchableOpacity
               onPress={() => speak(verb)}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               accessibilityRole="button"
               accessibilityLabel={`Play pronunciation of ${verb}`}
             >
-              <Ionicons name="volume-medium" size={22} color={colors.primary} />
+              <Ionicons name="volume-medium" size={22} color={colors.primaryText} />
             </TouchableOpacity>
           </View>
           <TouchableOpacity
@@ -107,6 +107,8 @@ export default function ConjugationScreen() {
 
       {/* Conjugation Groups */}
       {FORM_GROUPS.map((group) => {
+        const groupForms = availableForms(verbData, group.forms);
+        if (groupForms.length === 0) return null;
         const isCollapsed = !!collapsedGroups[group.title];
         return (
           <View key={group.title} style={styles.groupSection}>
@@ -130,7 +132,7 @@ export default function ConjugationScreen() {
             </TouchableOpacity>
             {!isCollapsed && (
               <View style={[styles.groupCard, { backgroundColor: colors.card }]}>
-                {group.forms.map((form) => {
+                {groupForms.map((form) => {
                   const result = conjugate(verb, verbData, form);
                   const isHighlighted = form === highlightForm && highlightForm !== 'dictionary';
                   return (
@@ -153,7 +155,7 @@ export default function ConjugationScreen() {
                       style={[
                         styles.formRow,
                         { borderBottomColor: colors.divider },
-                        isHighlighted && { backgroundColor: colors.primary + '15' },
+                        isHighlighted && { backgroundColor: colors.primaryText + '15' },
                       ]}
                       onPress={() => speak(result.reading)}
                       activeOpacity={0.7}
