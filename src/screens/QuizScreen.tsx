@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import * as StoreReview from 'expo-store-review';
+import Constants from 'expo-constants';
 import { stopSpeech } from '../utils/speech';
 import verbs from '../data/verbs.json';
 import {
@@ -26,6 +26,7 @@ import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 import { useSessionStore } from '../store/sessionStore';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
+import { maybeRequestStoreReview } from '../utils/storeReviewPrompt';
 import type { QuizStackParamList } from '../types/navigation';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
@@ -66,6 +67,12 @@ export default function QuizScreen() {
   const [bestSessionStreak, setBestSessionStreak] = useState(0);
   const [showHint, setShowHint] = useState(true);
   const hasRecordedAnswer = React.useRef(false);
+  // Freeze the persisted baseline; newTotal tracks this visit synchronously,
+  // while quiz-store writes may still be queued when review eligibility runs.
+  const totalQuestionsAtVisitStart = React.useRef<number | null>(null);
+  if (statsLoaded && totalQuestionsAtVisitStart.current === null) {
+    totalQuestionsAtVisitStart.current = totalQuestions;
+  }
 
   useEffect(() => {
     loadStats();
@@ -126,9 +133,14 @@ export default function QuizScreen() {
       if (newStreak > bestSessionStreak) setBestSessionStreak(newStreak);
       recordAnswer(true, newStreak);
       if (newStreak === 10) {
-        StoreReview.isAvailableAsync().then((available) => {
-          if (available) StoreReview.requestReview();
-        }).catch(() => {});
+        void maybeRequestStoreReview({
+          appVersion: Constants.expoConfig?.version,
+          newStreak,
+          totalQuestionsAtVisitStart: totalQuestionsAtVisitStart.current ?? totalQuestions,
+          answersThisVisitBeforeCurrent: newTotal,
+          sessionDays: sessions.map(session => session.day),
+          currentDay: getTodayKey(),
+        });
       }
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
