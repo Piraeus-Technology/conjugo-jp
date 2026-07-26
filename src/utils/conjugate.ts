@@ -65,18 +65,32 @@ export interface VerbData {
   transitive?: boolean;
   examples?: VerbExample[];
   overrides?: Partial<Record<ConjugationForm, string>>;
-  // Forms that either don't exist naturally for this verb or aren't useful quiz
-  // targets (e.g. ある has no potential あれる; あろう is real but too formal).
+  // Valid forms that are poor practice targets, such as forms that collide
+  // with another conjugation. These stay visible in reference views.
   excludeForms?: ConjugationForm[];
+  // Mechanically generated forms that are not valid Japanese for this verb.
+  // These are hidden from both reference views and practice.
+  unavailableForms?: ConjugationForm[];
 }
 
 // Filter a set of practice forms down to the ones worth quizzing for a verb,
 // dropping any in its excludeForms. Returns an empty array when no active forms
 // are quizzable, so callers can pick a different verb instead.
 export function quizzableForms(verb: VerbData, forms: ConjugationForm[]): ConjugationForm[] {
-  if (!verb.excludeForms || verb.excludeForms.length === 0) return forms;
-  const excluded = new Set(verb.excludeForms);
+  const excluded = new Set([
+    ...(verb.excludeForms ?? []),
+    ...(verb.unavailableForms ?? []),
+  ]);
+  if (excluded.size === 0) return forms;
   return forms.filter((f) => !excluded.has(f));
+}
+
+// Reference views only hide invalid forms. A valid form omitted from quizzes
+// remains available to learners in the conjugation table and exact search.
+export function availableForms(verb: VerbData, forms: ConjugationForm[]): ConjugationForm[] {
+  if (!verb.unavailableForms || verb.unavailableForms.length === 0) return forms;
+  const unavailable = new Set(verb.unavailableForms);
+  return forms.filter((form) => !unavailable.has(form));
 }
 
 export interface ConjugationResult {
@@ -92,7 +106,7 @@ export const FORM_GROUPS = [
   {
     title: 'Basic',
     titleJa: '基本',
-    forms: ['dictionary', 'masu', 'te', 'ta'] as ConjugationForm[],
+    forms: ['dictionary', 'masu', 'masu_past', 'te', 'ta'] as ConjugationForm[],
   },
   {
     title: 'Negative',

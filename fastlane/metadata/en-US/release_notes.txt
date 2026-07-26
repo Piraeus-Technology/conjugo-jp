@@ -1,7 +1,9 @@
-Example sentences for every JLPT level! N2 and N1 verbs now have them too — every flashcard, from N5 to N1, shows the conjugation used in a real, natural Japanese sentence.
+Every form, now complete. The polite past (ました) has joined the conjugation table, and forms that don't exist for a verb no longer appear at all — so what you see is what Japanese actually uses.
 
 Also in this update:
-• Conjugation fixes for 〜ゆく compound verbs and rare single-kanji する verbs.
-• More accurate stats: practice now counts toward the day you actually studied, and flashcard stats include your all-time totals.
+• Flashcards adapt to you. Verbs you struggle with come round more often, and ones you've mastered fade out, then return weeks later just as they start to slip.
+• Reset your learning data any time from the More tab.
+• Easier to read, with stronger contrast in both light and dark mode and larger tap targets throughout.
+• Faster search across every conjugated form.
 
 Thanks for studying with ConjuGo!

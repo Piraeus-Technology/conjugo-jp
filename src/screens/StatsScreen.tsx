@@ -13,6 +13,7 @@ export default function StatsScreen() {
   } = useSessionStore();
   const {
     weights,
+    lastPracticedAt,
     loaded: weightsLoaded,
     loadError: weightsLoadError,
     loadWeights,
@@ -21,6 +22,8 @@ export default function StatsScreen() {
     totalQuestions,
     totalCorrect,
     bestStreak,
+    loaded: statsLoaded,
+    loadError: statsLoadError,
     loadStats,
   } = useQuizStore();
 
@@ -38,9 +41,10 @@ export default function StatsScreen() {
   return (
     <PracticeStatsView
       sessions={dayCounts}
-      sessionsLoaded={sessionsLoaded}
-      sessionsLoadError={sessionsLoadError}
+      sessionsLoaded={sessionsLoaded && statsLoaded}
+      sessionsLoadError={sessionsLoadError || statsLoadError}
       weights={weights}
+      lastPracticedAt={lastPracticedAt}
       weightsLoaded={weightsLoaded}
       weightsLoadError={weightsLoadError}
       allTimeOverride={{

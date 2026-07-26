@@ -13,7 +13,7 @@ interface FlashcardStats {
   loadError: boolean;
   loadStats: () => Promise<void>;
   recordReview: (correct: boolean) => Promise<void>;
-  resetStats: () => Promise<void>;
+  resetStats: () => Promise<boolean>;
 }
 
 const queue = createStoreQueue();
@@ -99,22 +99,25 @@ export const useFlashcardStatsStore = create<FlashcardStats>((set, get) => ({
     });
   },
 
-  resetStats: async () => {
+  resetStats: async (): Promise<boolean> => {
     if (!get().loaded) {
       await get().loadStats();
     }
     if (!get().loaded) {
       console.warn('Skipping flashcard stats reset: store never loaded');
-      return;
+      return false;
     }
-    return queue.enqueue(async () => {
+    let cleared = false;
+    await queue.enqueue(async () => {
       const removed = await safeRemoveItem('flashcard_stats');
       if (!removed) {
         console.warn('Failed to reset flashcard stats');
         return;
       }
       set({ totalReviewed: 0, totalCorrect: 0, loaded: true, loadError: false });
+      cleared = true;
     });
+    return cleared;
   },
 }));
 

@@ -6,14 +6,13 @@ import {
   StyleSheet,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as StoreReview from 'expo-store-review';
 import { stopSpeech } from '../utils/speech';
 import verbs from '../data/verbs.json';
 import {
   getConjugationHint,
   FORM_LABELS,
-  ConjugationForm,
   VerbData,
   JLPTLevel,
 } from '../utils/conjugate';
@@ -34,9 +33,29 @@ const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 export default function QuizScreen() {
   const colors = useColors();
   const navigation = useNavigation<NativeStackNavigationProp<QuizStackParamList, 'QuizMain'>>();
-  const { totalQuestions, totalCorrect, bestStreak, loadStats, recordAnswer } = useQuizStore();
-  const { loaded: weightsLoaded, loadWeights, recordResult, getWeight } = useSpacedRepStore();
-  const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
+  const {
+    totalQuestions,
+    totalCorrect,
+    bestStreak,
+    loaded: statsLoaded,
+    loadError: statsLoadError,
+    loadStats,
+    recordAnswer,
+  } = useQuizStore();
+  const {
+    loaded: weightsLoaded,
+    loadError: weightsLoadError,
+    loadWeights,
+    recordResult,
+    getWeight,
+  } = useSpacedRepStore();
+  const {
+    activeForms,
+    activeLevels,
+    loaded: settingsLoaded,
+    loadError: settingsLoadError,
+    loadPracticeSettings,
+  } = usePracticeSettingsStore();
   const { sessions, loadSessions, saveSession } = useSessionStore();
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -53,7 +72,7 @@ export default function QuizScreen() {
     loadWeights();
     loadPracticeSettings();
     loadSessions();
-  }, []);
+  }, [loadStats, loadWeights, loadPracticeSettings, loadSessions]);
 
   useFocusEffect(useCallback(() => () => stopSpeech(), []));
 
@@ -67,8 +86,8 @@ export default function QuizScreen() {
           accessibilityRole="button"
           accessibilityLabel="Open form and level settings"
         >
-          <Text style={{ color: colors.primary, fontSize: 14, fontWeight: '600' }}>Forms</Text>
-          <Ionicons name="options-outline" size={18} color={colors.primary} />
+          <Text style={{ color: colors.primaryText, fontSize: 14, fontWeight: '600' }}>Forms</Text>
+          <Ionicons name="options-outline" size={18} color={colors.primaryText} />
         </TouchableOpacity>
       ),
     });
@@ -80,12 +99,12 @@ export default function QuizScreen() {
   );
 
   useEffect(() => {
-    if (weightsLoaded && settingsLoaded) {
+    if (statsLoaded && weightsLoaded && settingsLoaded) {
       setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
       setSelectedAnswer(null);
       hasRecordedAnswer.current = false;
     }
-  }, [weightsLoaded, settingsLoaded, activeForms, activeLevels]);
+  }, [statsLoaded, weightsLoaded, settingsLoaded, activeForms, filteredEntries, getWeight]);
 
   const isCorrect = selectedAnswer === question?.correctAnswer;
   const answered = selectedAnswer !== null;
@@ -165,6 +184,37 @@ export default function QuizScreen() {
     return colors.textMuted;
   };
 
+  const hasLoadError =
+    (statsLoadError && !statsLoaded) ||
+    (weightsLoadError && !weightsLoaded) ||
+    (settingsLoadError && !settingsLoaded);
+
+  if (hasLoadError) return (
+    <View style={[styles.container, styles.statusContainer, { backgroundColor: colors.bg }]}>
+      <Text style={[styles.statusText, { color: colors.textMuted }]}>
+        Couldn&apos;t load your quiz data.
+      </Text>
+      <TouchableOpacity
+        style={[styles.retryButton, { backgroundColor: colors.primary }]}
+        onPress={() => {
+          loadStats();
+          loadWeights();
+          loadPracticeSettings();
+        }}
+        accessibilityRole="button"
+        accessibilityLabel="Retry loading quiz data"
+      >
+        <Text style={styles.retryButtonText}>Retry</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  if (!statsLoaded || !weightsLoaded || !settingsLoaded) return (
+    <View style={[styles.container, styles.statusContainer, { backgroundColor: colors.bg }]}>
+      <Text style={[styles.statusText, { color: colors.textMuted }]}>Loading quiz…</Text>
+    </View>
+  );
+
   if (!question) return (
     <View style={[styles.container, { backgroundColor: colors.bg, justifyContent: 'center', alignItems: 'center' }]}>
       <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>No matching verbs</Text>
@@ -181,7 +231,7 @@ export default function QuizScreen() {
         <View style={[styles.scoreCard, { backgroundColor: colors.card }]}>
           <View style={styles.scoreRow}>
             <View style={styles.scoreItem}>
-              <Text style={[styles.scoreValue, { color: colors.primary }]}>{sessionTotal}</Text>
+              <Text style={[styles.scoreValue, { color: colors.primaryText }]}>{sessionTotal}</Text>
               <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Reviewed</Text>
             </View>
             <View style={styles.scoreItem}>
@@ -212,7 +262,7 @@ export default function QuizScreen() {
             {formLabel.ja} — {formLabel.en}
           </Text>
           <Text
-            style={[styles.questionVerb, { color: colors.primary }]}
+            style={[styles.questionVerb, { color: colors.primaryText }]}
             numberOfLines={1}
             adjustsFontSizeToFit
           >
@@ -269,7 +319,7 @@ export default function QuizScreen() {
               accessibilityState={{ expanded: showHint }}
             >
               <View style={styles.hintTitleRow}>
-                <Ionicons name="help-circle-outline" size={18} color={colors.primary} />
+                <Ionicons name="help-circle-outline" size={18} color={colors.primaryText} />
                 <Text style={[styles.hintTitle, { color: colors.textPrimary }]}>Why?</Text>
               </View>
               <Ionicons
@@ -307,6 +357,26 @@ export default function QuizScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  statusContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statusText: {
+    fontSize: fonts.sizes.md,
+    textAlign: 'center',
+  },
+  retryButton: {
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+    marginTop: spacing.md,
+  },
+  retryButtonText: {
+    color: '#fff',
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.semibold,
+  },
   content: {
     flex: 1,
     paddingHorizontal: spacing.lg,

@@ -148,6 +148,7 @@
     "jlpt": "N5",
     "transitive": false,
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive"],
     "overrides": {
       "nai": "ない",
       "nakatta": "なかった"
@@ -400,6 +401,7 @@
     "translation": "to understand",
     "jlpt": "N5",
     "excludeForms": ["potential", "passive", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [
       {
@@ -1513,6 +1515,7 @@
     "translation": "to be visible",
     "jlpt": "N4",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [
       {
@@ -1527,6 +1530,7 @@
     "translation": "to be audible",
     "jlpt": "N4",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [
       {
@@ -3371,6 +3375,7 @@
     "jlpt": "N3",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
+    "unavailableForms": ["volitional", "imperative", "prohibitive"],
     "examples": [{ "ja": "母に似る。", "en": "I resemble my mother." }]
   },
   "異なる": {
@@ -3381,6 +3386,7 @@
     "jlpt": "N3",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
+    "unavailableForms": ["volitional", "imperative", "prohibitive"],
     "examples": [{ "ja": "意見が異なる。", "en": "Opinions differ." }]
   },
   "当たる": {
@@ -4836,6 +4842,7 @@
     "translation": "to be able to, to be completed",
     "jlpt": "N5",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "日本語が出来る。", "en": "I can speak Japanese." }]
   },
@@ -4855,6 +4862,7 @@
     "translation": "to need",
     "jlpt": "N5",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "お金が要る。", "en": "I need money." }]
   },
@@ -7381,6 +7389,8 @@
     "translation": "to be deceived",
     "jlpt": "N4",
     "transitive": false,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive"],
     "examples": [{ "ja": "詐欺に騙される。", "en": "I am deceived by a scam." }]
   },
   "諦める": {
@@ -8201,6 +8211,7 @@
     "jlpt": "N4",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
+    "unavailableForms": ["volitional", "imperative", "prohibitive"],
     "examples": [{ "ja": "お金が足りる。", "en": "The money is enough." }]
   },
   "見つかる": {
@@ -8290,6 +8301,7 @@
     "jlpt": "N4",
     "excludeForms": ["potential", "passive", "causative", "volitional", "imperative"],
     "transitive": false,
+    "unavailableForms": ["volitional", "imperative"],
     "examples": [{ "ja": "お腹が空く。", "en": "I get hungry." }]
   },
   "込める": {
@@ -8932,6 +8944,7 @@
     "jlpt": "N5",
     "transitive": false,
     "excludeForms": ["dictionary", "nai", "nakatta", "potential", "passive", "causative", "causative_passive", "imperative", "prohibitive", "volitional", "conditional_ba"],
+    "unavailableForms": ["nai", "nakatta", "potential", "passive", "causative", "causative_passive", "imperative", "prohibitive", "volitional", "conditional_ba"],
     "overrides": { "dictionary": "ござる", "masu": "ございます", "masu_negative": "ございません", "masu_past": "ございました", "masu_past_negative": "ございませんでした" },
     "examples": [{ "ja": "こちらにございます。", "en": "It is here (polite)." }]
   },
@@ -9746,6 +9759,7 @@
     "translation": "to sense, to guess",
     "jlpt": "N3",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "気持ちを察する。", "en": "I sense the feelings." }]
   },
@@ -9755,6 +9769,7 @@
     "translation": "to be suitable for",
     "jlpt": "N3",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "条件に適する。", "en": "It is suitable for the conditions." }]
   },
@@ -9764,6 +9779,7 @@
     "translation": "to belong to",
     "jlpt": "N3",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "チームに属する。", "en": "I belong to the team." }]
   },
@@ -10126,6 +10142,7 @@
     "translation": "to present, to show (symptoms)",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "症状を呈する。", "en": "It shows symptoms." }]
   },
@@ -10135,6 +10152,7 @@
     "translation": "to possess, to have",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "権利を有する。", "en": "I possess the right." }]
   },
@@ -10144,6 +10162,7 @@
     "translation": "to have, to possess (many)",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "多くの支持者を擁する。", "en": "I have many supporters." }]
   },
@@ -10153,6 +10172,7 @@
     "translation": "to deviate, to miss",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "常軌を逸する。", "en": "It deviates from normality." }]
   },
@@ -10179,6 +10199,7 @@
     "translation": "to conquer, to subjugate",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "敵を征する。", "en": "I conquer the enemy." }]
   },
@@ -11107,6 +11128,7 @@
     "translation": "to assassinate (one's lord/parent)",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "主君を弑する。", "en": "I assassinate my lord." }]
   },
@@ -11245,6 +11267,7 @@
     "translation": "to be able to, to be ready",
     "jlpt": "N5",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "料理ができる。", "en": "I can cook." }]
   },
@@ -11271,6 +11294,7 @@
     "translation": "to be visible, to be able to see",
     "jlpt": "N5",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "山がみえる。", "en": "The mountain is visible." }]
   },
@@ -11280,6 +11304,7 @@
     "translation": "to be audible, to be able to hear",
     "jlpt": "N5",
     "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "transitive": false,
     "examples": [{ "ja": "音がきこえる。", "en": "I can hear a sound." }]
   },
@@ -12470,6 +12495,7 @@
     "translation": "to play (music), to achieve (results)",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "功を奏する。", "en": "It achieves results." }]
   },
@@ -12514,6 +12540,7 @@
     "translation": "to despise, to scorn",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "敵を蔑する。", "en": "I scorn the enemy." }]
   },
@@ -12523,6 +12550,7 @@
     "translation": "to play with, to tamper with",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "策を弄する。", "en": "I resort to tricks." }]
   },
@@ -12532,6 +12560,7 @@
     "translation": "to fall into, to degenerate",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "怠惰に堕する。", "en": "I fall into laziness." }]
   },
@@ -12541,6 +12570,7 @@
     "translation": "to result in, to be attributed to",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "失敗に帰する。", "en": "It results in failure." }]
   },
@@ -12550,6 +12580,7 @@
     "translation": "to contribute to, to be useful for",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "発展に資する。", "en": "It contributes to development." }]
   },
@@ -12559,6 +12590,7 @@
     "translation": "to deal with, to punish",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "厳罰に処する。", "en": "I punish severely." }]
   },
@@ -12568,6 +12600,7 @@
     "translation": "to serve, to submit to",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "刑に服する。", "en": "I serve a sentence." }]
   },
@@ -12577,6 +12610,7 @@
     "translation": "to conform to, to be in accordance with",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "実態に則する。", "en": "I conform to the actual situation." }]
   },
@@ -12586,6 +12620,7 @@
     "translation": "to resist, to oppose",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "権力に抗する。", "en": "I resist authority." }]
   },
@@ -12611,6 +12646,7 @@
     "translation": "to yield, to submit",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": false,
     "examples": [{ "ja": "圧力に屈する。", "en": "I yield to pressure." }]
   },
@@ -12620,6 +12656,7 @@
     "translation": "to decide, to determine",
     "jlpt": "N1",
     "excludeForms": ["potential"],
+    "unavailableForms": ["potential"],
     "transitive": true,
     "examples": [{ "ja": "勝敗を決する。", "en": "I determine the outcome." }]
   },

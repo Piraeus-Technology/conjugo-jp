@@ -11,6 +11,7 @@ import { __resetQuizStoreForTests, useQuizStore } from '../store/quizStore';
 import { __resetFlashcardStatsStoreForTests, useFlashcardStatsStore } from '../store/flashcardStatsStore';
 import { __resetSpacedRepStoreForTests, useSpacedRepStore } from '../store/spacedRepStore';
 import { __resetThemeStoreForTests, useThemeStore } from '../store/themeStore';
+import { FORM_GROUPS } from '../utils/conjugate';
 
 const mockStorage = new Map<string, string>();
 
@@ -85,6 +86,29 @@ describe('store persistence hardening', () => {
     expect(mockStorage.get('favorites')).toBe(JSON.stringify(['飲む', '書く']));
   });
 
+  test('favorites can be cleared for the learning-data reset', async () => {
+    mockStorage.set('favorites', JSON.stringify(['書く']));
+    await useFavoritesStore.getState().loadFavorites();
+
+    const cleared = await useFavoritesStore.getState().clearFavorites();
+
+    expect(cleared).toBe(true);
+    expect(useFavoritesStore.getState().favorites).toEqual([]);
+    expect(mockStorage.has('favorites')).toBe(false);
+  });
+
+  test('favorites clear reports failure and preserves state when removal fails', async () => {
+    mockStorage.set('favorites', JSON.stringify(['書く']));
+    await useFavoritesStore.getState().loadFavorites();
+    jest.mocked(AsyncStorage.removeItem).mockRejectedValueOnce(new Error('disk unavailable'));
+
+    const cleared = await useFavoritesStore.getState().clearFavorites();
+
+    expect(cleared).toBe(false);
+    expect(useFavoritesStore.getState().favorites).toEqual(['書く']);
+    expect(mockStorage.has('favorites')).toBe(true);
+  });
+
   test('history add/remove writes serialize in order', async () => {
     await useHistoryStore.getState().loadHistory();
     await Promise.all([
@@ -117,6 +141,7 @@ describe('store persistence hardening', () => {
 
     await useSpacedRepStore.getState().recordResult('書く', false);
     expect(useSpacedRepStore.getState()).toMatchObject({ loaded: false, loadError: true });
+    // Untouched on a failed load — still the v1 blob.
     expect(JSON.parse(mockStorage.get('spaced_rep_weights')!)).toEqual({ 書く: 4 });
 
     await useSpacedRepStore.getState().recordResult('書く', false);
@@ -126,7 +151,43 @@ describe('store persistence hardening', () => {
       loadError: false,
       weights: { 書く: 5 },
     });
-    expect(JSON.parse(mockStorage.get('spaced_rep_weights')!)).toEqual({ 書く: 5 });
+    const persisted = JSON.parse(mockStorage.get('spaced_rep_weights')!);
+    expect(persisted).toMatchObject({ version: 2, weights: { 書く: 5 } });
+    expect(persisted.lastPracticedAt.書く).toBeGreaterThan(0);
+  });
+
+  test('v1 weights migrate without losing learned difficulty', async () => {
+    mockStorage.set('spaced_rep_weights', JSON.stringify({ 書く: 4, 見る: 0.2 }));
+
+    await useSpacedRepStore.getState().loadWeights();
+
+    // Weights survive verbatim; the decay clock starts at the upgrade rather
+    // than resetting everyone to the default.
+    expect(useSpacedRepStore.getState().weights).toEqual({ 書く: 4, 見る: 0.2 });
+    const { lastPracticedAt } = useSpacedRepStore.getState();
+    expect(lastPracticedAt.書く).toBeGreaterThan(0);
+    expect(lastPracticedAt.見る).toBeGreaterThan(0);
+  });
+
+  test('getWeight decays a stale weight back toward the default', async () => {
+    const twentyEightDaysAgo = Date.now() - 28 * 24 * 60 * 60 * 1000;
+    mockStorage.set(
+      'spaced_rep_weights',
+      JSON.stringify({
+        version: 2,
+        weights: { 書く: 5, 見る: 0.2 },
+        lastPracticedAt: { 書く: twentyEightDaysAgo, 見る: twentyEightDaysAgo },
+      }),
+    );
+
+    await useSpacedRepStore.getState().loadWeights();
+    const { getWeight } = useSpacedRepStore.getState();
+
+    // Two half-lives → a quarter of the distance from 1 remains.
+    expect(getWeight('書く')).toBeCloseTo(2, 1);
+    expect(getWeight('見る')).toBeCloseTo(0.8, 1);
+    // Stored values are untouched; decay is applied at read time.
+    expect(useSpacedRepStore.getState().weights).toEqual({ 書く: 5, 見る: 0.2 });
   });
 
   test('practice settings drops unknown persisted values and refills empty subsets', async () => {
@@ -139,6 +200,13 @@ describe('store persistence hardening', () => {
 
     expect(usePracticeSettingsStore.getState().activeForms).toEqual(['te']);
     expect(usePracticeSettingsStore.getState().activeLevels).toEqual(allLevels);
+  });
+
+  test('selectable forms are derived from the shared display groups', () => {
+    expect(allForms).toEqual(
+      FORM_GROUPS.flatMap(group => group.forms).filter(form => form !== 'dictionary'),
+    );
+    expect(allForms).toContain('masu_past');
   });
 
   test('practice settings write failure leaves in-memory state unchanged', async () => {

@@ -20,6 +20,7 @@ export default function FlashcardStatsScreen() {
   } = useFlashcardStatsStore();
   const {
     weights,
+    lastPracticedAt,
     loaded: weightsLoaded,
     loadError: weightsLoadError,
     loadWeights,
@@ -46,9 +47,10 @@ export default function FlashcardStatsScreen() {
   return (
     <PracticeStatsView
       sessions={dayCounts}
-      sessionsLoaded={sessionsLoaded}
-      sessionsLoadError={sessionsLoadError}
+      sessionsLoaded={sessionsLoaded && statsLoaded}
+      sessionsLoadError={sessionsLoadError || statsLoadError}
       weights={weights}
+      lastPracticedAt={lastPracticedAt}
       weightsLoaded={weightsLoaded}
       weightsLoadError={weightsLoadError}
       allTimeOverride={allTimeOverride}

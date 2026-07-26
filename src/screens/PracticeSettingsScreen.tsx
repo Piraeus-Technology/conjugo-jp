@@ -7,12 +7,12 @@ import {
   ScrollView,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
-import { FORM_LABELS, FORM_GROUPS, ConjugationForm, JLPTLevel } from '../utils/conjugate';
+import { FORM_LABELS, FORM_GROUPS } from '../utils/conjugate';
 import { usePracticeSettingsStore, allForms, allLevels } from '../store/practiceSettingsStore';
 import type { PracticeSettingsParams, QuizStackParamList } from '../types/navigation';
 
@@ -34,7 +34,7 @@ export default function PracticeSettingsScreen() {
 
   useEffect(() => {
     loadPracticeSettings();
-  }, []);
+  }, [loadPracticeSettings]);
 
   const allFormsSelected = activeForms.length === allForms.length;
   const allLevelsSelected = activeLevels.length === allLevels.length;
@@ -61,6 +61,7 @@ export default function PracticeSettingsScreen() {
       <View style={styles.sectionHeader}>
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Forms</Text>
         <TouchableOpacity
+          style={styles.selectAllButton}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             setActiveForms(allFormsSelected ? ['masu'] : [...allForms]);
@@ -68,7 +69,7 @@ export default function PracticeSettingsScreen() {
           accessibilityRole="button"
           accessibilityLabel={allFormsSelected ? 'Deselect all forms' : 'Select all forms'}
         >
-          <Text style={[styles.selectAllText, { color: colors.primary }]}>
+          <Text style={[styles.selectAllText, { color: colors.primaryText }]}>
             {allFormsSelected ? 'Deselect All' : 'Select All'}
           </Text>
         </TouchableOpacity>
@@ -99,7 +100,7 @@ export default function PracticeSettingsScreen() {
                   <Ionicons
                     name={active ? 'checkmark-circle' : 'ellipse-outline'}
                     size={24}
-                    color={active ? colors.primary : colors.border}
+                    color={active ? colors.primaryText : colors.border}
                   />
                 </TouchableOpacity>
               );
@@ -112,6 +113,7 @@ export default function PracticeSettingsScreen() {
       <View style={styles.sectionHeader}>
         <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>JLPT Levels</Text>
         <TouchableOpacity
+          style={styles.selectAllButton}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             setActiveLevels(allLevelsSelected ? ['N5'] : [...allLevels]);
@@ -119,7 +121,7 @@ export default function PracticeSettingsScreen() {
           accessibilityRole="button"
           accessibilityLabel={allLevelsSelected ? 'Deselect all JLPT levels' : 'Select all JLPT levels'}
         >
-          <Text style={[styles.selectAllText, { color: colors.primary }]}>
+          <Text style={[styles.selectAllText, { color: colors.primaryText }]}>
             {allLevelsSelected ? 'Deselect All' : 'Select All'}
           </Text>
         </TouchableOpacity>
@@ -190,6 +192,11 @@ const styles = StyleSheet.create({
   selectAllText: {
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.medium,
+  },
+  selectAllButton: {
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.sm,
   },
   groupLabel: {
     fontSize: fonts.sizes.xs,

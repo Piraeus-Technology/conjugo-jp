@@ -2,10 +2,11 @@ import { useThemeStore } from '../store/themeStore';
 
 const lightColors = {
   primary: '#BC002D',
+  primaryText: '#BC002D',
   primaryLight: '#D4354F',
   primaryDark: '#8C0021',
 
-  accent: '#E890A0',
+  accent: '#C14460',
   accentLight: '#FFF0F3',
 
   bg: '#FFFAFA',
@@ -14,7 +15,7 @@ const lightColors = {
 
   textPrimary: '#1A1A1A',
   textSecondary: '#6B6B6B',
-  textMuted: '#9E9E9E',
+  textMuted: '#6F6F6F',
 
   border: '#F0D8DC',
   divider: '#FFF0F3',
@@ -55,7 +56,8 @@ const lightColors = {
 };
 
 const darkColors = {
-  primary: '#E8384F',
+  primary: '#D42E47',
+  primaryText: '#F06A7C',
   primaryLight: '#FF5A6E',
   primaryDark: '#FF6B7A',
 
@@ -68,7 +70,7 @@ const darkColors = {
 
   textPrimary: '#F0F0F0',
   textSecondary: '#A0A0A0',
-  textMuted: '#666666',
+  textMuted: '#949494',
 
   border: '#3A2A30',
   divider: '#2A2426',

@@ -6,23 +6,22 @@ import {
   StyleSheet,
   Animated,
   AppState,
+  ScrollView,
   useWindowDimensions,
 } from 'react-native';
 import type { AppStateStatus } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import verbs from '../data/verbs.json';
 import {
-  conjugateReading,
   FORM_LABELS,
-  ConjugationForm,
   VerbData,
   JLPTLevel,
 } from '../utils/conjugate';
 import { getExampleSentence } from '../utils/formExamples';
-import { chooseQuizzableEntry } from '../utils/practiceSelection';
+import { generateFlashcard, type Flashcard } from '../utils/flashcardCard';
 import { speak, stopSpeech } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
@@ -36,57 +35,32 @@ import type { FlashcardStackParamList } from '../types/navigation';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 
-const flashcardForms: ConjugationForm[] = [
-  'masu', 'te', 'ta', 'nai', 'potential', 'passive',
-  'causative', 'conditional_ba', 'conditional_tara', 'volitional', 'imperative',
-];
-
-interface Card {
-  verb: string;
-  reading: string;
-  translation: string;
-  form: ConjugationForm;
-  answer: string;
-}
-
-function generateCard(entries: [string, VerbData][], forms: ConjugationForm[]): Card | null {
-  const verbEntries = entries;
-  const activeForms = forms;
-  const commonCount = Math.min(200, verbEntries.length);
-  const selection = chooseQuizzableEntry(verbEntries, activeForms, () => {
-    const idx = Math.random() < 0.7
-      ? Math.floor(Math.random() * commonCount)
-      : Math.floor(Math.random() * verbEntries.length);
-    return verbEntries[idx];
-  });
-  if (!selection) return null;
-  const [verb, data] = selection.entry;
-  const pool = selection.forms;
-  const form = pool[Math.floor(Math.random() * pool.length)];
-  const answer = conjugateReading(data, form);
-  return {
-    verb,
-    reading: data.reading,
-    translation: data.translation,
-    form,
-    answer,
-  };
-}
-
 export default function FlashcardScreen() {
   const colors = useColors();
   const { width } = useWindowDimensions();
   const navigation = useNavigation<NativeStackNavigationProp<FlashcardStackParamList, 'FlashcardMain'>>();
-  const { activeForms, activeLevels, loaded: settingsLoaded, loadPracticeSettings } = usePracticeSettingsStore();
+  const {
+    activeForms,
+    activeLevels,
+    loaded: settingsLoaded,
+    loadError: settingsLoadError,
+    loadPracticeSettings,
+  } = usePracticeSettingsStore();
   const { sessions, loadSessions, saveSession } = useFlashcardSessionStore();
   const { loadStats, recordReview } = useFlashcardStatsStore();
-  const { recordResult } = useSpacedRepStore();
+  const {
+    loaded: weightsLoaded,
+    loadError: weightsLoadError,
+    loadWeights,
+    getWeight,
+    recordResult,
+  } = useSpacedRepStore();
   const { autoTTS } = useThemeStore();
   const filteredEntries = useMemo(() =>
     allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
     [activeLevels]
   );
-  const [card, setCard] = useState<Card | null>(() => generateCard(allVerbEntries, flashcardForms));
+  const [card, setCard] = useState<Flashcard | null>(null);
   const [flipped, setFlipped] = useState(false);
   // This-visit answers (monotonic); persisted as deltas by useSessionAutosave.
   const [newReviewed, setNewReviewed] = useState(0);
@@ -103,7 +77,8 @@ export default function FlashcardScreen() {
     loadPracticeSettings();
     loadSessions();
     loadStats();
-  }, []);
+    loadWeights();
+  }, [loadPracticeSettings, loadSessions, loadStats, loadWeights]);
 
   useFocusEffect(useCallback(() => {
     speechGate.current.focused = true;
@@ -133,23 +108,23 @@ export default function FlashcardScreen() {
           accessibilityRole="button"
           accessibilityLabel="Open form and level settings"
         >
-          <Text style={{ color: colors.primary, fontSize: 14, fontWeight: '600' }}>Forms</Text>
-          <Ionicons name="options-outline" size={18} color={colors.primary} />
+          <Text style={{ color: colors.primaryText, fontSize: 14, fontWeight: '600' }}>Forms</Text>
+          <Ionicons name="options-outline" size={18} color={colors.primaryText} />
         </TouchableOpacity>
       ),
     });
   }, [navigation, colors]);
 
   useEffect(() => {
-    if (!settingsLoaded) return;
+    if (!settingsLoaded || !weightsLoaded) return;
     flipAnim.stopAnimation(() => {
       flipAnim.setValue(0);
       isAnimating.current = false;
       hasGradedCard.current = false;
       setFlipped(false);
-      setCard(generateCard(filteredEntries, activeForms));
+      setCard(generateFlashcard(filteredEntries, activeForms, getWeight));
     });
-  }, [settingsLoaded, activeForms, filteredEntries, flipAnim]);
+  }, [settingsLoaded, weightsLoaded, activeForms, filteredEntries, flipAnim, getWeight]);
 
   const flipToFront = () => {
     isAnimating.current = true;
@@ -163,7 +138,7 @@ export default function FlashcardScreen() {
         hasGradedCard.current = false;
         return;
       }
-      setCard(generateCard(filteredEntries, activeForms));
+      setCard(generateFlashcard(filteredEntries, activeForms, getWeight));
       setFlipped(false);
       isAnimating.current = false;
       hasGradedCard.current = false;
@@ -242,6 +217,31 @@ export default function FlashcardScreen() {
     outputRange: ['180deg', '360deg'],
   });
 
+  if ((settingsLoadError && !settingsLoaded) || (weightsLoadError && !weightsLoaded)) return (
+    <View style={[styles.container, { backgroundColor: colors.bg }]}>
+      <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md, textAlign: 'center' }}>
+        Couldn&apos;t load flashcard data.
+      </Text>
+      <TouchableOpacity
+        style={[styles.retryButton, { backgroundColor: colors.primary }]}
+        onPress={() => {
+          loadPracticeSettings();
+          loadWeights();
+        }}
+        accessibilityRole="button"
+        accessibilityLabel="Retry loading flashcard data"
+      >
+        <Text style={styles.retryButtonText}>Retry</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  if (!settingsLoaded || !weightsLoaded) return (
+    <View style={[styles.container, { backgroundColor: colors.bg }]}>
+      <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>Loading flashcards…</Text>
+    </View>
+  );
+
   if (!card) return (
     <View style={[styles.container, { backgroundColor: colors.bg, justifyContent: 'center', alignItems: 'center' }]}>
       <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>No matching verbs</Text>
@@ -257,7 +257,7 @@ export default function FlashcardScreen() {
       <View style={[styles.scoreBar, { backgroundColor: colors.card }]}>
         <View style={styles.scoreRow}>
           <View style={styles.scoreItem}>
-            <Text style={[styles.scoreValue, { color: colors.primary }]}>{reviewed}</Text>
+            <Text style={[styles.scoreValue, { color: colors.primaryText }]}>{reviewed}</Text>
             <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Reviewed</Text>
           </View>
           <View style={styles.scoreItem}>
@@ -308,7 +308,7 @@ export default function FlashcardScreen() {
               </Text>
             ) : null}
             <Text
-              style={[styles.verbText, { color: colors.primary }]}
+              style={[styles.verbText, { color: colors.primaryText }]}
               numberOfLines={1}
               adjustsFontSizeToFit
             >
@@ -336,6 +336,12 @@ export default function FlashcardScreen() {
               },
             ]}
           >
+            <ScrollView
+              style={styles.cardScroll}
+              contentContainerStyle={styles.cardScrollContent}
+              nestedScrollEnabled
+              showsVerticalScrollIndicator={false}
+            >
             <Text style={[styles.formLabel, { color: colors.textSecondary }]}>
               {formLabel.ja} — {formLabel.en}
             </Text>
@@ -345,7 +351,7 @@ export default function FlashcardScreen() {
               </Text>
             ) : null}
             <Text
-              style={[styles.answerText, { color: colors.primary }]}
+              style={[styles.answerText, { color: colors.primaryText }]}
               numberOfLines={1}
               adjustsFontSizeToFit
             >
@@ -379,6 +385,7 @@ export default function FlashcardScreen() {
             >
               <Ionicons name="volume-medium" size={20} color="#fff" />
             </TouchableOpacity>
+            </ScrollView>
           </Animated.View>
         </TouchableOpacity>
 
@@ -441,7 +448,9 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   cardContainer: {
-    height: 400,
+    flex: 1,
+    minHeight: 280,
+    maxHeight: 520,
   },
   card: {
     position: 'absolute',
@@ -463,6 +472,16 @@ const styles = StyleSheet.create({
   cardBack: {
     borderWidth: 2,
     borderColor: 'rgba(0,0,0,0.05)',
+    padding: 0,
+  },
+  cardScroll: {
+    alignSelf: 'stretch',
+  },
+  cardScrollContent: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: spacing.xl,
   },
   formLabel: {
     fontSize: fonts.sizes.sm,
@@ -553,4 +572,16 @@ const styles = StyleSheet.create({
   buttonRow: { flexDirection: 'row', gap: spacing.md, marginTop: spacing.lg },
   actionButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: spacing.xs, paddingVertical: spacing.sm + 2, paddingHorizontal: spacing.xl, borderRadius: radius.md, borderWidth: 1.5 },
   actionButtonText: { fontSize: fonts.sizes.md, fontWeight: fonts.weights.bold },
+  retryButton: {
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+    marginTop: spacing.md,
+  },
+  retryButtonText: {
+    color: '#fff',
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.semibold,
+  },
 });

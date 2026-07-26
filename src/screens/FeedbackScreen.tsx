@@ -12,20 +12,37 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Constants from 'expo-constants';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useThemeStore } from '../store/themeStore';
 import type { MoreStackParamList } from '../types/navigation';
 import { useTipJar } from '../utils/tipJar';
+import { useFavoritesStore } from '../store/favoritesStore';
+import { useHistoryStore } from '../store/historyStore';
+import { useQuizStore } from '../store/quizStore';
+import { useSessionStore } from '../store/sessionStore';
+import { useFlashcardStatsStore } from '../store/flashcardStatsStore';
+import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
+import { useSpacedRepStore } from '../store/spacedRepStore';
 
-const APP_VERSION = '1.0.0';
+const IOS_STORE_URL = 'https://apps.apple.com/app/id6781443990';
+const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.piraeus.conjugojp';
+const APP_VERSION = Constants.expoConfig?.version ?? 'Unknown';
 
 export default function FeedbackScreen() {
   const colors = useColors();
   const navigation = useNavigation<NativeStackNavigationProp<MoreStackParamList, 'MoreMain'>>();
   const { isDark, autoTTS, toggleTheme, toggleAutoTTS } = useThemeStore();
+  const clearFavorites = useFavoritesStore(state => state.clearFavorites);
+  const clearHistory = useHistoryStore(state => state.clearHistory);
+  const resetQuizStats = useQuizStore(state => state.resetStats);
+  const clearQuizSessions = useSessionStore(state => state.clearSessions);
+  const resetFlashcardStats = useFlashcardStatsStore(state => state.resetStats);
+  const clearFlashcardSessions = useFlashcardSessionStore(state => state.clearSessions);
+  const resetWeights = useSpacedRepStore(state => state.resetWeights);
   const {
     products,
     loading: tipLoading,
@@ -34,15 +51,71 @@ export default function FeedbackScreen() {
     tip,
   } = useTipJar();
 
-  const handleRateApp = () => {
-    const url = Platform.select({
-      ios: 'https://apps.apple.com/app/id6781443990?action=write-review',
-      android: 'market://details?id=com.piraeus.conjugojp',
-      default: 'https://apps.apple.com/app/id6781443990',
-    });
-    Linking.openURL(url).catch(() => {
-      Alert.alert('Not Available Yet', 'Rating will be available once the app is on the App Store.');
-    });
+  const handleRateApp = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        await Linking.openURL('market://details?id=com.piraeus.conjugojp');
+      } catch {
+        try {
+          await Linking.openURL(ANDROID_STORE_URL);
+        } catch {
+          Alert.alert('Google Play Unavailable', 'Could not open the Google Play listing.');
+        }
+      }
+      return;
+    }
+
+    try {
+      await Linking.openURL(`${IOS_STORE_URL}?action=write-review`);
+    } catch {
+      Alert.alert('App Store Unavailable', 'Could not open the App Store listing.');
+    }
+  };
+
+  const handleResetLearningData = () => {
+    Alert.alert(
+      'Reset learning data?',
+      'This permanently removes favorites, search history, quiz and flashcard stats, sessions, and adaptive practice weights from this device.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Reset',
+          style: 'destructive',
+          onPress: async () => {
+            const operations = [
+              { label: 'favorites', run: clearFavorites },
+              { label: 'search history', run: clearHistory },
+              { label: 'quiz stats', run: resetQuizStats },
+              { label: 'quiz sessions', run: clearQuizSessions },
+              { label: 'flashcard stats', run: resetFlashcardStats },
+              { label: 'flashcard sessions', run: clearFlashcardSessions },
+              { label: 'adaptive weights', run: resetWeights },
+            ];
+            const results = await Promise.allSettled(
+              operations.map(operation => operation.run()),
+            );
+            const failed = operations.filter((_, index) => {
+              const result = results[index];
+              return result.status === 'rejected' || !result.value;
+            });
+
+            if (failed.length === 0) {
+              Alert.alert('Learning data reset');
+            } else if (failed.length === operations.length) {
+              Alert.alert(
+                'Reset failed',
+                'No learning data was cleared. Your data is still on this device. Please try again.',
+              );
+            } else {
+              Alert.alert(
+                'Reset incomplete',
+                `Some data was cleared, but these items remain: ${failed.map(item => item.label).join(', ')}. Please try again.`,
+              );
+            }
+          },
+        },
+      ],
+    );
   };
 
   const handleSendEmail = () => {
@@ -71,7 +144,7 @@ export default function FeedbackScreen() {
           accessibilityRole="button"
           accessibilityLabel="Open quiz stats"
         >
-          <Ionicons name="bar-chart-outline" size={24} color={colors.primary} style={{ marginRight: spacing.md }} />
+          <Ionicons name="bar-chart-outline" size={24} color={colors.primaryText} style={{ marginRight: spacing.md }} />
           <View style={styles.rowInfo}>
             <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Quiz Stats</Text>
             <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>View your quiz progress and streaks</Text>
@@ -87,7 +160,7 @@ export default function FeedbackScreen() {
           accessibilityRole="button"
           accessibilityLabel="Open flashcard stats"
         >
-          <Ionicons name="layers-outline" size={24} color={colors.primary} style={{ marginRight: spacing.md }} />
+          <Ionicons name="layers-outline" size={24} color={colors.primaryText} style={{ marginRight: spacing.md }} />
           <View style={styles.rowInfo}>
             <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Flashcard Stats</Text>
             <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>View your flashcard progress</Text>
@@ -126,6 +199,22 @@ export default function FeedbackScreen() {
           </View>
         </View>
 
+        <TouchableOpacity
+          style={[styles.rowCard, { backgroundColor: colors.card }]}
+          onPress={handleResetLearningData}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel="Reset all learning data"
+        >
+          <Ionicons name="trash-outline" size={22} color={colors.errorText} style={{ marginRight: spacing.md }} />
+          <View style={styles.rowInfo}>
+            <Text style={[styles.rowTitle, { color: colors.errorText }]}>Reset Learning Data</Text>
+            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>
+              Clear favorites, history, progress, and adaptive weights
+            </Text>
+          </View>
+        </TouchableOpacity>
+
         {/* Tip Jar */}
         {(products.length > 0 || tipUnavailable) && (
           <>
@@ -139,7 +228,7 @@ export default function FeedbackScreen() {
                   {products.map((product) => (
                     <TouchableOpacity
                       key={product.id}
-                      style={[styles.tipButton, { backgroundColor: colors.card, borderColor: colors.primary }]}
+                      style={[styles.tipButton, { backgroundColor: colors.card, borderColor: colors.primaryText }]}
                       onPress={() => tip(product.id)}
                       disabled={tipLoading}
                       activeOpacity={0.7}
@@ -147,7 +236,7 @@ export default function FeedbackScreen() {
                       accessibilityLabel={`Leave a ${product.displayPrice} tip`}
                       accessibilityState={{ disabled: tipLoading }}
                     >
-                      <Text style={[styles.tipPrice, { color: colors.primary }]}>{product.displayPrice}</Text>
+                      <Text style={[styles.tipPrice, { color: colors.primaryText }]}>{product.displayPrice}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>
@@ -184,12 +273,14 @@ export default function FeedbackScreen() {
           onPress={handleRateApp}
           activeOpacity={0.7}
           accessibilityRole="button"
-          accessibilityLabel="Rate ConjuGo JP on the App Store"
+          accessibilityLabel={`Rate ConjuGo JP on ${Platform.OS === 'android' ? 'Google Play' : 'the App Store'}`}
         >
           <Text style={styles.rowEmoji}>⭐</Text>
           <View style={styles.rowInfo}>
             <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Enjoying ConjuGo JP?</Text>
-            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>Rate us on the App Store</Text>
+            <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>
+              Rate us on {Platform.OS === 'android' ? 'Google Play' : 'the App Store'}
+            </Text>
           </View>
         </TouchableOpacity>
 
@@ -198,7 +289,9 @@ export default function FeedbackScreen() {
           style={[styles.rowCard, { backgroundColor: colors.card }]}
           onPress={() => {
             Share.share({
-              message: 'Check out ConjuGo JP — a Japanese verb conjugation app!',
+              message: `Check out ConjuGo JP — a Japanese verb conjugation app! ${
+                Platform.OS === 'android' ? ANDROID_STORE_URL : IOS_STORE_URL
+              }`,
             });
           }}
           activeOpacity={0.7}
