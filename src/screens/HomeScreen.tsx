@@ -21,6 +21,8 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { romajiToHiragana } from '../utils/kana';
+import { getTodayKey } from '../utils/dayKey';
+import { getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
 import type { SearchStackParamList } from '../types/navigation';
 import { availableForms, conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, JLPTLevel, ConjugationForm } from '../utils/conjugate';
 
@@ -101,11 +103,6 @@ interface SearchResult {
   matchType: 'verb' | 'conjugation';
   matchDetail?: string;
   matchForm?: ConjugationForm;
-}
-
-function getVerbOfTheDay(): [string, VerbData] {
-  const dayIndex = Math.floor(Date.now() / 86400000) % verbList.length;
-  return verbList[dayIndex];
 }
 
 const levelFilters: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -245,7 +242,11 @@ export default function HomeScreen() {
     navigation.navigate('Conjugation', { verb, highlightForm });
   }, [addToHistory, navigation]);
 
-  const [vodVerb, vodData] = getVerbOfTheDay();
+  const vodDayKey = getTodayKey();
+  const [vodVerb, vodData] = useMemo(
+    () => getVerbOfTheDayForKey(verbList, vodDayKey),
+    [vodDayKey],
+  );
 
   const groupTagColors: Record<VerbGroup, { bg: string; text: string }> = {
     godan: { bg: colors.godanTag, text: colors.godanTagText },
