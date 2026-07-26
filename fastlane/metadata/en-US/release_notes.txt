@@ -1,9 +1,7 @@
-Every form, now complete. The polite past (ました) has joined the conjugation table, and forms that don't exist for a verb no longer appear at all — so what you see is what Japanese actually uses.
+A sharper quiz. When you practise a single form, the wrong answers are now other forms of the same verb — so you have to know the conjugation, not just recognise the word. Previously the choices came from unrelated verbs and were often obvious at a glance.
 
 Also in this update:
-• Flashcards adapt to you. Verbs you struggle with come round more often, and ones you've mastered fade out, then return weeks later just as they start to slip.
-• Reset your learning data any time from the More tab.
-• Easier to read, with stronger contrast in both light and dark mode and larger tap targets throughout.
-• Faster search across every conjugated form.
+• Verb of the Day now changes at your local midnight, matching your streaks and activity calendar.
+• Fewer interruptions while you study.
 
 Thanks for studying with ConjuGo!
