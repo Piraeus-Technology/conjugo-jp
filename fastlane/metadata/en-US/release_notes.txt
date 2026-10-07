@@ -1,7 +1,11 @@
-A sharper quiz. When you practise a single form, the wrong answers are now other forms of the same verb — so you have to know the conjugation, not just recognise the word. Previously the choices came from unrelated verbs and were often obvious at a glance.
+Better-balanced practice: with several JLPT levels selected, prompts now draw evenly across them instead of mostly repeating beginner verbs.
 
 Also in this update:
-• Verb of the Day now changes at your local midnight, matching your streaks and activity calendar.
-• Fewer interruptions while you study.
+• Level-filtered search finds every matching verb.
+• All your favorites now show on the home screen.
+• Clearer hints for exception verbs like ある and くださる.
+• Romaji search accepts more spellings (gambaru, matcha).
+• More varied Verb of the Day.
+• Practice past midnight counts on the right day.
 
 Thanks for studying with ConjuGo!
