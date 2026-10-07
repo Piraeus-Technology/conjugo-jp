@@ -10,104 +10,77 @@ interface SessionDelta {
   day: string;
 }
 
-// Auto-saves new answers when the screen blurs, the app backgrounds, or the
-// component unmounts. Save attempts are serialized so re-entrant triggers
-// cannot interleave their last-saved bookkeeping. Markers advance only after a
-// successful save; failed deltas remain unsaved and get retried next time.
-export function useSessionAutosave({
-  count,
-  correct,
-  bestStreak = 0,
-  save,
-}: {
-  count: number;
-  correct: number;
-  bestStreak?: number;
+// Stamp each answer synchronously, rather than attributing a whole batch to
+// its first answer or flush time. All days and save triggers share one queue.
+export function useSessionAutosave({ save }: {
   save: (delta: SessionDelta) => Promise<void>;
-}): { unsavedCount: number; unsavedCorrect: number } {
+}) {
   const nav = useNavigation();
-  const countRef = React.useRef(count);
-  const correctRef = React.useRef(correct);
-  const bestStreakRef = React.useRef(bestStreak);
   const saveRef = React.useRef(save);
-  const lastSavedCountRef = React.useRef(0);
-  const lastSavedCorrectRef = React.useRef(0);
-  const lastSavedBestStreakRef = React.useRef(0);
-  const attributionDayRef = React.useRef<string | null>(null);
-  const saveQueueRef = React.useRef<Promise<void>>(Promise.resolve());
-  countRef.current = count;
-  correctRef.current = correct;
-  bestStreakRef.current = bestStreak;
   saveRef.current = save;
+  const pending = React.useRef(new Map<string, SessionDelta>());
+  const saveQueue = React.useRef<Promise<void>>(Promise.resolve());
+  const mounted = React.useRef(true);
+  const [, refresh] = React.useReducer((value: number) => value + 1, 0);
 
-  // Attribute an unsaved batch to the day of its first answer, not the
-  // (possibly post-midnight) flush time. Cleared once everything is saved so
-  // the next batch re-stamps with its own first-answer day.
-  if (count > lastSavedCountRef.current) {
-    if (attributionDayRef.current === null) {
-      attributionDayRef.current = getTodayKey();
-    }
-  } else {
-    attributionDayRef.current = null;
-  }
+  const recordProgress = React.useCallback((correct: boolean, bestStreak = 0) => {
+    const day = getTodayKey();
+    const current = pending.current.get(day);
+    pending.current.set(day, {
+      day,
+      count: (current?.count ?? 0) + 1,
+      correct: (current?.correct ?? 0) + (correct ? 1 : 0),
+      bestStreak: Math.max(current?.bestStreak ?? 0, bestStreak),
+    });
+    refresh();
+  }, []);
 
   const saveNow = React.useCallback(() => {
     const run = async () => {
-      const snapshotCount = countRef.current;
-      const snapshotCorrect = correctRef.current;
-      const unsavedCount = snapshotCount - lastSavedCountRef.current;
-      const unsavedCorrect = snapshotCorrect - lastSavedCorrectRef.current;
-      const unsavedBestStreak = Math.max(bestStreakRef.current, lastSavedBestStreakRef.current);
-      const day = attributionDayRef.current ?? getTodayKey();
-
-      if (unsavedCount <= 0) return;
-
-      try {
-        await saveRef.current({
-          count: unsavedCount,
-          correct: unsavedCorrect,
-          bestStreak: unsavedBestStreak,
-          day,
-        });
-        lastSavedCountRef.current = snapshotCount;
-        lastSavedCorrectRef.current = snapshotCorrect;
-        lastSavedBestStreakRef.current = unsavedBestStreak;
-        // Answers that arrived during this save form the next batch; let it
-        // pick up its own first-answer day.
-        if (countRef.current === snapshotCount) {
-          attributionDayRef.current = null;
+      const batches = [...pending.current.values()];
+      // Claim every snapshot before awaiting any write, so new answers on a
+      // later day cannot be erased when that day's snapshot starts saving.
+      // Claim before store updates also prevents counting saved totals twice.
+      pending.current.clear();
+      for (const delta of batches) {
+        try {
+          await saveRef.current(delta);
+        } catch (error) {
+          const newer = pending.current.get(delta.day);
+          pending.current.set(delta.day, {
+            day: delta.day,
+            count: delta.count + (newer?.count ?? 0),
+            correct: delta.correct + (newer?.correct ?? 0),
+            bestStreak: Math.max(delta.bestStreak, newer?.bestStreak ?? 0),
+          });
+          console.warn('Failed to save session:', error);
         }
-      } catch (e) {
-        console.warn('Failed to save session:', e);
+        if (mounted.current) refresh();
       }
     };
-
-    const next = saveQueueRef.current.then(run, run);
-    saveQueueRef.current = next.catch(() => undefined);
+    const next = saveQueue.current.then(run, run);
+    saveQueue.current = next.catch(() => undefined);
     return next;
   }, []);
 
   React.useEffect(() => {
+    mounted.current = true;
     const sub = AppState.addEventListener('change', (state) => {
-      if (state === 'background' || state === 'inactive') {
-        saveNow().catch((e) => console.warn('AppState save failed:', e));
-      }
+      if (state === 'background' || state === 'inactive') void saveNow();
     });
     return () => {
+      mounted.current = false;
       sub.remove();
-      saveNow().catch((e) => console.warn('Unmount save failed:', e));
+      void saveNow();
     };
   }, [saveNow]);
 
-  React.useEffect(() => {
-    const unsubscribe = nav.addListener('blur', () => {
-      saveNow().catch((e) => console.warn('Blur save failed:', e));
-    });
-    return unsubscribe;
-  }, [nav, saveNow]);
+  React.useEffect(() => nav.addListener('blur', () => { void saveNow(); }), [nav, saveNow]);
 
+  const today = pending.current.get(getTodayKey());
   return {
-    unsavedCount: count - lastSavedCountRef.current,
-    unsavedCorrect: correct - lastSavedCorrectRef.current,
+    unsavedCount: today?.count ?? 0,
+    unsavedCorrect: today?.correct ?? 0,
+    recordProgress,
   };
 }

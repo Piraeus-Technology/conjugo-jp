@@ -60,11 +60,9 @@ export default function QuizScreen() {
   const { sessions, loadSessions, saveSession } = useSessionStore();
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  // This-visit answers (monotonic); persisted as deltas by useSessionAutosave.
-  const [newCorrect, setNewCorrect] = useState(0);
+  // This-visit answers drive review eligibility; the hook dates each answer.
   const [newTotal, setNewTotal] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [bestSessionStreak, setBestSessionStreak] = useState(0);
   const [showHint, setShowHint] = useState(true);
   const hasRecordedAnswer = React.useRef(false);
   // Freeze the persisted baseline; newTotal tracks this visit synchronously,
@@ -125,12 +123,11 @@ export default function QuizScreen() {
     setNewTotal(t => t + 1);
 
     const correct = answer === question.correctAnswer;
+    recordProgress(correct, correct ? streak + 1 : 0);
     if (correct) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      setNewCorrect(s => s + 1);
       const newStreak = streak + 1;
       setStreak(newStreak);
-      if (newStreak > bestSessionStreak) setBestSessionStreak(newStreak);
       recordAnswer(true, newStreak);
       if (newStreak === 10) {
         void maybeRequestStoreReview({
@@ -160,10 +157,7 @@ export default function QuizScreen() {
   };
 
   // Auto-save new answers on blur / background / unmount (delta-based).
-  const { unsavedCount, unsavedCorrect } = useSessionAutosave({
-    count: newTotal,
-    correct: newCorrect,
-    bestStreak: bestSessionStreak,
+  const { unsavedCount, unsavedCorrect, recordProgress } = useSessionAutosave({
     save: async ({ count, correct, bestStreak, day }) => {
       if (!(await saveSession({ total: count, correct, streak: bestStreak }, day))) {
         throw new Error('quiz session save failed');
