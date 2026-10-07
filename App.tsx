@@ -16,6 +16,7 @@ import QuizScreen from './src/screens/QuizScreen';
 import StatsScreen from './src/screens/StatsScreen';
 import FlashcardStatsScreen from './src/screens/FlashcardStatsScreen';
 import PracticeSettingsScreen from './src/screens/PracticeSettingsScreen';
+import AppErrorBoundary from './src/components/AppErrorBoundary';
 import { useThemeStore } from './src/store/themeStore';
 import { usePracticeSettingsStore } from './src/store/practiceSettingsStore';
 import { useColors, fonts } from './src/utils/theme';
@@ -173,6 +174,7 @@ export default function App() {
         barStyle={isDark ? 'light-content' : 'dark-content'}
         backgroundColor={colors.bg}
       />
+      <AppErrorBoundary>
       <NavigationContainer theme={navTheme}>
         <Tab.Navigator
           id="MainTabs"
@@ -243,6 +245,7 @@ export default function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
+      </AppErrorBoundary>
     </GestureHandlerRootView>
   );
 }
