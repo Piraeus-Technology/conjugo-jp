@@ -4,6 +4,7 @@ import {
   type ConjugationForm,
   type VerbData,
 } from './conjugate';
+import { practiceBaseWeights } from './practiceSelection';
 
 export interface Flashcard {
   verb: string;
@@ -28,17 +29,12 @@ export function generateFlashcard(
   const eligible: EligibleEntry[] = [];
   let totalWeight = 0;
 
-  const commonCount = Math.min(200, entries.length);
-  const commonShare = entries.length > commonCount ? 0.7 : 1;
-  const lessCommonCount = entries.length - commonCount;
+  const baseWeights = practiceBaseWeights(entries);
 
   entries.forEach((entry, index) => {
     const forms = quizzableForms(entry[1], activeForms);
     if (forms.length === 0) return;
-    const baseProbability = index < commonCount
-      ? commonShare / commonCount
-      : (1 - commonShare) / lessCommonCount;
-    const weight = Math.max(0.01, getWeight(entry[0])) * baseProbability;
+    const weight = Math.max(0.01, getWeight(entry[0])) * baseWeights[index];
     totalWeight += weight;
     eligible.push({ entry, forms, weight });
   });

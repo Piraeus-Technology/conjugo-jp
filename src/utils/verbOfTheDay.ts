@@ -2,6 +2,21 @@ import { dateToDayKey } from './dayKey';
 
 const MS_PER_DAY = 86_400_000;
 const DAY_KEY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
+const permutations = new Map<number, number[]>();
+
+function shuffledIndices(length: number): number[] {
+  const cached = permutations.get(length);
+  if (cached) return cached;
+  const indices = Array.from({ length }, (_, index) => index);
+  let seed = (0x9e3779b9 ^ length) >>> 0;
+  for (let index = length - 1; index > 0; index--) {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    const other = Math.floor((seed / 0x100000000) * (index + 1));
+    [indices[index], indices[other]] = [indices[other], indices[index]];
+  }
+  permutations.set(length, indices);
+  return indices;
+}
 
 export function getVerbOfTheDayForKey<T>(entries: readonly T[], dayKey: string): T {
   if (entries.length === 0) {
@@ -23,7 +38,7 @@ export function getVerbOfTheDayForKey<T>(entries: readonly T[], dayKey: string):
     Number(day),
   ) / MS_PER_DAY);
   const dayIndex = ((dayNumber % entries.length) + entries.length) % entries.length;
-  return entries[dayIndex];
+  return entries[shuffledIndices(entries.length)[dayIndex]];
 }
 
 export function getVerbOfTheDay<T>(entries: readonly T[], date: Date): T {

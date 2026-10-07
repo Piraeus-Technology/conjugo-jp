@@ -62,9 +62,6 @@ export default function FlashcardScreen() {
   );
   const [card, setCard] = useState<Flashcard | null>(null);
   const [flipped, setFlipped] = useState(false);
-  // This-visit answers (monotonic); persisted as deltas by useSessionAutosave.
-  const [newReviewed, setNewReviewed] = useState(0);
-  const [newCorrect, setNewCorrect] = useState(0);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
   const hasGradedCard = useRef(false);
@@ -174,8 +171,7 @@ export default function FlashcardScreen() {
     hasGradedCard.current = true;
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    setNewReviewed(r => r + 1);
-    setNewCorrect(c => c + 1);
+    recordProgress(true);
     recordReview(true).catch(() => {});
     recordResult(card.verb, true).catch(() => {});
     flipToFront();
@@ -186,16 +182,14 @@ export default function FlashcardScreen() {
     hasGradedCard.current = true;
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    setNewReviewed(r => r + 1);
+    recordProgress(false);
     recordReview(false).catch(() => {});
     recordResult(card.verb, false).catch(() => {});
     flipToFront();
   };
 
   // Auto-save new answers on blur / background / unmount (delta-based).
-  const { unsavedCount, unsavedCorrect } = useSessionAutosave({
-    count: newReviewed,
-    correct: newCorrect,
+  const { unsavedCount, unsavedCorrect, recordProgress } = useSessionAutosave({
     save: async ({ count, correct, day }) => {
       if (!(await saveSession({ reviewed: count, correct }, day))) {
         throw new Error('flashcard session save failed');

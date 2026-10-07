@@ -15,6 +15,7 @@ interface PracticeSettingsStore {
   setActiveLevels: (levels: JLPTLevel[]) => Promise<void>;
   toggleForm: (form: ConjugationForm) => Promise<void>;
   toggleLevel: (level: JLPTLevel) => Promise<void>;
+  resetPracticeSettings: () => Promise<boolean>;
 }
 
 // Keep the settings model and the reference table on one source of truth.
@@ -23,6 +24,15 @@ const allForms: ConjugationForm[] = Array.from(new Set(
 ));
 
 const allLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
+export const beginnerForms: ConjugationForm[] = ['masu', 'masu_negative', 'masu_past', 'te', 'ta', 'nai'];
+export const beginnerLevels: JLPTLevel[] = ['N5', 'N4'];
+
+// These keys are written by 1.4.0 even when Practice Settings was never
+// changed. App boot resolves this before navigation can create new activity.
+const legacyKeys = [
+  'verb_history', 'favorites', 'quiz_stats', 'sessions', 'flashcard_stats',
+  'flashcardSessions', 'spaced_rep_weights', 'theme_mode', 'auto_tts',
+];
 const validForms: ConjugationForm[] = [...ALL_FORMS];
 
 const queue = createStoreQueue();
@@ -43,8 +53,8 @@ function safeLevels(levels: JLPTLevel[]): JLPTLevel[] {
 }
 
 export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get) => ({
-  activeForms: [...allForms],
-  activeLevels: [...allLevels],
+  activeForms: [...beginnerForms],
+  activeLevels: [...beginnerLevels],
   loaded: false,
   loadError: false,
 
@@ -55,6 +65,20 @@ export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get)
       if (get().loaded) return;
       try {
         const stored = await AsyncStorage.getItem('practiceSettings');
+        if (stored === null) {
+          const legacyValues = await Promise.all(legacyKeys.map(key => AsyncStorage.getItem(key)));
+          const returning = legacyValues.some(value => value !== null);
+          const initial = {
+            activeForms: [...(returning ? allForms : beginnerForms)],
+            activeLevels: [...(returning ? allLevels : beginnerLevels)],
+          };
+          if (!(await safeSetItem('practiceSettings', JSON.stringify(initial)))) {
+            set({ loadError: true });
+            return;
+          }
+          set({ ...initial, loaded: true, loadError: false });
+          return;
+        }
         const parsed = stored ? JSON.parse(stored) : {};
         const forms = parseStoredSubset(parsed?.activeForms, validForms);
         const levels = parseStoredSubset(parsed?.activeLevels, allLevels);
@@ -69,6 +93,17 @@ export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get)
         set({ loadError: true });
       }
     });
+  },
+
+  resetPracticeSettings: async () => {
+    let reset = false;
+    await queue.enqueue(async () => {
+      const defaults = { activeForms: [...beginnerForms], activeLevels: [...beginnerLevels] };
+      if (!(await safeSetItem('practiceSettings', JSON.stringify(defaults)))) return;
+      set({ ...defaults, loaded: true, loadError: false });
+      reset = true;
+    });
+    return reset;
   },
 
   setActiveForms: async (forms) => {
@@ -181,8 +216,8 @@ export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get)
 export function __resetPracticeSettingsStoreForTests() {
   queue.reset();
   usePracticeSettingsStore.setState({
-    activeForms: [...allForms],
-    activeLevels: [...allLevels],
+    activeForms: [...beginnerForms],
+    activeLevels: [...beginnerLevels],
     loaded: false,
     loadError: false,
   });

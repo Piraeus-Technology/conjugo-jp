@@ -32,6 +32,12 @@ export function getStem(reading: string): string {
 
 // Romaji to hiragana conversion table
 const romajiMap: [string, string][] = [
+  ['sya', 'しゃ'], ['syu', 'しゅ'], ['syo', 'しょ'], ['syi', 'し'], ['sye', 'しぇ'],
+  ['tya', 'ちゃ'], ['tyu', 'ちゅ'], ['tyo', 'ちょ'], ['tyi', 'ち'], ['tye', 'ちぇ'],
+  ['cya', 'ちゃ'], ['cyu', 'ちゅ'], ['cyo', 'ちょ'],
+  ['jya', 'じゃ'], ['jyu', 'じゅ'], ['jyo', 'じょ'], ['jyi', 'じ'], ['jye', 'じぇ'],
+  ['zya', 'じゃ'], ['zyu', 'じゅ'], ['zyo', 'じょ'], ['zyi', 'じ'], ['zye', 'じぇ'],
+  ['dya', 'ぢゃ'], ['dyu', 'ぢゅ'], ['dyo', 'ぢょ'],
   ['sha', 'しゃ'], ['shi', 'し'], ['shu', 'しゅ'], ['sho', 'しょ'],
   ['cha', 'ちゃ'], ['chi', 'ち'], ['chu', 'ちゅ'], ['cho', 'ちょ'],
   ['tsu', 'つ'],
@@ -67,6 +73,18 @@ export function romajiToHiragana(input: string): string {
   let remaining = input.toLowerCase();
 
   while (remaining.length > 0) {
+    // Hepburn writes geminated ち as tch, and sometimes ん as m before
+    // b/p/m. Handle these before generic doubled consonants (e.g. gamma).
+    if (remaining.startsWith('tch')) {
+      result += 'っ';
+      remaining = remaining.slice(1);
+      continue;
+    }
+    if (/^m[bpm]/.test(remaining)) {
+      result += 'ん';
+      remaining = remaining.slice(1);
+      continue;
+    }
     // Handle double consonant (っ)
     if (remaining.length >= 2 && remaining[0] === remaining[1] && 'bcdfghjklmpqrstvwxyz'.includes(remaining[0]) && remaining[0] !== 'n') {
       result += 'っ';

@@ -15,6 +15,7 @@ const mockClearQuizSessions = jest.fn();
 const mockResetFlashcardStats = jest.fn();
 const mockClearFlashcardSessions = jest.fn();
 const mockResetWeights = jest.fn();
+const mockResetPracticeSettings = jest.fn();
 
 jest.mock('@expo/vector-icons/Ionicons', () => 'Ionicons');
 jest.mock('expo-constants', () => ({ expoConfig: { version: '1.2.0' } }));
@@ -70,6 +71,10 @@ jest.mock('../store/spacedRepStore', () => ({
   useSpacedRepStore: (selector: (value: { resetWeights: () => Promise<boolean> }) => unknown) =>
     selector({ resetWeights: () => mockResetWeights() }),
 }));
+jest.mock('../store/practiceSettingsStore', () => ({
+  usePracticeSettingsStore: (selector: (value: { resetPracticeSettings: () => Promise<boolean> }) => unknown) =>
+    selector({ resetPracticeSettings: () => mockResetPracticeSettings() }),
+}));
 
 describe('FeedbackScreen', () => {
   const originalPlatform = Platform.OS;
@@ -81,6 +86,7 @@ describe('FeedbackScreen', () => {
     mockResetFlashcardStats,
     mockClearFlashcardSessions,
     mockResetWeights,
+    mockResetPracticeSettings,
   ];
 
   beforeEach(() => {

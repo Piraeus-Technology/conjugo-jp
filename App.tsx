@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,7 +16,9 @@ import QuizScreen from './src/screens/QuizScreen';
 import StatsScreen from './src/screens/StatsScreen';
 import FlashcardStatsScreen from './src/screens/FlashcardStatsScreen';
 import PracticeSettingsScreen from './src/screens/PracticeSettingsScreen';
+import AppErrorBoundary from './src/components/AppErrorBoundary';
 import { useThemeStore } from './src/store/themeStore';
+import { usePracticeSettingsStore } from './src/store/practiceSettingsStore';
 import { useColors, fonts } from './src/utils/theme';
 import type {
   FlashcardStackParamList,
@@ -41,7 +43,7 @@ function SearchStackScreen() {
       id="SearchStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: {
           fontWeight: fonts.weights.semibold,
           color: colors.textPrimary,
@@ -76,7 +78,7 @@ function QuizStackScreen() {
       id="QuizStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
         headerTitleAlign: 'center' as const,
         headerShadowVisible: false,
@@ -99,7 +101,7 @@ function FlashcardStackScreen() {
       id="FlashcardStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
         headerTitleAlign: 'center' as const,
         headerShadowVisible: false,
@@ -122,7 +124,7 @@ function MoreStackScreen() {
       id="MoreStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
         headerTitleAlign: 'center' as const,
         headerShadowVisible: false,
@@ -138,9 +140,13 @@ function MoreStackScreen() {
 export default function App() {
   const { isDark, loaded, loadTheme } = useThemeStore();
   const colors = useColors();
+  const [preferencesReady, setPreferencesReady] = useState(false);
 
   useEffect(() => {
-    loadTheme();
+    void Promise.all([
+      loadTheme(),
+      usePracticeSettingsStore.getState().loadPracticeSettings(),
+    ]).then(() => setPreferencesReady(true));
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -149,7 +155,7 @@ export default function App() {
     }
   }, [loaded]);
 
-  if (!loaded) return null;
+  if (!loaded || !preferencesReady) return null;
 
   const navTheme = {
     ...(isDark ? DarkTheme : DefaultTheme),
@@ -168,6 +174,7 @@ export default function App() {
         barStyle={isDark ? 'light-content' : 'dark-content'}
         backgroundColor={colors.bg}
       />
+      <AppErrorBoundary>
       <NavigationContainer theme={navTheme}>
         <Tab.Navigator
           id="MainTabs"
@@ -183,7 +190,7 @@ export default function App() {
               fontWeight: fonts.weights.medium,
             },
             headerStyle: { backgroundColor: colors.bg },
-            headerTintColor: colors.primary,
+            headerTintColor: colors.primaryText,
             headerTitleStyle: {
               fontWeight: fonts.weights.semibold,
               color: colors.textPrimary,
@@ -238,6 +245,7 @@ export default function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
+      </AppErrorBoundary>
     </GestureHandlerRootView>
   );
 }

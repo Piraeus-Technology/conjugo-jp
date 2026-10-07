@@ -222,8 +222,10 @@ export default function HomeScreen() {
     }
 
     // Verb name/reading/translation search
-    const results1 = fuse.search(q, { limit: 40 });
-    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery, { limit: 40 }) : [];
+    // Filter the full headword matches before the display cap. Capping Fuse
+    // candidates first can discard every match in a selected JLPT level.
+    const results1 = fuse.search(q);
+    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery) : [];
     for (const r of [...results1, ...results2]) {
       if (!seen.has(r.item.verb)) {
         seen.add(r.item.verb);
@@ -477,7 +479,7 @@ export default function HomeScreen() {
             onPress={() => handleVerbPress(vodVerb)}
             activeOpacity={0.7}
             accessibilityRole="button"
-            accessibilityLabel={`Verb of the Day: ${vodVerb}, ${vodData.reading}, ${vodData.translation}`}
+            accessibilityLabel={`Verb of the Day: ${vodVerb}, ${vodData.reading}, ${vodData.translation}, JLPT ${vodData.jlpt}`}
             accessibilityHint="Opens conjugation table"
           >
             <Text style={[styles.vodLabel, { color: colors.textMuted }]}>Verb of the Day</Text>
@@ -515,7 +517,7 @@ export default function HomeScreen() {
           {favorites.length > 0 && (
             <View style={styles.section}>
               <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Favorites</Text>
-              {favorites.slice(0, 10).map((verb) => renderSwipeableRow(verb, 'favorite'))}
+              {favorites.map((verb) => renderSwipeableRow(verb, 'favorite'))}
             </View>
           )}
 

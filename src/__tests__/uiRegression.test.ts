@@ -1,8 +1,14 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { StyleSheet } from 'react-native';
-import { getConjugationIndex, styles as homeStyles } from '../screens/HomeScreen';
+import React from 'react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
+import HomeScreen, { getConjugationIndex, styles as homeStyles } from '../screens/HomeScreen';
 import { themes } from '../utils/theme';
+import { useFavoritesStore } from '../store/favoritesStore';
+import verbs from '../data/verbs.json';
+
+const mockNavigate = jest.fn();
 
 jest.mock(
   '@react-native-async-storage/async-storage',
@@ -19,7 +25,7 @@ jest.mock('expo-haptics', () => ({
 }));
 jest.mock('react-native-gesture-handler', () => ({ Swipeable: 'Swipeable' }));
 jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ navigate: jest.fn() }),
+  useNavigation: () => ({ navigate: mockNavigate }),
 }));
 
 function relativeLuminance(hex: string): number {
@@ -42,6 +48,32 @@ function contrastRatio(foreground: string, background: string): number {
 }
 
 describe('UI regression guards', () => {
+  it('announces the daily verb JLPT level to screen readers', async () => {
+    const screen = render(React.createElement(HomeScreen));
+    await act(async () => { await Promise.resolve(); });
+    expect(screen.getByLabelText(/^Verb of the Day: .*, JLPT N[1-5]$/)).toBeTruthy();
+  });
+
+  it('opens favorites beyond the first ten', async () => {
+    const favorites = Object.keys(verbs).slice(0, 11);
+    useFavoritesStore.setState({ favorites, loaded: true });
+    const screen = render(React.createElement(HomeScreen));
+    const verb = favorites[10];
+    const data = verbs[verb as keyof typeof verbs];
+    fireEvent.press(screen.getByLabelText(`${verb}, ${data.reading}, ${data.translation}`));
+    expect(mockNavigate).toHaveBeenCalledWith('Conjugation', { verb, highlightForm: undefined });
+    screen.unmount();
+    useFavoritesStore.setState({ favorites: [], loaded: true });
+  });
+
+  it('finds N1 suru verbs after filtering rather than truncating them first', async () => {
+    const screen = render(React.createElement(HomeScreen));
+    fireEvent.press(screen.getByLabelText('Filter by N1'));
+    fireEvent.changeText(screen.getByLabelText('Search Japanese verbs'), 'する');
+    await waitFor(() => expect(screen.getByText('寄与する')).toBeTruthy());
+    expect(screen.queryByText('No matching verbs')).toBeNull();
+  });
+
   it('keeps normal text roles at WCAG AA contrast in both themes', () => {
     for (const colors of Object.values(themes)) {
       const surfaces = [colors.bg, colors.card, colors.searchBg];

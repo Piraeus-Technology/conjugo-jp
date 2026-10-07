@@ -27,6 +27,7 @@ import { useSessionStore } from '../store/sessionStore';
 import { useFlashcardStatsStore } from '../store/flashcardStatsStore';
 import { useFlashcardSessionStore } from '../store/flashcardSessionStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
+import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 
 const IOS_STORE_URL = 'https://apps.apple.com/app/id6781443990';
 const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.piraeus.conjugojp';
@@ -43,6 +44,7 @@ export default function FeedbackScreen() {
   const resetFlashcardStats = useFlashcardStatsStore(state => state.resetStats);
   const clearFlashcardSessions = useFlashcardSessionStore(state => state.clearSessions);
   const resetWeights = useSpacedRepStore(state => state.resetWeights);
+  const resetPracticeSettings = usePracticeSettingsStore(state => state.resetPracticeSettings);
   const {
     products,
     loading: tipLoading,
@@ -75,7 +77,7 @@ export default function FeedbackScreen() {
   const handleResetLearningData = () => {
     Alert.alert(
       'Reset learning data?',
-      'This permanently removes favorites, search history, quiz and flashcard stats, sessions, and adaptive practice weights from this device.',
+      'This permanently removes favorites, search history, quiz and flashcard stats, sessions, and adaptive practice weights from this device. Practice settings return to beginner defaults.',
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -90,6 +92,7 @@ export default function FeedbackScreen() {
               { label: 'flashcard stats', run: resetFlashcardStats },
               { label: 'flashcard sessions', run: clearFlashcardSessions },
               { label: 'adaptive weights', run: resetWeights },
+              { label: 'practice settings', run: resetPracticeSettings },
             ];
             const results = await Promise.allSettled(
               operations.map(operation => operation.run()),

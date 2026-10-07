@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Alert, Platform } from 'react-native';
 import {
-  hasPendingIapEnd,
   releaseIapConnection,
   retainIapConnection,
   waitForPendingIapEnd,
@@ -86,6 +85,7 @@ export function useTipJar() {
     retainIapConnection();
 
     const handlePurchaseUpdated = async (purchase: Purchase) => {
+      if (!TIP_SKUS.includes(purchase.productId)) return;
       const txKey = getTipTransactionKey(purchase);
       if (!claimTransaction(purchase)) return; // the other path is finishing it
       try {
@@ -131,21 +131,20 @@ export function useTipJar() {
     };
 
     // Attach immediately so cleanup always has concrete subscriptions to
-    // remove. If a previous screen's endConnection is already in flight, init
-    // will reattach after it resolves because react-native-iap clears JS
-    // listeners during endConnection.
+    // remove. This first registration can be inert while Nitro is unavailable,
+    // so init always replaces it after the native connection is ready.
     attachListeners();
 
     const init = async () => {
       try {
-        const shouldReattachAfterEnd = hasPendingIapEnd();
         await waitForPendingIapEnd();
         if (!mounted) return;
-        if (shouldReattachAfterEnd) {
-          attachListeners();
-        }
         await initConnection();
         if (!mounted) return;
+        // endConnection clears the library's JS listener sets, and listeners
+        // registered before initConnection cannot attach to the native bridge.
+        // Re-register unconditionally after every successful cold/remount init.
+        attachListeners();
         setUnavailable(false);
         if (Platform.OS === 'android') {
           try {
@@ -197,8 +196,12 @@ export function useTipJar() {
         request: { apple: { sku }, google: { skus: [sku] } },
         type: 'in-app',
       });
-    } catch {
-      // surfaced by the error listener
+    } catch (error) {
+      const code = (error as PurchaseError | undefined)?.code;
+      if (code !== iapModule.ErrorCode?.UserCancelled) {
+        console.warn('Failed to start tip purchase:', error);
+        Alert.alert('Purchase Failed', 'Something went wrong. Please try again.');
+      }
     } finally {
       // Always clear the spinner once the request settles: deferred
       // purchases (iOS Ask to Buy) and abandoned flows may never emit a
