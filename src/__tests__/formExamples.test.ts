@@ -396,17 +396,17 @@ describe('N4 form example sentences', () => {
 
 const n3dataset = n3 as Record<string, Partial<Record<ConjugationForm, string>>>;
 const n3ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
-  masu: 380,
-  te: 379,
-  ta: 378,
-  nai: 380,
-  potential: 269,
-  passive: 222,
-  causative: 278,
-  conditional_ba: 376,
-  conditional_tara: 377,
-  volitional: 277,
-  imperative: 258,
+  masu: 379,
+  te: 378,
+  ta: 377,
+  nai: 379,
+  potential: 268,
+  passive: 221,
+  causative: 277,
+  conditional_ba: 375,
+  conditional_tara: 376,
+  volitional: 276,
+  imperative: 257,
 };
 
 const n3IntentionalOmissions: [string, ConjugationForm][] = [

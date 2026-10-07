@@ -6804,7 +6804,7 @@
     "group": "ichidan",
     "translation": "to speak to, to address",
     "jlpt": "N3",
-    "transitive": false,
+    "transitive": true,
     "examples": [{ "ja": "知らない人に話しかける。", "en": "I speak to a stranger." }]
   },
   "思い込む": {
@@ -13214,14 +13214,6 @@
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "他人を思いやる。", "en": "I am considerate of others." }]
-  },
-  "話し掛ける": {
-    "reading": "はなしかける",
-    "group": "ichidan",
-    "translation": "to talk to, to address",
-    "jlpt": "N3",
-    "transitive": true,
-    "examples": [{ "ja": "隣の人に話し掛ける。", "en": "I talk to the person next to me." }]
   },
   "分かち合う": {
     "reading": "わかちあう",

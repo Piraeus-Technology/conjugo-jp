@@ -15,6 +15,11 @@ type VerbEntry = {
 const verbEntries = Object.entries(verbs) as [string, VerbEntry][];
 
 describe('Verb data integrity', () => {
+  test('keeps one transitive headword for hanashikakeru', () => {
+    expect(verbs['話しかける'].transitive).toBe(true);
+    expect(Object.keys(verbs)).not.toContain('話し掛ける');
+  });
+
   test('has verbs', () => {
     expect(verbEntries.length).toBeGreaterThan(0);
   });
