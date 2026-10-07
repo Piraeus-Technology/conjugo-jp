@@ -497,6 +497,11 @@ export function getConjugationHint(verb: VerbData, form: ConjugationForm, headwo
     }
     const answer = conjugateReading(verb, form);
     const regular = conjugateReading({ ...verb, overrides: undefined }, form);
+    if (answer === headword || answer === verb.reading) {
+      const description = form === 'masu' ? 'polite' : `in the ${FORM_LABELS[form].ja} form`;
+      const label = form === 'masu' ? 'ます' : FORM_LABELS[form].ja;
+      return `Exception: ${headword} is already ${description} — its ${label} form is ${answer} itself${regular !== answer ? ` (not ${regular})` : ''}.`;
+    }
     return `Exception: ${headword} → ${answer}${regular !== answer ? ` (not ${regular})` : ''}.`;
   }
   switch (verb.group) {
