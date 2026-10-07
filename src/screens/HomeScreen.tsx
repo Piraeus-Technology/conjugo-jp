@@ -517,7 +517,7 @@ export default function HomeScreen() {
           {favorites.length > 0 && (
             <View style={styles.section}>
               <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Favorites</Text>
-              {favorites.slice(0, 10).map((verb) => renderSwipeableRow(verb, 'favorite'))}
+              {favorites.map((verb) => renderSwipeableRow(verb, 'favorite'))}
             </View>
           )}
 
