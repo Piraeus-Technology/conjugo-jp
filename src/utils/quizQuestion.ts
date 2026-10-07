@@ -6,7 +6,7 @@ import {
   quizzableForms,
   VerbData,
 } from './conjugate';
-import { addSameFormDistractors, chooseQuizzableEntry } from './practiceSelection';
+import { addSameFormDistractors, chooseQuizzableEntry, createPracticePicker } from './practiceSelection';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
 
@@ -36,23 +36,9 @@ export function generateQuestion(
   filteredEntries: [string, VerbData][],
 ): Question | null {
   const verbEntries = filteredEntries;
-  const commonCount = Math.min(200, verbEntries.length);
-  const selection = chooseQuizzableEntry(verbEntries, activeForms, () => {
-    const candidates: number[] = [];
-    for (let i = 0; i < 10; i++) {
-      if (Math.random() < 0.7) {
-        candidates.push(Math.floor(Math.random() * commonCount));
-      } else {
-        candidates.push(Math.floor(Math.random() * verbEntries.length));
-      }
-    }
-    const verbIndex = candidates.reduce((best, idx) => {
-      const bestWeight = getWeight(verbEntries[best][0]);
-      const thisWeight = getWeight(verbEntries[idx][0]);
-      return thisWeight > bestWeight ? idx : best;
-    }, candidates[0]);
-    return verbEntries[verbIndex];
-  });
+  const selection = chooseQuizzableEntry(
+    verbEntries, activeForms, createPracticePicker(verbEntries, getWeight),
+  );
   if (!selection) return null;
 
   const [verb, data] = selection.entry;
