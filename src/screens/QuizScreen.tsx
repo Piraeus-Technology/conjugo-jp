@@ -234,7 +234,7 @@ export default function QuizScreen() {
   );
 
   const formLabel = FORM_LABELS[question.form];
-  const hint = getConjugationHint(question.verbData, question.form);
+  const hint = getConjugationHint(question.verbData, question.form, question.verb);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>

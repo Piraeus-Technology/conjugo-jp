@@ -489,7 +489,16 @@ function getIrregularConjugationHint(verb: VerbData, form: ConjugationForm): str
   return 'This verb uses an irregular conjugation pattern for this form.';
 }
 
-export function getConjugationHint(verb: VerbData, form: ConjugationForm): string {
+export function getConjugationHint(verb: VerbData, form: ConjugationForm, headword = verb.reading): string {
+  if (verb.overrides?.[form]) {
+    if (verb.group === 'godan' && verb.reading === 'いく' && verb.godanRow === 'ku'
+      && ['te', 'ta', 'conditional_tara'].includes(form)) {
+      return getGodanConjugationHint(verb, form);
+    }
+    const answer = conjugateReading(verb, form);
+    const regular = conjugateReading({ ...verb, overrides: undefined }, form);
+    return `Exception: ${headword} → ${answer}${regular !== answer ? ` (not ${regular})` : ''}.`;
+  }
   switch (verb.group) {
     case 'godan':
       return getGodanConjugationHint(verb, form);

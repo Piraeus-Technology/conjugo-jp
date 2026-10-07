@@ -5,7 +5,33 @@ import {
   ConjugationForm,
   GodanRow,
   VerbData,
+  ALL_FORMS,
+  quizzableForms,
 } from '../utils/conjugate';
+import verbs from '../data/verbs.json';
+
+test('every quizzable override has an exception hint containing the actual answer', () => {
+  for (const [headword, data] of Object.entries(verbs) as [string, VerbData][]) {
+    if (!data.overrides) continue;
+    for (const form of quizzableForms(data, ALL_FORMS)) {
+      if (!data.overrides[form]) continue;
+      const hint = getConjugationHint(data, form, headword);
+      expect(hint).toContain(conjugateReading(data, form));
+      expect(hint).toMatch(/exception|irregular/i);
+      if (headword === '行く' && ['te', 'ta', 'conditional_tara'].includes(form)) {
+        expect(hint).toBe(getConjugationHint({ ...data, overrides: undefined }, form, headword));
+        expect(hint).toContain('Godan');
+        expect(hint).toContain('行く is the exception');
+      } else {
+        const regular = conjugateReading({ ...data, overrides: undefined }, form);
+        expect(hint).toContain(`Exception: ${headword} → ${conjugateReading(data, form)}`);
+        expect(hint).toContain(`(not ${regular})`);
+      }
+    }
+  }
+  expect(getConjugationHint(verbs['ある'] as VerbData, 'nai', 'ある')).toBe('Exception: ある → ない (not あらない).');
+  expect(getConjugationHint(verbs['くださる'] as VerbData, 'masu', 'くださる')).toBe('Exception: くださる → くださいます (not くださります).');
+});
 
 // Helper to make verb data concise in tests
 function godan(reading: string, row: GodanRow, overrides?: Partial<Record<ConjugationForm, string>>): VerbData {
