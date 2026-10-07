@@ -1,7 +1,9 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { StyleSheet } from 'react-native';
-import { getConjugationIndex, styles as homeStyles } from '../screens/HomeScreen';
+import React from 'react';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import HomeScreen, { getConjugationIndex, styles as homeStyles } from '../screens/HomeScreen';
 import { themes } from '../utils/theme';
 
 jest.mock(
@@ -42,6 +44,14 @@ function contrastRatio(foreground: string, background: string): number {
 }
 
 describe('UI regression guards', () => {
+  it('finds N1 suru verbs after filtering rather than truncating them first', async () => {
+    const screen = render(React.createElement(HomeScreen));
+    fireEvent.press(screen.getByLabelText('Filter by N1'));
+    fireEvent.changeText(screen.getByLabelText('Search Japanese verbs'), 'する');
+    await waitFor(() => expect(screen.getByText('寄与する')).toBeTruthy());
+    expect(screen.queryByText('No matching verbs')).toBeNull();
+  });
+
   it('keeps normal text roles at WCAG AA contrast in both themes', () => {
     for (const colors of Object.values(themes)) {
       const surfaces = [colors.bg, colors.card, colors.searchBg];

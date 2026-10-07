@@ -222,8 +222,10 @@ export default function HomeScreen() {
     }
 
     // Verb name/reading/translation search
-    const results1 = fuse.search(q, { limit: 40 });
-    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery, { limit: 40 }) : [];
+    // Filter the full headword matches before the display cap. Capping Fuse
+    // candidates first can discard every match in a selected JLPT level.
+    const results1 = fuse.search(q);
+    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery) : [];
     for (const r of [...results1, ...results2]) {
       if (!seen.has(r.item.verb)) {
         seen.add(r.item.verb);
