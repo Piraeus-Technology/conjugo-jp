@@ -24,3 +24,10 @@ No migration is included, as requested.
 
 No additional headword removals or transitivity edits are included. Separate
 review candidates, if any, are report-only outside this commit.
+
+Measured after both edits by parsing the actual JSON keys: 1,710 headwords.
+N3 form examples now have 378 headwords and N1 form examples have 560.
+All 11 approved removals were present in verbs.json. Ten had keyed form
+examples; 需要する had none. The intentional-omission rows belonging to
+removed keys were removed from formExamples.test.ts. The N2 base-verb
+sentences containing 漂わせる and 蝕まれる were preserved.

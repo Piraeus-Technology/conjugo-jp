@@ -7630,14 +7630,6 @@
     "transitive": true,
     "examples": [{ "ja": "距離を縮める。", "en": "I shorten the distance." }]
   },
-  "膨らませる": {
-    "reading": "ふくらませる",
-    "group": "ichidan",
-    "translation": "to inflate, to puff up",
-    "jlpt": "N3",
-    "transitive": true,
-    "examples": [{ "ja": "風船を膨らませる。", "en": "I inflate the balloon." }]
-  },
   "弄る": {
     "reading": "いじる",
     "group": "godan",
@@ -9504,15 +9496,6 @@
     "jlpt": "N1",
     "transitive": false,
     "examples": [{ "ja": "表情が翳る。", "en": "The expression becomes gloomy." }]
-  },
-  "佇まう": {
-    "reading": "たたずまう",
-    "group": "godan",
-    "godanRow": "u",
-    "translation": "to stand quietly, to have an air of",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "静かに佇まう。", "en": "I stand quietly." }]
   },
   "頒布する": {
     "reading": "はんぷする",
@@ -11984,14 +11967,6 @@
     "transitive": true,
     "examples": [{ "ja": "人を貶める。", "en": "I disparage someone." }]
   },
-  "蝕まれる": {
-    "reading": "むしばまれる",
-    "group": "ichidan",
-    "translation": "to be eaten away, to be eroded",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "心が蝕まれる。", "en": "My heart is eaten away." }]
-  },
   "鍛錬する": {
     "reading": "たんれんする",
     "group": "irregular",
@@ -12150,14 +12125,6 @@
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "電力を供給する。", "en": "I supply electricity." }]
-  },
-  "需要する": {
-    "reading": "じゅようする",
-    "group": "irregular",
-    "translation": "to demand",
-    "jlpt": "N3",
-    "transitive": true,
-    "examples": [{ "ja": "市場が需要する。", "en": "The market demands." }]
   },
   "所有する": {
     "reading": "しょゆうする",
@@ -12533,16 +12500,6 @@
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "人目を憚る。", "en": "I am wary of people watching." }]
-  },
-  "蔑する": {
-    "reading": "べっする",
-    "group": "irregular",
-    "translation": "to despise, to scorn",
-    "jlpt": "N1",
-    "excludeForms": ["potential"],
-    "unavailableForms": ["potential"],
-    "transitive": true,
-    "examples": [{ "ja": "敵を蔑する。", "en": "I scorn the enemy." }]
   },
   "弄する": {
     "reading": "ろうする",
@@ -13474,14 +13431,6 @@
     "transitive": false,
     "examples": [{ "ja": "目が翳む。", "en": "My eyes become blurry." }]
   },
-  "漂わせる": {
-    "reading": "ただよわせる",
-    "group": "ichidan",
-    "translation": "to give off (an air), to let float",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "不思議な雰囲気を漂わせる。", "en": "I give off a mysterious air." }]
-  },
   "染み渡る": {
     "reading": "しみわたる",
     "group": "godan",
@@ -13718,14 +13667,6 @@
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "候補者を支持する。", "en": "I support the candidate." }]
-  },
-  "物足りる": {
-    "reading": "ものたりる",
-    "group": "ichidan",
-    "translation": "to be satisfactory",
-    "jlpt": "N3",
-    "transitive": false,
-    "examples": [{ "ja": "少し物足りない。", "en": "It is a little unsatisfying." }]
   },
   "恥じる": {
     "reading": "はじる",
@@ -15351,14 +15292,6 @@
     "transitive": false,
     "examples": [{ "ja": "家が零落する。", "en": "The family falls into ruin." }]
   },
-  "専横する": {
-    "reading": "せんおうする",
-    "group": "irregular",
-    "translation": "to act tyrannically, to abuse power",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "権力を専横する。", "en": "I abuse power tyrannically." }]
-  },
   "壟断する": {
     "reading": "ろうだんする",
     "group": "irregular",
@@ -15543,14 +15476,6 @@
     "transitive": true,
     "examples": [{ "ja": "罪人を処刑する。", "en": "I execute the criminal." }]
   },
-  "恩赦する": {
-    "reading": "おんしゃする",
-    "group": "irregular",
-    "translation": "to grant amnesty, to pardon",
-    "jlpt": "N1",
-    "transitive": true,
-    "examples": [{ "ja": "囚人を恩赦する。", "en": "I grant amnesty to the prisoner." }]
-  },
   "赦免する": {
     "reading": "しゃめんする",
     "group": "irregular",
@@ -15664,14 +15589,6 @@
     "transitive": false,
     "examples": [{ "ja": "故郷を思い焦がれる。", "en": "I pine for my homeland." }]
   },
-  "思い馳せる": {
-    "reading": "おもいはせる",
-    "group": "ichidan",
-    "translation": "to let one's thoughts wander to",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "遠い昔に思い馳せる。", "en": "I let my thoughts wander to the distant past." }]
-  },
   "思い詰める": {
     "reading": "おもいつめる",
     "group": "ichidan",
@@ -15747,14 +15664,6 @@
     "jlpt": "N1",
     "transitive": false,
     "examples": [{ "ja": "臥薪嘗胆して機会を待つ。", "en": "I endure hardship and wait for the chance." }]
-  },
-  "呉越同舟する": {
-    "reading": "ごえつどうしゅうする",
-    "group": "irregular",
-    "translation": "to cooperate with rivals in a crisis",
-    "jlpt": "N1",
-    "transitive": false,
-    "examples": [{ "ja": "敵と呉越同舟する。", "en": "I cooperate with rivals in the crisis." }]
   },
   "下ろす": {
     "reading": "おろす",

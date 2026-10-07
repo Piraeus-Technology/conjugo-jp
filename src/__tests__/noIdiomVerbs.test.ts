@@ -41,6 +41,15 @@ const ALLOWED_IDIOMS = new Set([
 ]);
 
 describe('verb list contains no phrase idioms', () => {
+  it('excludes the approved non-verb and derived headwords while retaining their bases', () => {
+    const removed = [
+      '膨らませる', '物足りる', '佇まう', '思い馳せる', '専横する', '恩赦する',
+      '呉越同舟する', '蔑する', '漂わせる', '蝕まれる', '需要する',
+    ];
+    for (const verb of removed) expect(verbs[verb]).toBeUndefined();
+    for (const verb of ['膨らむ', '佇む', '漂う', '蝕む']) expect(verbs[verb]).toBeDefined();
+  });
+
   it('flags no idiom keys outside the allowlist', () => {
     const offenders = Object.keys(verbs).filter(
       (k) => isPhraseIdiom(k) && !ALLOWED_IDIOMS.has(k),
