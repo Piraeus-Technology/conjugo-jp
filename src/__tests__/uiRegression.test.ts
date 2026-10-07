@@ -2,7 +2,7 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 import { StyleSheet } from 'react-native';
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import HomeScreen, { getConjugationIndex, styles as homeStyles } from '../screens/HomeScreen';
 import { themes } from '../utils/theme';
 import { useFavoritesStore } from '../store/favoritesStore';
@@ -48,6 +48,12 @@ function contrastRatio(foreground: string, background: string): number {
 }
 
 describe('UI regression guards', () => {
+  it('announces the daily verb JLPT level to screen readers', async () => {
+    const screen = render(React.createElement(HomeScreen));
+    await act(async () => { await Promise.resolve(); });
+    expect(screen.getByLabelText(/^Verb of the Day: .*, JLPT N[1-5]$/)).toBeTruthy();
+  });
+
   it('opens favorites beyond the first ten', async () => {
     const favorites = Object.keys(verbs).slice(0, 11);
     useFavoritesStore.setState({ favorites, loaded: true });

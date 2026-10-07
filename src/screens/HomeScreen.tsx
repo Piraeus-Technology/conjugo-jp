@@ -479,7 +479,7 @@ export default function HomeScreen() {
             onPress={() => handleVerbPress(vodVerb)}
             activeOpacity={0.7}
             accessibilityRole="button"
-            accessibilityLabel={`Verb of the Day: ${vodVerb}, ${vodData.reading}, ${vodData.translation}`}
+            accessibilityLabel={`Verb of the Day: ${vodVerb}, ${vodData.reading}, ${vodData.translation}, JLPT ${vodData.jlpt}`}
             accessibilityHint="Opens conjugation table"
           >
             <Text style={[styles.vodLabel, { color: colors.textMuted }]}>Verb of the Day</Text>

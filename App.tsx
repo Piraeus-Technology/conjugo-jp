@@ -42,7 +42,7 @@ function SearchStackScreen() {
       id="SearchStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: {
           fontWeight: fonts.weights.semibold,
           color: colors.textPrimary,
@@ -77,7 +77,7 @@ function QuizStackScreen() {
       id="QuizStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
         headerTitleAlign: 'center' as const,
         headerShadowVisible: false,
@@ -100,7 +100,7 @@ function FlashcardStackScreen() {
       id="FlashcardStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
         headerTitleAlign: 'center' as const,
         headerShadowVisible: false,
@@ -123,7 +123,7 @@ function MoreStackScreen() {
       id="MoreStack"
       screenOptions={{
         headerStyle: { backgroundColor: colors.bg },
-        headerTintColor: colors.primary,
+        headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
         headerTitleAlign: 'center' as const,
         headerShadowVisible: false,
@@ -188,7 +188,7 @@ export default function App() {
               fontWeight: fonts.weights.medium,
             },
             headerStyle: { backgroundColor: colors.bg },
-            headerTintColor: colors.primary,
+            headerTintColor: colors.primaryText,
             headerTitleStyle: {
               fontWeight: fonts.weights.semibold,
               color: colors.textPrimary,
