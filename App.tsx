@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -17,6 +17,7 @@ import StatsScreen from './src/screens/StatsScreen';
 import FlashcardStatsScreen from './src/screens/FlashcardStatsScreen';
 import PracticeSettingsScreen from './src/screens/PracticeSettingsScreen';
 import { useThemeStore } from './src/store/themeStore';
+import { usePracticeSettingsStore } from './src/store/practiceSettingsStore';
 import { useColors, fonts } from './src/utils/theme';
 import type {
   FlashcardStackParamList,
@@ -138,9 +139,13 @@ function MoreStackScreen() {
 export default function App() {
   const { isDark, loaded, loadTheme } = useThemeStore();
   const colors = useColors();
+  const [preferencesReady, setPreferencesReady] = useState(false);
 
   useEffect(() => {
-    loadTheme();
+    void Promise.all([
+      loadTheme(),
+      usePracticeSettingsStore.getState().loadPracticeSettings(),
+    ]).then(() => setPreferencesReady(true));
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -149,7 +154,7 @@ export default function App() {
     }
   }, [loaded]);
 
-  if (!loaded) return null;
+  if (!loaded || !preferencesReady) return null;
 
   const navTheme = {
     ...(isDark ? DarkTheme : DefaultTheme),

@@ -5,6 +5,8 @@ import {
   __resetPracticeSettingsStoreForTests,
   allForms,
   allLevels,
+  beginnerForms,
+  beginnerLevels,
   usePracticeSettingsStore,
 } from '../store/practiceSettingsStore';
 import { __resetQuizStoreForTests, useQuizStore } from '../store/quizStore';
@@ -215,8 +217,35 @@ describe('store persistence hardening', () => {
 
     await usePracticeSettingsStore.getState().setActiveForms(['te']);
 
-    expect(usePracticeSettingsStore.getState().activeForms).toEqual(allForms);
-    expect(mockStorage.get('practiceSettings')).toBeUndefined();
+    expect(usePracticeSettingsStore.getState().activeForms).toEqual(beginnerForms);
+    expect(JSON.parse(mockStorage.get('practiceSettings')!).activeForms).toEqual(beginnerForms);
+  });
+
+  test('beginner defaults distinguish fresh installs, legacy activity, stored choices, and explicit resets', async () => {
+    await usePracticeSettingsStore.getState().loadPracticeSettings();
+    expect(usePracticeSettingsStore.getState()).toMatchObject({ activeForms: beginnerForms, activeLevels: beginnerLevels });
+
+    for (const key of ['verb_history', 'favorites', 'quiz_stats', 'sessions', 'flashcard_stats', 'flashcardSessions', 'spaced_rep_weights', 'theme_mode', 'auto_tts']) {
+      mockStorage.clear();
+      mockStorage.set(key, key === 'verb_history' ? JSON.stringify(['書く']) : '{}');
+      __resetPracticeSettingsStoreForTests();
+      await usePracticeSettingsStore.getState().loadPracticeSettings();
+      expect(usePracticeSettingsStore.getState()).toMatchObject({ activeForms: allForms, activeLevels: allLevels });
+    }
+
+    const chosen = { activeForms: ['te', 'potential'], activeLevels: ['N2', 'N1'] };
+    mockStorage.set('practiceSettings', JSON.stringify(chosen));
+    __resetPracticeSettingsStoreForTests();
+    await usePracticeSettingsStore.getState().loadPracticeSettings();
+    expect(usePracticeSettingsStore.getState()).toMatchObject(chosen);
+
+    expect(await usePracticeSettingsStore.getState().resetPracticeSettings()).toBe(true);
+    __resetPracticeSettingsStoreForTests();
+    await usePracticeSettingsStore.getState().loadPracticeSettings();
+    expect(usePracticeSettingsStore.getState()).toMatchObject({ activeForms: beginnerForms, activeLevels: beginnerLevels });
+    await usePracticeSettingsStore.getState().setActiveForms(allForms);
+    await usePracticeSettingsStore.getState().setActiveLevels(allLevels);
+    expect(usePracticeSettingsStore.getState()).toMatchObject({ activeForms: allForms, activeLevels: allLevels });
   });
 
   test('flashcard lifetime stats accumulate reviewed/correct', async () => {
