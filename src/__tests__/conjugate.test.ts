@@ -24,13 +24,41 @@ test('every quizzable override has an exception hint containing the actual answe
         expect(hint).toContain('行く is the exception');
       } else {
         const regular = conjugateReading({ ...data, overrides: undefined }, form);
-        expect(hint).toContain(`Exception: ${headword} → ${conjugateReading(data, form)}`);
+        const answer = conjugateReading(data, form);
+        if (answer === headword || answer === data.reading) {
+          expect(hint).toContain(`Exception: ${headword} is already`);
+        } else {
+          expect(hint).toBe(`Exception: ${headword} → ${answer} (not ${regular}).`);
+        }
         expect(hint).toContain(`(not ${regular})`);
       }
     }
   }
   expect(getConjugationHint(verbs['ある'] as VerbData, 'nai', 'ある')).toBe('Exception: ある → ない (not あらない).');
   expect(getConjugationHint(verbs['くださる'] as VerbData, 'masu', 'くださる')).toBe('Exception: くださる → くださいます (not くださります).');
+});
+
+test('every quizzable override avoids an arrow from a form to itself', () => {
+  for (const [headword, data] of Object.entries(verbs) as [string, VerbData][]) {
+    if (!data.overrides) continue;
+    for (const form of quizzableForms(data, ALL_FORMS)) {
+      if (!data.overrides[form]) continue;
+      for (const display of [headword, data.reading]) {
+        const hint = getConjugationHint(data, form, display);
+        expect({ headword, form, hint }).not.toEqual(expect.objectContaining({
+          hint: expect.stringMatching(/([^\s]+) → \1(?=[\s.,;!?]|$)/u),
+        }));
+      }
+    }
+  }
+});
+
+test('ございます is already polite and remains quizzable in the ます form', () => {
+  const data = verbs['ございます'] as VerbData;
+  expect(quizzableForms(data, ALL_FORMS)).toContain('masu');
+  expect(getConjugationHint(data, 'masu', 'ございます')).toBe(
+    'Exception: ございます is already polite — its ます form is ございます itself (not ございまします).',
+  );
 });
 
 // Helper to make verb data concise in tests
