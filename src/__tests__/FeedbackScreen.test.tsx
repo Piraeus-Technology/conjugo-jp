@@ -60,8 +60,8 @@ jest.mock('../store/sessionStore', () => ({
     selector({ clearSessions: () => mockClearQuizSessions() }),
 }));
 jest.mock('../store/flashcardStatsStore', () => ({
-  useFlashcardStatsStore: (selector: (value: { resetStats: () => Promise<boolean> }) => unknown) =>
-    selector({ resetStats: () => mockResetFlashcardStats() }),
+  useFlashcardStatsStore: (selector: (value: { resetStats: (keepEmptyTotal?: boolean) => Promise<boolean> }) => unknown) =>
+    selector({ resetStats: (keepEmptyTotal) => mockResetFlashcardStats(keepEmptyTotal) }),
 }));
 jest.mock('../store/flashcardSessionStore', () => ({
   useFlashcardSessionStore: (selector: (value: { clearSessions: () => Promise<boolean> }) => unknown) =>
@@ -176,6 +176,16 @@ describe('FeedbackScreen', () => {
       expect.stringContaining('adaptive weights'),
     );
     expect(alert).not.toHaveBeenCalledWith('Learning data reset');
+  });
+
+  it('keeps an explicit zero for flashcard lifetime stats if the daily reset fails', async () => {
+    mockClearFlashcardSessions.mockResolvedValue(false);
+    const alert = jest.spyOn(Alert, 'alert');
+    const screen = render(<FeedbackScreen />);
+    fireEvent.press(screen.getByLabelText('Reset all learning data'));
+    await act(async () => { await alert.mock.calls[0][2]?.find(button => button.text === 'Reset')?.onPress?.(); });
+    expect(mockResetFlashcardStats).toHaveBeenCalledWith(true);
+    expect(alert).toHaveBeenLastCalledWith('Reset incomplete', expect.stringContaining('flashcard sessions'));
   });
 
   it('distinguishes a total reset failure from partial failure', async () => {

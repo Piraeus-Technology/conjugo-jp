@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { safeRemoveItem, safeSetItem } from '../utils/safeStorage';
+import { isStoredCount, requireStoredCounts } from '../utils/storedLearningData';
 import { createStoreQueue } from '../utils/storeQueue';
 
 interface QuizStats {
@@ -30,9 +31,17 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
       if (get().loaded) return;
       try {
         const stored = await AsyncStorage.getItem('quiz_stats');
-        if (stored) {
+        if (stored !== null) {
           const data = JSON.parse(stored);
-          set({ ...data, loaded: true, loadError: false });
+          requireStoredCounts(data?.totalQuestions, data?.totalCorrect);
+          if (!isStoredCount(data.bestStreak)) throw new Error('Invalid quiz streak');
+          set({
+            totalQuestions: data.totalQuestions,
+            totalCorrect: data.totalCorrect,
+            bestStreak: data.bestStreak,
+            loaded: true,
+            loadError: false,
+          });
         } else {
           set({ loaded: true, loadError: false });
         }
@@ -68,13 +77,6 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
   },
 
   resetStats: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadStats();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping quiz stats reset: store never loaded');
-      return false;
-    }
     let cleared = false;
     await queue.enqueue(async () => {
       const removed = await safeRemoveItem('quiz_stats');

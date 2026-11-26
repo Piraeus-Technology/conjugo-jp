@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { safeRemoveItem, safeSetItem } from '../utils/safeStorage';
+import { requireStoredCounts } from '../utils/storedLearningData';
 import { createStoreQueue } from '../utils/storeQueue';
 
 // Lifetime flashcard aggregate, mirroring quizStore. Kept separate from the
@@ -13,7 +14,7 @@ interface FlashcardStats {
   loadError: boolean;
   loadStats: () => Promise<void>;
   recordReview: (correct: boolean) => Promise<void>;
-  resetStats: () => Promise<boolean>;
+  resetStats: (keepEmptyTotal?: boolean) => Promise<boolean>;
 }
 
 const queue = createStoreQueue();
@@ -27,10 +28,7 @@ async function seedStatsFromSessions(): Promise<{ totalReviewed: number; totalCo
   if (!Array.isArray(sessions)) throw new Error('Invalid flashcard session history');
 
   for (const session of sessions) {
-    if (!session || !Number.isSafeInteger(session.reviewed) || !Number.isSafeInteger(session.correct) ||
-        session.correct < 0 || session.reviewed < session.correct) {
-      throw new Error('Invalid flashcard session counts');
-    }
+    requireStoredCounts(session?.reviewed, session?.correct);
     totals.totalReviewed += session.reviewed;
     totals.totalCorrect += session.correct;
   }
@@ -51,9 +49,15 @@ export const useFlashcardStatsStore = create<FlashcardStats>((set, get) => ({
       if (get().loaded) return;
       try {
         const stored = await AsyncStorage.getItem('flashcard_stats');
-        if (stored) {
+        if (stored !== null) {
           const data = JSON.parse(stored);
-          set({ ...data, loaded: true, loadError: false });
+          requireStoredCounts(data?.totalReviewed, data?.totalCorrect);
+          set({
+            totalReviewed: data.totalReviewed,
+            totalCorrect: data.totalCorrect,
+            loaded: true,
+            loadError: false,
+          });
         } else {
           const seeded = await seedStatsFromSessions();
           const persisted = await safeSetItem('flashcard_stats', JSON.stringify(seeded));
@@ -92,22 +96,20 @@ export const useFlashcardStatsStore = create<FlashcardStats>((set, get) => ({
     });
   },
 
-  resetStats: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadStats();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping flashcard stats reset: store never loaded');
-      return false;
-    }
+  resetStats: async (keepEmptyTotal = false): Promise<boolean> => {
     let cleared = false;
     await queue.enqueue(async () => {
-      const removed = await safeRemoveItem('flashcard_stats');
-      if (!removed) {
+      const empty = { totalReviewed: 0, totalCorrect: 0 };
+      // If daily history survived a partial reset, record an explicit zero to
+      // prevent it from seeding the newly reset lifetime total.
+      const persisted = keepEmptyTotal
+        ? await safeSetItem('flashcard_stats', JSON.stringify(empty))
+        : await safeRemoveItem('flashcard_stats');
+      if (!persisted) {
         console.warn('Failed to reset flashcard stats');
         return;
       }
-      set({ totalReviewed: 0, totalCorrect: 0, loaded: true, loadError: false });
+      set({ ...empty, loaded: true, loadError: false });
       cleared = true;
     });
     return cleared;

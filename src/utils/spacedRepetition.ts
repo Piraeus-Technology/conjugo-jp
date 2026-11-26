@@ -99,7 +99,7 @@ export const SPACED_REP_SCHEMA_VERSION = 2;
  * upgrade, rather than silently resetting everyone to DEFAULT_WEIGHT.
  */
 export function parseStoredWeights(stored: string | null, migratedAt: number): VerbWeightState {
-  if (!stored) return { weights: {}, lastPracticedAt: {} };
+  if (stored === null) return { weights: {}, lastPracticedAt: {} };
 
   const parsed = JSON.parse(stored) as unknown;
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {

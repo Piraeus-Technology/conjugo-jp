@@ -84,13 +84,20 @@ export default function FeedbackScreen() {
           text: 'Reset',
           style: 'destructive',
           onPress: async () => {
+            const flashcardSessions = Promise.resolve().then(clearFlashcardSessions);
             const operations = [
               { label: 'favorites', run: clearFavorites },
               { label: 'search history', run: clearHistory },
               { label: 'quiz stats', run: resetQuizStats },
               { label: 'quiz sessions', run: clearQuizSessions },
-              { label: 'flashcard stats', run: resetFlashcardStats },
-              { label: 'flashcard sessions', run: clearFlashcardSessions },
+              {
+                label: 'flashcard stats',
+                run: () => flashcardSessions.then(
+                  cleared => resetFlashcardStats(!cleared),
+                  () => resetFlashcardStats(true),
+                ),
+              },
+              { label: 'flashcard sessions', run: () => flashcardSessions },
               { label: 'adaptive weights', run: resetWeights },
               { label: 'practice settings', run: resetPracticeSettings },
             ];

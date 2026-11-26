@@ -76,13 +76,6 @@ export const useHistoryStore = create<HistoryStore>((set, get) => ({
   },
 
   clearHistory: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadHistory();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping history clear: store never loaded');
-      return false;
-    }
     let cleared = false;
     await queue.enqueue(async () => {
       const removed = await safeRemoveItem('verb_history');

@@ -1,3 +1,5 @@
+import { __resetSessionStoreForTests, useSessionStore } from '../store/sessionStore';
+import { __resetFlashcardSessionStoreForTests, useFlashcardSessionStore } from '../store/flashcardSessionStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { __resetFavoritesStoreForTests, useFavoritesStore } from '../store/favoritesStore';
 import { __resetHistoryStoreForTests, useHistoryStore } from '../store/historyStore';
@@ -50,6 +52,8 @@ describe('store persistence hardening', () => {
     __resetHistoryStoreForTests();
     __resetPracticeSettingsStoreForTests();
     __resetQuizStoreForTests();
+    __resetSessionStoreForTests();
+    __resetFlashcardSessionStoreForTests();
     __resetFlashcardStatsStoreForTests();
     __resetSpacedRepStoreForTests();
     __resetThemeStoreForTests();
@@ -306,6 +310,54 @@ describe('store persistence hardening', () => {
 
     expect(JSON.parse(mockStorage.get('flashcard_stats')!)).toEqual({ totalReviewed: 10, totalCorrect: 7 });
     expect(useFlashcardStatsStore.getState()).toMatchObject({ loaded: false, loadError: true });
+  });
+
+  test.each([
+    ['favorites', useFavoritesStore.getState, 'loadFavorites', 'clearFavorites', { favorites: [] }],
+    ['verb_history', useHistoryStore.getState, 'loadHistory', 'clearHistory', { history: [] }],
+    ['quiz_stats', useQuizStore.getState, 'loadStats', 'resetStats', { totalQuestions: 0, totalCorrect: 0, bestStreak: 0 }],
+    ['sessions', useSessionStore.getState, 'loadSessions', 'clearSessions', { sessions: [] }],
+    ['flashcard_stats', useFlashcardStatsStore.getState, 'loadStats', 'resetStats', { totalReviewed: 0, totalCorrect: 0 }],
+    ['flashcardSessions', useFlashcardSessionStore.getState, 'loadSessions', 'clearSessions', { sessions: [] }],
+    ['spaced_rep_weights', useSpacedRepStore.getState, 'loadWeights', 'resetWeights', { weights: {}, lastPracticedAt: {} }],
+  ] as const)('%s can be explicitly cleared after an unparseable read', async (key, getState, loadMethod, resetMethod, empty) => {
+    mockStorage.set(key, '{');
+    const state = getState() as unknown as Record<string, () => Promise<unknown>>;
+    await state[loadMethod]();
+    expect(getState()).toMatchObject({ loaded: false, loadError: true });
+    expect(mockStorage.get(key)).toBe('{');
+
+    expect(await state[resetMethod]()).toBe(true);
+    expect(mockStorage.has(key)).toBe(false);
+    expect(getState()).toMatchObject({ ...empty, loaded: true, loadError: false });
+  });
+
+  test.each([
+    ['quiz stats', 'quiz_stats', '{"totalQuestions":"3","totalCorrect":2,"bestStreak":2}', useQuizStore.getState, 'loadStats'],
+    ['flashcard stats', 'flashcard_stats', '{"totalReviewed":5,"totalCorrect":null}', useFlashcardStatsStore.getState, 'loadStats'],
+    ['quiz sessions', 'sessions', '{"day":"2026-06-25","total":3,"correct":2}', useSessionStore.getState, 'loadSessions'],
+    ['flashcard sessions', 'flashcardSessions', '[{"day":"2026-06-25","reviewed":"4","correct":2}]', useFlashcardSessionStore.getState, 'loadSessions'],
+  ] as const)('%s reject the wrong persisted shape without modifying it', async (_label, key, stored, getState, loadMethod) => {
+    mockStorage.set(key, stored);
+    const state = getState() as unknown as Record<string, () => Promise<unknown>>;
+    await state[loadMethod]();
+    expect(getState()).toMatchObject({ loaded: false, loadError: true });
+    expect(mockStorage.get(key)).toBe(stored);
+    expect(AsyncStorage.setItem).not.toHaveBeenCalled();
+  });
+
+  test('an explicit lifetime reset is not reseeded when clearing daily flashcard history fails', async () => {
+    mockStorage.set('flashcardSessions', JSON.stringify([{ day: '2026-06-25', reviewed: 40, correct: 30 }]));
+    await useFlashcardStatsStore.getState().loadStats();
+    jest.mocked(AsyncStorage.removeItem).mockRejectedValueOnce(new Error('disk locked'));
+    const sessionsCleared = await useFlashcardSessionStore.getState().clearSessions();
+    expect(sessionsCleared).toBe(false);
+    expect(await useFlashcardStatsStore.getState().resetStats(!sessionsCleared)).toBe(true);
+
+    __resetFlashcardStatsStoreForTests();
+    await useFlashcardStatsStore.getState().loadStats();
+    expect(useFlashcardStatsStore.getState()).toMatchObject({ loaded: true, totalReviewed: 0, totalCorrect: 0 });
+    expect(mockStorage.has('flashcardSessions')).toBe(true);
   });
 
   // Keep last: this uses a persistent mockRejectedValue that clearAllMocks does
