@@ -113,9 +113,10 @@ export default function HomeScreen() {
   }, [hasActiveFilters, passesFilters]);
 
   const results = useMemo((): SearchResult[] => {
-    if (!debouncedQuery.trim()) return !query.trim() && hasActiveFilters ? filteredVerbResults : [];
+    if (!query.trim()) return filteredVerbResults;
+    if (!debouncedQuery.trim()) return [];
     return searchVerbs(debouncedQuery, passesFilters);
-  }, [query, debouncedQuery, hasActiveFilters, filteredVerbResults, passesFilters]);
+  }, [query, debouncedQuery, filteredVerbResults, passesFilters]);
 
   const handleVerbPress = useCallback((verb: string, highlightForm?: string) => {
     addToHistory(verb);
@@ -348,9 +349,9 @@ export default function HomeScreen() {
           keyExtractor={(item) => item.verb + item.matchType}
           renderItem={renderVerbItem}
           contentContainerStyle={styles.listContent}
-          ListEmptyComponent={
+          ListEmptyComponent={query.trim() !== debouncedQuery.trim() ? null : (
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>No matching verbs</Text>
-          }
+          )}
         />
       ) : (
         <ScrollView style={styles.homeContent}>

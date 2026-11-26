@@ -113,6 +113,10 @@ export function searchVerbs(
 
   function addForm(match: ConjMatch) {
     const { jlpt, group, transitive } = (verbs as Record<string, VerbData>)[match.verb];
+    if (match.form === 'dictionary') {
+      addVerb({ verb: match.verb, reading: match.reading, translation: match.translation, jlpt, group, transitive });
+      return;
+    }
     const label = FORM_LABELS[match.form];
     add({
       verb: match.verb,

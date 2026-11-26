@@ -31,6 +31,12 @@ describe('verb search', () => {
     }
   });
 
+  it('omits the dictionary match line while keeping the exact conjugation label', () => {
+    expect(searchVerbs('taberu')[0]).toMatchObject({ verb: '食べる', matchType: 'verb' });
+    expect(searchVerbs('taberu')[0].matchDetail).toBeUndefined();
+    expect(searchVerbs('tabemasu')[0].matchDetail).toContain('ます');
+  });
+
   it('keeps exact conjugations and English headwords near the top', () => {
     expect(searchVerbs('tabemasu')[0]).toMatchObject({ verb: '食べる', matchForm: 'masu' });
     expect(searchVerbs('itta').slice(0, 3).map(row => row.verb)).toEqual(['行く', '言う', '要る']);
