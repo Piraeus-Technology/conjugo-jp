@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { FlatList, ScrollView, StyleSheet } from 'react-native';
+import { AppState, FlatList, ScrollView, StyleSheet } from 'react-native';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import HomeScreen, { styles as homeStyles } from '../screens/HomeScreen';
@@ -11,6 +11,7 @@ import { useFavoritesStore } from '../store/favoritesStore';
 import verbs from '../data/verbs.json';
 
 const mockNavigate = jest.fn();
+const mockNavigation = { navigate: mockNavigate, addListener: () => jest.fn() };
 
 jest.mock(
   '@react-native-async-storage/async-storage',
@@ -27,7 +28,7 @@ jest.mock('expo-haptics', () => ({
 }));
 jest.mock('react-native-gesture-handler', () => ({ Swipeable: 'Swipeable' }));
 jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ navigate: mockNavigate }),
+  useNavigation: () => mockNavigation,
 }));
 
 function relativeLuminance(hex: string): number {
@@ -50,6 +51,11 @@ function contrastRatio(foreground: string, background: string): number {
 }
 
 describe('UI regression guards', () => {
+  beforeEach(() => {
+    jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
+  });
+  afterEach(() => jest.restoreAllMocks());
+
   it('announces the daily verb JLPT level to screen readers', async () => {
     const screen = render(React.createElement(HomeScreen));
     await act(async () => { await Promise.resolve(); });

@@ -30,7 +30,7 @@ import { useFlashcardStatsStore } from '../store/flashcardStatsStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 import { useThemeStore } from '../store/themeStore';
 import { useSessionAutosave } from '../hooks/useSessionAutosave';
-import { getTodayKey } from '../utils/dayKey';
+import { useTodayKey } from '../hooks/useTodayKey';
 import type { FlashcardStackParamList } from '../types/navigation';
 
 const allVerbEntries = Object.entries(verbs as Record<string, VerbData>);
@@ -203,7 +203,8 @@ export default function FlashcardScreen() {
   });
 
   // Today's cumulative totals plus any unsaved in-memory progress.
-  const todaySession = sessions.find(s => s.day === getTodayKey());
+  const todayKey = useTodayKey();
+  const todaySession = sessions.find(s => s.day === todayKey);
   const reviewed = (todaySession?.reviewed || 0) + unsavedCount;
   const correct = (todaySession?.correct || 0) + unsavedCorrect;
 

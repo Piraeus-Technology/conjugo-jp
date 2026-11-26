@@ -30,6 +30,35 @@ export default function ConjugationScreen() {
   const highlightRef = useRef<React.ElementRef<typeof TouchableOpacity>>(null);
   const scrollContentRef = useRef<View>(null);
 
+  const highlightTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const didScrollToHighlight = useRef(false);
+
+  React.useLayoutEffect(() => {
+    didScrollToHighlight.current = false;
+    return () => {
+      if (highlightTimer.current !== null) clearTimeout(highlightTimer.current);
+      highlightTimer.current = null;
+    };
+  }, [verb, highlightForm]);
+
+  const scheduleHighlight = () => {
+    if (didScrollToHighlight.current || highlightTimer.current !== null) return;
+    highlightTimer.current = setTimeout(() => {
+      highlightTimer.current = null;
+      if (!highlightRef.current || !scrollContentRef.current) return;
+      const row = highlightRef.current;
+      row.measureLayout(
+        scrollContentRef.current,
+        (_x, y) => {
+          if (didScrollToHighlight.current || highlightRef.current !== row) return;
+          didScrollToHighlight.current = true;
+          scrollRef.current?.scrollTo({ y: Math.max(0, y - 150), animated: true });
+        },
+        () => {},
+      );
+    }, 400);
+  };
+
   if (!verbData) {
     return (
       <View style={[styles.container, { backgroundColor: colors.bg }]}>
@@ -139,19 +168,7 @@ export default function ConjugationScreen() {
                     <TouchableOpacity
                       key={form}
                       ref={isHighlighted ? highlightRef : undefined}
-                      onLayout={isHighlighted ? () => {
-                        setTimeout(() => {
-                          if (highlightRef.current && scrollContentRef.current) {
-                            highlightRef.current.measureLayout(
-                              scrollContentRef.current,
-                              (_x, y) => {
-                                scrollRef.current?.scrollTo({ y: Math.max(0, y - 150), animated: true });
-                              },
-                              () => {},
-                            );
-                          }
-                        }, 400);
-                      } : undefined}
+                      onLayout={isHighlighted ? scheduleHighlight : undefined}
                       style={[
                         styles.formRow,
                         { borderBottomColor: colors.divider },

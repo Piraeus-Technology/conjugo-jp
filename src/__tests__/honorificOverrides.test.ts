@@ -1,4 +1,4 @@
-import { conjugateReading, ConjugationForm, VerbData } from '../utils/conjugate';
+import { conjugateReading, getConjugationHint, ConjugationForm, VerbData } from '../utils/conjugate';
 import verbsJson from '../data/verbs.json';
 
 const verbs = verbsJson as Record<string, VerbData>;
@@ -62,4 +62,13 @@ describe('honorific / irregular verb overrides', () => {
   it('does not regress the regular ichidan imperative (e.g. 食べろ)', () => {
     expect(conjugateReading(verbs['食べる'], 'imperative')).toBe('たべろ');
   });
+});
+
+it.each([
+  ['te', 'ございまして'],
+  ['ta', 'ございました'],
+  ['conditional_tara', 'ございましたら'],
+] as const)('explains the polite ございます pattern for %s and keeps the same answer', (form, answer) => {
+  expect(conjugateReading(verbs['ございます'], form)).toBe(answer);
+  expect(getConjugationHint(verbs['ございます'], form)).toContain(`polite ます pattern. Use ${answer}`);
 });

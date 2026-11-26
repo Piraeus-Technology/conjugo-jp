@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Alert, Platform } from 'react-native';
 import {
   releaseIapConnection,
@@ -41,6 +41,7 @@ type PurchaseError = import('react-native-iap').PurchaseError;
 export function useTipJar() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
+  const requestInFlight = useRef(false);
   // Without the native module (Expo Go, web) the tip jar is permanently
   // unsupported; everything below no-ops so hooks are still called
   // unconditionally.
@@ -91,7 +92,7 @@ export function useTipJar() {
       try {
         await finishTransaction({ purchase, isConsumable: true });
         if (!mounted) return;
-        setLoading(false);
+        if (!requestInFlight.current) setLoading(false);
         // Always thank on success — the user deserves the confirmation
         // even (especially) when the same transaction had previously
         // failed and we'd warned them with "Purchase Needs Attention".
@@ -102,7 +103,7 @@ export function useTipJar() {
         // Release the claim so an OS replay can retry the finish.
         releaseTransactionClaim(purchase);
         if (!mounted) return;
-        setLoading(false);
+        if (!requestInFlight.current) setLoading(false);
         if (txKey && failedTransactionIds.has(txKey)) {
           // Already alerted on this transaction this mount — stay quiet.
           return;
@@ -117,7 +118,7 @@ export function useTipJar() {
 
     const handlePurchaseError = (error: PurchaseError) => {
       if (!mounted) return;
-      setLoading(false);
+      if (!requestInFlight.current) setLoading(false);
       if (error.code !== ErrorCode.UserCancelled) {
         Alert.alert('Purchase Failed', 'Something went wrong. Please try again.');
       }
@@ -189,7 +190,8 @@ export function useTipJar() {
   }, []);
 
   const tip = useCallback(async (sku: string) => {
-    if (!iapModule) return;
+    if (!iapModule || requestInFlight.current) return;
+    requestInFlight.current = true;
     setLoading(true);
     try {
       await iapModule.requestPurchase({
@@ -207,6 +209,7 @@ export function useTipJar() {
       // purchases (iOS Ask to Buy) and abandoned flows may never emit a
       // listener event, which used to leave the button loading forever.
       // The purchase listener still clears it on the normal path.
+      requestInFlight.current = false;
       setLoading(false);
     }
   }, []);

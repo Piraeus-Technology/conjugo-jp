@@ -20,7 +20,7 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { searchVerbs, verbList, type SearchResult } from '../utils/verbSearch';
-import { getTodayKey } from '../utils/dayKey';
+import { useTodayKey } from '../hooks/useTodayKey';
 import { getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
 import type { SearchStackParamList } from '../types/navigation';
 import { VerbData, VerbGroup, JLPTLevel } from '../utils/conjugate';
@@ -123,7 +123,7 @@ export default function HomeScreen() {
     navigation.navigate('Conjugation', { verb, highlightForm });
   }, [addToHistory, navigation]);
 
-  const vodDayKey = getTodayKey();
+  const vodDayKey = useTodayKey();
   const [vodVerb, vodData] = useMemo(
     () => getVerbOfTheDayForKey(verbList, vodDayKey),
     [vodDayKey],

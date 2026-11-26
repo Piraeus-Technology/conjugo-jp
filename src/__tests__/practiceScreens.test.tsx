@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AccessibilityInfo, Animated, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { AccessibilityInfo, Animated, AppState, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { act, fireEvent, render } from '@testing-library/react-native';
 import ConjugationScreen from '../screens/ConjugationScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
@@ -8,18 +8,20 @@ import { __resetFlashcardStatsStoreForTests } from '../store/flashcardStatsStore
 import { __resetFlashcardSessionStoreForTests } from '../store/flashcardSessionStore';
 import { maybeRequestStoreReview } from '../utils/storeReviewPrompt';
 import { speak, stopSpeech } from '../utils/speech';
+import PracticeSettingsScreen from '../screens/PracticeSettingsScreen';
 import QuizScreen from '../screens/QuizScreen';
-import { __resetPracticeSettingsStoreForTests } from '../store/practiceSettingsStore';
+import { __resetPracticeSettingsStoreForTests, allForms, allLevels, usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { __resetQuizStoreForTests, useQuizStore } from '../store/quizStore';
 import { __resetSessionStoreForTests } from '../store/sessionStore';
 import { __resetSpacedRepStoreForTests } from '../store/spacedRepStore';
 import verbs from '../data/verbs.json';
 
+let mockRouteParams: { verb?: string; highlightForm?: string; mode?: string };
 const mockNavigation = { setOptions: jest.fn(), addListener: () => jest.fn() };
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
   useFocusEffect: jest.fn(),
-  useRoute: () => ({ params: { verb: '開く' } }),
+  useRoute: () => ({ params: mockRouteParams }),
 }));
 jest.mock('@react-native-async-storage/async-storage', () =>
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -43,6 +45,8 @@ const question = {
 
 beforeEach(async () => {
   await AsyncStorage.clear();
+  mockRouteParams = { verb: '開く' };
+  jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
   jest.clearAllMocks();
   __resetQuizStoreForTests();
   __resetFlashcardSessionStoreForTests();
@@ -55,6 +59,8 @@ beforeEach(async () => {
   const { generateFlashcard } = jest.requireMock('../utils/flashcardCard');
   generateFlashcard.mockReturnValue({ ...question, answer: question.correctAnswer });
 });
+
+afterEach(() => jest.restoreAllMocks());
 
 async function ready(component: React.ReactElement) {
   const screen = render(component);
@@ -168,4 +174,48 @@ it('guards Next before an answer and announces which option was correct', async 
   } finally {
     announce.mockRestore();
   }
+});
+
+it('scrolls to a highlighted form once and cancels a pending scroll on unmount', async () => {
+  mockRouteParams.highlightForm = 'masu';
+  const measureLayout = jest.spyOn(View.prototype, 'measureLayout')
+    .mockImplementation((_parent, reply) => reply(0, 250, 0, 0));
+  const load = () => ready(<ConjugationScreen />);
+  jest.useFakeTimers();
+  try {
+    const screen = await load();
+    const row = () => screen.getByLabelText(/^ます形, .*開きます/);
+    const group = screen.getByLabelText('Basic conjugation group');
+    fireEvent(row(), 'layout');
+    act(() => jest.advanceTimersByTime(400));
+    expect(measureLayout).toHaveBeenCalledTimes(1);
+    fireEvent.press(group);
+    fireEvent.press(group);
+    fireEvent(row(), 'layout');
+    act(() => jest.advanceTimersByTime(400));
+    expect(measureLayout).toHaveBeenCalledTimes(1);
+    screen.unmount();
+
+    const reopened = await load();
+    const schedule = jest.spyOn(global, 'setTimeout');
+    const cancel = jest.spyOn(global, 'clearTimeout');
+    fireEvent(reopened.getByLabelText(/^ます形, .*開きます/), 'layout');
+    const index = schedule.mock.calls.map(([, delay]) => delay).lastIndexOf(400);
+    expect(index).toBeGreaterThanOrEqual(0);
+    reopened.unmount();
+    expect(cancel).toHaveBeenCalledWith(schedule.mock.results[index].value);
+    schedule.mockRestore();
+    cancel.mockRestore();
+  } finally {
+    jest.useRealTimers();
+  }
+});
+
+it('offers the ます-only and N5-only practice settings by name', async () => {
+  mockRouteParams = { mode: 'quiz' };
+  usePracticeSettingsStore.setState({ activeForms: [...allForms], activeLevels: [...allLevels], loaded: true });
+  const screen = await ready(<PracticeSettingsScreen />);
+  await act(async () => fireEvent.press(screen.getByRole('button', { name: 'ます only' })));
+  await act(async () => fireEvent.press(screen.getByRole('button', { name: 'N5 only' })));
+  expect(usePracticeSettingsStore.getState()).toMatchObject({ activeForms: ['masu'], activeLevels: ['N5'] });
 });

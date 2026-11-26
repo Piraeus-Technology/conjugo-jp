@@ -24,6 +24,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useSessionAutosave } from '../hooks/useSessionAutosave';
 import { getTodayKey } from '../utils/dayKey';
+import { useTodayKey } from '../hooks/useTodayKey';
 import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 import { useSessionStore } from '../store/sessionStore';
@@ -172,7 +173,8 @@ export default function QuizScreen() {
   });
 
   // Today's cumulative totals plus any unsaved in-memory progress.
-  const todaySession = sessions.find(s => s.day === getTodayKey());
+  const todayKey = useTodayKey();
+  const todaySession = sessions.find(s => s.day === todayKey);
   const sessionTotal = (todaySession?.total || 0) + unsavedCount;
   const sessionScore = (todaySession?.correct || 0) + unsavedCorrect;
 

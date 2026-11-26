@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react-native';
+import { AppState } from 'react-native';
+import { act, fireEvent, render } from '@testing-library/react-native';
 import { getTodayKey } from '../utils/dayKey';
 import PracticeStatsView, { type PracticeStatsLabels } from '../components/PracticeStatsView';
 
@@ -10,6 +11,9 @@ jest.mock(
   () => require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 jest.mock('@expo/vector-icons/Ionicons', () => 'Ionicons');
+const mockAddListener = jest.fn();
+const mockNavigation = { addListener: mockAddListener };
+jest.mock('@react-navigation/native', () => ({ useNavigation: () => mockNavigation }));
 
 const labels: PracticeStatsLabels = {
   countLabel: 'Questions',
@@ -33,6 +37,34 @@ const commonProps = {
 };
 
 describe('PracticeStatsView', () => {
+  beforeEach(() => {
+    mockAddListener.mockClear().mockReturnValue(jest.fn());
+    jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
+  });
+  afterEach(() => jest.restoreAllMocks());
+
+  it('refreshes today and the current month on foregrounding and focus', () => {
+    jest.useFakeTimers();
+    try {
+      jest.setSystemTime(new Date(2026, 9, 31, 23, 59));
+      const listener = jest.mocked(AppState.addEventListener);
+      const screen = render(<PracticeStatsView {...commonProps} sessions={[{ day: '2026-10-31', count: 1, correct: 1 }]} />);
+      expect(screen.getByText('October 2026')).toBeTruthy();
+      expect(screen.getByText('Today')).toBeTruthy();
+
+      jest.setSystemTime(new Date(2026, 10, 1, 1));
+      act(() => listener.mock.calls[0][1]('active'));
+      expect(screen.getByText('November 2026')).toBeTruthy();
+      expect(screen.queryByText('Today')).toBeNull();
+
+      jest.setSystemTime(new Date(2026, 11, 1, 1));
+      act(() => mockAddListener.mock.calls[0][1]());
+      expect(screen.getByText('December 2026')).toBeTruthy();
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
   it('replaces zero-filled dashboards with the empty state', () => {
     const screen = render(<PracticeStatsView {...commonProps} />);
 

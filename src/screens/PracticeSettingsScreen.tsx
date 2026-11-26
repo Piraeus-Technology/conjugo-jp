@@ -67,10 +67,10 @@ export default function PracticeSettingsScreen() {
             setActiveForms(allFormsSelected ? ['masu'] : [...allForms]);
           }}
           accessibilityRole="button"
-          accessibilityLabel={allFormsSelected ? 'Deselect all forms' : 'Select all forms'}
+          accessibilityLabel={allFormsSelected ? 'ます only' : 'Select all forms'}
         >
           <Text style={[styles.selectAllText, { color: colors.primaryText }]}>
-            {allFormsSelected ? 'Deselect All' : 'Select All'}
+            {allFormsSelected ? 'ます only' : 'Select All'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -119,10 +119,10 @@ export default function PracticeSettingsScreen() {
             setActiveLevels(allLevelsSelected ? ['N5'] : [...allLevels]);
           }}
           accessibilityRole="button"
-          accessibilityLabel={allLevelsSelected ? 'Deselect all JLPT levels' : 'Select all JLPT levels'}
+          accessibilityLabel={allLevelsSelected ? 'N5 only' : 'Select all JLPT levels'}
         >
           <Text style={[styles.selectAllText, { color: colors.primaryText }]}>
-            {allLevelsSelected ? 'Deselect All' : 'Select All'}
+            {allLevelsSelected ? 'N5 only' : 'Select All'}
           </Text>
         </TouchableOpacity>
       </View>

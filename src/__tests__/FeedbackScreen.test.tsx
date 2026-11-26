@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
   Linking,
   Platform,
   Share,
@@ -8,6 +10,7 @@ import {
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import FeedbackScreen from '../screens/FeedbackScreen';
 
+const mockTipJar = jest.fn();
 const mockClearFavorites = jest.fn();
 const mockClearHistory = jest.fn();
 const mockResetQuizStats = jest.fn();
@@ -23,13 +26,7 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: jest.fn() }),
 }));
 jest.mock('../utils/tipJar', () => ({
-  useTipJar: () => ({
-    products: [],
-    loading: false,
-    unavailable: false,
-    unsupported: false,
-    tip: jest.fn(),
-  }),
+  useTipJar: () => mockTipJar(),
 }));
 jest.mock('../store/themeStore', () => {
   const state = {
@@ -91,6 +88,7 @@ describe('FeedbackScreen', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockTipJar.mockReturnValue({ products: [], loading: false, unavailable: false, unsupported: false, tip: jest.fn() });
     resetActions.forEach(reset => reset.mockResolvedValue(true));
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'android' });
   });
@@ -141,6 +139,31 @@ describe('FeedbackScreen', () => {
       message: expect.stringContaining('https://play.google.com/store/apps/details?id=com.piraeus.conjugojp'),
     });
     expect(screen.getByText('ConjuGo JP v1.2.0')).toBeTruthy();
+  });
+
+  it('shows feedback when Share or the privacy policy cannot be opened', async () => {
+    jest.spyOn(Share, 'share').mockRejectedValue(new Error('no share sheet'));
+    jest.spyOn(Linking, 'openURL').mockRejectedValue(new Error('no browser'));
+    const alert = jest.spyOn(Alert, 'alert');
+    const screen = render(<FeedbackScreen />);
+    await act(async () => fireEvent.press(screen.getByLabelText('Share ConjuGo JP')));
+    expect(alert).toHaveBeenCalledWith('Sharing Unavailable', 'Could not open the share sheet.');
+    await act(async () => fireEvent.press(screen.getByLabelText('Open privacy policy')));
+    expect(alert).toHaveBeenCalledWith('Privacy Policy Unavailable', 'Could not open the privacy policy.');
+  });
+
+  it('marks the tip button busy and shows a spinner during the request', () => {
+    mockTipJar.mockReturnValue({
+      products: [{ id: 'conjugojp_tip_small', displayPrice: '$0.99' }], loading: true, tip: jest.fn(),
+    });
+    const screen = render(<FeedbackScreen />);
+    expect(screen.getByRole('button', { name: 'Leave a $0.99 tip', busy: true })).toBeDisabled();
+    expect(screen.UNSAFE_getByType(ActivityIndicator)).toBeTruthy();
+  });
+
+  it('renders More without a keyboard-avoidance wrapper', () => {
+    const screen = render(<FeedbackScreen />);
+    expect(screen.UNSAFE_queryByType(KeyboardAvoidingView)).toBeNull();
   });
 
   it('requires confirmation before clearing every category of learning data', async () => {
