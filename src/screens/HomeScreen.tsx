@@ -12,7 +12,6 @@ import {
 import { Swipeable } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
-import Fuse from 'fuse.js';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -20,90 +19,19 @@ import verbs from '../data/verbs.json';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
-import { romajiToHiragana } from '../utils/kana';
+import { searchVerbs, verbList, type SearchResult } from '../utils/verbSearch';
 import { getTodayKey } from '../utils/dayKey';
 import { getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
 import type { SearchStackParamList } from '../types/navigation';
-import { availableForms, conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS, VerbData, VerbGroup, JLPTLevel, ConjugationForm } from '../utils/conjugate';
+import { VerbData, VerbGroup, JLPTLevel } from '../utils/conjugate';
 
 type NavProp = NativeStackNavigationProp<SearchStackParamList>;
-
-const verbList = Object.entries(verbs as Record<string, VerbData>);
-
-// Build search index
-const searchData = verbList.map(([verb, data]) => ({
-  verb,
-  reading: data.reading,
-  translation: data.translation,
-  jlpt: data.jlpt,
-  group: data.group,
-  transitive: data.transitive,
-}));
-
-const fuse = new Fuse(searchData, {
-  keys: [
-    { name: 'verb', weight: 3 },
-    { name: 'reading', weight: 2 },
-    { name: 'translation', weight: 1 },
-  ],
-  threshold: 0.3,
-  ignoreLocation: true,
-});
 
 const groupColors: Record<VerbGroup, { bg: string; text: string; label: string }> = {
   godan: { bg: '', text: '', label: '五段' },
   ichidan: { bg: '', text: '', label: '一段' },
   irregular: { bg: '', text: '', label: '不規則' },
 };
-
-// Lazy-built conjugation index — only created on first conjugated form search
-interface ConjMatch {
-  verb: string;
-  reading: string;
-  translation: string;
-  form: ConjugationForm;
-  conjugated: string;
-  conjugatedKanji: string;
-}
-
-let conjugationIndex: Map<string, ConjMatch[]> | null = null;
-
-export function getConjugationIndex(): Map<string, ConjMatch[]> {
-  if (conjugationIndex) return conjugationIndex;
-  conjugationIndex = new Map();
-  verbList.forEach(([verb, data]) => {
-    availableForms(data, ALL_FORMS).forEach((form) => {
-      const reading = conjugateReading(data, form);
-      const kanji = deriveKanjiForm(verb, data.reading, reading);
-      const match: ConjMatch = {
-        verb,
-        reading: data.reading,
-        translation: data.translation,
-        form,
-        conjugated: reading,
-        conjugatedKanji: kanji,
-      };
-      for (const key of new Set([reading, kanji])) {
-        const current = conjugationIndex!.get(key) ?? [];
-        current.push(match);
-        conjugationIndex!.set(key, current);
-      }
-    });
-  });
-  return conjugationIndex;
-}
-
-interface SearchResult {
-  verb: string;
-  reading: string;
-  translation: string;
-  jlpt: string;
-  group: string;
-  transitive?: boolean;
-  matchType: 'verb' | 'conjugation';
-  matchDetail?: string;
-  matchForm?: ConjugationForm;
-}
 
 const levelFilters: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const groupFilters: { value: VerbGroup; label: string }[] = [
@@ -186,57 +114,7 @@ export default function HomeScreen() {
 
   const results = useMemo((): SearchResult[] => {
     if (!debouncedQuery.trim()) return !query.trim() && hasActiveFilters ? filteredVerbResults : [];
-    const q = debouncedQuery.trim();
-    const hiraganaQuery = romajiToHiragana(q);
-
-    // Exact conjugated-form lookup is O(1). Typo tolerance remains on the much
-    // smaller headword index, avoiding a 30k-item synchronous Fuse scan.
-    const conjugations = getConjugationIndex();
-    const exactConjMatches = [
-      ...(conjugations.get(hiraganaQuery) ?? []),
-      ...(hiraganaQuery === q ? [] : conjugations.get(q) ?? []),
-    ];
-
-    const seen = new Set<string>();
-    const out: SearchResult[] = [];
-
-    if (exactConjMatches.length > 0) {
-      exactConjMatches.forEach((c) => {
-        if (!seen.has(c.verb)) {
-          seen.add(c.verb);
-          const data = (verbs as Record<string, VerbData>)[c.verb];
-          const label = FORM_LABELS[c.form];
-          out.push({
-            verb: c.verb,
-            reading: c.reading,
-            translation: c.translation,
-            jlpt: data?.jlpt || '',
-            group: data?.group || '',
-            transitive: data?.transitive,
-            matchType: 'conjugation',
-            matchDetail: `「${c.conjugated}」— ${label.ja} (${label.en})`,
-            matchForm: c.form,
-          });
-        }
-      });
-    }
-
-    // Verb name/reading/translation search
-    // Filter the full headword matches before the display cap. Capping Fuse
-    // candidates first can discard every match in a selected JLPT level.
-    const results1 = fuse.search(q);
-    const results2 = hiraganaQuery !== q ? fuse.search(hiraganaQuery) : [];
-    for (const r of [...results1, ...results2]) {
-      if (!seen.has(r.item.verb)) {
-        seen.add(r.item.verb);
-        out.push({
-          ...r.item,
-          matchType: 'verb',
-        });
-      }
-    }
-
-    return out.filter(passesFilters).slice(0, 20);
+    return searchVerbs(debouncedQuery, passesFilters);
   }, [query, debouncedQuery, hasActiveFilters, filteredVerbResults, passesFilters]);
 
   const handleVerbPress = useCallback((verb: string, highlightForm?: string) => {
