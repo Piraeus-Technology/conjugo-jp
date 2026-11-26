@@ -169,6 +169,7 @@ export default function FlashcardScreen() {
     // animation, so a rapid double-tap would otherwise record the card twice.
     if (!card || !flipped || hasGradedCard.current) return;
     hasGradedCard.current = true;
+    stopSpeech();
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     recordProgress(true);
@@ -180,6 +181,7 @@ export default function FlashcardScreen() {
   const handleMissed = () => {
     if (!card || !flipped || hasGradedCard.current) return;
     hasGradedCard.current = true;
+    stopSpeech();
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     recordProgress(false);
@@ -285,6 +287,9 @@ export default function FlashcardScreen() {
         >
           {/* Front */}
           <Animated.View
+            pointerEvents={flipped ? 'none' : 'auto'}
+            accessibilityElementsHidden={flipped}
+            importantForAccessibility={flipped ? 'no-hide-descendants' : 'auto'}
             style={[
               styles.card,
               {
@@ -321,11 +326,14 @@ export default function FlashcardScreen() {
 
           {/* Back */}
           <Animated.View
+            pointerEvents={flipped ? 'auto' : 'none'}
+            accessibilityElementsHidden={!flipped}
+            importantForAccessibility={flipped ? 'auto' : 'no-hide-descendants'}
             style={[
               styles.card,
               styles.cardBack,
               {
-                backgroundColor: colors.primary + '10',
+                backgroundColor: colors.flashcardBack,
                 transform: [{ perspective: 1000 }, { rotateY: backRotateY }],
               },
             ]}
@@ -372,7 +380,7 @@ export default function FlashcardScreen() {
               style={[styles.speakButton, { backgroundColor: colors.primary }]}
               onPress={(e) => {
                 e.stopPropagation?.();
-                speak(card.answer);
+                if (flipped && !hasGradedCard.current) speak(card.answer);
               }}
               accessibilityRole="button"
               accessibilityLabel={`Play pronunciation of ${card.answer}`}

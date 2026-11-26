@@ -11,6 +11,7 @@ const lightColors = {
 
   bg: '#FFFAFA',
   card: '#FFFFFF',
+  flashcardBack: '#FBEFF2',
   searchBg: '#FFF5F6',
 
   textPrimary: '#1A1A1A',
@@ -66,6 +67,7 @@ const darkColors = {
 
   bg: '#141012',
   card: '#1E1A1C',
+  flashcardBack: '#291B1F',
   searchBg: '#2A2426',
 
   textPrimary: '#F0F0F0',
