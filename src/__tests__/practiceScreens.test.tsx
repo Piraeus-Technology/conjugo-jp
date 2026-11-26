@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AccessibilityInfo, Animated, AppState, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { act, fireEvent, render } from '@testing-library/react-native';
@@ -6,6 +7,7 @@ import ConjugationScreen from '../screens/ConjugationScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
 import { __resetFlashcardStatsStoreForTests } from '../store/flashcardStatsStore';
 import { __resetFlashcardSessionStoreForTests } from '../store/flashcardSessionStore';
+import { useThemeStore } from '../store/themeStore';
 import { maybeRequestStoreReview } from '../utils/storeReviewPrompt';
 import { speak, stopSpeech } from '../utils/speech';
 import PracticeSettingsScreen from '../screens/PracticeSettingsScreen';
@@ -218,4 +220,33 @@ it('offers the ます-only and N5-only practice settings by name', async () => {
   await act(async () => fireEvent.press(screen.getByRole('button', { name: 'ます only' })));
   await act(async () => fireEvent.press(screen.getByRole('button', { name: 'N5 only' })));
   expect(usePracticeSettingsStore.getState()).toMatchObject({ activeForms: ['masu'], activeLevels: ['N5'] });
+});
+
+it.each(['focused', 'blurred', 'backgrounded'])('waits for the flip and gates flashcard auto-play while %s', async (mode) => {
+  const timing = Animated.timing;
+  let finish!: () => void;
+  jest.spyOn(Animated, 'timing').mockImplementation((value, config) => {
+    if (config.duration !== 300) return timing(value, config);
+    return { start: complete => { finish = () => complete?.({ finished: true }); }, stop: jest.fn(), reset: jest.fn() };
+  });
+  const previousAppState = AppState.currentState;
+  AppState.currentState = 'active';
+  useThemeStore.setState({ autoTTS: true });
+  try {
+    const screen = await ready(<FlashcardScreen />);
+    const focus = jest.mocked(useFocusEffect).mock.calls[0][0];
+    const blur = focus();
+    fireEvent.press(screen.getByRole('button', { name: /^Tap to reveal/ }));
+    expect(speak).not.toHaveBeenCalled();
+    if (mode === 'blurred' && typeof blur === 'function') blur();
+    if (mode === 'backgrounded') {
+      for (const [, listener] of jest.mocked(AppState.addEventListener).mock.calls) listener('background');
+    }
+    act(finish);
+    if (mode === 'focused') expect(speak).toHaveBeenCalledWith('たべます');
+    else expect(speak).not.toHaveBeenCalled();
+  } finally {
+    AppState.currentState = previousAppState;
+    act(() => useThemeStore.setState({ autoTTS: false }));
+  }
 });

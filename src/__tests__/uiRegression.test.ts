@@ -148,6 +148,7 @@ describe('UI regression guards', () => {
       [colors.calHighText, colors.calHigh], [colors.calMidText, colors.calMid], [colors.calLowText, colors.calLow],
       [colors.n5Text, colors.n5Bg], [colors.n4Text, colors.n4Bg], [colors.n3Text, colors.n3Bg],
       [colors.n2Text, colors.n2Bg], [colors.n1Text, colors.n1Bg], [colors.tabActive, colors.bg],
+      [colors.speechIndicatorText, colors.speechIndicatorBg],
     ];
     for (const [text, surface] of textPairs) {
       expect(contrastRatio(text, surface)).toBeGreaterThanOrEqual(4.5);

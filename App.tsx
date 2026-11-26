@@ -4,6 +4,7 @@ import type { RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar, useColorScheme } from 'react-native';
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as SplashScreen from 'expo-splash-screen';
@@ -16,6 +17,7 @@ import QuizScreen from './src/screens/QuizScreen';
 import StatsScreen from './src/screens/StatsScreen';
 import FlashcardStatsScreen from './src/screens/FlashcardStatsScreen';
 import PracticeSettingsScreen from './src/screens/PracticeSettingsScreen';
+import SpeechIndicator from './src/components/SpeechIndicator';
 import AppErrorBoundary from './src/components/AppErrorBoundary';
 import { useThemeStore } from './src/store/themeStore';
 import { usePracticeSettingsStore } from './src/store/practiceSettingsStore';
@@ -179,6 +181,7 @@ export default function App() {
         barStyle={isDark ? 'light-content' : 'dark-content'}
         backgroundColor={colors.bg}
       />
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <AppErrorBoundary>
       <NavigationContainer theme={navTheme}>
         <Tab.Navigator
@@ -250,7 +253,9 @@ export default function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
+      <SpeechIndicator />
       </AppErrorBoundary>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
