@@ -3,12 +3,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { safeSetItem } from '../utils/safeStorage';
 import { createStoreQueue } from '../utils/storeQueue';
 
+type ThemeChoice = 'light' | 'dark';
+
 interface ThemeStore {
   isDark: boolean;
+  systemIsDark: boolean;
+  choice: ThemeChoice | null;
   autoTTS: boolean;
   loaded: boolean;
   loadError: boolean;
   loadTheme: () => Promise<void>;
+  syncSystemTheme: (isDark: boolean) => void;
   toggleTheme: () => Promise<void>;
   toggleAutoTTS: () => Promise<void>;
 }
@@ -17,6 +22,8 @@ const queue = createStoreQueue();
 
 export const useThemeStore = create<ThemeStore>((set, get) => ({
   isDark: false,
+  systemIsDark: false,
+  choice: null,
   autoTTS: false,
   loaded: false,
   loadError: false,
@@ -26,20 +33,31 @@ export const useThemeStore = create<ThemeStore>((set, get) => ({
     set({ loadError: false });
     return queue.runLoad(async () => {
       if (get().loaded) return;
-      try {
-        const [stored, tts] = await Promise.all([
-          AsyncStorage.getItem('theme_mode'),
-          AsyncStorage.getItem('auto_tts'),
-        ]);
-        set({ isDark: stored === 'dark', autoTTS: tts === 'true', loaded: true, loadError: false });
-      } catch (e) {
-        console.warn('Failed to load theme:', e);
-        // Theme gates App.tsx's first render, so recoverable preference-load
-        // failures must still mark loaded and fall back to defaults.
-        set({ loaded: true, loadError: true });
-      }
+      const [theme, tts] = await Promise.allSettled([
+        AsyncStorage.getItem('theme_mode'),
+        AsyncStorage.getItem('auto_tts'),
+      ]);
+      const saved = theme.status === 'fulfilled' ? theme.value : null;
+      const choice = saved === 'dark' || saved === 'light' ? saved : null;
+      const loadError = theme.status === 'rejected' || tts.status === 'rejected';
+      if (theme.status === 'rejected') console.warn('Failed to load theme:', theme.reason);
+      if (tts.status === 'rejected') console.warn('Failed to load auto-play preference:', tts.reason);
+      // App gates its first render on loaded, so use the available preferences
+      // and system defaults even when one of the reads fails.
+      set(state => ({
+        choice,
+        isDark: choice === null ? state.systemIsDark : choice === 'dark',
+        autoTTS: tts.status === 'fulfilled' && tts.value === 'true',
+        loaded: true,
+        loadError,
+      }));
     });
   },
+
+  syncSystemTheme: (systemIsDark) => set(state => ({
+    systemIsDark,
+    isDark: state.choice === null ? systemIsDark : state.choice === 'dark',
+  })),
 
   toggleTheme: async () => {
     if (!get().loaded) {
@@ -51,12 +69,13 @@ export const useThemeStore = create<ThemeStore>((set, get) => ({
     }
     return queue.enqueue(async () => {
       const newIsDark = !get().isDark;
-      const persisted = await safeSetItem('theme_mode', newIsDark ? 'dark' : 'light');
+      const choice = newIsDark ? 'dark' : 'light';
+      const persisted = await safeSetItem('theme_mode', choice);
       if (!persisted) {
         console.warn('Theme preference not persisted');
         return;
       }
-      set({ isDark: newIsDark });
+      set({ choice, isDark: newIsDark });
     });
   },
 
@@ -82,5 +101,5 @@ export const useThemeStore = create<ThemeStore>((set, get) => ({
 
 export function __resetThemeStoreForTests() {
   queue.reset();
-  useThemeStore.setState({ isDark: false, autoTTS: false, loaded: false, loadError: false });
+  useThemeStore.setState({ isDark: false, systemIsDark: false, choice: null, autoTTS: false, loaded: false, loadError: false });
 }

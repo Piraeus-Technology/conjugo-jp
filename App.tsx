@@ -1,9 +1,9 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useLayoutEffect, useState } from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar } from 'react-native';
+import { StatusBar, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as SplashScreen from 'expo-splash-screen';
@@ -138,9 +138,14 @@ function MoreStackScreen() {
 }
 
 export default function App() {
-  const { isDark, loaded, loadTheme } = useThemeStore();
+  const { isDark, loaded, loadTheme, syncSystemTheme } = useThemeStore();
+  const systemScheme = useColorScheme();
   const colors = useColors();
   const [preferencesReady, setPreferencesReady] = useState(false);
+
+  useLayoutEffect(() => {
+    syncSystemTheme(systemScheme === 'dark');
+  }, [systemScheme, syncSystemTheme]);
 
   useEffect(() => {
     void Promise.all([

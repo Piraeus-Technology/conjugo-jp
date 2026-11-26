@@ -360,6 +360,38 @@ describe('store persistence hardening', () => {
     expect(mockStorage.has('flashcardSessions')).toBe(true);
   });
 
+  test('follows system appearance until the user saves an override', async () => {
+    const { loadTheme, syncSystemTheme, toggleTheme } = useThemeStore.getState();
+    await loadTheme();
+    expect(useThemeStore.getState().isDark).toBe(false);
+    expect(AsyncStorage.setItem).not.toHaveBeenCalled();
+    syncSystemTheme(true);
+    expect(useThemeStore.getState().isDark).toBe(true);
+    syncSystemTheme(false);
+    expect(useThemeStore.getState().isDark).toBe(false);
+    syncSystemTheme(true);
+    await toggleTheme();
+    expect(mockStorage.get('theme_mode')).toBe('light');
+    syncSystemTheme(false);
+    syncSystemTheme(true);
+    expect(useThemeStore.getState()).toMatchObject({ isDark: false, choice: 'light' });
+    expect(mockStorage.has('auto_tts')).toBe(false);
+  });
+
+  test.each(['dark', 'light'] as const)('honors a saved %s choice despite the system and an auto-play read failure', async (choice) => {
+    const isDark = choice === 'dark';
+    const { loadTheme, syncSystemTheme } = useThemeStore.getState();
+    mockStorage.set('theme_mode', choice);
+    syncSystemTheme(!isDark);
+    jest.mocked(AsyncStorage.getItem).mockResolvedValueOnce(choice).mockRejectedValueOnce(new Error('auto-play read failed'));
+    await loadTheme();
+    expect(useThemeStore.getState()).toMatchObject({ choice, isDark, loaded: true });
+    syncSystemTheme(isDark);
+    syncSystemTheme(!isDark);
+    expect(useThemeStore.getState().isDark).toBe(isDark);
+    expect(AsyncStorage.setItem).not.toHaveBeenCalled();
+  });
+
   // Keep last: this uses a persistent mockRejectedValue that clearAllMocks does
   // not reset, so tests added after it would inherit a rejecting getItem.
   test('theme load failure falls back to defaults and still marks loaded', async () => {
