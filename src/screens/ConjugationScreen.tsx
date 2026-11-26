@@ -66,7 +66,7 @@ export default function ConjugationScreen() {
           <View style={styles.verbRow}>
             <Text style={[styles.verb, { color: colors.primaryText }]}>{verb}</Text>
             <TouchableOpacity
-              onPress={() => speak(verb)}
+              onPress={() => speak(verbData.reading)}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               accessibilityRole="button"
               accessibilityLabel={`Play pronunciation of ${verb}`}

@@ -2,6 +2,7 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Animated, ScrollView, StyleSheet } from 'react-native';
 import { act, fireEvent, render } from '@testing-library/react-native';
+import ConjugationScreen from '../screens/ConjugationScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
 import { __resetFlashcardStatsStoreForTests } from '../store/flashcardStatsStore';
 import { __resetFlashcardSessionStoreForTests } from '../store/flashcardSessionStore';
@@ -17,6 +18,7 @@ const mockNavigation = { setOptions: jest.fn(), addListener: () => jest.fn() };
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
   useFocusEffect: jest.fn(),
+  useRoute: () => ({ params: { verb: '開く' } }),
 }));
 jest.mock('@react-native-async-storage/async-storage', () =>
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -96,4 +98,10 @@ it.each(['missed', 'got it'])('stops flashcard speech when the card is graded %s
   } finally {
     animation.mockRestore();
   }
+});
+
+it('speaks the displayed kana あく when the 開く header button is pressed', async () => {
+  const screen = await ready(<ConjugationScreen />);
+  fireEvent.press(screen.getByLabelText('Play pronunciation of 開く'));
+  expect(speak).toHaveBeenCalledWith('あく');
 });
