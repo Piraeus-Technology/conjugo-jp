@@ -324,6 +324,7 @@ export default function HomeScreen() {
 
       <ScrollView
         horizontal
+        keyboardShouldPersistTaps="handled"
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.filterContent}
         style={styles.filterScroll}
@@ -342,6 +343,8 @@ export default function HomeScreen() {
       {query.trim() || hasActiveFilters ? (
         <FlatList
           data={results}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
           keyExtractor={(item) => item.verb + item.matchType}
           renderItem={renderVerbItem}
           contentContainerStyle={styles.listContent}

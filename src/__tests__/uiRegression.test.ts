@@ -1,6 +1,6 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { StyleSheet } from 'react-native';
+import { FlatList, ScrollView, StyleSheet } from 'react-native';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import HomeScreen, { styles as homeStyles } from '../screens/HomeScreen';
@@ -65,6 +65,17 @@ describe('UI regression guards', () => {
     expect(mockNavigate).toHaveBeenCalledWith('Conjugation', { verb, highlightForm: undefined });
     screen.unmount();
     useFavoritesStore.setState({ favorites: [], loaded: true });
+  });
+
+  it('passes handled taps through both search scroll containers and dismisses on a results drag', async () => {
+    const screen = render(React.createElement(HomeScreen));
+    const chipStrip = screen.UNSAFE_getAllByType(ScrollView).find(view => view.props.horizontal);
+    expect(chipStrip?.props.keyboardShouldPersistTaps).toBe('handled');
+    fireEvent.press(screen.getByLabelText('Filter by N5'));
+    const results = screen.UNSAFE_getByType(FlatList);
+    expect(results.props.keyboardShouldPersistTaps).toBe('handled');
+    expect(results.props.keyboardDismissMode).toBe('on-drag');
+    await act(async () => { await Promise.resolve(); });
   });
 
   it('finds N1 suru verbs after filtering rather than truncating them first', async () => {
