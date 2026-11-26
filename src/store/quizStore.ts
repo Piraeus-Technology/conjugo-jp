@@ -8,6 +8,7 @@ interface QuizStats {
   totalQuestions: number;
   totalCorrect: number;
   bestStreak: number;
+  resetCount: number;
   loaded: boolean;
   loadError: boolean;
   loadStats: () => Promise<void>;
@@ -21,6 +22,7 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
   totalQuestions: 0,
   totalCorrect: 0,
   bestStreak: 0,
+  resetCount: 0,
   loaded: false,
   loadError: false,
 
@@ -38,7 +40,7 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
           set({
             totalQuestions: data.totalQuestions,
             totalCorrect: data.totalCorrect,
-            bestStreak: data.bestStreak,
+            bestStreak: Math.min(data.bestStreak, data.totalQuestions),
             loaded: true,
             loadError: false,
           });
@@ -65,7 +67,7 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
       const updated = {
         totalQuestions: state.totalQuestions + 1,
         totalCorrect: state.totalCorrect + (correct ? 1 : 0),
-        bestStreak: Math.max(state.bestStreak, currentStreak),
+        bestStreak: Math.min(state.totalQuestions + 1, Math.max(state.bestStreak, currentStreak)),
       };
       const persisted = await safeSetItem('quiz_stats', JSON.stringify(updated));
       if (!persisted) {
@@ -84,7 +86,10 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
         console.warn('Failed to reset quiz stats');
         return;
       }
-      set({ totalQuestions: 0, totalCorrect: 0, bestStreak: 0, loaded: true, loadError: false });
+      set(state => ({
+        totalQuestions: 0, totalCorrect: 0, bestStreak: 0, resetCount: state.resetCount + 1,
+        loaded: true, loadError: false,
+      }));
       cleared = true;
     });
     return cleared;
@@ -97,6 +102,7 @@ export function __resetQuizStoreForTests() {
     totalQuestions: 0,
     totalCorrect: 0,
     bestStreak: 0,
+    resetCount: 0,
     loaded: false,
     loadError: false,
   });

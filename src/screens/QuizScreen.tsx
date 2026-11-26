@@ -61,17 +61,14 @@ export default function QuizScreen() {
   const { sessions, loadSessions, saveSession } = useSessionStore();
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  // This-visit answers drive review eligibility; the hook dates each answer.
-  const [newTotal, setNewTotal] = useState(0);
-  const [streak, setStreak] = useState(0);
   const [showHint, setShowHint] = useState(true);
   const hasRecordedAnswer = React.useRef(false);
-  // Freeze the persisted baseline; newTotal tracks this visit synchronously,
-  // while quiz-store writes may still be queued when review eligibility runs.
-  const totalQuestionsAtVisitStart = React.useRef<number | null>(null);
-  if (statsLoaded && totalQuestionsAtVisitStart.current === null) {
-    totalQuestionsAtVisitStart.current = totalQuestions;
-  }
+  const visit = React.useRef<{
+    resetCount: number;
+    initialTotal: number;
+    answers: number;
+    streak: number;
+  } | null>(null);
 
   useEffect(() => {
     loadStats();
@@ -121,21 +118,24 @@ export default function QuizScreen() {
     if (hasRecordedAnswer.current || !question) return;
     hasRecordedAnswer.current = true;
     setSelectedAnswer(answer);
-    setNewTotal(t => t + 1);
-
+    const stats = useQuizStore.getState();
+    if (!visit.current || visit.current.resetCount !== stats.resetCount) {
+      visit.current = { resetCount: stats.resetCount, initialTotal: stats.totalQuestions, answers: 0, streak: 0 };
+    }
+    const progress = visit.current;
     const correct = answer === question.correctAnswer;
-    recordProgress(correct, correct ? streak + 1 : 0);
+    progress.streak = correct ? progress.streak + 1 : 0;
+    recordProgress(correct, progress.streak);
     if (correct) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      const newStreak = streak + 1;
-      setStreak(newStreak);
+      const newStreak = progress.streak;
       recordAnswer(true, newStreak);
       if (newStreak === 10) {
         void maybeRequestStoreReview({
           appVersion: Constants.expoConfig?.version,
           newStreak,
-          totalQuestionsAtVisitStart: totalQuestionsAtVisitStart.current ?? totalQuestions,
-          answersThisVisitBeforeCurrent: newTotal,
+          totalQuestionsAtVisitStart: progress.initialTotal,
+          answersThisVisitBeforeCurrent: progress.answers,
           sessionDays: sessions.map(session => session.day),
           currentDay: getTodayKey(),
         });
@@ -143,9 +143,9 @@ export default function QuizScreen() {
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setShowHint(true);
-      setStreak(0);
       recordAnswer(false, 0);
     }
+    progress.answers++;
     recordResult(question.verb, correct).catch(() => {});
   };
 

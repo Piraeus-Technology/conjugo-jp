@@ -6,10 +6,11 @@ import ConjugationScreen from '../screens/ConjugationScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
 import { __resetFlashcardStatsStoreForTests } from '../store/flashcardStatsStore';
 import { __resetFlashcardSessionStoreForTests } from '../store/flashcardSessionStore';
+import { maybeRequestStoreReview } from '../utils/storeReviewPrompt';
 import { speak, stopSpeech } from '../utils/speech';
 import QuizScreen from '../screens/QuizScreen';
 import { __resetPracticeSettingsStoreForTests } from '../store/practiceSettingsStore';
-import { __resetQuizStoreForTests } from '../store/quizStore';
+import { __resetQuizStoreForTests, useQuizStore } from '../store/quizStore';
 import { __resetSessionStoreForTests } from '../store/sessionStore';
 import { __resetSpacedRepStoreForTests } from '../store/spacedRepStore';
 import verbs from '../data/verbs.json';
@@ -30,6 +31,7 @@ jest.mock('expo-haptics', () => ({
   ImpactFeedbackStyle: { Light: 'Light' },
   NotificationFeedbackType: { Success: 'Success', Error: 'Error' },
 }));
+jest.mock('../utils/storeReviewPrompt', () => ({ maybeRequestStoreReview: jest.fn() }));
 jest.mock('../utils/speech', () => ({ speak: jest.fn(), stopSpeech: jest.fn() }));
 jest.mock('../utils/flashcardCard', () => ({ generateFlashcard: jest.fn() }));
 jest.mock('../utils/quizQuestion', () => ({ generateQuestion: jest.fn() }));
@@ -104,4 +106,25 @@ it('speaks the displayed kana あく when the 開く header button is pressed', 
   const screen = await ready(<ConjugationScreen />);
   fireEvent.press(screen.getByLabelText('Play pronunciation of 開く'));
   expect(speak).toHaveBeenCalledWith('あく');
+});
+
+it('restarts a streak of eight and the review baseline after resetting learning data', async () => {
+  const screen = await ready(<QuizScreen />);
+  async function answer() {
+    await act(async () => fireEvent.press(screen.getByLabelText('Answer: たべます')));
+    fireEvent.press(screen.getByLabelText('Next question'));
+  }
+  for (let i = 0; i < 8; i++) await answer();
+  expect(useQuizStore.getState()).toMatchObject({ totalQuestions: 8, bestStreak: 8 });
+
+  await act(async () => { await useQuizStore.getState().resetStats(); });
+  await answer();
+  expect(useQuizStore.getState()).toMatchObject({ totalQuestions: 1, totalCorrect: 1, bestStreak: 1 });
+  expect(maybeRequestStoreReview).not.toHaveBeenCalled();
+
+  for (let i = 0; i < 9; i++) await answer();
+  expect(maybeRequestStoreReview).toHaveBeenCalledTimes(1);
+  expect(maybeRequestStoreReview).toHaveBeenCalledWith(expect.objectContaining({
+    newStreak: 10, totalQuestionsAtVisitStart: 0, answersThisVisitBeforeCurrent: 9,
+  }));
 });
