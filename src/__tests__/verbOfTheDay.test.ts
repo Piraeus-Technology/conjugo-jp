@@ -1,4 +1,5 @@
-import { getVerbOfTheDay, getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
+import type { VerbData } from '../utils/conjugate';
+import { getDailyVerbPool, getVerbOfTheDay, getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
 import verbData from '../data/verbs.json';
 
 const verbs = ['verb-0', 'verb-1', 'verb-2', 'verb-3', 'verb-4'];
@@ -34,6 +35,30 @@ describe('verb of the day', () => {
   it('rejects an empty verb list or malformed day key', () => {
     expect(() => getVerbOfTheDayForKey([], '2026-07-26')).toThrow('empty list');
     expect(() => getVerbOfTheDayForKey(verbs, 'July 26')).toThrow('Invalid local day key');
+  });
+
+  it('selects only N5 and N4 for a year and exhausts that pool before repeating', () => {
+    const entries = Object.entries(verbData as Record<string, VerbData>);
+    const pool = getDailyVerbPool(entries, ['N5', 'N4']);
+    const startingDay = Date.UTC(2026, 0, 1);
+    const select = (offset: number) => getVerbOfTheDayForKey(
+      pool, new Date(startingDay + offset * 86_400_000).toISOString().slice(0, 10),
+    );
+    for (let index = 0; index < 365; index++) {
+      const [verb, { jlpt }] = select(index);
+      expect(['N5', 'N4']).toContain(jlpt);
+      expect(select(index)[0]).toBe(verb);
+    }
+    const cycle = Array.from({ length: pool.length }, (_, index) => select(index)[0]);
+    expect(new Set(cycle).size).toBe(pool.length);
+    expect(select(pool.length)[0]).toBe(cycle[0]);
+  });
+
+  it('keeps a non-empty pool when no practice levels are available', () => {
+    const entries = Object.entries(verbData as Record<string, VerbData>);
+    const pool = getDailyVerbPool(entries, []);
+    expect(pool).toBe(entries);
+    expect(getVerbOfTheDayForKey(pool, '2026-11-27')).toBeDefined();
   });
 
   it('visits every verb once per cycle while breaking consecutive file order', () => {
