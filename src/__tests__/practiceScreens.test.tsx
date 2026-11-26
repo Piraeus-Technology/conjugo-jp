@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Animated, ScrollView, StyleSheet } from 'react-native';
+import { AccessibilityInfo, Animated, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { act, fireEvent, render } from '@testing-library/react-native';
 import ConjugationScreen from '../screens/ConjugationScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
@@ -127,4 +127,45 @@ it('restarts a streak of eight and the review baseline after resetting learning 
   expect(maybeRequestStoreReview).toHaveBeenCalledWith(expect.objectContaining({
     newStreak: 10, totalQuestionsAtVisitStart: 0, answersThisVisitBeforeCurrent: 9,
   }));
+});
+
+it('exposes each flashcard face separately with its translation and keeps grading hidden until the flip', async () => {
+  const screen = await ready(<FlashcardScreen />);
+  const front = screen.getByRole('button', { name: /^Tap to reveal/ });
+  expect(front.props.accessibilityLabel).toContain('to eat');
+  expect(front.props.accessibilityLabel).not.toContain('たべます');
+  expect(screen.queryByRole('button', { name: /^Mark card/ })).toBeNull();
+
+  fireEvent.press(front);
+  const back = screen.getByLabelText(/Answer: たべます.*to eat/);
+  const speakButton = screen.getByRole('button', { name: 'Play pronunciation of たべます' });
+  for (let node = speakButton.parent; node; node = node.parent) {
+    expect(node).not.toBe(back);
+  }
+  expect(screen.queryByRole('button', { name: /^Tap to reveal/ })).toBeNull();
+  expect(screen.getByRole('button', { name: 'Mark card as missed' })).toBeEnabled();
+  expect(screen.getByRole('button', { name: 'Mark card as got it' })).toBeEnabled();
+});
+
+it('guards Next before an answer and announces which option was correct', async () => {
+  const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility').mockImplementation(() => {});
+  try {
+    const screen = await ready(<QuizScreen />);
+    const { generateQuestion } = jest.requireMock('../utils/quizQuestion');
+    const hidden = screen.UNSAFE_getAllByType(TouchableOpacity)
+      .find(node => node.props.accessibilityLabel === 'Next question')!;
+    expect(screen.queryByRole('button', { name: 'Next question' })).toBeNull();
+    act(() => hidden.props.onPress());
+    expect(generateQuestion).toHaveBeenCalledTimes(1);
+
+    await act(async () => fireEvent.press(screen.getByLabelText('Answer: たべる')));
+    expect(announce).toHaveBeenCalledWith('Incorrect. Correct answer: たべます');
+    expect(screen.getByRole('button', { name: 'Answer: たべます, correct' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Answer: たべる, incorrect. Correct answer: たべます' })).toBeSelected();
+    fireEvent.press(screen.getByRole('button', { name: 'Next question' }));
+    await act(async () => fireEvent.press(screen.getByLabelText('Answer: たべます')));
+    expect(announce).toHaveBeenLastCalledWith('Correct');
+  } finally {
+    announce.mockRestore();
+  }
 });

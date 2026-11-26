@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  AccessibilityInfo,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -124,6 +125,9 @@ export default function QuizScreen() {
     }
     const progress = visit.current;
     const correct = answer === question.correctAnswer;
+    AccessibilityInfo.announceForAccessibility(correct
+      ? 'Correct'
+      : `Incorrect. Correct answer: ${question.correctAnswer}`);
     progress.streak = correct ? progress.streak + 1 : 0;
     recordProgress(correct, progress.streak);
     if (correct) {
@@ -150,6 +154,7 @@ export default function QuizScreen() {
   };
 
   const handleNext = () => {
+    if (!hasRecordedAnswer.current) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
     setSelectedAnswer(null);
@@ -292,7 +297,9 @@ export default function QuizScreen() {
             activeOpacity={answered ? 1 : 0.7}
             disabled={answered}
             accessibilityRole="button"
-            accessibilityLabel={`Answer: ${option}`}
+            accessibilityLabel={`Answer: ${option}${answered && option === question.correctAnswer
+              ? ', correct'
+              : selectedAnswer === option ? `, incorrect. Correct answer: ${question.correctAnswer}` : ''}`}
             accessibilityState={{ disabled: answered, selected: selectedAnswer === option }}
           >
             <Text
@@ -343,13 +350,19 @@ export default function QuizScreen() {
       )}
 
       {/* Next */}
-      <View style={[styles.bottomRow, { opacity: answered ? 1 : 0 }]} pointerEvents={answered ? 'auto' : 'none'}>
+      <View
+        style={[styles.bottomRow, { opacity: answered ? 1 : 0 }]}
+        pointerEvents={answered ? 'auto' : 'none'}
+        accessibilityElementsHidden={!answered}
+        importantForAccessibility={answered ? 'auto' : 'no-hide-descendants'}
+      >
         <TouchableOpacity
           style={[styles.bottomButton, { backgroundColor: colors.primary }]}
           onPress={handleNext}
           activeOpacity={0.8}
           accessibilityRole="button"
           accessibilityLabel="Next question"
+          disabled={!answered}
           accessibilityState={{ disabled: !answered }}
         >
           <Text style={styles.bottomButtonText}>Next</Text>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react-native';
+import { getTodayKey } from '../utils/dayKey';
 import PracticeStatsView, { type PracticeStatsLabels } from '../components/PracticeStatsView';
 
 jest.mock(
@@ -38,6 +39,17 @@ describe('PracticeStatsView', () => {
     expect(screen.getByText('No stats yet')).toBeTruthy();
     expect(screen.queryByText('All Time')).toBeNull();
     expect(screen.queryByText('Activity')).toBeNull();
+  });
+
+  it('dims and disables forward navigation on the current month', () => {
+    const screen = render(<PracticeStatsView {...commonProps} sessions={[{ day: getTodayKey(), count: 1, correct: 1 }]} />);
+    const next = () => screen.getByRole('button', { name: 'Next month' });
+    expect(next()).toBeDisabled();
+    expect(next()).toHaveStyle({ opacity: 0.45 });
+    fireEvent.press(screen.getByRole('button', { name: 'Previous month' }));
+    expect(next()).toBeEnabled();
+    fireEvent.press(next());
+    expect(next()).toBeDisabled();
   });
 
   it('surfaces weight storage failures and retries them', () => {

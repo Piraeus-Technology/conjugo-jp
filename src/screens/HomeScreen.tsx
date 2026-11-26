@@ -275,6 +275,10 @@ export default function HomeScreen() {
           accessibilityRole="button"
           accessibilityLabel={`${verb}, ${data.reading}, ${data.translation}`}
           accessibilityHint="Opens conjugation table"
+          accessibilityActions={type === 'history' ? [{ name: 'remove', label: 'Remove from Recent' }] : undefined}
+          onAccessibilityAction={type === 'history' ? event => {
+            if (event.nativeEvent.actionName === 'remove') handleSwipeDelete();
+          } : undefined}
         >
           <View style={styles.historyLeft}>
             <Text style={[styles.historyVerb, { color: colors.textPrimary }]}>{verb}</Text>

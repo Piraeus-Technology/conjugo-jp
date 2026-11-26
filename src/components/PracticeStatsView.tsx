@@ -129,15 +129,12 @@ export default function PracticeStatsView({
     setCalendarDate(new Date(calYear, calMonth - 1, 1));
     setSelectedDay(null);
   };
+  const currentMonth = todayStr.slice(0, 7);
+  const canGoToNextMonth = buildDayKey(calYear, calMonth, 1).slice(0, 7) < currentMonth;
   const nextMonth = () => {
-    const now = new Date();
-    const next = new Date(calYear, calMonth + 1, 1);
-    // Cap at the current month — paging into a guaranteed-empty future
-    // month is never useful.
-    if (next <= new Date(now.getFullYear(), now.getMonth(), 1)) {
-      setCalendarDate(next);
-      setSelectedDay(null);
-    }
+    if (!canGoToNextMonth) return;
+    setCalendarDate(new Date(calYear, calMonth + 1, 1));
+    setSelectedDay(null);
   };
 
   const selectedData = selectedDay ? dailyMap[selectedDay] : null;
@@ -273,6 +270,9 @@ export default function PracticeStatsView({
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             accessibilityRole="button"
             accessibilityLabel="Next month"
+            disabled={!canGoToNextMonth}
+            accessibilityState={{ disabled: !canGoToNextMonth }}
+            style={{ opacity: canGoToNextMonth ? 1 : 0.45 }}
           >
             <Ionicons name="chevron-forward" size={20} color={colors.primaryText} />
           </TouchableOpacity>

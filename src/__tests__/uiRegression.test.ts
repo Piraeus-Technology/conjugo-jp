@@ -6,6 +6,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import HomeScreen, { styles as homeStyles } from '../screens/HomeScreen';
 import { getConjugationIndex } from '../utils/verbSearch';
 import { themes } from '../utils/theme';
+import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import verbs from '../data/verbs.json';
 
@@ -65,6 +66,16 @@ describe('UI regression guards', () => {
     expect(mockNavigate).toHaveBeenCalledWith('Conjugation', { verb, highlightForm: undefined });
     screen.unmount();
     useFavoritesStore.setState({ favorites: [], loaded: true });
+  });
+
+  it('lets assistive technology remove a Recent entry without a swipe', async () => {
+    useHistoryStore.setState({ history: ['食べる'], loaded: true });
+    const screen = render(React.createElement(HomeScreen));
+    const row = screen.getByRole('button', { name: '食べる, たべる, to eat' });
+    expect(row.props.accessibilityActions).toEqual([{ name: 'remove', label: 'Remove from Recent' }]);
+    await act(async () => fireEvent(row, 'accessibilityAction', { nativeEvent: { actionName: 'remove' } }));
+    expect(useHistoryStore.getState().history).toEqual([]);
+    expect(screen.queryByText('Recent')).toBeNull();
   });
 
   it('passes handled taps through both search scroll containers and dismisses on a results drag', async () => {
