@@ -97,17 +97,33 @@ describe('UI regression guards', () => {
     expect(screen.queryByText('No matching verbs')).toBeNull();
   });
 
-  it('keeps normal text roles at WCAG AA contrast in both themes', () => {
-    for (const colors of Object.values(themes)) {
-      const surfaces = [colors.bg, colors.card, colors.searchBg];
-      for (const textColor of [colors.textMuted, colors.textSecondary, colors.primaryText]) {
-        for (const surface of surfaces) {
-          expect(contrastRatio(textColor, surface)).toBeGreaterThanOrEqual(4.5);
-        }
+  it.each(['light', 'dark'] as const)('keeps themed text and interactive outlines legible in %s mode', mode => {
+    const colors = themes[mode];
+    const surfaces = [colors.bg, colors.card, colors.searchBg, colors.flashcardBack];
+    for (const textColor of [colors.textPrimary, colors.textMuted, colors.textSecondary, colors.primaryText]) {
+      for (const surface of surfaces) {
+        expect(contrastRatio(textColor, surface)).toBeGreaterThanOrEqual(4.5);
       }
-      expect(contrastRatio('#FFFFFF', colors.primary)).toBeGreaterThanOrEqual(4.5);
     }
-    expect(contrastRatio(themes.light.accent, themes.light.card)).toBeGreaterThanOrEqual(4.5);
+    const textPairs = [
+      ['#FFFFFF', colors.primary], [colors.accent, colors.card],
+      [colors.pillText, colors.pillBg], [colors.pillActiveText, colors.pillActiveBg],
+      [colors.textSecondary, colors.pillBg],
+      [colors.godanTagText, colors.godanTag], [colors.ichidanTagText, colors.ichidanTag],
+      [colors.irregularTagText, colors.irregularTag],
+      [colors.transitiveText, colors.transitiveBg], [colors.intransitiveText, colors.intransitiveBg],
+      [colors.successText, colors.successBg], [colors.errorText, colors.errorBg],
+      [colors.successText, colors.card], [colors.errorText, colors.card], [colors.errorText, colors.bg],
+      [colors.calHighText, colors.calHigh], [colors.calMidText, colors.calMid], [colors.calLowText, colors.calLow],
+      [colors.n5Text, colors.n5Bg], [colors.n4Text, colors.n4Bg], [colors.n3Text, colors.n3Bg],
+      [colors.n2Text, colors.n2Bg], [colors.n1Text, colors.n1Bg], [colors.tabActive, colors.bg],
+    ];
+    for (const [text, surface] of textPairs) {
+      expect(contrastRatio(text, surface)).toBeGreaterThanOrEqual(4.5);
+    }
+    expect(contrastRatio(colors.uncheckedOutline, colors.card)).toBeGreaterThanOrEqual(3);
+    expect(contrastRatio(colors.practiceBorder, colors.card)).toBeGreaterThanOrEqual(1.7);
+    expect(contrastRatio(colors.practiceBorder, colors.flashcardBack)).toBeGreaterThanOrEqual(1.7);
   });
 
   it('keeps search filter chips at least 44 points tall', () => {

@@ -179,7 +179,7 @@ export default function App() {
         <Tab.Navigator
           id="MainTabs"
           screenOptions={{
-            tabBarActiveTintColor: colors.primary,
+            tabBarActiveTintColor: colors.tabActive,
             tabBarInactiveTintColor: colors.textMuted,
             tabBarStyle: {
               backgroundColor: colors.bg,

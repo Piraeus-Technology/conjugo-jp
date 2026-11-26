@@ -256,7 +256,7 @@ export default function QuizScreen() {
           </View>
         </View>
         {totalQuestions > 0 && (
-          <Text style={[styles.allTimeText, { color: colors.textMuted }]}>
+          <Text style={[styles.allTimeText, { color: colors.textMuted, borderTopColor: colors.practiceBorder }]}>
             All-time: {totalCorrect}/{totalQuestions} ({Math.round((totalCorrect / totalQuestions) * 100)}%) · Best streak: {bestStreak}
           </Text>
         )}
@@ -407,7 +407,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
     paddingTop: spacing.sm,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(0,0,0,0.08)',
   },
   scoreValue: {
     fontSize: fonts.sizes.xl,

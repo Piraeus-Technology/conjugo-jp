@@ -3,6 +3,7 @@ import { useThemeStore } from '../store/themeStore';
 const lightColors = {
   primary: '#BC002D',
   primaryText: '#BC002D',
+  tabActive: '#BC002D',
   primaryLight: '#D4354F',
   primaryDark: '#8C0021',
 
@@ -16,9 +17,11 @@ const lightColors = {
 
   textPrimary: '#1A1A1A',
   textSecondary: '#6B6B6B',
-  textMuted: '#6F6F6F',
+  textMuted: '#6E6E6E',
 
   border: '#F0D8DC',
+  uncheckedOutline: '#A09093',
+  practiceBorder: '#CAB6B9',
   divider: '#FFF0F3',
 
   pillBg: '#FFF0F3',
@@ -31,11 +34,11 @@ const lightColors = {
   ichidanTag: '#E3F2FD',
   ichidanTagText: '#1565C0',
   irregularTag: '#FFF3E0',
-  irregularTagText: '#E65100',
+  irregularTagText: '#C54500',
   transitiveBg: '#E3F2FD',
   transitiveText: '#1565C0',
   intransitiveBg: '#FFF8E1',
-  intransitiveText: '#F57F17',
+  intransitiveText: '#B05B11',
 
   successBg: '#E8F5E9',
   successText: '#2E7D32',
@@ -45,11 +48,11 @@ const lightColors = {
   calHigh: '#E8F5E9',
   calHighText: '#2E7D32',
   calMid: '#FFF8E1',
-  calMidText: '#F57F17',
+  calMidText: '#B05B11',
   calLow: '#FFEBEE',
   calLowText: '#C62828',
 
-  n5Bg: '#E0F7FA', n5Text: '#00838F',
+  n5Bg: '#E0F7FA', n5Text: '#007A85',
   n4Bg: '#E0F2F1', n4Text: '#00695C',
   n3Bg: '#EDE7F6', n3Text: '#4527A0',
   n2Bg: '#FCE4EC', n2Text: '#AD1457',
@@ -59,6 +62,7 @@ const lightColors = {
 const darkColors = {
   primary: '#D42E47',
   primaryText: '#F06A7C',
+  tabActive: '#D9485E',
   primaryLight: '#FF5A6E',
   primaryDark: '#FF6B7A',
 
@@ -75,10 +79,12 @@ const darkColors = {
   textMuted: '#949494',
 
   border: '#3A2A30',
+  uncheckedOutline: '#6F6468',
+  practiceBorder: '#4F4146',
   divider: '#2A2426',
 
   pillBg: '#2A2426',
-  pillActiveBg: '#E8384F',
+  pillActiveBg: '#DB354B',
   pillText: '#A0A0A0',
   pillActiveText: '#FFFFFF',
 
@@ -96,14 +102,14 @@ const darkColors = {
   successBg: '#1B3A1B',
   successText: '#66BB6A',
   errorBg: '#3E1A1A',
-  errorText: '#EF5350',
+  errorText: '#EF5855',
 
   calHigh: '#1B3A1B',
   calHighText: '#66BB6A',
   calMid: '#3E3308',
   calMidText: '#FFB74D',
   calLow: '#3E1A1A',
-  calLowText: '#EF5350',
+  calLowText: '#EF5855',
 
   n5Bg: '#0A2E30', n5Text: '#4DD0E1',
   n4Bg: '#0D2E2B', n4Text: '#4DB6AC',

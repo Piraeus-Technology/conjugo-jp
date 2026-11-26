@@ -337,6 +337,7 @@ export default function FlashcardScreen() {
               styles.cardBack,
               {
                 backgroundColor: colors.flashcardBack,
+                borderColor: colors.practiceBorder,
                 transform: [{ perspective: 1000 }, { rotateY: backRotateY }],
               },
             ]}
@@ -476,7 +477,6 @@ const styles = StyleSheet.create({
   },
   cardBack: {
     borderWidth: 2,
-    borderColor: 'rgba(0,0,0,0.05)',
     padding: 0,
   },
   cardScroll: {

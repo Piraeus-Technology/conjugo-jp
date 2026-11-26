@@ -100,7 +100,7 @@ export default function PracticeSettingsScreen() {
                   <Ionicons
                     name={active ? 'checkmark-circle' : 'ellipse-outline'}
                     size={24}
-                    color={active ? colors.primaryText : colors.border}
+                    color={active ? colors.primaryText : colors.uncheckedOutline}
                   />
                 </TouchableOpacity>
               );
@@ -149,7 +149,7 @@ export default function PracticeSettingsScreen() {
               <Ionicons
                 name={active ? 'checkmark-circle' : 'ellipse-outline'}
                 size={24}
-                color={active ? colors.primaryText : colors.border}
+                color={active ? colors.primaryText : colors.uncheckedOutline}
               />
             </TouchableOpacity>
           );
