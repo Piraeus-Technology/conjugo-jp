@@ -279,6 +279,25 @@ describe('store persistence hardening', () => {
     expect(JSON.parse(mockStorage.get('flashcard_stats')!)).toEqual({ totalReviewed: 9, totalCorrect: 6 });
   });
 
+  test.each(['read error', 'invalid JSON'])('retries the flashcard seed after a %s without saving a zero', async (failure) => {
+    const history = JSON.stringify([{ day: '2026-06-25', reviewed: 40, correct: 30 }]);
+    mockStorage.set('flashcardSessions', failure === 'read error' ? history : '{');
+    if (failure === 'read error') {
+      jest.mocked(AsyncStorage.getItem)
+        .mockResolvedValueOnce(null)
+        .mockRejectedValueOnce(new Error('disk locked'));
+    }
+    await useFlashcardStatsStore.getState().loadStats();
+    expect(mockStorage.has('flashcard_stats')).toBe(false);
+    expect(useFlashcardStatsStore.getState()).toMatchObject({ loaded: false, loadError: true });
+
+    mockStorage.set('flashcardSessions', history);
+    await useFlashcardStatsStore.getState().loadStats();
+    expect(useFlashcardStatsStore.getState()).toMatchObject({
+      loaded: true, loadError: false, totalReviewed: 40, totalCorrect: 30,
+    });
+  });
+
   test('flashcard stat after failed load refuses to clobber lifetime totals', async () => {
     mockStorage.set('flashcard_stats', JSON.stringify({ totalReviewed: 10, totalCorrect: 7 }));
     jest.mocked(AsyncStorage.getItem).mockRejectedValueOnce(new Error('disk locked'));

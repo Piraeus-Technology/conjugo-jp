@@ -18,31 +18,24 @@ interface FlashcardStats {
 
 const queue = createStoreQueue();
 
-function toFiniteNumber(value: unknown): number {
-  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
-}
-
 async function seedStatsFromSessions(): Promise<{ totalReviewed: number; totalCorrect: number }> {
-  const seed = { totalReviewed: 0, totalCorrect: 0 };
-  try {
-    const stored = await AsyncStorage.getItem('flashcardSessions');
-    if (!stored) return seed;
+  const totals = { totalReviewed: 0, totalCorrect: 0 };
+  const stored = await AsyncStorage.getItem('flashcardSessions');
+  if (stored === null) return totals;
 
-    const sessions = JSON.parse(stored);
-    if (!Array.isArray(sessions)) return seed;
+  const sessions = JSON.parse(stored);
+  if (!Array.isArray(sessions)) throw new Error('Invalid flashcard session history');
 
-    return sessions.reduce((totals, session) => {
-      if (!session || typeof session !== 'object') return totals;
-      const s = session as { reviewed?: unknown; correct?: unknown };
-      return {
-        totalReviewed: totals.totalReviewed + toFiniteNumber(s.reviewed),
-        totalCorrect: totals.totalCorrect + toFiniteNumber(s.correct),
-      };
-    }, seed);
-  } catch (e) {
-    console.warn('Failed to seed flashcard stats from sessions:', e);
-    return seed;
+  for (const session of sessions) {
+    if (!session || !Number.isSafeInteger(session.reviewed) || !Number.isSafeInteger(session.correct) ||
+        session.correct < 0 || session.reviewed < session.correct) {
+      throw new Error('Invalid flashcard session counts');
+    }
+    totals.totalReviewed += session.reviewed;
+    totals.totalCorrect += session.correct;
   }
+  if (!Number.isSafeInteger(totals.totalReviewed)) throw new Error('Invalid flashcard history total');
+  return totals;
 }
 
 export const useFlashcardStatsStore = create<FlashcardStats>((set, get) => ({
