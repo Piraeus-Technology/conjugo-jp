@@ -10,58 +10,87 @@ interface SessionDelta {
   day: string;
 }
 
-// Stamp each answer synchronously, rather than attributing a whole batch to
-// its first answer or flush time. All days and save triggers share one queue.
-export function useSessionAutosave({ save }: {
-  save: (delta: SessionDelta) => Promise<void>;
+const RETRY_DELAY_MS = 5000;
+
+// Stamp answers synchronously and keep each delta visible until the session
+// store is about to publish the corresponding persisted totals.
+export function useSessionAutosave({ save, readResetCount }: {
+  save: (delta: SessionDelta, beforePublish: () => void) => Promise<void>;
+  readResetCount?: () => number;
 }) {
   const nav = useNavigation();
-  const saveRef = React.useRef(save);
-  saveRef.current = save;
-  const pending = React.useRef(new Map<string, SessionDelta>());
+  const options = React.useRef({ save, readResetCount });
+  options.current = { save, readResetCount };
+  const progress = React.useRef({ resetCount: 0, days: new Map<string, SessionDelta>() });
   const saveQueue = React.useRef<Promise<void>>(Promise.resolve());
+  const retryTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const mounted = React.useRef(true);
   const [, refresh] = React.useReducer((value: number) => value + 1, 0);
 
+  const getPending = React.useCallback(() => {
+    const resetCount = options.current.readResetCount?.() ?? 0;
+    if (progress.current.resetCount !== resetCount) {
+      progress.current = { resetCount, days: new Map() };
+    }
+    return progress.current.days;
+  }, []);
+
+  const clearRetry = React.useCallback(() => {
+    if (retryTimer.current !== null) clearTimeout(retryTimer.current);
+    retryTimer.current = null;
+  }, []);
+
+  const saveNow = React.useCallback((): Promise<void> => {
+    clearRetry();
+    const run = async () => {
+      const pending = getPending();
+      let failed = false;
+      for (const delta of [...pending.values()]) {
+        if (pending !== getPending()) break;
+        try {
+          await options.current.save(delta, () => {
+            const latest = pending.get(delta.day)!;
+            if (latest.count === delta.count) {
+              pending.delete(delta.day);
+            } else {
+              pending.set(delta.day, {
+                ...latest,
+                count: latest.count - delta.count,
+                correct: latest.correct - delta.correct,
+              });
+            }
+          });
+          if (mounted.current) refresh();
+        } catch (error) {
+          if (pending !== getPending()) break;
+          failed = true;
+          console.warn('Failed to save session:', error);
+        }
+      }
+      if (failed && mounted.current && getPending().size > 0 && retryTimer.current === null) {
+        retryTimer.current = setTimeout(() => { void saveNow(); }, RETRY_DELAY_MS);
+      } else if (getPending().size === 0) {
+        clearRetry();
+      }
+    };
+    const next = saveQueue.current.then(run, run);
+    saveQueue.current = next.catch(() => undefined);
+    return next;
+  }, [getPending, clearRetry]);
+
   const recordProgress = React.useCallback((correct: boolean, bestStreak = 0) => {
     const day = getTodayKey();
-    const current = pending.current.get(day);
-    pending.current.set(day, {
+    const pending = getPending();
+    const current = pending.get(day);
+    pending.set(day, {
       day,
       count: (current?.count ?? 0) + 1,
       correct: (current?.correct ?? 0) + (correct ? 1 : 0),
       bestStreak: Math.max(current?.bestStreak ?? 0, bestStreak),
     });
     refresh();
-  }, []);
-
-  const saveNow = React.useCallback(() => {
-    const run = async () => {
-      const batches = [...pending.current.values()];
-      // Claim every snapshot before awaiting any write, so new answers on a
-      // later day cannot be erased when that day's snapshot starts saving.
-      // Claim before store updates also prevents counting saved totals twice.
-      pending.current.clear();
-      for (const delta of batches) {
-        try {
-          await saveRef.current(delta);
-        } catch (error) {
-          const newer = pending.current.get(delta.day);
-          pending.current.set(delta.day, {
-            day: delta.day,
-            count: delta.count + (newer?.count ?? 0),
-            correct: delta.correct + (newer?.correct ?? 0),
-            bestStreak: Math.max(delta.bestStreak, newer?.bestStreak ?? 0),
-          });
-          console.warn('Failed to save session:', error);
-        }
-        if (mounted.current) refresh();
-      }
-    };
-    const next = saveQueue.current.then(run, run);
-    saveQueue.current = next.catch(() => undefined);
-    return next;
-  }, []);
+    void saveNow();
+  }, [getPending, saveNow]);
 
   React.useEffect(() => {
     mounted.current = true;
@@ -77,7 +106,7 @@ export function useSessionAutosave({ save }: {
 
   React.useEffect(() => nav.addListener('blur', () => { void saveNow(); }), [nav, saveNow]);
 
-  const today = pending.current.get(getTodayKey());
+  const today = getPending().get(getTodayKey());
   return {
     unsavedCount: today?.count ?? 0,
     unsavedCorrect: today?.correct ?? 0,

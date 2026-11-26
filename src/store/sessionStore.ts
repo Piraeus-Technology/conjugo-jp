@@ -16,9 +16,10 @@ export interface Session {
 interface SessionStore {
   sessions: Session[];
   loaded: boolean;
+  resetCount: number;
   loadError: boolean;
   loadSessions: () => Promise<void>;
-  saveSession: (session: Omit<Session, 'day'>, day?: string) => Promise<boolean>;
+  saveSession: (session: Omit<Session, 'day'>, day?: string, beforePublish?: () => void) => Promise<boolean>;
   clearSessions: () => Promise<boolean>;
 }
 
@@ -26,6 +27,7 @@ const queue = createStoreQueue();
 
 export const useSessionStore = create<SessionStore>((set, get) => ({
   sessions: [],
+  resetCount: 0,
   loaded: false,
   loadError: false,
 
@@ -80,7 +82,8 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
     });
   },
 
-  saveSession: async (session, day): Promise<boolean> => {
+  saveSession: async (session, day, beforePublish): Promise<boolean> => {
+    const { resetCount } = get();
     if (!get().loaded) {
       await get().loadSessions();
     }
@@ -90,6 +93,7 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
     }
     let ok = false;
     await queue.enqueue(async () => {
+      if (get().resetCount !== resetCount) return;
       const today = day ?? getTodayKey();
       const current = get().sessions;
       const existingIndex = current.findIndex(s => s.day === today);
@@ -114,6 +118,7 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
         console.warn('Failed to persist quiz session');
         return;
       }
+      beforePublish?.();
       set({ sessions: updated });
       ok = true;
     });
@@ -128,7 +133,7 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
         console.warn('Failed to clear quiz sessions');
         return;
       }
-      set({ sessions: [], loaded: true, loadError: false });
+      set(state => ({ sessions: [], loaded: true, loadError: false, resetCount: state.resetCount + 1 }));
       cleared = true;
     });
     return cleared;
@@ -137,5 +142,5 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
 
 export function __resetSessionStoreForTests() {
   queue.reset();
-  useSessionStore.setState({ sessions: [], loaded: false, loadError: false });
+  useSessionStore.setState({ sessions: [], resetCount: 0, loaded: false, loadError: false });
 }

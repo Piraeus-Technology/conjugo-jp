@@ -190,10 +190,13 @@ export default function FlashcardScreen() {
     flipToFront();
   };
 
-  // Auto-save new answers on blur / background / unmount (delta-based).
   const { unsavedCount, unsavedCorrect, recordProgress } = useSessionAutosave({
-    save: async ({ count, correct, day }) => {
-      if (!(await saveSession({ reviewed: count, correct }, day))) {
+    readResetCount: () => useFlashcardSessionStore.getState().resetCount,
+    save: async ({ count, correct, day }, beforePublish) => {
+      // Finish an in-flight lifetime seed before it can read this new review
+      // from daily storage. recordReview accounts for the new review itself.
+      if (!useFlashcardStatsStore.getState().loaded) await loadStats();
+      if (!(await saveSession({ reviewed: count, correct }, day, beforePublish))) {
         throw new Error('flashcard session save failed');
       }
     },

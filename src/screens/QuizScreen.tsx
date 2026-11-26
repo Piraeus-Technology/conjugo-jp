@@ -157,10 +157,10 @@ export default function QuizScreen() {
     hasRecordedAnswer.current = false;
   };
 
-  // Auto-save new answers on blur / background / unmount (delta-based).
   const { unsavedCount, unsavedCorrect, recordProgress } = useSessionAutosave({
-    save: async ({ count, correct, bestStreak, day }) => {
-      if (!(await saveSession({ total: count, correct, streak: bestStreak }, day))) {
+    readResetCount: () => useSessionStore.getState().resetCount,
+    save: async ({ count, correct, bestStreak, day }, beforePublish) => {
+      if (!(await saveSession({ total: count, correct, streak: bestStreak }, day, beforePublish))) {
         throw new Error('quiz session save failed');
       }
     },

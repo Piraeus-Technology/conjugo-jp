@@ -15,9 +15,10 @@ export interface FlashcardSession {
 interface FlashcardSessionStore {
   sessions: FlashcardSession[];
   loaded: boolean;
+  resetCount: number;
   loadError: boolean;
   loadSessions: () => Promise<void>;
-  saveSession: (session: Omit<FlashcardSession, 'day'>, day?: string) => Promise<boolean>;
+  saveSession: (session: Omit<FlashcardSession, 'day'>, day?: string, beforePublish?: () => void) => Promise<boolean>;
   clearSessions: () => Promise<boolean>;
 }
 
@@ -25,6 +26,7 @@ const queue = createStoreQueue();
 
 export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get) => ({
   sessions: [],
+  resetCount: 0,
   loaded: false,
   loadError: false,
 
@@ -77,7 +79,8 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
     });
   },
 
-  saveSession: async (session, day): Promise<boolean> => {
+  saveSession: async (session, day, beforePublish): Promise<boolean> => {
+    const { resetCount } = get();
     if (!get().loaded) {
       await get().loadSessions();
     }
@@ -87,6 +90,7 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
     }
     let ok = false;
     await queue.enqueue(async () => {
+      if (get().resetCount !== resetCount) return;
       const today = day ?? getTodayKey();
       const current = get().sessions;
       const existingIndex = current.findIndex(s => s.day === today);
@@ -110,6 +114,7 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
         console.warn('Failed to persist flashcard session');
         return;
       }
+      beforePublish?.();
       set({ sessions: updated });
       ok = true;
     });
@@ -124,7 +129,7 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
         console.warn('Failed to clear flashcard sessions');
         return;
       }
-      set({ sessions: [], loaded: true, loadError: false });
+      set(state => ({ sessions: [], loaded: true, loadError: false, resetCount: state.resetCount + 1 }));
       cleared = true;
     });
     return cleared;
@@ -133,5 +138,5 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
 
 export function __resetFlashcardSessionStoreForTests() {
   queue.reset();
-  useFlashcardSessionStore.setState({ sessions: [], loaded: false, loadError: false });
+  useFlashcardSessionStore.setState({ sessions: [], resetCount: 0, loaded: false, loadError: false });
 }
