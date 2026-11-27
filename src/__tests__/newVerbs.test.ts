@@ -110,7 +110,7 @@ describe('exact search ranking', () => {
   it.each([
     ['すませる', '済ませる'], ['sumaseru', '済ませる'], ['はれる', '晴れる'], ['さす', '差す'],
     ['よる', '寄る'], ['すむ', '住む'], ['うつる', '移る'], ['おさえる', '抑える'], ['はく', '履く'],
-    ['kieru', '消える'], ['chigau', '違う'], ['watasu', '渡す'],
+    ['kieru', '消える'], ['chigau', '違う'], ['watasu', '渡す'], ['chekkusuru', 'チェックする'],
   ])('ranks an exact reading first for %s', (query, word) => {
     expect(searchWords(query)[0]).toMatchObject({ verb: word, matchType: 'verb' });
   });
