@@ -4,6 +4,8 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
+  AccessibilityInfo,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -22,6 +24,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useSessionAutosave } from '../hooks/useSessionAutosave';
 import { getTodayKey } from '../utils/dayKey';
+import { useTodayKey } from '../hooks/useTodayKey';
 import { useQuizStore } from '../store/quizStore';
 import { useSpacedRepStore } from '../store/spacedRepStore';
 import { useSessionStore } from '../store/sessionStore';
@@ -60,17 +63,14 @@ export default function QuizScreen() {
   const { sessions, loadSessions, saveSession } = useSessionStore();
   const [question, setQuestion] = useState<Question | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  // This-visit answers drive review eligibility; the hook dates each answer.
-  const [newTotal, setNewTotal] = useState(0);
-  const [streak, setStreak] = useState(0);
   const [showHint, setShowHint] = useState(true);
   const hasRecordedAnswer = React.useRef(false);
-  // Freeze the persisted baseline; newTotal tracks this visit synchronously,
-  // while quiz-store writes may still be queued when review eligibility runs.
-  const totalQuestionsAtVisitStart = React.useRef<number | null>(null);
-  if (statsLoaded && totalQuestionsAtVisitStart.current === null) {
-    totalQuestionsAtVisitStart.current = totalQuestions;
-  }
+  const visit = React.useRef<{
+    resetCount: number;
+    initialTotal: number;
+    answers: number;
+    streak: number;
+  } | null>(null);
 
   useEffect(() => {
     loadStats();
@@ -120,21 +120,27 @@ export default function QuizScreen() {
     if (hasRecordedAnswer.current || !question) return;
     hasRecordedAnswer.current = true;
     setSelectedAnswer(answer);
-    setNewTotal(t => t + 1);
-
+    const stats = useQuizStore.getState();
+    if (!visit.current || visit.current.resetCount !== stats.resetCount) {
+      visit.current = { resetCount: stats.resetCount, initialTotal: stats.totalQuestions, answers: 0, streak: 0 };
+    }
+    const progress = visit.current;
     const correct = answer === question.correctAnswer;
-    recordProgress(correct, correct ? streak + 1 : 0);
+    AccessibilityInfo.announceForAccessibility(correct
+      ? 'Correct'
+      : `Incorrect. Correct answer: ${question.correctAnswer}`);
+    progress.streak = correct ? progress.streak + 1 : 0;
+    recordProgress(correct, progress.streak);
     if (correct) {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      const newStreak = streak + 1;
-      setStreak(newStreak);
+      const newStreak = progress.streak;
       recordAnswer(true, newStreak);
       if (newStreak === 10) {
         void maybeRequestStoreReview({
           appVersion: Constants.expoConfig?.version,
           newStreak,
-          totalQuestionsAtVisitStart: totalQuestionsAtVisitStart.current ?? totalQuestions,
-          answersThisVisitBeforeCurrent: newTotal,
+          totalQuestionsAtVisitStart: progress.initialTotal,
+          answersThisVisitBeforeCurrent: progress.answers,
           sessionDays: sessions.map(session => session.day),
           currentDay: getTodayKey(),
         });
@@ -142,13 +148,14 @@ export default function QuizScreen() {
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setShowHint(true);
-      setStreak(0);
       recordAnswer(false, 0);
     }
+    progress.answers++;
     recordResult(question.verb, correct).catch(() => {});
   };
 
   const handleNext = () => {
+    if (!hasRecordedAnswer.current) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
     setSelectedAnswer(null);
@@ -156,17 +163,18 @@ export default function QuizScreen() {
     hasRecordedAnswer.current = false;
   };
 
-  // Auto-save new answers on blur / background / unmount (delta-based).
   const { unsavedCount, unsavedCorrect, recordProgress } = useSessionAutosave({
-    save: async ({ count, correct, bestStreak, day }) => {
-      if (!(await saveSession({ total: count, correct, streak: bestStreak }, day))) {
+    readResetCount: () => useSessionStore.getState().resetCount,
+    save: async ({ count, correct, bestStreak, day }, beforePublish) => {
+      if (!(await saveSession({ total: count, correct, streak: bestStreak }, day, beforePublish))) {
         throw new Error('quiz session save failed');
       }
     },
   });
 
   // Today's cumulative totals plus any unsaved in-memory progress.
-  const todaySession = sessions.find(s => s.day === getTodayKey());
+  const todayKey = useTodayKey();
+  const todaySession = sessions.find(s => s.day === todayKey);
   const sessionTotal = (todaySession?.total || 0) + unsavedCount;
   const sessionScore = (todaySession?.correct || 0) + unsavedCorrect;
 
@@ -231,133 +239,139 @@ export default function QuizScreen() {
   const hint = getConjugationHint(question.verbData, question.form, question.verb);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.bg }]}>
-      <View style={styles.content}>
-        {/* Session score bar */}
-        <View style={[styles.scoreCard, { backgroundColor: colors.card }]}>
-          <View style={styles.scoreRow}>
-            <View style={styles.scoreItem}>
-              <Text style={[styles.scoreValue, { color: colors.primaryText }]}>{sessionTotal}</Text>
-              <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Reviewed</Text>
-            </View>
-            <View style={styles.scoreItem}>
-              <Text style={[styles.scoreValue, { color: colors.successText }]}>{sessionScore}</Text>
-              <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Got It</Text>
-            </View>
-            <View style={styles.scoreItem}>
-              <Text style={[styles.scoreValue, { color: colors.errorText }]}>{sessionTotal - sessionScore}</Text>
-              <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Missed</Text>
-            </View>
-            <View style={styles.scoreItem}>
-              <Text style={[styles.scoreValue, { color: colors.textSecondary }]}>
-                {sessionTotal > 0 ? Math.round((sessionScore / sessionTotal) * 100) : 0}%
-              </Text>
-              <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Accuracy</Text>
-            </View>
+    <ScrollView style={[styles.container, { backgroundColor: colors.bg }]} contentContainerStyle={styles.content}>
+      {/* Session score bar */}
+      <View style={[styles.scoreCard, { backgroundColor: colors.card }]}>
+        <View style={styles.scoreRow}>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.primaryText }]}>{sessionTotal}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Reviewed</Text>
           </View>
-          {totalQuestions > 0 && (
-            <Text style={[styles.allTimeText, { color: colors.textMuted }]}>
-              All-time: {totalCorrect}/{totalQuestions} ({Math.round((totalCorrect / totalQuestions) * 100)}%) · Best streak: {bestStreak}
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.successText }]}>{sessionScore}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Got It</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.errorText }]}>{sessionTotal - sessionScore}</Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Missed</Text>
+          </View>
+          <View style={styles.scoreItem}>
+            <Text style={[styles.scoreValue, { color: colors.textSecondary }]}>
+              {sessionTotal > 0 ? Math.round((sessionScore / sessionTotal) * 100) : 0}%
+            </Text>
+            <Text style={[styles.scoreLabel, { color: colors.textMuted }]}>Accuracy</Text>
+          </View>
+        </View>
+        {totalQuestions > 0 && (
+          <Text style={[styles.allTimeText, { color: colors.textMuted, borderTopColor: colors.practiceBorder }]}>
+            All-time: {totalCorrect}/{totalQuestions} ({Math.round((totalCorrect / totalQuestions) * 100)}%) · Best streak: {bestStreak}
+          </Text>
+        )}
+      </View>
+
+      {/* Question — fills remaining space */}
+      <View style={styles.questionContainer}>
+        <Text style={[styles.questionLabel, { color: colors.textMuted }]}>
+          {formLabel.ja} — {formLabel.en}
+        </Text>
+        <Text
+          style={[styles.questionVerb, { color: colors.primaryText }]}
+          numberOfLines={1}
+          adjustsFontSizeToFit
+        >
+          {question.verb}
+        </Text>
+        <Text style={[styles.questionReading, { color: colors.textSecondary }]}>
+          {question.reading}
+        </Text>
+        <Text style={[styles.questionTranslation, { color: colors.textSecondary }]}>
+          {question.translation}
+        </Text>
+      </View>
+
+      {/* Options */}
+      <View style={styles.optionsContainer}>
+        {question.options.map((option, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[styles.optionButton, getOptionStyle(option)]}
+            onPress={() => handleAnswer(option)}
+            activeOpacity={answered ? 1 : 0.7}
+            disabled={answered}
+            accessibilityRole="button"
+            accessibilityLabel={`Answer: ${option}${answered && option === question.correctAnswer
+              ? ', correct'
+              : selectedAnswer === option ? `, incorrect. Correct answer: ${question.correctAnswer}` : ''}`}
+            accessibilityState={{ disabled: answered, selected: selectedAnswer === option }}
+          >
+            <Text
+              style={[styles.optionText, { color: getOptionTextColor(option) }]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+            >
+              {option}
+            </Text>
+            {answered && option === question.correctAnswer && (
+              <Ionicons name="checkmark-circle" size={22} color={colors.successText} style={{ marginLeft: 8 }} />
+            )}
+            {answered && option === selectedAnswer && !isCorrect && option !== question.correctAnswer && (
+              <Ionicons name="close-circle" size={22} color={colors.errorText} style={{ marginLeft: 8 }} />
+            )}
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {answered && !isCorrect && (
+        <View style={[styles.hintCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <TouchableOpacity
+            style={styles.hintHeader}
+            onPress={() => setShowHint(v => !v)}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel="Show conjugation rule"
+            accessibilityHint={showHint ? 'Collapses the rule explanation' : 'Expands the rule explanation'}
+            accessibilityState={{ expanded: showHint }}
+          >
+            <View style={styles.hintTitleRow}>
+              <Ionicons name="help-circle-outline" size={18} color={colors.primaryText} />
+              <Text style={[styles.hintTitle, { color: colors.textPrimary }]}>Why?</Text>
+            </View>
+            <Ionicons
+              name={showHint ? 'chevron-up' : 'chevron-down'}
+              size={18}
+              color={colors.textMuted}
+            />
+          </TouchableOpacity>
+          {showHint && (
+            <Text style={[styles.hintText, { color: colors.textSecondary }]}>
+              {hint}
             </Text>
           )}
         </View>
+      )}
 
-        {/* Question — fills remaining space */}
-        <View style={styles.questionContainer}>
-          <Text style={[styles.questionLabel, { color: colors.textMuted }]}>
-            {formLabel.ja} — {formLabel.en}
-          </Text>
-          <Text
-            style={[styles.questionVerb, { color: colors.primaryText }]}
-            numberOfLines={1}
-            adjustsFontSizeToFit
-          >
-            {question.verb}
-          </Text>
-          <Text style={[styles.questionReading, { color: colors.textSecondary }]}>
-            {question.reading}
-          </Text>
-          <Text style={[styles.questionTranslation, { color: colors.textSecondary }]}>
-            {question.translation}
-          </Text>
-        </View>
-
-        {/* Options */}
-        <View style={styles.optionsContainer}>
-          {question.options.map((option, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[styles.optionButton, getOptionStyle(option)]}
-              onPress={() => handleAnswer(option)}
-              activeOpacity={answered ? 1 : 0.7}
-              disabled={answered}
-              accessibilityRole="button"
-              accessibilityLabel={`Answer: ${option}`}
-              accessibilityState={{ disabled: answered, selected: selectedAnswer === option }}
-            >
-              <Text
-                style={[styles.optionText, { color: getOptionTextColor(option) }]}
-                numberOfLines={1}
-                adjustsFontSizeToFit
-                minimumFontScale={0.7}
-              >
-                {option}
-              </Text>
-              {answered && option === question.correctAnswer && (
-                <Ionicons name="checkmark-circle" size={22} color={colors.successText} style={{ marginLeft: 8 }} />
-              )}
-              {answered && option === selectedAnswer && !isCorrect && option !== question.correctAnswer && (
-                <Ionicons name="close-circle" size={22} color={colors.errorText} style={{ marginLeft: 8 }} />
-              )}
-            </TouchableOpacity>
-          ))}
-        </View>
-
-        {answered && !isCorrect && (
-          <View style={[styles.hintCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <TouchableOpacity
-              style={styles.hintHeader}
-              onPress={() => setShowHint(v => !v)}
-              activeOpacity={0.7}
-              accessibilityRole="button"
-              accessibilityLabel="Show conjugation rule"
-              accessibilityHint={showHint ? 'Collapses the rule explanation' : 'Expands the rule explanation'}
-              accessibilityState={{ expanded: showHint }}
-            >
-              <View style={styles.hintTitleRow}>
-                <Ionicons name="help-circle-outline" size={18} color={colors.primaryText} />
-                <Text style={[styles.hintTitle, { color: colors.textPrimary }]}>Why?</Text>
-              </View>
-              <Ionicons
-                name={showHint ? 'chevron-up' : 'chevron-down'}
-                size={18}
-                color={colors.textMuted}
-              />
-            </TouchableOpacity>
-            {showHint && (
-              <Text style={[styles.hintText, { color: colors.textSecondary }]}>
-                {hint}
-              </Text>
-            )}
-          </View>
-        )}
-
-        {/* Next */}
-        <View style={[styles.bottomRow, { opacity: answered ? 1 : 0 }]} pointerEvents={answered ? 'auto' : 'none'}>
-          <TouchableOpacity
-            style={[styles.bottomButton, { backgroundColor: colors.primary }]}
-            onPress={handleNext}
-            activeOpacity={0.8}
-            accessibilityRole="button"
-            accessibilityLabel="Next question"
-            accessibilityState={{ disabled: !answered }}
-          >
-            <Text style={styles.bottomButtonText}>Next</Text>
-            <Ionicons name="arrow-forward" size={16} color="#fff" />
-          </TouchableOpacity>
-        </View>
+      {/* Next */}
+      <View
+        style={[styles.bottomRow, { opacity: answered ? 1 : 0 }]}
+        pointerEvents={answered ? 'auto' : 'none'}
+        accessibilityElementsHidden={!answered}
+        importantForAccessibility={answered ? 'auto' : 'no-hide-descendants'}
+      >
+        <TouchableOpacity
+          style={[styles.bottomButton, { backgroundColor: colors.primary }]}
+          onPress={handleNext}
+          activeOpacity={0.8}
+          accessibilityRole="button"
+          accessibilityLabel="Next question"
+          disabled={!answered}
+          accessibilityState={{ disabled: !answered }}
+        >
+          <Text style={styles.bottomButtonText}>Next</Text>
+          <Ionicons name="arrow-forward" size={16} color="#fff" />
+        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -384,7 +398,8 @@ const styles = StyleSheet.create({
     fontWeight: fonts.weights.semibold,
   },
   content: {
-    flex: 1,
+    flexGrow: 1,
+    flexShrink: 0,
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.sm,
     paddingBottom: spacing.md,
@@ -407,7 +422,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
     paddingTop: spacing.sm,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(0,0,0,0.08)',
   },
   scoreValue: {
     fontSize: fonts.sizes.xl,

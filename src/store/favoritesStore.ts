@@ -58,13 +58,6 @@ export const useFavoritesStore = create<FavoritesStore>((set, get) => ({
   },
 
   clearFavorites: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadFavorites();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping favorites clear: store never loaded');
-      return false;
-    }
     let cleared = false;
     await queue.enqueue(async () => {
       const removed = await safeRemoveItem('favorites');

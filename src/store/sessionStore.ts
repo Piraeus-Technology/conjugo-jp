@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MAX_DAILY_SESSIONS } from '../utils/constants';
 import { getTodayKey, normalizeStoredDayKey, timestampToDayKey } from '../utils/dayKey';
 import { safeRemoveItem, safeSetItem } from '../utils/safeStorage';
+import { isStoredCount, requireStoredCounts } from '../utils/storedLearningData';
 import { createStoreQueue } from '../utils/storeQueue';
 
 export interface Session {
@@ -15,9 +16,10 @@ export interface Session {
 interface SessionStore {
   sessions: Session[];
   loaded: boolean;
+  resetCount: number;
   loadError: boolean;
   loadSessions: () => Promise<void>;
-  saveSession: (session: Omit<Session, 'day'>, day?: string) => Promise<boolean>;
+  saveSession: (session: Omit<Session, 'day'>, day?: string, beforePublish?: () => void) => Promise<boolean>;
   clearSessions: () => Promise<boolean>;
 }
 
@@ -25,6 +27,7 @@ const queue = createStoreQueue();
 
 export const useSessionStore = create<SessionStore>((set, get) => ({
   sessions: [],
+  resetCount: 0,
   loaded: false,
   loadError: false,
 
@@ -35,29 +38,36 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
       if (get().loaded) return;
       try {
         const stored = await AsyncStorage.getItem('sessions');
-        if (stored) {
+        if (stored !== null) {
           const parsed = JSON.parse(stored);
-          const dayMap: Record<string, Session> = {};
+          if (!Array.isArray(parsed)) throw new Error('Invalid session history');
+          const dayMap = new Map<string, Session>();
           let didMigrate = false;
           for (const s of parsed) {
+            requireStoredCounts(s?.total, s?.correct);
+            if (s.streak !== undefined && !isStoredCount(s.streak)) throw new Error('Invalid session streak');
             let day: string;
-            if (s.day) {
+            if (typeof s.day === 'string' && s.day) {
               day = normalizeStoredDayKey(s.day);
               if (day !== s.day) didMigrate = true;
-            } else {
+            } else if (s.day === undefined && typeof s.date === 'number' && Number.isFinite(new Date(s.date).getTime())) {
               didMigrate = true;
               day = timestampToDayKey(s.date);
-            }
-            if (dayMap[day]) {
-              didMigrate = true;
-              dayMap[day].total += s.total;
-              dayMap[day].correct += s.correct;
-              dayMap[day].streak = Math.max(dayMap[day].streak, s.streak || 0);
             } else {
-              dayMap[day] = { day, total: s.total, correct: s.correct, streak: s.streak || 0 };
+              throw new Error('Invalid session date');
+            }
+            const existing = dayMap.get(day);
+            if (existing) {
+              didMigrate = true;
+              existing.total += s.total;
+              existing.correct += s.correct;
+              requireStoredCounts(existing.total, existing.correct);
+              existing.streak = Math.max(existing.streak, s.streak || 0);
+            } else {
+              dayMap.set(day, { day, total: s.total, correct: s.correct, streak: s.streak ?? 0 });
             }
           }
-          const sessions = Object.values(dayMap).sort((a, b) => b.day.localeCompare(a.day));
+          const sessions = [...dayMap.values()].sort((a, b) => b.day.localeCompare(a.day));
           set({ sessions, loaded: true, loadError: false });
           if (didMigrate) {
             await safeSetItem('sessions', JSON.stringify(sessions));
@@ -72,7 +82,8 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
     });
   },
 
-  saveSession: async (session, day): Promise<boolean> => {
+  saveSession: async (session, day, beforePublish): Promise<boolean> => {
+    const { resetCount } = get();
     if (!get().loaded) {
       await get().loadSessions();
     }
@@ -82,6 +93,7 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
     }
     let ok = false;
     await queue.enqueue(async () => {
+      if (get().resetCount !== resetCount) return;
       const today = day ?? getTodayKey();
       const current = get().sessions;
       const existingIndex = current.findIndex(s => s.day === today);
@@ -106,6 +118,7 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
         console.warn('Failed to persist quiz session');
         return;
       }
+      beforePublish?.();
       set({ sessions: updated });
       ok = true;
     });
@@ -113,13 +126,6 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
   },
 
   clearSessions: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadSessions();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping quiz session clear: store never loaded');
-      return false;
-    }
     let cleared = false;
     await queue.enqueue(async () => {
       const removed = await safeRemoveItem('sessions');
@@ -127,7 +133,7 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
         console.warn('Failed to clear quiz sessions');
         return;
       }
-      set({ sessions: [], loaded: true, loadError: false });
+      set(state => ({ sessions: [], loaded: true, loadError: false, resetCount: state.resetCount + 1 }));
       cleared = true;
     });
     return cleared;
@@ -136,5 +142,5 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
 
 export function __resetSessionStoreForTests() {
   queue.reset();
-  useSessionStore.setState({ sessions: [], loaded: false, loadError: false });
+  useSessionStore.setState({ sessions: [], resetCount: 0, loaded: false, loadError: false });
 }

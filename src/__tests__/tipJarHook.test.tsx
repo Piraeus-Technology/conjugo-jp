@@ -48,3 +48,31 @@ test('tip jar matches ES listener, SKU, and purchase-start recovery behavior', a
     warn.mockRestore();
   }
 });
+
+test('ignores a same-frame second tap and stays busy until the first request settles', async () => {
+  const iap = jest.requireMock('react-native-iap');
+  jest.clearAllMocks();
+  const alert = jest.spyOn(Alert, 'alert').mockImplementation(() => {});
+  let finish!: () => void;
+  iap.requestPurchase.mockImplementationOnce(() => new Promise<void>(resolve => { finish = resolve; }));
+  const hook = renderHook(useTipJar);
+  try {
+    await waitFor(() => expect(hook.result.current.products).toHaveLength(1));
+    act(() => {
+      void hook.result.current.tip('conjugojp_tip_small');
+      void hook.result.current.tip('conjugojp_tip_small');
+    });
+    expect(iap.requestPurchase).toHaveBeenCalledTimes(1);
+    expect(hook.result.current.loading).toBe(true);
+    act(() => iap.purchaseErrorListener.mock.lastCall[0]({ code: 'E_USER_CANCELLED' }));
+    expect(hook.result.current.loading).toBe(true);
+    await act(async () => finish());
+    expect(hook.result.current.loading).toBe(false);
+    await act(async () => hook.result.current.tip('conjugojp_tip_small'));
+    expect(iap.requestPurchase).toHaveBeenCalledTimes(2);
+  } finally {
+    hook.unmount();
+    __resetIapLifecycleForTests();
+    alert.mockRestore();
+  }
+});

@@ -40,7 +40,7 @@ const romajiMap: [string, string][] = [
   ['dya', 'ぢゃ'], ['dyu', 'ぢゅ'], ['dyo', 'ぢょ'],
   ['sha', 'しゃ'], ['shi', 'し'], ['shu', 'しゅ'], ['sho', 'しょ'],
   ['cha', 'ちゃ'], ['chi', 'ち'], ['chu', 'ちゅ'], ['cho', 'ちょ'],
-  ['tsu', 'つ'],
+  ['tsu', 'つ'], ['dzu', 'づ'], ['dzi', 'ぢ'],
   ['ja', 'じゃ'], ['ji', 'じ'], ['ju', 'じゅ'], ['jo', 'じょ'],
   ['nya', 'にゃ'], ['nyu', 'にゅ'], ['nyo', 'にょ'],
   ['hya', 'ひゃ'], ['hyu', 'ひゅ'], ['hyo', 'ひょ'],
@@ -73,6 +73,11 @@ export function romajiToHiragana(input: string): string {
   let remaining = input.toLowerCase();
 
   while (remaining.length > 0) {
+    if (remaining.startsWith("n'")) {
+      result += 'ん';
+      remaining = remaining.slice(2);
+      continue;
+    }
     // Hepburn writes geminated ち as tch, and sometimes ん as m before
     // b/p/m. Handle these before generic doubled consonants (e.g. gamma).
     if (remaining.startsWith('tch')) {
@@ -109,4 +114,39 @@ export function romajiToHiragana(input: string): string {
   }
 
   return result;
+}
+
+// Kana search accepts either script, and romaji search also accepts incomplete
+// syllables or a missing apostrophe at a moraic n boundary.
+export function searchReadings(query: string): { exact: string[]; prefixes: string[] } {
+  const hiragana = query.replace(/[ァ-ヶ]/g, kana => String.fromCharCode(kana.charCodeAt(0) - 0x60));
+  if (!/^[a-z']+$/.test(query)) {
+    return { exact: [hiragana], prefixes: /^[ぁ-ゖー]+$/.test(hiragana) ? [hiragana] : [] };
+  }
+
+  const spellings = new Set([query]);
+  for (const { index } of query.matchAll(/n(?=[aiueo]|y[auo])/g)) {
+    spellings.add(query.slice(0, index + 1) + "'" + query.slice(index + 1));
+  }
+  spellings.add(query.replace(/n(?=[aiueo]|y[auo])/g, "n'"));
+
+  const exact = new Set<string>();
+  const prefixes = new Set<string>();
+  for (const spelling of spellings) {
+    const reading = romajiToHiragana(spelling);
+    if (/^[ぁ-ゖー]+$/.test(reading)) {
+      exact.add(reading);
+      prefixes.add(reading);
+    }
+    const unfinished = reading.match(/^(.*?)([a-z]+)$/);
+    if (unfinished) {
+      const [, start, tail] = unfinished;
+      if (tail.length < 3 && /^[ぁ-ゖー]*$/.test(start)) {
+        for (const [romaji, kana] of romajiMap) {
+          if (romaji.startsWith(tail)) prefixes.add(start + kana);
+        }
+      }
+    }
+  }
+  return { exact: [...exact], prefixes: [...prefixes] };
 }

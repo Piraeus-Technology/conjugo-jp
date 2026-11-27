@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MAX_DAILY_SESSIONS } from '../utils/constants';
 import { getTodayKey, normalizeStoredDayKey, timestampToDayKey } from '../utils/dayKey';
 import { safeRemoveItem, safeSetItem } from '../utils/safeStorage';
+import { requireStoredCounts } from '../utils/storedLearningData';
 import { createStoreQueue } from '../utils/storeQueue';
 
 export interface FlashcardSession {
@@ -14,9 +15,10 @@ export interface FlashcardSession {
 interface FlashcardSessionStore {
   sessions: FlashcardSession[];
   loaded: boolean;
+  resetCount: number;
   loadError: boolean;
   loadSessions: () => Promise<void>;
-  saveSession: (session: Omit<FlashcardSession, 'day'>, day?: string) => Promise<boolean>;
+  saveSession: (session: Omit<FlashcardSession, 'day'>, day?: string, beforePublish?: () => void) => Promise<boolean>;
   clearSessions: () => Promise<boolean>;
 }
 
@@ -24,6 +26,7 @@ const queue = createStoreQueue();
 
 export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get) => ({
   sessions: [],
+  resetCount: 0,
   loaded: false,
   loadError: false,
 
@@ -34,28 +37,34 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
       if (get().loaded) return;
       try {
         const stored = await AsyncStorage.getItem('flashcardSessions');
-        if (stored) {
+        if (stored !== null) {
           const parsed = JSON.parse(stored);
-          const dayMap: Record<string, FlashcardSession> = {};
+          if (!Array.isArray(parsed)) throw new Error('Invalid session history');
+          const dayMap = new Map<string, FlashcardSession>();
           let didMigrate = false;
           for (const s of parsed) {
+            requireStoredCounts(s?.reviewed, s?.correct);
             let day: string;
-            if (s.day) {
+            if (typeof s.day === 'string' && s.day) {
               day = normalizeStoredDayKey(s.day);
               if (day !== s.day) didMigrate = true;
-            } else {
+            } else if (s.day === undefined && typeof s.date === 'number' && Number.isFinite(new Date(s.date).getTime())) {
               didMigrate = true;
               day = timestampToDayKey(s.date);
-            }
-            if (dayMap[day]) {
-              didMigrate = true;
-              dayMap[day].reviewed += s.reviewed;
-              dayMap[day].correct += s.correct;
             } else {
-              dayMap[day] = { day, reviewed: s.reviewed, correct: s.correct };
+              throw new Error('Invalid session date');
+            }
+            const existing = dayMap.get(day);
+            if (existing) {
+              didMigrate = true;
+              existing.reviewed += s.reviewed;
+              existing.correct += s.correct;
+              requireStoredCounts(existing.reviewed, existing.correct);
+            } else {
+              dayMap.set(day, { day, reviewed: s.reviewed, correct: s.correct });
             }
           }
-          const sessions = Object.values(dayMap).sort((a, b) => b.day.localeCompare(a.day));
+          const sessions = [...dayMap.values()].sort((a, b) => b.day.localeCompare(a.day));
           set({ sessions, loaded: true, loadError: false });
           if (didMigrate) {
             await safeSetItem('flashcardSessions', JSON.stringify(sessions));
@@ -70,7 +79,8 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
     });
   },
 
-  saveSession: async (session, day): Promise<boolean> => {
+  saveSession: async (session, day, beforePublish): Promise<boolean> => {
+    const { resetCount } = get();
     if (!get().loaded) {
       await get().loadSessions();
     }
@@ -80,6 +90,7 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
     }
     let ok = false;
     await queue.enqueue(async () => {
+      if (get().resetCount !== resetCount) return;
       const today = day ?? getTodayKey();
       const current = get().sessions;
       const existingIndex = current.findIndex(s => s.day === today);
@@ -103,6 +114,7 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
         console.warn('Failed to persist flashcard session');
         return;
       }
+      beforePublish?.();
       set({ sessions: updated });
       ok = true;
     });
@@ -110,13 +122,6 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
   },
 
   clearSessions: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadSessions();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping flashcard session clear: store never loaded');
-      return false;
-    }
     let cleared = false;
     await queue.enqueue(async () => {
       const removed = await safeRemoveItem('flashcardSessions');
@@ -124,7 +129,7 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
         console.warn('Failed to clear flashcard sessions');
         return;
       }
-      set({ sessions: [], loaded: true, loadError: false });
+      set(state => ({ sessions: [], loaded: true, loadError: false, resetCount: state.resetCount + 1 }));
       cleared = true;
     });
     return cleared;
@@ -133,5 +138,5 @@ export const useFlashcardSessionStore = create<FlashcardSessionStore>((set, get)
 
 export function __resetFlashcardSessionStoreForTests() {
   queue.reset();
-  useFlashcardSessionStore.setState({ sessions: [], loaded: false, loadError: false });
+  useFlashcardSessionStore.setState({ sessions: [], resetCount: 0, loaded: false, loadError: false });
 }

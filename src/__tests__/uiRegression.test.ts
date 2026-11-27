@@ -1,14 +1,17 @@
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { StyleSheet } from 'react-native';
+import { AppState, FlatList, ScrollView, StyleSheet } from 'react-native';
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
-import HomeScreen, { getConjugationIndex, styles as homeStyles } from '../screens/HomeScreen';
+import HomeScreen, { styles as homeStyles } from '../screens/HomeScreen';
+import { getConjugationIndex } from '../utils/verbSearch';
 import { themes } from '../utils/theme';
+import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import verbs from '../data/verbs.json';
 
 const mockNavigate = jest.fn();
+const mockNavigation = { navigate: mockNavigate, addListener: () => jest.fn() };
 
 jest.mock(
   '@react-native-async-storage/async-storage',
@@ -25,7 +28,7 @@ jest.mock('expo-haptics', () => ({
 }));
 jest.mock('react-native-gesture-handler', () => ({ Swipeable: 'Swipeable' }));
 jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ navigate: mockNavigate }),
+  useNavigation: () => mockNavigation,
 }));
 
 function relativeLuminance(hex: string): number {
@@ -48,6 +51,11 @@ function contrastRatio(foreground: string, background: string): number {
 }
 
 describe('UI regression guards', () => {
+  beforeEach(() => {
+    jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
+  });
+  afterEach(() => jest.restoreAllMocks());
+
   it('announces the daily verb JLPT level to screen readers', async () => {
     const screen = render(React.createElement(HomeScreen));
     await act(async () => { await Promise.resolve(); });
@@ -66,6 +74,38 @@ describe('UI regression guards', () => {
     useFavoritesStore.setState({ favorites: [], loaded: true });
   });
 
+  it('lets assistive technology remove a Recent entry without a swipe', async () => {
+    useHistoryStore.setState({ history: ['食べる'], loaded: true });
+    const screen = render(React.createElement(HomeScreen));
+    const row = screen.getByRole('button', { name: '食べる, たべる, to eat' });
+    expect(row.props.accessibilityActions).toEqual([{ name: 'remove', label: 'Remove from Recent' }]);
+    await act(async () => fireEvent(row, 'accessibilityAction', { nativeEvent: { actionName: 'remove' } }));
+    expect(useHistoryStore.getState().history).toEqual([]);
+    expect(screen.queryByText('Recent')).toBeNull();
+  });
+
+  it('passes handled taps through both search scroll containers and dismisses on a results drag', async () => {
+    const screen = render(React.createElement(HomeScreen));
+    const chipStrip = screen.UNSAFE_getAllByType(ScrollView).find(view => view.props.horizontal);
+    expect(chipStrip?.props.keyboardShouldPersistTaps).toBe('handled');
+    fireEvent.press(screen.getByLabelText('Filter by N5'));
+    const results = screen.UNSAFE_getByType(FlatList);
+    expect(results.props.keyboardShouldPersistTaps).toBe('handled');
+    expect(results.props.keyboardDismissMode).toBe('on-drag');
+    await act(async () => { await Promise.resolve(); });
+  });
+
+  it.each([false, true])('shows the empty message only after debounce with a filter active: %s', async (filter) => {
+    const screen = render(React.createElement(HomeScreen));
+    if (filter) fireEvent.press(screen.getByLabelText('Filter by N5'));
+    const search = screen.getByLabelText('Search Japanese verbs');
+    fireEvent.changeText(search, '🦉');
+    expect(screen.queryByText('No matching verbs')).toBeNull();
+    await waitFor(() => expect(screen.getByText('No matching verbs')).toBeTruthy());
+    fireEvent.changeText(search, '食べる');
+    expect(screen.queryByText('No matching verbs')).toBeNull();
+  });
+
   it('finds N1 suru verbs after filtering rather than truncating them first', async () => {
     const screen = render(React.createElement(HomeScreen));
     fireEvent.press(screen.getByLabelText('Filter by N1'));
@@ -74,17 +114,33 @@ describe('UI regression guards', () => {
     expect(screen.queryByText('No matching verbs')).toBeNull();
   });
 
-  it('keeps normal text roles at WCAG AA contrast in both themes', () => {
-    for (const colors of Object.values(themes)) {
-      const surfaces = [colors.bg, colors.card, colors.searchBg];
-      for (const textColor of [colors.textMuted, colors.textSecondary, colors.primaryText]) {
-        for (const surface of surfaces) {
-          expect(contrastRatio(textColor, surface)).toBeGreaterThanOrEqual(4.5);
-        }
+  it.each(['light', 'dark'] as const)('keeps themed text and interactive outlines legible in %s mode', mode => {
+    const colors = themes[mode];
+    const surfaces = [colors.bg, colors.card, colors.searchBg, colors.flashcardBack];
+    for (const textColor of [colors.textPrimary, colors.textMuted, colors.textSecondary, colors.primaryText]) {
+      for (const surface of surfaces) {
+        expect(contrastRatio(textColor, surface)).toBeGreaterThanOrEqual(4.5);
       }
-      expect(contrastRatio('#FFFFFF', colors.primary)).toBeGreaterThanOrEqual(4.5);
     }
-    expect(contrastRatio(themes.light.accent, themes.light.card)).toBeGreaterThanOrEqual(4.5);
+    const textPairs = [
+      ['#FFFFFF', colors.primary], [colors.accent, colors.card],
+      [colors.pillText, colors.pillBg], [colors.pillActiveText, colors.pillActiveBg],
+      [colors.textSecondary, colors.pillBg],
+      [colors.godanTagText, colors.godanTag], [colors.ichidanTagText, colors.ichidanTag],
+      [colors.irregularTagText, colors.irregularTag],
+      [colors.transitiveText, colors.transitiveBg], [colors.intransitiveText, colors.intransitiveBg],
+      [colors.successText, colors.successBg], [colors.errorText, colors.errorBg],
+      [colors.successText, colors.card], [colors.errorText, colors.card], [colors.errorText, colors.bg],
+      [colors.calHighText, colors.calHigh], [colors.calMidText, colors.calMid], [colors.calLowText, colors.calLow],
+      [colors.n5Text, colors.n5Bg], [colors.n4Text, colors.n4Bg], [colors.n3Text, colors.n3Bg],
+      [colors.n2Text, colors.n2Bg], [colors.n1Text, colors.n1Bg], [colors.tabActive, colors.bg],
+    ];
+    for (const [text, surface] of textPairs) {
+      expect(contrastRatio(text, surface)).toBeGreaterThanOrEqual(4.5);
+    }
+    expect(contrastRatio(colors.uncheckedOutline, colors.card)).toBeGreaterThanOrEqual(3);
+    expect(contrastRatio(colors.practiceBorder, colors.card)).toBeGreaterThanOrEqual(1.7);
+    expect(contrastRatio(colors.practiceBorder, colors.flashcardBack)).toBeGreaterThanOrEqual(1.7);
   });
 
   it('keeps search filter chips at least 44 points tall', () => {

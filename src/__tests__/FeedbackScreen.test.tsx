@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
   Linking,
   Platform,
   Share,
@@ -8,6 +10,7 @@ import {
 import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import FeedbackScreen from '../screens/FeedbackScreen';
 
+const mockTipJar = jest.fn();
 const mockClearFavorites = jest.fn();
 const mockClearHistory = jest.fn();
 const mockResetQuizStats = jest.fn();
@@ -23,13 +26,7 @@ jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ navigate: jest.fn() }),
 }));
 jest.mock('../utils/tipJar', () => ({
-  useTipJar: () => ({
-    products: [],
-    loading: false,
-    unavailable: false,
-    unsupported: false,
-    tip: jest.fn(),
-  }),
+  useTipJar: () => mockTipJar(),
 }));
 jest.mock('../store/themeStore', () => {
   const state = {
@@ -60,8 +57,8 @@ jest.mock('../store/sessionStore', () => ({
     selector({ clearSessions: () => mockClearQuizSessions() }),
 }));
 jest.mock('../store/flashcardStatsStore', () => ({
-  useFlashcardStatsStore: (selector: (value: { resetStats: () => Promise<boolean> }) => unknown) =>
-    selector({ resetStats: () => mockResetFlashcardStats() }),
+  useFlashcardStatsStore: (selector: (value: { resetStats: (keepEmptyTotal?: boolean) => Promise<boolean> }) => unknown) =>
+    selector({ resetStats: (keepEmptyTotal) => mockResetFlashcardStats(keepEmptyTotal) }),
 }));
 jest.mock('../store/flashcardSessionStore', () => ({
   useFlashcardSessionStore: (selector: (value: { clearSessions: () => Promise<boolean> }) => unknown) =>
@@ -91,6 +88,7 @@ describe('FeedbackScreen', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockTipJar.mockReturnValue({ products: [], loading: false, unavailable: false, unsupported: false, tip: jest.fn() });
     resetActions.forEach(reset => reset.mockResolvedValue(true));
     Object.defineProperty(Platform, 'OS', { configurable: true, value: 'android' });
   });
@@ -143,6 +141,31 @@ describe('FeedbackScreen', () => {
     expect(screen.getByText('ConjuGo JP v1.2.0')).toBeTruthy();
   });
 
+  it('shows feedback when Share or the privacy policy cannot be opened', async () => {
+    jest.spyOn(Share, 'share').mockRejectedValue(new Error('no share sheet'));
+    jest.spyOn(Linking, 'openURL').mockRejectedValue(new Error('no browser'));
+    const alert = jest.spyOn(Alert, 'alert');
+    const screen = render(<FeedbackScreen />);
+    await act(async () => fireEvent.press(screen.getByLabelText('Share ConjuGo JP')));
+    expect(alert).toHaveBeenCalledWith('Sharing Unavailable', 'Could not open the share sheet.');
+    await act(async () => fireEvent.press(screen.getByLabelText('Open privacy policy')));
+    expect(alert).toHaveBeenCalledWith('Privacy Policy Unavailable', 'Could not open the privacy policy.');
+  });
+
+  it('marks the tip button busy and shows a spinner during the request', () => {
+    mockTipJar.mockReturnValue({
+      products: [{ id: 'conjugojp_tip_small', displayPrice: '$0.99' }], loading: true, tip: jest.fn(),
+    });
+    const screen = render(<FeedbackScreen />);
+    expect(screen.getByRole('button', { name: 'Leave a $0.99 tip', busy: true })).toBeDisabled();
+    expect(screen.UNSAFE_getByType(ActivityIndicator)).toBeTruthy();
+  });
+
+  it('renders More without a keyboard-avoidance wrapper', () => {
+    const screen = render(<FeedbackScreen />);
+    expect(screen.UNSAFE_queryByType(KeyboardAvoidingView)).toBeNull();
+  });
+
   it('requires confirmation before clearing every category of learning data', async () => {
     const alert = jest.spyOn(Alert, 'alert');
     const screen = render(<FeedbackScreen />);
@@ -176,6 +199,16 @@ describe('FeedbackScreen', () => {
       expect.stringContaining('adaptive weights'),
     );
     expect(alert).not.toHaveBeenCalledWith('Learning data reset');
+  });
+
+  it('keeps an explicit zero for flashcard lifetime stats if the daily reset fails', async () => {
+    mockClearFlashcardSessions.mockResolvedValue(false);
+    const alert = jest.spyOn(Alert, 'alert');
+    const screen = render(<FeedbackScreen />);
+    fireEvent.press(screen.getByLabelText('Reset all learning data'));
+    await act(async () => { await alert.mock.calls[0][2]?.find(button => button.text === 'Reset')?.onPress?.(); });
+    expect(mockResetFlashcardStats).toHaveBeenCalledWith(true);
+    expect(alert).toHaveBeenLastCalledWith('Reset incomplete', expect.stringContaining('flashcard sessions'));
   });
 
   it('distinguishes a total reset failure from partial failure', async () => {

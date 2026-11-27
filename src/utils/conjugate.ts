@@ -490,6 +490,9 @@ function getIrregularConjugationHint(verb: VerbData, form: ConjugationForm): str
 }
 
 export function getConjugationHint(verb: VerbData, form: ConjugationForm, headword = verb.reading): string {
+  if (verb.reading === 'ございます' && (form === 'te' || form === 'ta' || form === 'conditional_tara')) {
+    return `ございます uses the polite ます pattern. Use ${conjugateReading(verb, form)} for the ${FORM_LABELS[form].ja} form.`;
+  }
   if (verb.overrides?.[form]) {
     if (verb.group === 'godan' && verb.reading === 'いく' && verb.godanRow === 'ku'
       && ['te', 'ta', 'conditional_tara'].includes(form)) {

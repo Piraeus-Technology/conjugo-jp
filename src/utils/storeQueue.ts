@@ -43,7 +43,7 @@ export function createStoreQueue(): StoreQueue {
 
 /** Parse a persisted JSON string array, dropping anything that isn't a string. */
 export function parseStoredStringArray(stored: string | null): string[] {
-  if (!stored) return [];
+  if (stored === null) return [];
   const parsed = JSON.parse(stored);
   if (!Array.isArray(parsed)) return [];
   return parsed.filter((v): v is string => typeof v === 'string');

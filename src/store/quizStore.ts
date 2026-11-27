@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { safeRemoveItem, safeSetItem } from '../utils/safeStorage';
+import { isStoredCount, requireStoredCounts } from '../utils/storedLearningData';
 import { createStoreQueue } from '../utils/storeQueue';
 
 interface QuizStats {
   totalQuestions: number;
   totalCorrect: number;
   bestStreak: number;
+  resetCount: number;
   loaded: boolean;
   loadError: boolean;
   loadStats: () => Promise<void>;
@@ -20,6 +22,7 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
   totalQuestions: 0,
   totalCorrect: 0,
   bestStreak: 0,
+  resetCount: 0,
   loaded: false,
   loadError: false,
 
@@ -30,9 +33,17 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
       if (get().loaded) return;
       try {
         const stored = await AsyncStorage.getItem('quiz_stats');
-        if (stored) {
+        if (stored !== null) {
           const data = JSON.parse(stored);
-          set({ ...data, loaded: true, loadError: false });
+          requireStoredCounts(data?.totalQuestions, data?.totalCorrect);
+          if (!isStoredCount(data.bestStreak)) throw new Error('Invalid quiz streak');
+          set({
+            totalQuestions: data.totalQuestions,
+            totalCorrect: data.totalCorrect,
+            bestStreak: Math.min(data.bestStreak, data.totalQuestions),
+            loaded: true,
+            loadError: false,
+          });
         } else {
           set({ loaded: true, loadError: false });
         }
@@ -56,7 +67,7 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
       const updated = {
         totalQuestions: state.totalQuestions + 1,
         totalCorrect: state.totalCorrect + (correct ? 1 : 0),
-        bestStreak: Math.max(state.bestStreak, currentStreak),
+        bestStreak: Math.min(state.totalQuestions + 1, Math.max(state.bestStreak, currentStreak)),
       };
       const persisted = await safeSetItem('quiz_stats', JSON.stringify(updated));
       if (!persisted) {
@@ -68,13 +79,6 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
   },
 
   resetStats: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadStats();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping quiz stats reset: store never loaded');
-      return false;
-    }
     let cleared = false;
     await queue.enqueue(async () => {
       const removed = await safeRemoveItem('quiz_stats');
@@ -82,7 +86,10 @@ export const useQuizStore = create<QuizStats>((set, get) => ({
         console.warn('Failed to reset quiz stats');
         return;
       }
-      set({ totalQuestions: 0, totalCorrect: 0, bestStreak: 0, loaded: true, loadError: false });
+      set(state => ({
+        totalQuestions: 0, totalCorrect: 0, bestStreak: 0, resetCount: state.resetCount + 1,
+        loaded: true, loadError: false,
+      }));
       cleared = true;
     });
     return cleared;
@@ -95,6 +102,7 @@ export function __resetQuizStoreForTests() {
     totalQuestions: 0,
     totalCorrect: 0,
     bestStreak: 0,
+    resetCount: 0,
     loaded: false,
     loadError: false,
   });

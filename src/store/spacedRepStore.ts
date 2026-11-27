@@ -82,13 +82,6 @@ export const useSpacedRepStore = create<SpacedRepStore>((set, get) => ({
   },
 
   resetWeights: async (): Promise<boolean> => {
-    if (!get().loaded) {
-      await get().loadWeights();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping spaced rep reset: store never loaded');
-      return false;
-    }
     let cleared = false;
     await queue.enqueue(async () => {
       const removed = await safeRemoveItem(STORAGE_KEY);

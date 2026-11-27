@@ -11,7 +11,7 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { buildPracticeInsights } from '../utils/practiceInsights';
 import { getAccuracyPercent, hasPositiveCount } from '../utils/statsMath';
 import { buildCalendarWeeks, buildDayKey, computeStreak } from '../utils/activityCalendar';
-import { getTodayKey } from '../utils/dayKey';
+import { useTodayKey } from '../hooks/useTodayKey';
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -72,7 +72,7 @@ export default function PracticeStatsView({
   allTimeOverride,
 }: PracticeStatsViewProps) {
   const colors = useColors();
-  const [calendarDate, setCalendarDate] = useState(new Date());
+  const [selectedMonth, setSelectedMonth] = useState<Date | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   // jp weights are bare-verb and shared by quiz + flashcards, so the weakest
@@ -101,7 +101,7 @@ export default function PracticeStatsView({
   const allTimeThirdStat = allTimeOverride?.thirdStat ?? { value: sessions.length, label: labels.daysLabel };
 
   // Today stats
-  const todayStr = getTodayKey();
+  const todayStr = useTodayKey();
   const todayData = dailyMap[todayStr];
 
   const streak = React.useMemo(
@@ -110,6 +110,8 @@ export default function PracticeStatsView({
   );
 
   // Calendar
+  const [todayYear, todayMonth] = todayStr.split('-').map(Number);
+  const calendarDate = selectedMonth ?? new Date(todayYear, todayMonth - 1, 1);
   const calYear = calendarDate.getFullYear();
   const calMonth = calendarDate.getMonth();
   const monthName = calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
@@ -126,18 +128,16 @@ export default function PracticeStatsView({
   };
 
   const prevMonth = () => {
-    setCalendarDate(new Date(calYear, calMonth - 1, 1));
+    setSelectedMonth(new Date(calYear, calMonth - 1, 1));
     setSelectedDay(null);
   };
+  const currentMonth = todayStr.slice(0, 7);
+  const canGoToNextMonth = buildDayKey(calYear, calMonth, 1).slice(0, 7) < currentMonth;
   const nextMonth = () => {
-    const now = new Date();
+    if (!canGoToNextMonth) return;
     const next = new Date(calYear, calMonth + 1, 1);
-    // Cap at the current month — paging into a guaranteed-empty future
-    // month is never useful.
-    if (next <= new Date(now.getFullYear(), now.getMonth(), 1)) {
-      setCalendarDate(next);
-      setSelectedDay(null);
-    }
+    setSelectedMonth(next.getFullYear() === todayYear && next.getMonth() === todayMonth - 1 ? null : next);
+    setSelectedDay(null);
   };
 
   const selectedData = selectedDay ? dailyMap[selectedDay] : null;
@@ -273,6 +273,9 @@ export default function PracticeStatsView({
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
             accessibilityRole="button"
             accessibilityLabel="Next month"
+            disabled={!canGoToNextMonth}
+            accessibilityState={{ disabled: !canGoToNextMonth }}
+            style={{ opacity: canGoToNextMonth ? 1 : 0.45 }}
           >
             <Ionicons name="chevron-forward" size={20} color={colors.primaryText} />
           </TouchableOpacity>
