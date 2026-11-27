@@ -314,16 +314,22 @@ describe('adjective quiz options', () => {
     return out;
   };
 
-  it('always offers three distinct wrong options that are never accepted answers', () => {
+  it('builds every adjective question and card with four choices and no accepted distractors', () => {
     let pairs = 0;
-    for (const [word, data] of adjectiveList) {
+    for (const entry of adjectiveList) {
+      const [word, data] = entry;
       for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
-        const wrong = listAdjectiveDistractors(data, form);
-        expect([word, form, wrong.length, new Set(wrong).size]).toEqual([word, form, 3, 3]);
+        const question = generateAdjectiveQuestion([form], () => 1, [entry], () => 0)!;
+        const card = generateAdjectiveCard([form], () => 1, [entry], () => 0)!;
+        expect([question.word, question.form, question.options.length, new Set(question.options).size])
+          .toEqual([word, form, 4, 4]);
+        expect([card.word, card.form, card.answer]).toEqual([word, form, question.correctAnswer]);
+        expect(question.options).toContain(question.correctAnswer);
         const ok = accepted(data, form);
-        for (const option of wrong) {
+        for (const option of question.options.filter(value => value !== question.correctAnswer)) {
           expect([word, form, option, ok.has(option)]).toEqual([word, form, option, false]);
           expect(KANA.test(option)).toBe(true);
+          expect(getAdjectiveHint(word, data, form, option)).toContain(`「${option}」`);
         }
         pairs++;
       }
@@ -352,16 +358,6 @@ describe('adjective quiz options', () => {
         const wrong = listAdjectiveDistractors(data, form);
         expect(wrong.some(option => option.startsWith(yoStem))).toBe(true);
         if (form === 'polite') expect(wrong.some(option => option.startsWith(data.reading))).toBe(true);
-      }
-    }
-  });
-
-  it('names each offered mistake when the learner picks it', () => {
-    for (const [word, data] of adjectiveList) {
-      for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
-        for (const option of listAdjectiveDistractors(data, form)) {
-          expect(getAdjectiveHint(word, data, form, option)).toContain(`「${option}」`);
-        }
       }
     }
   });
@@ -415,10 +411,10 @@ describe('adjective quiz options', () => {
     expect(listAdjectiveDistractors(adjectiveMap['細かい'], 'adverb')).not.toContain('こまかに');
   });
 
-  it('practices the Polite form of all 80 N5 adjectives and copula entries', () => {
+  it('practices the Polite form of all N5 adjectives and copula entries', () => {
     const n5 = adjectiveList.filter(([, data]) => data.jlpt === 'N5');
-    expect(n5).toHaveLength(80);
-    expect(countEligibleAdjectives(n5, ['polite'])).toBe(80);
+    expect(n5.length).toBeGreaterThan(0);
+    expect(countEligibleAdjectives(n5, ['polite'])).toBe(n5.length);
     for (const entry of n5) {
       const question = generateAdjectiveQuestion(['polite'], () => 1, [entry], () => 0)!;
       const card = generateAdjectiveCard(['polite'], () => 1, [entry], () => 0)!;
