@@ -732,7 +732,12 @@
         "ja": "いろいろな国に行きました。",
         "en": "I went to various countries."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "いろいろの"
+      ]
+    }
   },
   "同じ": {
     "reading": "おなじ",
@@ -749,9 +754,10 @@
       "before_noun": "おなじ",
       "adverb": "おなじように"
     },
-    "note": "No な before a noun (同じ本). Its adverb is 同じように (同じに is also used, e.g. 同じにする).",
+    "note": "No な before a noun (同じ本). Its adverb is 同じように; 同じく and 同じに (as in 同じにする) are also correct.",
     "variants": {
       "adverb": [
+        "おなじく",
         "おなじに"
       ]
     },
@@ -1282,7 +1288,7 @@
   "一生懸命": {
     "reading": "いっしょうけんめい",
     "class": "na",
-    "translation": "with all one's effort",
+    "translation": "earnest; with all one's effort",
     "jlpt": "N4",
     "examples": [
       {
@@ -1375,7 +1381,12 @@
         "ja": "一日で全部読むのは無理です。",
         "en": "Reading it all in one day is impossible."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "むりの"
+      ]
+    }
   },
   "適当": {
     "reading": "てきとう",
@@ -1483,7 +1494,12 @@
         "ja": "時間は十分です。",
         "en": "There's enough time."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "じゅうぶんの"
+      ]
+    }
   },
   "危険": {
     "reading": "きけん",
@@ -1531,7 +1547,12 @@
         "ja": "今日は特別な日です。",
         "en": "Today is a special day."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "とくべつの"
+      ]
+    }
   },
   "安全": {
     "reading": "あんぜん",
@@ -1555,7 +1576,12 @@
         "ja": "急な用事ができました。",
         "en": "Something urgent came up."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "きゅうの"
+      ]
+    }
   },
   "親しい": {
     "reading": "したしい",
@@ -1764,7 +1790,7 @@
   "濃い": {
     "reading": "こい",
     "class": "i",
-    "translation": "strong, thick, dark (taste, colour)",
+    "translation": "strong, thick, dark (taste, color)",
     "jlpt": "N3",
     "examples": [
       {
@@ -1867,7 +1893,12 @@
         "ja": "様々な意見があります。",
         "en": "There are various opinions."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "さまざまの"
+      ]
+    }
   },
   "幸せ": {
     "reading": "しあわせ",
@@ -2036,7 +2067,12 @@
         "ja": "来月、正式に発表します。",
         "en": "We will announce it officially next month."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "せいしきの"
+      ]
+    }
   },
   "贅沢": {
     "reading": "ぜいたく",
@@ -2231,7 +2267,12 @@
         "ja": "計画は完全に失敗しました。",
         "en": "The plan failed completely."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "かんぜんの"
+      ]
+    }
   },
   "貴重": {
     "reading": "きちょう",
@@ -2296,7 +2337,7 @@
   "器用": {
     "reading": "きよう",
     "class": "na",
-    "translation": "skilful (with one's hands)",
+    "translation": "skillful (with one's hands)",
     "jlpt": "N3",
     "examples": [
       {
@@ -2594,7 +2635,7 @@
     "examples": [
       {
         "ja": "愉快な仲間と旅行しました。",
-        "en": "I travelled with a fun group of friends."
+        "en": "I traveled with a fun group of friends."
       }
     ],
     "note": "な-adjective although it ends in い."
@@ -2646,7 +2687,12 @@
         "ja": "余分なお金はありません。",
         "en": "I don't have any spare money."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "よぶんの"
+      ]
+    }
   },
   "楽": {
     "reading": "らく",
@@ -2707,7 +2753,12 @@
         "ja": "残りはわずかです。",
         "en": "There is only a little left."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "わずかの"
+      ]
+    }
   },
   "粗末": {
     "reading": "そまつ",
@@ -2779,7 +2830,12 @@
         "ja": "適度な運動は体にいいです。",
         "en": "Moderate exercise is good for you."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "てきどの"
+      ]
+    }
   },
   "得意": {
     "reading": "とくい",
@@ -2789,10 +2845,15 @@
     "examples": [
       {
         "ja": "私は数学が得意です。",
-        "en": "I'm good at maths."
+        "en": "I'm good at math."
       }
     ],
-    "note": "な-adjective although it ends in い."
+    "note": "な-adjective although it ends in い.",
+    "variants": {
+      "before_noun": [
+        "とくいの"
+      ]
+    }
   },
   "独特": {
     "reading": "どくとく",
@@ -2804,7 +2865,12 @@
         "ja": "この料理は独特な味がします。",
         "en": "This dish has a distinctive taste."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "どくとくの"
+      ]
+    }
   },
   "苦手": {
     "reading": "にがて",
@@ -2839,7 +2905,7 @@
     "examples": [
       {
         "ja": "派手な色のシャツですね。",
-        "en": "That shirt is a flashy colour."
+        "en": "That shirt is a flashy color."
       }
     ]
   },
@@ -2865,7 +2931,12 @@
         "ja": "必死に走りました。",
         "en": "I ran for my life."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "ひっしの"
+      ]
+    }
   },
   "微妙": {
     "reading": "びみょう",
@@ -2889,7 +2960,12 @@
         "ja": "法の前では、みんな平等です。",
         "en": "Everyone is equal before the law."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "びょうどうの"
+      ]
+    }
   },
   "不安": {
     "reading": "ふあん",
@@ -3009,7 +3085,12 @@
         "ja": "彼の顔は真っ赤になりました。",
         "en": "His face turned bright red."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "まっかの"
+      ]
+    }
   },
   "精巧": {
     "reading": "せいこう",
@@ -3033,7 +3114,12 @@
         "ja": "自然な日本語を話したいです。",
         "en": "I want to speak natural Japanese."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "しぜんの"
+      ]
+    }
   },
   "健康": {
     "reading": "けんこう",
@@ -3595,7 +3681,7 @@
     "examples": [
       {
         "ja": "隣の犬がやかましいです。",
-        "en": "The neighbour's dog is noisy."
+        "en": "The neighbor's dog is noisy."
       }
     ]
   },
@@ -3720,7 +3806,12 @@
         "en": "She is working hard."
       }
     ],
-    "note": "な-adjective although it ends in い."
+    "note": "な-adjective although it ends in い.",
+    "variants": {
+      "before_noun": [
+        "けんめいの"
+      ]
+    }
   },
   "強引": {
     "reading": "ごういん",
@@ -3744,7 +3835,12 @@
         "ja": "高級なホテルに泊まりました。",
         "en": "We stayed at a high-class hotel."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "こうきゅうの"
+      ]
+    }
   },
   "さかさま": {
     "reading": "さかさま",
@@ -3756,7 +3852,12 @@
         "ja": "絵がさかさまです。",
         "en": "The picture is upside down."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "さかさまの"
+      ]
+    }
   },
   "さわやか": {
     "reading": "さわやか",
@@ -3781,7 +3882,12 @@
         "en": "A child's heart is pure."
       }
     ],
-    "note": "な-adjective although it ends in い."
+    "note": "な-adjective although it ends in い.",
+    "variants": {
+      "before_noun": [
+        "じゅんすいの"
+      ]
+    }
   },
   "消極的": {
     "reading": "しょうきょくてき",
@@ -3817,7 +3923,12 @@
         "ja": "紙に垂直な線を引いてください。",
         "en": "Please draw a vertical line on the paper."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "すいちょくの"
+      ]
+    }
   },
   "水平": {
     "reading": "すいへい",
@@ -3830,7 +3941,12 @@
         "en": "Please mount the shelf level."
       }
     ],
-    "note": "な-adjective although it ends in い."
+    "note": "な-adjective although it ends in い.",
+    "variants": {
+      "before_noun": [
+        "すいへいの"
+      ]
+    }
   },
   "素直": {
     "reading": "すなお",
@@ -3890,7 +4006,12 @@
         "ja": "彼は交渉で強気でした。",
         "en": "He was assertive in the negotiations."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "つよきの"
+      ]
+    }
   },
   "的確": {
     "reading": "てきかく",
@@ -3939,7 +4060,12 @@
         "en": "It's a clear glass cup."
       }
     ],
-    "note": "な-adjective although it ends in い."
+    "note": "な-adjective although it ends in い.",
+    "variants": {
+      "before_noun": [
+        "とうめいの"
+      ]
+    }
   },
   "特殊": {
     "reading": "とくしゅ",
@@ -3951,7 +4077,12 @@
         "ja": "これは特殊な機械です。",
         "en": "This is a special machine."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "とくしゅの"
+      ]
+    }
   },
   "生意気": {
     "reading": "なまいき",
@@ -3999,7 +4130,12 @@
         "ja": "皮肉なことに、彼はその日だけ休みでした。",
         "en": "Ironically, that was the one day he was off."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "ひにくの"
+      ]
+    }
   },
   "不運": {
     "reading": "ふうん",
@@ -4108,7 +4244,13 @@
         "ja": "外は真っ暗です。",
         "en": "It's pitch dark outside."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "まっくらの"
+      ]
+    },
+    "iTwin": true
   },
   "真っ黒": {
     "reading": "まっくろ",
@@ -4121,7 +4263,12 @@
         "en": "I got deeply tanned playing at the beach."
       }
     ],
-    "iTwin": true
+    "iTwin": true,
+    "variants": {
+      "before_noun": [
+        "まっくろの"
+      ]
+    }
   },
   "真っ青": {
     "reading": "まっさお",
@@ -4133,7 +4280,12 @@
         "ja": "空が真っ青です。",
         "en": "The sky is deep blue."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "まっさおの"
+      ]
+    }
   },
   "真っ白": {
     "reading": "まっしろ",
@@ -4146,7 +4298,12 @@
         "en": "The mountain is white with snow."
       }
     ],
-    "iTwin": true
+    "iTwin": true,
+    "variants": {
+      "before_noun": [
+        "まっしろの"
+      ]
+    }
   },
   "まれ": {
     "reading": "まれ",
@@ -4231,7 +4388,12 @@
         "ja": "この仕事には高度な技術が必要です。",
         "en": "This job requires advanced skills."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "こうどの"
+      ]
+    }
   },
   "幼稚": {
     "reading": "ようち",
@@ -5000,7 +5162,12 @@
         "ja": "新製品の売れ行きは好調です。",
         "en": "Sales of the new product are going well."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "こうちょうの"
+      ]
+    }
   },
   "巧妙": {
     "reading": "こうみょう",
@@ -5024,7 +5191,12 @@
         "ja": "彼女は小柄です。",
         "en": "She is petite."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "こがらの"
+      ]
+    }
   },
   "滑稽": {
     "reading": "こっけい",
@@ -5049,7 +5221,12 @@
         "ja": "都会で孤独な生活を送っています。",
         "en": "I live a solitary life in the city."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "こどくの"
+      ]
+    }
   },
   "細やか": {
     "reading": "こまやか",
@@ -5073,7 +5250,12 @@
         "ja": "彼の仕事は雑です。",
         "en": "His work is sloppy."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "ざつの"
+      ]
+    }
   },
   "残酷": {
     "reading": "ざんこく",
@@ -5109,7 +5291,8 @@
         "ja": "彼は人間関係がドライです。",
         "en": "He's unsentimental about relationships."
       }
-    ]
+    ],
+    "note": "な-adjective although it ends in い."
   },
   "鈍感": {
     "reading": "どんかん",
@@ -5169,7 +5352,12 @@
         "ja": "みんな一様に驚きました。",
         "en": "Everyone was equally surprised."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "いちようの"
+      ]
+    }
   },
   "陰気": {
     "reading": "いんき",
@@ -5241,7 +5429,12 @@
         "ja": "彼は大柄な男性です。",
         "en": "He is a big man."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "おおがらの"
+      ]
+    }
   },
   "おおげさ": {
     "reading": "おおげさ",
@@ -5265,7 +5458,12 @@
         "ja": "電車が大幅に遅れました。",
         "en": "The train was badly delayed."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "おおはばの"
+      ]
+    }
   },
   "臆病": {
     "reading": "おくびょう",
@@ -5409,7 +5607,12 @@
         "ja": "肝心なことを忘れていました。",
         "en": "I'd forgotten the most important thing."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "かんじんの"
+      ]
+    }
   },
   "簡素": {
     "reading": "かんそ",
@@ -5625,7 +5828,7 @@
     "examples": [
       {
         "ja": "鮮やかな色の花が咲いています。",
-        "en": "Brightly coloured flowers are blooming."
+        "en": "Brightly colored flowers are blooming."
       }
     ]
   },
@@ -5871,7 +6074,12 @@
         "ja": "私たちは対等な関係です。",
         "en": "We're on equal terms."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "たいとうの"
+      ]
+    }
   },
   "タイムリー": {
     "reading": "タイムリー",
@@ -5888,12 +6096,12 @@
   "巧み": {
     "reading": "たくみ",
     "class": "na",
-    "translation": "skilful",
+    "translation": "skillful",
     "jlpt": "N1",
     "examples": [
       {
         "ja": "彼は巧みに話をそらしました。",
-        "en": "He skilfully changed the subject."
+        "en": "He skillfully changed the subject."
       }
     ]
   },
@@ -5919,7 +6127,12 @@
         "ja": "多忙な毎日を送っています。",
         "en": "I lead a very busy life."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "たぼうの"
+      ]
+    }
   },
   "多様": {
     "reading": "たよう",
@@ -6149,7 +6362,12 @@
         "ja": "水は生活に不可欠です。",
         "en": "Water is indispensable to life."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "ふかけつの"
+      ]
+    }
   },
   "不吉": {
     "reading": "ふきつ",
@@ -6195,7 +6413,7 @@
     "examples": [
       {
         "ja": "無難な色を選びました。",
-        "en": "I chose a safe colour."
+        "en": "I chose a safe color."
       }
     ]
   },
@@ -6234,8 +6452,7 @@
         "ja": "環境問題は身近な問題です。",
         "en": "Environmental problems are close to home."
       }
-    ],
-    "iTwin": true
+    ]
   },
   "密接": {
     "reading": "みっせつ",
@@ -6271,7 +6488,12 @@
         "ja": "父は無口な人です。",
         "en": "My father is a man of few words."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "むくちの"
+      ]
+    }
   },
   "無邪気": {
     "reading": "むじゃき",
@@ -6444,7 +6666,7 @@
   "良好": {
     "reading": "りょうこう",
     "class": "na",
-    "translation": "good, favourable",
+    "translation": "good, favorable",
     "jlpt": "N1",
     "examples": [
       {
@@ -6463,7 +6685,12 @@
         "ja": "良質な材料を使っています。",
         "en": "We use good-quality materials."
       }
-    ]
+    ],
+    "variants": {
+      "before_noun": [
+        "りょうしつの"
+      ]
+    }
   },
   "ルーズ": {
     "reading": "ルーズ",

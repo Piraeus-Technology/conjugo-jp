@@ -269,7 +269,11 @@ describe('adjective practice', () => {
     mocked.generateAdjectiveCard.mockReturnValue(null);
   });
 
-  it('asks an adjective, explains the mistake, and records it under the adjective key', async () => {
+  it.each([
+    ['たかいでした', 'adds the past of です to the dictionary form'],
+    ['たかかったでした', 'marks the past twice with かった and でした'],
+    ['たかいかったです', 'keeps the final い when adding かったです'],
+  ])('explains the picked 高い Polite Past mistake %s and records the adjective key', async (picked, reason) => {
     const mocked = jest.requireMock('../utils/adjectivePractice');
     mocked.countEligibleAdjectives.mockReturnValue(100000);
     mocked.generateAdjectiveQuestion.mockReturnValue({
@@ -282,10 +286,46 @@ describe('adjective practice', () => {
     const screen = await ready(<QuizScreen />);
     expect(screen.getByText('高い')).toBeTruthy();
     expect(screen.getByText('丁寧過去形 — Polite Past')).toBeTruthy();
-    await act(async () => fireEvent.press(screen.getByLabelText('Answer: たかいでした')));
-    expect(screen.getByText(/don't take でした/)).toBeTruthy();
+    await act(async () => fireEvent.press(screen.getByLabelText(`Answer: ${picked}`)));
+    expect(screen.getByText(`「${picked}」 ${reason}. Drop the final い and add かったです → たかかったです.`)).toBeTruthy();
     await waitFor(() => expect(useSpacedRepStore.getState().weights['adj:高い']).toBeGreaterThan(1));
     expect(useSpacedRepStore.getState().weights['高い']).toBeUndefined();
+  });
+
+  it.each(['しずかじゃないです', 'しずかだじゃないです'])('reveals the full variant set after answering %s', async picked => {
+    const mocked = jest.requireMock('../utils/adjectivePractice');
+    mocked.countEligibleAdjectives.mockReturnValue(100000);
+    const data = (adjectives as Record<string, AdjectiveData>)['静か'];
+    mocked.generateAdjectiveQuestion.mockReturnValue({
+      word: '静か', reading: 'しずか', translation: data.translation, form: 'polite_negative',
+      correctAnswer: 'しずかじゃないです',
+      options: ['しずかじゃないです', 'しずかだじゃないです', 'しずかなじゃないです', 'しずかでじゃないです'],
+      data,
+    });
+    jest.spyOn(Math, 'random').mockReturnValue(0);
+    const screen = await ready(<QuizScreen />);
+    const reveal = 'Also correct: しずかじゃありません、しずかではありません、しずかではないです';
+    expect(screen.queryByText(reveal)).toBeNull();
+    await act(async () => fireEvent.press(screen.getByLabelText(`Answer: ${picked}`)));
+    expect(screen.getByText(reveal)).toBeTruthy();
+  });
+
+  it('lets the longest adjective answer wrap even when its result icon is visible', async () => {
+    const mocked = jest.requireMock('../utils/adjectivePractice');
+    mocked.countEligibleAdjectives.mockReturnValue(100000);
+    const data = (adjectives as Record<string, AdjectiveData>)['一生懸命'];
+    const answer = 'いっしょうけんめいじゃなかったです';
+    mocked.generateAdjectiveQuestion.mockReturnValue({
+      word: '一生懸命', reading: data.reading, translation: data.translation, form: 'polite_past_negative',
+      correctAnswer: answer, options: [answer, 'いっしょうけんめいじゃないでした'], data,
+    });
+    jest.spyOn(Math, 'random').mockReturnValue(0);
+    const screen = await ready(<QuizScreen />);
+    await act(async () => fireEvent.press(screen.getByLabelText(`Answer: ${answer}`)));
+    const option = screen.getByText(answer);
+    expect(option.props.numberOfLines).toBeUndefined();
+    expect(option.props.adjustsFontSizeToFit).toBeUndefined();
+    expect(StyleSheet.flatten(option.props.style)).toMatchObject({ flexShrink: 1, textAlign: 'center' });
   });
 
   it('shows the also-correct forms on the back of an adjective card', async () => {

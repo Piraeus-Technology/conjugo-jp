@@ -24,12 +24,36 @@ describe('searching verbs and adjectives together', () => {
   });
 
   it('keeps every verb result in the order searchVerbs gives it', () => {
-    for (const query of ['たべる', 'taberu', 'eat', 'する', 'かく', 'miru', 'のむ', '行った', 'open']) {
-      const verbsOnly = searchWords(query).filter(r => r.kind === 'verb').map(r => r.verb);
-      const expected = searchVerbs(query).map(r => r.verb);
-      expect(expected.slice(0, verbsOnly.length)).toEqual(verbsOnly);
+    for (const query of ['たべる', 'taberu', 'eat', 'する', 'かく', 'miru', 'のむ', '行った', 'easy', 'cold', 'fine', 'open', 'nara', 'こい', 'かって']) {
+      const verbsOnly = searchWords(query).flatMap(result => {
+        if (result.kind !== 'verb') return [];
+        const { kind: _kind, ...verb } = result;
+        return [verb];
+      });
+      expect(verbsOnly).toEqual(searchVerbs(query));
     }
     expect(searchWords('たべる')[0]).toMatchObject({ kind: 'verb', verb: '食べる' });
+  });
+
+  it('ranks exact matches by level and puts partial gloss matches after verbs', () => {
+    const open = searchWords('open');
+    expect(open[0]).toMatchObject({ kind: 'verb', verb: '開ける' });
+    expect(open.findIndex(row => row.verb === '露骨')).toBeGreaterThan(searchVerbs('open').length - 1);
+    expect(searchWords('こい')[0]).toMatchObject({ kind: 'verb', verb: '来る', matchForm: 'imperative' });
+    const katte = searchWords('かって');
+    const adjective = katte.findIndex(row => row.verb === '勝手');
+    for (const verb of ['買う', '勝つ']) {
+      expect(katte.slice(0, adjective).some(row => row.verb === verb && row.matchForm === 'te')).toBe(true);
+    }
+    expect(searchWords('nara')[0]).toMatchObject({ kind: 'adjective', verb: 'だ', matchForm: 'conditional_ba' });
+  });
+
+  it.each([
+    ['mijika', '短い'], ['mijika', '身近'], ['chikarazuyoi', '力強い'],
+    ['chikarazuyokatta', '力強い'], ['kokorozuyoi', '心強い'],
+    ['sumaato', 'スマート'], ['yuniiku', 'ユニーク'], ['ruuzu', 'ルーズ'], ['taimurii', 'タイムリー'],
+  ])('finds %s as %s with Hepburn or a long vowel', (query, word) => {
+    expect(searchWords(query)).toContainEqual(expect.objectContaining({ kind: 'adjective', verb: word }));
   });
 
   it('applies the word-class filters to adjectives', () => {

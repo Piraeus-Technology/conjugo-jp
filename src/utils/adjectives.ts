@@ -1,9 +1,9 @@
 import adjectives from '../data/adjectives.json';
+import { getConjugationIndex } from './verbSearch';
 import type { JLPTLevel, VerbExample } from './conjugate';
 
 // い-adjectives, な-adjectives and the copula だ/です. They live beside the verb
-// engine rather than inside it: verbs keep their 18-form set, and nothing here
-// changes how a verb conjugates, is quizzed or is searched.
+// engine. The combined word search indexes adjective forms alongside verbs.
 
 export type AdjectiveClass = 'i' | 'na' | 'copula';
 
@@ -61,14 +61,6 @@ export const CLASS_FORMS: Record<AdjectiveClass, AdjectiveForm[]> = {
     'polite', 'negative', 'polite_negative', 'past', 'polite_past', 'past_negative',
     'polite_past_negative', 'te', 'conditional_ba', 'conditional_tara',
   ],
-};
-
-// Shown in the table, never practised: the answer is the headword plus です and
-// no realistic wrong rule produces three distinct mistakes for it.
-const NOT_PRACTISED: Record<AdjectiveClass, AdjectiveForm[]> = {
-  i: ['polite'],
-  na: [],
-  copula: ['polite'],
 };
 
 export const ADJECTIVE_FORM_GROUPS: { title: string; titleJa: string; forms: AdjectiveForm[] }[] = [
@@ -166,8 +158,7 @@ export function adjectiveForms(data: AdjectiveData): AdjectiveForm[] {
 
 // The forms of a word that practice may ask, given the forms the learner chose.
 export function practiceAdjectiveForms(data: AdjectiveData, active: readonly AdjectiveForm[]): AdjectiveForm[] {
-  const skip = NOT_PRACTISED[data.class];
-  return CLASS_FORMS[data.class].filter(form => active.includes(form) && !skip.includes(form));
+  return CLASS_FORMS[data.class].filter(form => active.includes(form));
 }
 
 function hasForm(data: AdjectiveData, form: AdjectiveForm): boolean {
@@ -256,8 +247,8 @@ export function conjugateAdjective(headword: string, data: AdjectiveData, form: 
   };
 }
 
-// Every reading of this word that is grammatical somewhere, so none of them can
-// be offered as a wrong option. Includes forms the app does not teach.
+// Block other taught forms and common related forms so options test the rule
+// for the question. Before a Noun deliberately tests the misuse of plain だ.
 function grammaticalReadings(data: AdjectiveData): Set<string> {
   const out = new Set<string>([data.reading]);
   for (const form of CLASS_FORMS[data.class]) {
@@ -285,32 +276,7 @@ function grammaticalReadings(data: AdjectiveData): Set<string> {
 // True for a な-adjective that a learner could mistake for an い-adjective
 // because its reading ends in い (きれい, 有名). Read from the stored class.
 export function isLookalike(data: AdjectiveData): boolean {
-  return data.class === 'na' && data.reading.endsWith('い');
-}
-
-// The one mistake the "Why?" hint names, which is therefore always offered.
-export function hintedAdjectiveMistake(data: AdjectiveData, form: AdjectiveForm): string | undefined {
-  requireForm(data, form);
-  const r = data.reading;
-  if (data.class === 'i') {
-    if (data.irregular === 'ii' && form !== 'polite') {
-      return r.slice(0, -1) + I_ENDINGS[form as keyof typeof I_ENDINGS];
-    }
-    if (form === 'polite_past') return r + 'でした';
-    if (form === 'polite_past_negative') return iBaseReading(data) + 'くないでした';
-    return undefined;
-  }
-  if (data.class === 'copula') {
-    return form === 'polite_past_negative' ? 'じゃないでした' : undefined;
-  }
-  if (data.overrides?.before_noun && form === 'before_noun') return r + 'な';
-  if (isLookalike(data) && form in I_ENDINGS) {
-    return r.slice(0, -1) + I_ENDINGS[form as keyof typeof I_ENDINGS];
-  }
-  if (form === 'before_noun') return r + 'の';
-  if (form === 'polite') return r + 'だです';
-  if (form === 'polite_past_negative') return r + 'じゃないでした';
-  return undefined;
+  return data.class === 'na' && /[いイ]$/.test(data.reading);
 }
 
 function iCandidates(data: AdjectiveData, form: AdjectiveForm): string[] {
@@ -324,18 +290,22 @@ function iCandidates(data: AdjectiveData, form: AdjectiveForm): string[] {
   const byForm: Record<AdjectiveForm, string[]> = {
     plain: [],
     before_noun: [],
-    polite: [b + 'くです', r + 'だです', r + 'ます'],
-    negative: [r + 'じゃない', r + 'くない', b + 'ない'],
-    polite_negative: [r + 'じゃないです', r + 'じゃありません', r + 'くないです'],
-    past: [r + 'だった', r + 'かった', b + 'くた'],
-    polite_past: [r + 'でした', b + 'かったでした', r + 'かったです'],
-    past_negative: [r + 'じゃなかった', b + 'くないかった', r + 'くなかった'],
+    polite: [r + 'だです', b + 'くです', r + 'ます', r + 'いです'],
+    negative: [r + 'じゃない', b + 'ない', r + 'くない', b + 'くじゃない', b + 'かない'],
+    polite_negative: [b + 'くないだです', r + 'じゃないです', r + 'じゃありません', r + 'くないです'],
+    past: [b + 'くた', r + 'だった', r + 'かった', b + 'かた'],
+    polite_past: [r + 'でした', b + 'かったでした', r + 'かったです', b + 'かったます'],
+    past_negative: [b + 'くないかった', r + 'じゃなかった', r + 'くなかった', b + 'くなかた'],
     polite_past_negative: [b + 'くないでした', r + 'じゃなかったです', b + 'くなかったでした', r + 'じゃありませんでした'],
-    te: [r + 'で', r + 'て', b + 'くで', b + 'て'],
-    adverb: [r + 'に', r + 'く', b + 'くに'],
-    conditional_ba: [r + 'ければ', b + 'かれば', r + 'れば', b + 'くれば'],
-    conditional_tara: [r + 'だったら', r + 'かったら', b + 'くたら', b + 'たら'],
+    te: [b + 'くで', r + 'で', r + 'て', b + 'くって', b + 'て'],
+    adverb: [r + 'に', b + 'くく', r + 'く', b + 'っく', b + 'くってに'],
+    conditional_ba: [b + 'かれば', r + 'ければ', r + 'れば', b + 'くれば', b + 'くければ'],
+    conditional_tara: [b + 'くたら', r + 'だったら', r + 'かったら', b + 'たら', b + 'かたら'],
   };
+  if (form === 'adverb' && r === 'おおい') {
+    // 大いに is a real adverb with the same reading.
+    return byForm.adverb.slice(1);
+  }
   return [...lead, ...byForm[form]];
 }
 
@@ -350,21 +320,19 @@ function naCandidates(data: AdjectiveData, form: AdjectiveForm): string[] {
   const keepI = iEnding && isLookalike(data) ? [r + iEnding] : [];
   const plusI = data.iTwin ? [] : [r + 'い'];
   const byForm: Record<AdjectiveForm, string[]> = {
-    plain: [...plusI, r + 'なだ', r + 'の', r + 'のだ'],
-    // 〜だ is the plain form, but "だ before a noun" is the classic mistake here
-    // and can never be read as the form that describes a noun.
-    before_noun: [r + 'の', r + 'だ', ...plusI, r + 'だの'],
-    polite: [r + 'だです', r + 'なです', r + 'のです', ...(data.iTwin ? [] : [r + 'いです'])],
-    negative: [r + 'ない', r + 'だじゃない', r + 'なじゃない'],
-    polite_negative: [r + 'だじゃないです', r + 'なじゃないです', r + 'ないです'],
-    past: [r + 'なだった', r + 'のだった', r + 'だだった'],
+    plain: [...plusI, r + 'なだ', r + 'だだ', r + 'でだ'],
+    before_noun: [r + 'の', r + 'だ', ...plusI, r + 'でな', r + 'なな'],
+    polite: [r + 'だです', r + 'なです', r + 'でです', ...(data.iTwin ? [] : [r + 'いです'])],
+    negative: [r + 'だじゃない', r + 'なじゃない', r + 'でじゃない'],
+    polite_negative: [r + 'だじゃないです', r + 'なじゃないです', r + 'でじゃないです'],
+    past: [r + 'なだった', r + 'のだった', r + 'だだった', r + 'でだった'],
     polite_past: [r + 'だったでした', r + 'なでした', r + 'だでした'],
     past_negative: [r + 'じゃないだった', r + 'じゃないかった', r + 'だじゃなかった'],
     polite_past_negative: [r + 'じゃないでした', r + 'じゃなかったでした', r + 'だじゃなかったです'],
-    te: [r + 'だで', r + 'て', r + 'なで'],
-    adverb: [r + 'なに', r + 'だに', r + 'のに'],
-    conditional_ba: [r + 'だなら', r + 'れば', r + 'なれば'],
-    conditional_tara: [r + 'なったら', r + 'だたら', r + 'なだったら'],
+    te: [r + 'だで', r + 'て', r + 'なで', r + 'でて'],
+    adverb: [r + 'なに', r + 'だに', r + 'にく', r + 'でに'],
+    conditional_ba: [r + 'だなら', r + 'れば', r + 'なれば', r + 'になら'],
+    conditional_tara: [r + 'なったら', r + 'だたら', r + 'なだったら', r + 'でたら'],
   };
   const named = data.overrides?.before_noun && form === 'before_noun' ? [r + 'な'] : [];
   return [...named, ...asI, ...keepI, ...byForm[form]];
@@ -372,116 +340,83 @@ function naCandidates(data: AdjectiveData, form: AdjectiveForm): string[] {
 
 function copulaCandidates(form: AdjectiveForm): string[] {
   const byForm: Partial<Record<AdjectiveForm, string[]>> = {
-    polite: ['だです', 'でです', 'だます'],
-    negative: ['だじゃない', 'だない', 'じゃないだ', 'くない'],
+    polite: ['だです', 'でです', 'ですだ'],
+    negative: ['だじゃない', 'だない', 'じゃないだ'],
     polite_negative: ['だじゃないです', 'だないです', 'じゃないだです'],
-    past: ['だた', 'だだった', 'かった'],
+    past: ['だた', 'だだった', 'だかった'],
     polite_past: ['だでした', 'だったでした', 'でしたです'],
-    past_negative: ['じゃないだった', 'じゃないかった', 'だじゃなかった', 'くなかった'],
+    past_negative: ['じゃないだった', 'じゃないかった', 'だじゃなかった'],
     polite_past_negative: ['じゃないでした', 'じゃなかったでした', 'だじゃなかったです'],
-    te: ['だて', 'だで', 'て', 'くて'],
-    conditional_ba: ['だなら', 'だれば', 'ければ', 'だば'],
-    conditional_tara: ['だたら', 'だだったら', 'かったら'],
+    te: ['だて', 'だで', 'ですて'],
+    conditional_ba: ['だなら', 'だれば', 'だければ', 'だば'],
+    conditional_tara: ['だたら', 'だだったら', 'だかったら'],
   };
   return byForm[form] ?? [];
 }
 
-// Wrong options for a question, closest mistakes first. Every option is the
-// same form of the same word built with a wrong rule, so no option can be ruled
-// out from its stem. The quiz takes the first three.
+// Keep the closest available mistakes and filter out readings that are valid
+// here or collide with verb forms. Every candidate is built for the asked form.
 export function listAdjectiveDistractors(data: AdjectiveData, form: AdjectiveForm): string[] {
   requireForm(data, form);
   const blocked = grammaticalReadings(data);
+  if (form === 'before_noun') blocked.delete(data.reading + 'だ');
+  const verbForms = getConjugationIndex();
   const candidates = data.class === 'i'
     ? iCandidates(data, form)
     : data.class === 'na'
       ? naCandidates(data, form)
       : copulaCandidates(form);
-  const hinted = hintedAdjectiveMistake(data, form);
-  const ordered = hinted ? [hinted, ...candidates] : candidates;
-  const out: string[] = [];
-  for (const candidate of ordered) {
-    if (!candidate || blocked.has(candidate) || out.includes(candidate)) continue;
-    out.push(candidate);
-  }
-  if (out.length < 3) {
-    // Last resort: another form of the same word. It is never an also-correct
-    // variant of the asked form, so it is still unambiguously wrong.
-    const answer = conjugateAdjectiveReading(data, form);
-    const accepted = new Set([answer, ...alsoCorrectAdjectiveReadings(data, form)]);
-    for (const other of CLASS_FORMS[data.class]) {
-      if (out.length >= 3) break;
-      const reading = conjugateAdjectiveReading(data, other);
-      if (!accepted.has(reading) && !out.includes(reading)) out.push(reading);
-    }
-  }
-  return out;
+  return [...new Set(candidates)].filter(candidate => (
+    !blocked.has(candidate) &&
+    !verbForms.has(candidate) &&
+    !(data.overrides?.before_noun && candidate.startsWith(data.reading + 'の'))
+  )).slice(0, 3);
 }
 
 function hintRule(headword: string, data: AdjectiveData, form: AdjectiveForm, answer: string): string {
-  const mistake = hintedAdjectiveMistake(data, form);
-  const not = mistake ? `, not ${mistake}` : '';
   if (data.class === 'i') {
+    if (form === 'polite') return `い-adjectives keep the final い and add です → ${answer}.`;
     if (data.irregular === 'ii') {
-      if (form === 'polite') return `${headword} keeps いい in the polite form: ${answer}.`;
-      return `${headword} is irregular: every form except ${headword} and ${headword}です is built on よ-. Use ${answer}${not}.`;
+      const stem = iBaseReading(data);
+      return `Use the ${stem}- stem and add ${I_ENDINGS[form as keyof typeof I_ENDINGS]} → ${answer}.`;
     }
-    switch (form) {
-      case 'polite': return `い-adjectives keep い and add です: ${answer}.`;
-      case 'negative': return `い-adjectives: drop い and add くない → ${answer}.`;
-      case 'polite_negative': return `い-adjectives: drop い and add くないです → ${answer} (くありません is also correct).`;
-      case 'past': return `い-adjectives: drop い and add かった → ${answer}.`;
-      case 'polite_past': return `い-adjectives don't take でした. Drop い and add かったです → ${answer}${not}.`;
-      case 'past_negative': return `い-adjectives: drop い and add くなかった → ${answer}.`;
-      case 'polite_past_negative': return `い-adjectives: drop い and add くなかったです → ${answer}${not} (くありませんでした is also correct).`;
-      case 'te': return `い-adjectives: drop い and add くて → ${answer}.`;
-      case 'adverb': return `い-adjectives: drop い and add く → ${answer}.`;
-      case 'conditional_ba': return `い-adjectives: drop い and add ければ → ${answer}.`;
-      case 'conditional_tara': return `い-adjectives: drop い and add かったら → ${answer}.`;
-      default: return `Use the い-adjective endings: ${answer}.`;
-    }
+    return `Drop the final い and add ${I_ENDINGS[form as keyof typeof I_ENDINGS]} → ${answer}.`;
   }
 
   if (data.class === 'copula') {
-    switch (form) {
-      case 'polite': return 'だ becomes です in polite speech.';
-      case 'negative': return `だ → ${answer} (ではない is also correct).`;
-      case 'polite_negative': return `だ → ${answer} (じゃありません and ではありません are also correct).`;
-      case 'past': return `だ → ${answer}.`;
-      case 'polite_past': return `だ → ${answer}, the past of です.`;
-      case 'past_negative': return `だ → ${answer} (ではなかった is also correct).`;
-      case 'polite_past_negative': return `だ → ${answer}${not} (じゃありませんでした is also correct).`;
-      case 'te': return `だ → ${answer}.`;
-      case 'conditional_ba': return `だ → ${answer} (ならば and であれば are also correct).`;
-      case 'conditional_tara': return `だ → ${answer}.`;
-      default: return `だ → ${answer}.`;
-    }
+    return form === 'polite' ? 'だ becomes です in polite speech.' : `Change だ to ${answer}.`;
   }
 
   if (data.overrides?.before_noun && form === 'before_noun') {
-    return `${headword} takes no な before a noun: ${answer}${not} (${headword}本).`;
+    return `${headword} takes no な before a noun → ${answer} (${headword}本).`;
   }
+  if (data.overrides?.adverb && form === 'adverb') {
+    return `${headword} adds ように to form its adverb → ${answer}.`;
+  }
+  const finalI = data.reading.endsWith('イ') ? 'い (written イ)' : 'い';
   const lookalike = isLookalike(data)
-    ? `${headword} is a な-adjective even though it ends in い. `
+    ? `${headword} is a な-adjective even though it ends in ${finalI}. `
     : '';
-  switch (form) {
-    case 'plain': return `${lookalike}な-adjectives add だ in the plain form → ${answer}.`;
-    case 'before_noun': return `${lookalike}な-adjectives take な before a noun → ${answer}${not}.`;
-    case 'polite': return `${lookalike}な-adjectives add です directly → ${answer}${not}.`;
-    case 'negative': return `${lookalike}な-adjectives add じゃない → ${answer}${not} (ではない is also correct).`;
-    case 'polite_negative': return `${lookalike}な-adjectives add じゃないです → ${answer}${not} (じゃありません is also correct).`;
-    case 'past': return `${lookalike}な-adjectives add だった → ${answer}${not}.`;
-    case 'polite_past': return `${lookalike}な-adjectives add でした → ${answer}${not}.`;
-    case 'past_negative': return `${lookalike}な-adjectives add じゃなかった → ${answer}${not} (ではなかった is also correct).`;
-    case 'polite_past_negative': return `${lookalike}な-adjectives add じゃなかったです → ${answer}${not} (じゃありませんでした is also correct).`;
-    case 'te': return `${lookalike}な-adjectives add で → ${answer}${not}.`;
-    case 'adverb': return `${lookalike}な-adjectives add に → ${answer}${not}.`;
-    case 'conditional_ba': return `${lookalike}な-adjectives add なら → ${answer}${not} (ならば is also correct).`;
-    case 'conditional_tara': return `${lookalike}な-adjectives add だったら → ${answer}${not}.`;
-    default: return `${lookalike}Use the な-adjective endings → ${answer}.`;
-  }
+  return `${lookalike}な-adjectives add ${NA_ENDINGS[form]} → ${answer}.`;
 }
 
-export function getAdjectiveHint(headword: string, data: AdjectiveData, form: AdjectiveForm): string {
-  return hintRule(headword, data, form, conjugateAdjectiveReading(data, form));
+function explainAdjectiveMistake(data: AdjectiveData, form: AdjectiveForm, picked: string): string {
+  const r = data.reading;
+  if (data.class === 'i' && form === 'polite_past') {
+    if (picked === r + 'でした') return 'adds the past of です to the dictionary form';
+    if (picked === iBaseReading(data) + 'かったでした') return 'marks the past twice with かった and でした';
+    if (picked === r + 'かったです') return 'keeps the final い when adding かったです';
+  }
+  if (form === 'before_noun' && picked === r + 'だ') return 'uses the sentence-ending だ before a noun';
+  return 'applies a different ending';
+}
+
+export function getAdjectiveHint(
+  headword: string, data: AdjectiveData, form: AdjectiveForm, picked?: string,
+): string {
+  const rule = hintRule(headword, data, form, conjugateAdjectiveReading(data, form));
+  if (picked && listAdjectiveDistractors(data, form).includes(picked)) {
+    return `「${picked}」 ${explainAdjectiveMistake(data, form, picked)}. ${rule}`;
+  }
+  return rule;
 }

@@ -12,9 +12,8 @@ const verbMap = verbs as Record<string, VerbData>;
 const WEAK_VERB_LIMIT = 5;
 // A word sits at the default weight (1) until answered; weights climb above 1
 // on misses and fall below on correct answers. Only weights > 1 are "weak".
-// Weights are decayed to `now` first so this list agrees with what selection
-// actually favours — a word missed months ago has relaxed back toward 1 and is
-// no longer a weak area.
+// Weights are decayed to `now` before filtering. A weight slightly above 1
+// can still appear here even when it rounds to 1.0 for display.
 
 export interface WeakVerb {
   key: string; // spaced-repetition key

@@ -24,6 +24,7 @@ interface PracticeSettingsStore extends PracticeSettingsSnapshot {
   toggleForm: (form: ConjugationForm) => Promise<void>;
   toggleLevel: (level: JLPTLevel) => Promise<void>;
   setAdjectivesEnabled: (enabled: boolean) => Promise<void>;
+  toggleAdjectives: () => Promise<void>;
   setActiveAdjectiveForms: (forms: AdjectiveForm[]) => Promise<void>;
   toggleAdjectiveForm: (form: AdjectiveForm) => Promise<void>;
   dismissAdjectiveNotice: () => Promise<void>;
@@ -212,6 +213,13 @@ export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get)
     // Turning adjectives on also retires the "new" note.
     setAdjectivesEnabled: (enabled) => persist(
       enabled ? { adjectivesEnabled: true, adjectiveNoticeDismissed: true } : { adjectivesEnabled: false },
+      'adjective toggle',
+    ),
+
+    toggleAdjectives: () => persist(
+      state => state.adjectivesEnabled
+        ? { adjectivesEnabled: false }
+        : { adjectivesEnabled: true, adjectiveNoticeDismissed: true },
       'adjective toggle',
     ),
 

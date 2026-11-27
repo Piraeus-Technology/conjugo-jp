@@ -1,19 +1,20 @@
 import Fuse from 'fuse.js';
-import { searchReadings } from './kana';
+import { expandKanaLongVowels, foldHepburn, searchReadings } from './kana';
 import { MAX_SEARCH_RESULTS } from './constants';
-import { searchVerbs, type SearchResult } from './verbSearch';
+import { searchVerbsWithExactMatches, type SearchResult } from './verbSearch';
 import {
   ADJECTIVE_FORM_LABELS,
   adjectiveForms,
   adjectiveList,
+  adjectiveMap,
   conjugateAdjective,
   type AdjectiveClass,
   type AdjectiveData,
   type AdjectiveForm,
 } from './adjectives';
 
-// Search across verbs and adjectives. Verb results come from searchVerbs
-// unchanged and keep their order; adjectives are added around them.
+// Combined search keeps the full verb result list in order. Exact adjective
+// matches can appear among or ahead of those rows.
 
 export type AdjectiveGroup = 'i-adjective' | 'na-adjective' | 'copula';
 
@@ -42,6 +43,8 @@ export type WordSearchResult = (SearchResult & { kind: 'verb' }) | AdjectiveSear
 const toHiragana = (text: string) =>
   text.replace(/[ァ-ヶ]/g, kana => String.fromCharCode(kana.charCodeAt(0) - 0x60));
 
+const romajiAlias = (hiragana: string) => expandKanaLongVowels(foldHepburn(hiragana));
+
 interface AdjectiveIndexItem {
   word: string;
   data: AdjectiveData;
@@ -69,21 +72,26 @@ interface FormMatch extends AdjectiveIndexItem {
 }
 
 let formIndex: Map<string, FormMatch[]> | null = null;
+const romajiAliases = new Map<string, FormMatch[]>();
 
 // Every form of every adjective, including the also-correct variants, keyed by
 // reading (also folded to hiragana) and by kanji display.
 function getFormIndex(): Map<string, FormMatch[]> {
   if (formIndex) return formIndex;
   const index = new Map<string, FormMatch[]>();
-  const add = (key: string, match: FormMatch) => {
-    const list = index.get(key) ?? [];
+  const add = (map: Map<string, FormMatch[]>, key: string, match: FormMatch) => {
+    const list = map.get(key) ?? [];
     if (!list.some(m => m.word === match.word && m.form === match.form)) list.push(match);
-    index.set(key, list);
+    map.set(key, list);
+  };
+  const addSpelling = (value: string, reading: string, match: FormMatch) => {
+    const hiragana = toHiragana(reading);
+    for (const key of new Set([value, reading, hiragana])) add(index, key, match);
+    const alias = romajiAlias(hiragana);
+    if (alias !== hiragana) add(romajiAliases, alias, match);
   };
   for (const [word, data] of adjectiveList) {
-    for (const key of new Set([word, data.reading, toHiragana(data.reading)])) {
-      add(key, { word, data, form: null, shown: data.reading });
-    }
+    addSpelling(word, data.reading, { word, data, form: null, shown: data.reading });
     for (const form of adjectiveForms(data)) {
       const result = conjugateAdjective(word, data, form);
       const spellings = [
@@ -92,7 +100,7 @@ function getFormIndex(): Map<string, FormMatch[]> {
       ];
       for (const spelling of spellings) {
         const match = { word, data, form, shown: spelling.reading };
-        for (const key of new Set([spelling.value, spelling.reading, toHiragana(spelling.reading)])) add(key, match);
+        addSpelling(spelling.value, spelling.reading, match);
       }
     }
   }
@@ -123,14 +131,6 @@ function toResult(word: string, data: AdjectiveData, form: AdjectiveForm | null,
 const beginnerFirst = (a: { jlpt: string; reading: string }, b: { jlpt: string; reading: string }) =>
   b.jlpt.localeCompare(a.jlpt) || a.reading.length - b.reading.length;
 
-function glossMatches(translation: string, q: string): boolean {
-  return translation
-    .toLowerCase()
-    .split(/[;,]/)
-    .map(part => part.replace(/\(.*?\)/g, '').trim())
-    .includes(q);
-}
-
 export function searchAdjectives(
   query: string,
   passesFilters: (item: WordSearchResult) => boolean = () => true,
@@ -147,23 +147,30 @@ export function searchAdjectives(
   };
 
   const { exact, prefixes } = searchReadings(q);
+  const isRomaji = /^[a-z']+$/.test(q);
   const index = getFormIndex();
   for (const key of new Set([q, ...exact])) {
     for (const match of index.get(key) ?? []) push(strong, toResult(match.word, match.data, match.form, match.shown));
+    if (isRomaji) {
+      for (const match of romajiAliases.get(key) ?? []) push(strong, toResult(match.word, match.data, match.form, match.shown));
+    }
   }
   for (const [word, data] of adjectiveList) {
-    if (glossMatches(data.translation, q)) push(strong, toResult(word, data, null));
+    if (data.translation.toLowerCase() === q) push(strong, toResult(word, data, null));
   }
 
   if (prefixes.length) {
     adjectiveList
-      .filter(([, data]) => prefixes.some(prefix => toHiragana(data.reading).startsWith(prefix)))
+      .filter(([, data]) => {
+        const reading = toHiragana(data.reading);
+        return prefixes.some(prefix => reading.startsWith(prefix) ||
+          (isRomaji && romajiAlias(reading).startsWith(prefix)));
+      })
       .sort(([, a], [, b]) => beginnerFirst(a, b))
       .forEach(([word, data]) => push(weak, toResult(word, data, null)));
   }
   for (const { item } of adjectiveFuse.search(q)) {
-    const data = adjectiveList.find(([word]) => word === item.verb)![1];
-    push(weak, toResult(item.verb, data, null));
+    push(weak, toResult(item.verb, adjectiveMap[item.verb], null));
   }
   return { strong, weak };
 }
@@ -172,13 +179,23 @@ export function searchWords(
   query: string,
   passesFilters: (item: WordSearchResult) => boolean = () => true,
 ): WordSearchResult[] {
-  const verbs: WordSearchResult[] = searchVerbs(query, item => passesFilters({ ...item, kind: 'verb' }))
-    .map(item => ({ ...item, kind: 'verb' as const }));
+  const { results, exactCount } = searchVerbsWithExactMatches(query, item => passesFilters({ ...item, kind: 'verb' }));
+  const verbs = results.map(item => ({ ...item, kind: 'verb' as const }));
   const { strong, weak } = searchAdjectives(query, passesFilters);
-  return [...strong, ...verbs, ...weak].slice(0, MAX_SEARCH_RESULTS);
+  const exactAdjectives = strong.sort(beginnerFirst).slice(0, MAX_SEARCH_RESULTS);
+  const combined: WordSearchResult[] = [...verbs];
+
+  // Insert each adjective after the last exact verb at the same or an easier
+  // level. Working backward keeps the original verb indices usable.
+  for (const adjective of [...exactAdjectives].reverse()) {
+    let index = exactCount;
+    while (index > 0 && verbs[index - 1].jlpt < adjective.jlpt) index--;
+    combined.splice(index, 0, adjective);
+  }
+  return [...combined, ...weak.slice(0, MAX_SEARCH_RESULTS - exactAdjectives.length)];
 }
 
-// Adjectives that pass the browse filters, beginner levels first.
+// Adjectives that pass the browse filters, in data file order.
 export function browseAdjectives(passesFilters: (item: WordSearchResult) => boolean): AdjectiveSearchResult[] {
   return adjectiveList
     .map(([word, data]) => toResult(word, data, null))

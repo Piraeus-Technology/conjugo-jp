@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { act, fireEvent, render } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import {
   __resetPracticeSettingsStoreForTests,
   allForms,
@@ -13,6 +13,8 @@ import {
 import { __resetSpacedRepStoreForTests, useSpacedRepStore } from '../store/spacedRepStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { adjectiveKey } from '../utils/adjectives';
+import { __resetSessionStoreForTests, useSessionStore } from '../store/sessionStore';
+import { __resetFlashcardSessionStoreForTests, useFlashcardSessionStore } from '../store/flashcardSessionStore';
 import PracticeSettingsScreen from '../screens/PracticeSettingsScreen';
 import AdjectiveScreen from '../screens/AdjectiveScreen';
 
@@ -40,6 +42,8 @@ beforeEach(async () => {
   await AsyncStorage.clear();
   __resetPracticeSettingsStoreForTests();
   __resetSpacedRepStoreForTests();
+  __resetSessionStoreForTests();
+  __resetFlashcardSessionStoreForTests();
 });
 
 describe('adjective practice settings', () => {
@@ -105,11 +109,15 @@ describe('adjective practice settings', () => {
     await AsyncStorage.setItem('practiceSettings', JSON.stringify({ activeForms: ['te'], activeLevels: ['N3'] }));
     await usePracticeSettingsStore.getState().loadPracticeSettings();
     expect(await usePracticeSettingsStore.getState().resetPracticeSettings()).toBe(true);
-    expect(usePracticeSettingsStore.getState()).toMatchObject({
+    const defaults = {
       activeForms: beginnerForms,
+      activeLevels: beginnerLevels,
       adjectivesEnabled: true,
       activeAdjectiveForms: beginnerAdjectiveForms,
-    });
+      adjectiveNoticeDismissed: true,
+    };
+    expect(usePracticeSettingsStore.getState()).toMatchObject(defaults);
+    expect(await stored()).toEqual(defaults);
   });
 
   it('applies two quick toggles in a row without losing either', async () => {
@@ -131,14 +139,55 @@ describe('adjective practice settings', () => {
 });
 
 describe('adjective learning data', () => {
-  it('records an adjective under its own key and leaves verb weights untouched', async () => {
-    await AsyncStorage.setItem('spaced_rep_weights', JSON.stringify({ 飲む: 3, 食べる: 0.5 }));
-    await useSpacedRepStore.getState().loadWeights();
-    await useSpacedRepStore.getState().recordResult(adjectiveKey('高い'), false);
-    const { weights } = useSpacedRepStore.getState();
-    expect(weights).toMatchObject({ 飲む: 3, 食べる: 0.5 });
-    expect(weights[adjectiveKey('高い')]).toBeGreaterThan(1);
-    expect(weights['高い']).toBeUndefined();
+  it('preserves 1.4.2 verb weights, timestamps and sessions before and after an adjective answer', async () => {
+    const weights = { 飲む: 3, 食べる: 0.5 };
+    const lastPracticedAt = { 飲む: 1735689600000, 食べる: 1735776000000 };
+    const sessions = [
+      { day: '2025-01-02', total: 12, correct: 8, streak: 6 },
+      { day: '2025-01-01', total: 7, correct: 4, streak: 2 },
+    ];
+    const flashcardSessions = [
+      { day: '2025-01-02', reviewed: 9, correct: 7 },
+      { day: '2025-01-01', reviewed: 10, correct: 5 },
+    ];
+    const storedWeights = { version: 2, weights, lastPracticedAt };
+    await AsyncStorage.multiSet([
+      ['spaced_rep_weights', JSON.stringify(storedWeights)],
+      ['sessions', JSON.stringify(sessions)],
+      ['flashcardSessions', JSON.stringify(flashcardSessions)],
+    ]);
+    await Promise.all([
+      useSpacedRepStore.getState().loadWeights(),
+      useSessionStore.getState().loadSessions(),
+      useFlashcardSessionStore.getState().loadSessions(),
+    ]);
+    const checkSessions = async () => {
+      expect(useSessionStore.getState().sessions).toEqual(sessions);
+      expect(useFlashcardSessionStore.getState().sessions).toEqual(flashcardSessions);
+      expect(await AsyncStorage.getItem('sessions')).toBe(JSON.stringify(sessions));
+      expect(await AsyncStorage.getItem('flashcardSessions')).toBe(JSON.stringify(flashcardSessions));
+    };
+    expect(useSpacedRepStore.getState().weights).toEqual(weights);
+    expect(useSpacedRepStore.getState().lastPracticedAt).toEqual(lastPracticedAt);
+    expect(await AsyncStorage.getItem('spaced_rep_weights')).toBe(JSON.stringify(storedWeights));
+    await checkSessions();
+
+    const key = adjectiveKey('高い');
+    const answerTime = 1735862400000;
+    const now = jest.spyOn(Date, 'now').mockReturnValue(answerTime);
+    try {
+      await useSpacedRepStore.getState().recordResult(key, false);
+    } finally {
+      now.mockRestore();
+    }
+    const { weights: updatedWeights, lastPracticedAt: updatedTimestamps } = useSpacedRepStore.getState();
+    expect(updatedWeights[key]).toBeGreaterThan(1);
+    expect(updatedWeights).toEqual({ ...weights, [key]: updatedWeights[key] });
+    expect(updatedTimestamps).toEqual({ ...lastPracticedAt, [key]: answerTime });
+    expect(JSON.parse((await AsyncStorage.getItem('spaced_rep_weights'))!)).toEqual({
+      version: 2, weights: updatedWeights, lastPracticedAt: updatedTimestamps,
+    });
+    await checkSessions();
   });
 });
 
@@ -150,7 +199,33 @@ describe('practice settings screen', () => {
     await act(async () => fireEvent.press(screen.getByRole('button', { name: 'Turn on adjectives' })));
     expect(usePracticeSettingsStore.getState()).toMatchObject({ adjectivesEnabled: true, adjectiveNoticeDismissed: true });
     expect(screen.queryByRole('button', { name: 'Turn on adjectives' })).toBeNull();
-    expect(screen.getByRole('checkbox', { name: '否定形 (Negative)' })).toBeTruthy();
+    expect(screen.getByRole('checkbox', { name: 'Adjective form, 否定形 (Negative)' })).toBeTruthy();
+  });
+
+  it('persists both taps when the adjective switch is tapped twice before rendering', async () => {
+    mockRouteParams = { mode: 'quiz' };
+    await AsyncStorage.setItem('practiceSettings', JSON.stringify({ activeForms: ['te'], activeLevels: ['N3'] }));
+    await usePracticeSettingsStore.getState().loadPracticeSettings();
+    const setItem = jest.mocked(AsyncStorage.setItem);
+    setItem.mockClear();
+    const screen = render(<PracticeSettingsScreen />);
+    const toggle = screen.getByRole('checkbox', { name: 'Practice い/な-adjectives and だ/です' });
+    await act(async () => {
+      fireEvent.press(toggle);
+      fireEvent.press(toggle);
+    });
+    await waitFor(() => expect(setItem).toHaveBeenCalledTimes(2));
+    expect(setItem.mock.calls.map(([, value]) => JSON.parse(value).adjectivesEnabled)).toEqual([true, false]);
+    expect(await stored()).toMatchObject({ adjectivesEnabled: false, adjectiveNoticeDismissed: true });
+    expect(toggle).not.toBeChecked();
+  });
+
+  it('names verb and adjective forms separately for screen readers', () => {
+    mockRouteParams = { mode: 'quiz' };
+    usePracticeSettingsStore.setState({ loaded: true, adjectivesEnabled: true });
+    const screen = render(<PracticeSettingsScreen />);
+    expect(screen.getByLabelText('て形 (Te-form)')).toBeChecked();
+    expect(screen.getByRole('checkbox', { name: 'Adjective form, て形 (Te-form)' })).toBeChecked();
   });
 
   it('shows no note once dismissed and hides the adjective forms while adjectives are off', () => {
@@ -158,8 +233,8 @@ describe('practice settings screen', () => {
     usePracticeSettingsStore.setState({ loaded: true, adjectivesEnabled: false, adjectiveNoticeDismissed: true });
     const screen = render(<PracticeSettingsScreen />);
     expect(screen.queryByRole('button', { name: 'Turn on adjectives' })).toBeNull();
-    expect(screen.queryByRole('checkbox', { name: '否定形 (Negative)' })).toBeNull();
-    expect(screen.getByRole('checkbox', { name: 'Practise い/な-adjectives and だ/です' })).toBeTruthy();
+    expect(screen.queryByRole('checkbox', { name: 'Adjective form, 否定形 (Negative)' })).toBeNull();
+    expect(screen.getByRole('checkbox', { name: 'Practice い/な-adjectives and だ/です' })).toBeTruthy();
   });
 });
 
@@ -169,14 +244,21 @@ describe('adjective detail screen', () => {
     useFavoritesStore.setState({ favorites: [], loaded: true });
     const screen = render(<AdjectiveScreen />);
     expect(screen.getByText('な形容詞')).toBeTruthy();
-    expect(screen.getByText('静かじゃない')).toBeTruthy();
+    const forms = [
+      '静かだ', '静かな', '静かです', '静かじゃない', '静かじゃないです', '静かだった',
+      '静かでした', '静かじゃなかった', '静かじゃなかったです', '静かで', '静かに',
+      '静かなら', '静かだったら',
+    ];
+    const rows = screen.getAllByRole('button', { name: /: 静か.*, reading しずか/ });
+    expect(rows).toHaveLength(forms.length);
+    for (const form of forms) expect(screen.getByText(form, { exact: true })).toBeTruthy();
     expect(screen.getByText('Also: 静かではない')).toBeTruthy();
     await act(async () => fireEvent.press(screen.getByRole('button', { name: 'Add 静か to favorites' })));
     expect(useFavoritesStore.getState().favorites).toEqual([adjectiveKey('静か')]);
   });
 
-  it('explains a look-alike in its note', () => {
-    mockRouteParams = { word: 'きれい' };
+  it.each(['きれい', 'ドライ'])('explains %s in its look-alike note', word => {
+    mockRouteParams = { word };
     const screen = render(<AdjectiveScreen />);
     expect(screen.getByText('な-adjective although it ends in い.')).toBeTruthy();
   });

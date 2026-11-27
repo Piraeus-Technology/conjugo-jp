@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
 import verbs from '../data/verbs.json';
 import {
   ALL_ADJECTIVE_FORMS,
@@ -9,14 +11,14 @@ import {
   conjugateAdjective,
   conjugateAdjectiveReading,
   getAdjectiveHint,
-  hintedAdjectiveMistake,
   isLookalike,
   listAdjectiveDistractors,
   parseAdjectiveKey,
   practiceAdjectiveForms,
   type AdjectiveForm,
 } from '../utils/adjectives';
-import { generateAdjectiveQuestion } from '../utils/adjectivePractice';
+import { countEligibleAdjectives, generateAdjectiveCard, generateAdjectiveQuestion } from '../utils/adjectivePractice';
+import { getConjugationIndex } from '../utils/verbSearch';
 import { generatePracticeQuestion, describeQuestion } from '../utils/practiceItems';
 import type { VerbData } from '../utils/conjugate';
 
@@ -89,10 +91,15 @@ const GROUND_TRUTH: Record<string, Partial<Record<AdjectiveForm, [string, string
   かっこいい: {
     polite: ['かっこいいです', 'かっこいいです'],
     negative: ['かっこよくない', 'かっこよくない'],
+    polite_negative: ['かっこよくないです', 'かっこよくないです'],
     past: ['かっこよかった', 'かっこよかった'],
+    polite_past: ['かっこよかったです', 'かっこよかったです'],
+    past_negative: ['かっこよくなかった', 'かっこよくなかった'],
     polite_past_negative: ['かっこよくなかったです', 'かっこよくなかったです'],
     te: ['かっこよくて', 'かっこよくて'],
+    adverb: ['かっこよく', 'かっこよく'],
     conditional_ba: ['かっこよければ', 'かっこよければ'],
+    conditional_tara: ['かっこよかったら', 'かっこよかったら'],
   },
   // Ends in いい and is REGULAR: a spelling rule would get this wrong.
   かわいい: {
@@ -131,11 +138,42 @@ const ALSO_CORRECT: Record<string, Partial<Record<AdjectiveForm, string[]>>> = {
     polite_past_negative: ['しずかじゃありませんでした', 'しずかではありませんでした', 'しずかではなかったです'],
     conditional_ba: ['しずかならば', 'しずかであれば'],
   },
-  同じ: { adverb: ['おなじに'] },
+  同じ: { adverb: ['おなじく', 'おなじに'] },
 };
 
 // な-adjectives whose reading ends in い. Their class must stay な.
-const LOOKALIKES = ['嫌い', 'きれい', '有名', '失礼', '一生懸命', '丁寧', '得意', 'あいまい', '冷静', '無礼', '詳細', 'ぞんざい'];
+const LOOKALIKES = ['嫌い', 'きれい', '有名', '失礼', '一生懸命', '丁寧', '得意', 'あいまい', '冷静', '無礼', '詳細', 'ぞんざい', 'ドライ'];
+
+const I_ENDINGS = {
+  polite: 'です', negative: 'くない', polite_negative: 'くないです',
+  past: 'かった', polite_past: 'かったです', past_negative: 'くなかった',
+  polite_past_negative: 'くなかったです', te: 'くて', adverb: 'く',
+  conditional_ba: 'ければ', conditional_tara: 'かったら',
+};
+
+const NA_ENDINGS = {
+  plain: 'だ', before_noun: 'な', polite: 'です', negative: 'じゃない',
+  polite_negative: 'じゃないです', past: 'だった', polite_past: 'でした',
+  past_negative: 'じゃなかった', polite_past_negative: 'じゃなかったです',
+  te: 'で', adverb: 'に', conditional_ba: 'なら', conditional_tara: 'だったら',
+};
+
+const COPULA_ENDINGS = {
+  polite: 'です', negative: 'じゃない', polite_negative: 'じゃないです',
+  past: 'だった', polite_past: 'でした', past_negative: 'じゃなかった',
+  polite_past_negative: 'じゃなかったです', te: 'で',
+  conditional_ba: 'なら', conditional_tara: 'だったら',
+};
+
+const EXPECTED_ENDINGS = { i: I_ENDINGS, na: NA_ENDINGS, copula: COPULA_ENDINGS };
+const I_TWINS = ['真っ白', '真っ黒', '同じ', '意地悪', '気軽', '手軽', '真っ暗'];
+const TAKES_NO = [
+  'いろいろ', '無理', '特別', '正式', '完全', 'わずか', '適度', '得意', '独特', '必死',
+  '平等', '高級', 'さかさま', '純粋', '垂直', '水平', '強気', '透明', '特殊', '皮肉',
+  '真っ黒', '真っ白', '高度', '好調', '小柄', '孤独', '雑', '一様', '大柄', '肝心',
+  '対等', '多忙', '無口', '良質', '急', '懸命', '余分', '自然', '不可欠', '大幅',
+  '様々', '十分', '真っ赤', '真っ暗', '真っ青',
+];
 
 describe('adjective data', () => {
   it('has one copula and only い/な classes otherwise', () => {
@@ -164,9 +202,28 @@ describe('adjective data', () => {
     }
   });
 
-  it('never shares a headword with a verb, so learning data cannot collide', () => {
+  it('has no duplicate top-level keys in the raw adjective JSON', () => {
+    const raw = readFileSync(join(process.cwd(), 'src/data/adjectives.json'), 'utf8');
+    const keys = Array.from(raw.matchAll(/^  ("(?:[^"\\]|\\.)+"): \{/gm), match => JSON.parse(match[1]));
+    expect(keys).toEqual(Object.keys(adjectiveMap));
+  });
+
+  it('uses adj: keys to prevent collisions in learning data', () => {
     const verbKeys = new Set(Object.keys(verbs));
-    expect(adjectiveList.filter(([word]) => verbKeys.has(word)).map(([w]) => w)).toEqual([]);
+    for (const [word] of adjectiveList) {
+      expect(adjectiveKey(word)).toBe(`adj:${word}`);
+      expect(verbKeys.has(adjectiveKey(word))).toBe(false);
+    }
+  });
+
+  it('pins the い-twins and the words that accept の before a noun', () => {
+    expect(adjectiveList.filter(([, d]) => d.iTwin).map(([word]) => word).sort()).toEqual([...I_TWINS].sort());
+    const acceptsNo = adjectiveList.filter(([, d]) => d.variants?.before_noun?.includes(d.reading + 'の'));
+    expect(acceptsNo.map(([word]) => word).sort()).toEqual([...TAKES_NO].sort());
+    for (const word of TAKES_NO) {
+      expect(conjugateAdjective(word, adjectiveMap[word], 'before_noun').alsoCorrect)
+        .toEqual([{ value: word + 'の', reading: adjectiveMap[word].reading + 'の' }]);
+    }
   });
 
   it('has no kana spelling that duplicates a kanji entry of the same class', () => {
@@ -221,26 +278,27 @@ describe('adjective conjugation', () => {
     expect(() => conjugateAdjectiveReading(adjectiveMap['高い'], 'before_noun')).toThrow();
   });
 
-  it('builds every form of every word from the stored class', () => {
+  it('builds every form of every word from the hand-written ending tables', () => {
     let checked = 0;
     for (const [word, data] of adjectiveList) {
-      for (const form of CLASS_FORMS[data.class]) {
+      const endings = EXPECTED_ENDINGS[data.class];
+      expect([...CLASS_FORMS[data.class]].sort()).toEqual(Object.keys(endings).sort());
+      for (const [form, ending] of Object.entries(endings) as [AdjectiveForm, string][]) {
         const { value, reading } = conjugateAdjective(word, data, form);
-        expect([word, form, KANA.test(reading)]).toEqual([word, form, true]);
-        if (KANA.test(word)) expect([word, form, value]).toEqual([word, form, reading]);
-        if (data.class === 'na' && !data.overrides?.[form]) {
-          expect(reading.startsWith(data.reading)).toBe(true);
-          expect(value.startsWith(word)).toBe(true);
-        }
-        if (data.class === 'i' && form !== 'polite') {
-          const base = data.irregular === 'ii' ? data.reading.slice(0, -2) + 'よ' : data.reading.slice(0, -1);
-          expect([word, form, reading.startsWith(base) && !reading.startsWith(data.reading)])
-            .toEqual([word, form, data.irregular === 'ii' || !reading.startsWith(data.reading)]);
-        }
+        const attach = (head: string) => {
+          if (data.class === 'copula') return ending;
+          if (data.class === 'na' || form === 'polite') return head + ending;
+          if (word === 'いい' || word === 'かっこいい') return head.slice(0, -2) + 'よ' + ending;
+          return head.slice(0, -1) + ending;
+        };
+        const expected = word === '同じ'
+          ? GROUND_TRUTH['同じ'][form] ?? [attach(word), attach(data.reading)]
+          : [attach(word), attach(data.reading)];
+        expect([word, form, value, reading]).toEqual([word, form, ...expected]);
         checked++;
       }
     }
-    expect(checked).toBeGreaterThan(6000);
+    expect(checked).toBe(6632);
   });
 });
 
@@ -260,7 +318,7 @@ describe('adjective quiz options', () => {
     let pairs = 0;
     for (const [word, data] of adjectiveList) {
       for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
-        const wrong = listAdjectiveDistractors(data, form).slice(0, 3);
+        const wrong = listAdjectiveDistractors(data, form);
         expect([word, form, wrong.length, new Set(wrong).size]).toEqual([word, form, 3, 3]);
         const ok = accepted(data, form);
         for (const option of wrong) {
@@ -278,7 +336,7 @@ describe('adjective quiz options', () => {
     for (const [word, data] of adjectiveList) {
       const real = everyForm(data);
       for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
-        for (const option of listAdjectiveDistractors(data, form).slice(0, 3)) {
+        for (const option of listAdjectiveDistractors(data, form)) {
           const allowed = form === 'before_noun' && option === data.reading + 'だ';
           if (real.has(option) && !allowed) offenders.push(`${word}:${form}:${option}`);
         }
@@ -287,31 +345,40 @@ describe('adjective quiz options', () => {
     expect(offenders).toEqual([]);
   });
 
-  it('builds every wrong option on the word itself, so the stem gives nothing away', () => {
-    for (const [word, data] of adjectiveList) {
-      if (data.class === 'copula') continue;
-      const stem = data.irregular === 'ii' ? data.reading.slice(0, -2) : data.reading.slice(0, -1);
+  it('keeps the よ- stem among the choices for both irregular adjectives', () => {
+    for (const [word, yoStem] of [['いい', 'よ'], ['かっこいい', 'かっこよ']]) {
+      const data = adjectiveMap[word];
       for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
-        for (const option of listAdjectiveDistractors(data, form).slice(0, 3)) {
-          expect([word, form, option.startsWith(stem)]).toEqual([word, form, true]);
+        const wrong = listAdjectiveDistractors(data, form);
+        expect(wrong.some(option => option.startsWith(yoStem))).toBe(true);
+        if (form === 'polite') expect(wrong.some(option => option.startsWith(data.reading))).toBe(true);
+      }
+    }
+  });
+
+  it('names each offered mistake when the learner picks it', () => {
+    for (const [word, data] of adjectiveList) {
+      for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
+        for (const option of listAdjectiveDistractors(data, form)) {
+          expect(getAdjectiveHint(word, data, form, option)).toContain(`「${option}」`);
         }
       }
     }
   });
 
-  it('includes the mistake the hint names among the options', () => {
-    let named = 0;
+  it('excludes verb forms, bare な-adjective negatives and real い-adjective adverbs', () => {
+    const verbForms = getConjugationIndex();
     for (const [word, data] of adjectiveList) {
       for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
-        const mistake = hintedAdjectiveMistake(data, form);
-        if (!mistake) continue;
-        named++;
-        expect([word, form, listAdjectiveDistractors(data, form).slice(0, 3)])
-          .toEqual([word, form, expect.arrayContaining([mistake])]);
-        expect(getAdjectiveHint(word, data, form)).toContain(mistake);
+        for (const option of listAdjectiveDistractors(data, form)) {
+          expect([word, form, option, verbForms.has(option)]).toEqual([word, form, option, false]);
+          if (word === '同じ') expect(option.startsWith('おなじの')).toBe(false);
+          if (data.class === 'na') expect([data.reading + 'ない', data.reading + 'ないです']).not.toContain(option);
+          if (data.class === 'i' && form === 'adverb') expect(option).not.toMatch(/くに$|^おおいに$/);
+          if (data.class === 'copula') expect(option).toMatch(/^(だ|で|じゃ)/);
+        }
       }
     }
-    expect(named).toBeGreaterThan(1000);
   });
 
   it('offers the classic mistakes', () => {
@@ -319,7 +386,10 @@ describe('adjective quiz options', () => {
     expect(listAdjectiveDistractors(adjectiveMap['きれい'], 'negative').slice(0, 3)).toContain('きれくない');
     expect(listAdjectiveDistractors(adjectiveMap['いい'], 'negative').slice(0, 3)).toContain('いくない');
     expect(listAdjectiveDistractors(adjectiveMap['同じ'], 'before_noun').slice(0, 3)).toContain('おなじな');
-    expect(listAdjectiveDistractors(adjectiveMap['静か'], 'before_noun').slice(0, 3)).toContain('しずかの');
+    expect(listAdjectiveDistractors(adjectiveMap['静か'], 'before_noun')).toEqual(expect.arrayContaining(['しずかの', 'しずかだ']));
+    expect(listAdjectiveDistractors(adjectiveMap['高い'], 'negative')).toContain('たかいじゃない');
+    expect(listAdjectiveDistractors(adjectiveMap['いい'], 'negative')).toContain('いいじゃない');
+    expect(listAdjectiveDistractors(adjectiveMap['ドライ'], 'negative')).toContain('ドラくない');
     expect(listAdjectiveDistractors(adjectiveMap['だ'], 'polite_past_negative').slice(0, 3)).toContain('じゃないでした');
     // かわいい is regular, so the よ- form is never its answer and never its mistake.
     expect(conjugateAdjectiveReading(adjectiveMap['かわいい'], 'negative')).toBe('かわいくない');
@@ -328,13 +398,14 @@ describe('adjective quiz options', () => {
   it('never offers a real form of a twin word in the other class', () => {
     // 細かい has a な-twin 細か, so こまかに / こまかだった are real Japanese.
     const naEndings = ['だ', 'な', 'です', 'じゃない', 'じゃないです', 'だった', 'でした', 'じゃなかった', 'じゃなかったです', 'で', 'に', 'なら', 'だったら'];
-    const iEndings = ['い', 'くない', 'くないです', 'かった', 'かったです', 'くなかった', 'くなかったです', 'くて', 'く', 'ければ', 'かったら'];
+    const iEndings = ['い', 'いです', ...Object.values(I_ENDINGS).filter(ending => ending !== 'です'),
+      'くありません', 'くありませんでした'];
     const offenders: string[] = [];
     for (const [word, data] of adjectiveList) {
       for (const form of practiceAdjectiveForms(data, ALL_ADJECTIVE_FORMS)) {
-        for (const option of listAdjectiveDistractors(data, form).slice(0, 3)) {
+        for (const option of listAdjectiveDistractors(data, form)) {
           if (data.class === 'i' && naEndings.some(e => option === data.reading.slice(0, -1) + e)) offenders.push(`${word}:${option}`);
-          if (data.iTwin && iEndings.some(e => option === data.reading + e)) offenders.push(`${word}:${option}`);
+          if (I_TWINS.includes(word) && iEndings.some(e => option === data.reading + e)) offenders.push(`${word}:${option}`);
         }
       }
     }
@@ -344,10 +415,17 @@ describe('adjective quiz options', () => {
     expect(listAdjectiveDistractors(adjectiveMap['細かい'], 'adverb')).not.toContain('こまかに');
   });
 
-  it('does not quiz the bare です forms', () => {
-    expect(practiceAdjectiveForms(adjectiveMap['高い'], ALL_ADJECTIVE_FORMS)).not.toContain('polite');
-    expect(practiceAdjectiveForms(adjectiveMap['だ'], ALL_ADJECTIVE_FORMS)).not.toContain('polite');
-    expect(practiceAdjectiveForms(adjectiveMap['静か'], ALL_ADJECTIVE_FORMS)).toContain('polite');
+  it('practices the Polite form of all 80 N5 adjectives and copula entries', () => {
+    const n5 = adjectiveList.filter(([, data]) => data.jlpt === 'N5');
+    expect(n5).toHaveLength(80);
+    expect(countEligibleAdjectives(n5, ['polite'])).toBe(80);
+    for (const entry of n5) {
+      const question = generateAdjectiveQuestion(['polite'], () => 1, [entry], () => 0)!;
+      const card = generateAdjectiveCard(['polite'], () => 1, [entry], () => 0)!;
+      const expected = entry[0] === 'だ' ? 'です' : entry[1].reading + 'です';
+      expect([question.form, question.correctAnswer, new Set(question.options).size]).toEqual(['polite', expected, 4]);
+      expect([card.form, card.answer]).toEqual(['polite', expected]);
+    }
   });
 });
 
@@ -356,6 +434,7 @@ describe('adjective hints', () => {
     for (const [word, data] of adjectiveList) {
       for (const form of CLASS_FORMS[data.class]) {
         const hint = getAdjectiveHint(word, data, form);
+        expect(hint).not.toContain('also correct');
         expect([word, form, hint.includes(conjugateAdjectiveReading(data, form))]).toEqual([word, form, true]);
       }
     }
@@ -374,6 +453,18 @@ describe('adjective hints', () => {
   it('explains the よ- rule for いい and keeps いい only in the polite form', () => {
     expect(getAdjectiveHint('いい', adjectiveMap['いい'], 'negative')).toContain('よ-');
     expect(getAdjectiveHint('いい', adjectiveMap['いい'], 'polite')).toContain('いいです');
+  });
+
+  it('uses the special rules for 同じ and identifies the final イ in ドライ', () => {
+    expect(getAdjectiveHint('同じ', adjectiveMap['同じ'], 'before_noun')).toContain('takes no な before a noun');
+    expect(getAdjectiveHint('同じ', adjectiveMap['同じ'], 'adverb')).toContain('同じ adds ように');
+    expect(getAdjectiveHint('ドライ', adjectiveMap['ドライ'], 'negative')).toContain('ends in い (written イ)');
+  });
+
+  it('describes the rule without naming an unknown option', () => {
+    const data = adjectiveMap['高い'];
+    expect(getAdjectiveHint('高い', data, 'polite_past', 'たかかった'))
+      .toBe(getAdjectiveHint('高い', data, 'polite_past'));
   });
 });
 

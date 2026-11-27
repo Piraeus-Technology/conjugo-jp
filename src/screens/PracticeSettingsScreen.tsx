@@ -38,7 +38,7 @@ export default function PracticeSettingsScreen() {
     adjectivesEnabled, activeAdjectiveForms, adjectiveNoticeDismissed, loaded,
     loadPracticeSettings, toggleForm, toggleLevel,
     setActiveForms, setActiveLevels,
-    setAdjectivesEnabled, setActiveAdjectiveForms, toggleAdjectiveForm, dismissAdjectiveNotice,
+    setAdjectivesEnabled, toggleAdjectives, setActiveAdjectiveForms, toggleAdjectiveForm, dismissAdjectiveNotice,
   } = usePracticeSettingsStore();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function PracticeSettingsScreen() {
     forms: group.forms.map(f => ({ key: f, label: `${ADJECTIVE_FORM_LABELS[f].ja} (${ADJECTIVE_FORM_LABELS[f].en})` })),
   }));
 
-  const renderCheckRow = (label: string, active: boolean, onPress: () => void, last: boolean) => (
+  const renderCheckRow = (label: string, active: boolean, onPress: () => void, last: boolean, accessibilityLabel = label) => (
     <TouchableOpacity
       key={label}
       style={[
@@ -80,7 +80,7 @@ export default function PracticeSettingsScreen() {
       }}
       activeOpacity={0.7}
       accessibilityRole="checkbox"
-      accessibilityLabel={label}
+      accessibilityLabel={accessibilityLabel}
       accessibilityState={{ checked: active }}
     >
       <Text style={[styles.rowText, { color: colors.textPrimary }]}>{label}</Text>
@@ -105,7 +105,7 @@ export default function PracticeSettingsScreen() {
         >
           <Text style={[styles.noticeTitle, { color: colors.textPrimary }]}>New: adjectives and だ/です</Text>
           <Text style={[styles.noticeText, { color: colors.textSecondary }]}>
-            Practise い-adjectives, な-adjectives and だ/です alongside your verbs.
+            Practice い-adjectives, な-adjectives and だ/です alongside your verbs.
           </Text>
           <View style={styles.noticeButtons}>
             <TouchableOpacity
@@ -120,7 +120,7 @@ export default function PracticeSettingsScreen() {
               <Text style={styles.noticeButtonText}>Turn on</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.noticeButton, { borderColor: colors.border, borderWidth: 1 }]}
+              style={[styles.noticeButton, { borderColor: colors.textMuted, borderWidth: 1 }]}
               onPress={() => dismissAdjectiveNotice()}
               accessibilityRole="button"
               accessibilityLabel="Dismiss the adjectives note"
@@ -194,16 +194,16 @@ export default function PracticeSettingsScreen() {
               setActiveAdjectiveForms(allAdjectiveFormsSelected ? [...beginnerAdjectiveForms] : [...allAdjectiveForms]);
             }}
             accessibilityRole="button"
-            accessibilityLabel={allAdjectiveFormsSelected ? 'Basic adjective forms only' : 'Select all adjective forms'}
+            accessibilityLabel={allAdjectiveFormsSelected ? 'Select recommended adjective forms' : 'Select all adjective forms'}
           >
             <Text style={[styles.selectAllText, { color: colors.primaryText }]}>
-              {allAdjectiveFormsSelected ? 'Basics only' : 'Select All'}
+              {allAdjectiveFormsSelected ? 'Recommended forms' : 'Select All'}
             </Text>
           </TouchableOpacity>
         )}
       </View>
       <View style={[styles.card, { backgroundColor: colors.card }]}>
-        {renderCheckRow('Practise い/な-adjectives and だ/です', adjectivesEnabled, () => setAdjectivesEnabled(!adjectivesEnabled), true)}
+        {renderCheckRow('Practice い/な-adjectives and だ/です', adjectivesEnabled, toggleAdjectives, true)}
       </View>
       {adjectivesEnabled && adjectiveFormGroups.map((group) => (
         <View key={group.title}>
@@ -214,6 +214,7 @@ export default function PracticeSettingsScreen() {
               activeAdjectiveForms.includes(item.key),
               () => toggleAdjectiveForm(item.key),
               i === group.forms.length - 1,
+              `Adjective form, ${item.label}`,
             ))}
           </View>
         </View>
@@ -287,6 +288,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: spacing.lg, paddingBottom: 40 },
   sectionHeader: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -294,6 +296,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
   sectionTitle: {
+    flexShrink: 1,
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,
     textTransform: 'uppercase',
@@ -333,6 +336,8 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   rowText: {
+    flexShrink: 1,
+    marginRight: spacing.sm,
     fontSize: fonts.sizes.md,
     fontWeight: fonts.weights.medium,
   },
@@ -353,10 +358,12 @@ const styles = StyleSheet.create({
   },
   noticeButtons: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: spacing.sm,
     marginTop: spacing.md,
   },
   noticeButton: {
+    maxWidth: '100%',
     minHeight: 44,
     justifyContent: 'center',
     paddingHorizontal: spacing.lg,

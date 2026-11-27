@@ -84,7 +84,7 @@ export function generateAdjectiveQuestion(
   const [word, data] = selection.entry;
   const form = selection.forms[Math.floor(random() * selection.forms.length)];
   const correctAnswer = conjugateAdjectiveReading(data, form);
-  const options = [correctAnswer, ...listAdjectiveDistractors(data, form).slice(0, 3)];
+  const options = [correctAnswer, ...listAdjectiveDistractors(data, form)];
   for (let i = options.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [options[i], options[j]] = [options[j], options[i]];

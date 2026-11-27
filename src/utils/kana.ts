@@ -68,6 +68,21 @@ const romajiMap: [string, string][] = [
   ['n', 'ん'],
 ];
 
+export function foldHepburn(reading: string): string {
+  return reading.replace(/づ/g, 'ず').replace(/ぢ/g, 'じ');
+}
+
+const hiraganaVowels = new Map(romajiMap
+  .filter(([romaji]) => /[aiueo]$/.test(romaji))
+  .map(([romaji, kana]) => [kana.slice(-1), { a: 'あ', i: 'い', u: 'う', e: 'え', o: 'お' }[romaji.slice(-1) as 'a' | 'i' | 'u' | 'e' | 'o']]));
+
+export function expandKanaLongVowels(reading: string): string {
+  return reading.replace(/(.)ー+/g, (match, kana) => {
+    const vowel = hiraganaVowels.get(kana);
+    return vowel ? kana + vowel.repeat(match.length - 1) : match;
+  });
+}
+
 export function romajiToHiragana(input: string): string {
   let result = '';
   let remaining = input.toLowerCase();

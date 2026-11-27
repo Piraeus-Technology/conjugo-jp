@@ -63,6 +63,13 @@ describe('UI regression guards', () => {
     expect(screen.getByLabelText(/^Verb of the Day: .*, JLPT N[1-5]$/)).toBeTruthy();
   });
 
+  it('reaches だ/です through a filter and includes its class in the row name', async () => {
+    const screen = render(React.createElement(HomeScreen));
+    const chip = screen.getByRole('button', { name: 'Filter by だ・です (Copula)' });
+    await act(async () => fireEvent.press(chip));
+    expect(screen.getByRole('button', { name: /^だ, だ, .*Copula$/ })).toBeTruthy();
+  });
+
   it('updates the daily verb from the selected practice levels', () => {
     const levels = usePracticeSettingsStore.getState().activeLevels;
     const screen = render(React.createElement(HomeScreen));

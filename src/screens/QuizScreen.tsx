@@ -117,7 +117,10 @@ export default function QuizScreen() {
     }
   }, [statsLoaded, weightsLoaded, settingsLoaded, pool, getWeight]);
 
-  const view = useMemo(() => (question ? describeQuestion(question) : null), [question]);
+  const view = useMemo(
+    () => (question ? describeQuestion(question, selectedAnswer ?? undefined) : null),
+    [question, selectedAnswer],
+  );
   const isCorrect = selectedAnswer === view?.correctAnswer;
   const answered = selectedAnswer !== null;
 
@@ -243,7 +246,7 @@ export default function QuizScreen() {
   );
 
   const formLabel = view.formLabel;
-  const hint = view.hint;
+  const adjectiveQuestion = question?.kind === 'adjective';
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.bg }]} contentContainerStyle={styles.content}>
@@ -312,10 +315,8 @@ export default function QuizScreen() {
             accessibilityState={{ disabled: answered, selected: selectedAnswer === option }}
           >
             <Text
-              style={[styles.optionText, { color: getOptionTextColor(option) }]}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.7}
+              style={[styles.optionText, adjectiveQuestion && styles.wrappingOptionText, { color: getOptionTextColor(option) }]}
+              {...(adjectiveQuestion ? {} : { numberOfLines: 1, adjustsFontSizeToFit: true, minimumFontScale: 0.7 })}
             >
               {option}
             </Text>
@@ -328,6 +329,12 @@ export default function QuizScreen() {
           </TouchableOpacity>
         ))}
       </View>
+
+      {answered && view.alsoCorrect.length > 0 && (
+        <Text style={[styles.alsoCorrectText, { color: colors.textSecondary }]}>
+          Also correct: {view.alsoCorrect.join('、')}
+        </Text>
+      )}
 
       {answered && !isCorrect && (
         <View style={[styles.hintCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
@@ -352,7 +359,7 @@ export default function QuizScreen() {
           </TouchableOpacity>
           {showHint && (
             <Text style={[styles.hintText, { color: colors.textSecondary }]}>
-              {hint}
+              {view.hint}
             </Text>
           )}
         </View>
@@ -505,6 +512,15 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: fonts.sizes.lg,
     fontWeight: fonts.weights.semibold,
+  },
+  wrappingOptionText: {
+    flexShrink: 1,
+    textAlign: 'center',
+  },
+  alsoCorrectText: {
+    fontSize: fonts.sizes.sm,
+    marginTop: spacing.xs,
+    marginBottom: spacing.xs,
   },
   bottomRow: {
     flexDirection: 'row',

@@ -11,6 +11,7 @@ import { getExampleSentence } from './formExamples';
 import {
   ADJECTIVE_FORM_LABELS,
   adjectiveKey,
+  alsoCorrectAdjectiveReadings,
   getAdjectiveHint,
   type AdjectiveEntry,
   type AdjectiveForm,
@@ -107,13 +108,14 @@ export interface QuestionView {
   translation: string;
   formLabel: FormLabel;
   correctAnswer: string;
+  alsoCorrect: string[];
   options: string[];
   hint: string;
   /** Spaced-repetition key: the bare headword for verbs, adj:<headword> otherwise. */
   srKey: string;
 }
 
-export function describeQuestion(item: PracticeQuestion): QuestionView {
+export function describeQuestion(item: PracticeQuestion, selectedAnswer?: string): QuestionView {
   if (item.kind === 'verb') {
     const q = item.question;
     return {
@@ -122,6 +124,7 @@ export function describeQuestion(item: PracticeQuestion): QuestionView {
       translation: q.translation,
       formLabel: FORM_LABELS[q.form],
       correctAnswer: q.correctAnswer,
+      alsoCorrect: [],
       options: q.options,
       hint: getConjugationHint(q.verbData, q.form, q.verb),
       srKey: q.verb,
@@ -135,7 +138,8 @@ export function describeQuestion(item: PracticeQuestion): QuestionView {
     formLabel: ADJECTIVE_FORM_LABELS[q.form],
     correctAnswer: q.correctAnswer,
     options: q.options,
-    hint: getAdjectiveHint(q.word, q.data, q.form),
+    hint: getAdjectiveHint(q.word, q.data, q.form, selectedAnswer),
+    alsoCorrect: alsoCorrectAdjectiveReadings(q.data, q.form),
     srKey: adjectiveKey(q.word),
   };
 }

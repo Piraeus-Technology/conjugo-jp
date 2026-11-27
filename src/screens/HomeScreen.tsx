@@ -45,6 +45,15 @@ const groupLabels: Record<WordGroup, string> = {
   copula: 'だ・です',
 };
 
+const groupAccessibilityLabels: Record<WordGroup, string> = {
+  godan: 'Godan verb',
+  ichidan: 'Ichidan verb',
+  irregular: 'Irregular verb',
+  'i-adjective': 'い-adjective',
+  'na-adjective': 'な-adjective',
+  copula: 'Copula',
+};
+
 const levelFilters: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
 const groupFilters: { value: WordGroup; label: string }[] = [
   { value: 'godan', label: '五段 (Godan)' },
@@ -52,6 +61,7 @@ const groupFilters: { value: WordGroup; label: string }[] = [
   { value: 'irregular', label: '不規則 (Irregular)' },
   { value: 'i-adjective', label: 'い形容詞 (i-adj.)' },
   { value: 'na-adjective', label: 'な形容詞 (na-adj.)' },
+  { value: 'copula', label: 'だ・です (Copula)' },
 ];
 const transitivityFilters: { value: boolean; label: string }[] = [
   { value: true, label: '他動詞 (Trans.)' },
@@ -235,7 +245,7 @@ export default function HomeScreen() {
         onPress={() => handleResultPress(item)}
         activeOpacity={0.7}
         accessibilityRole="button"
-        accessibilityLabel={`${item.verb}, ${item.reading}, ${item.translation}`}
+        accessibilityLabel={`${item.verb}, ${item.reading}, ${item.translation}, ${groupAccessibilityLabels[item.group as WordGroup]}`}
         accessibilityHint={item.matchDetail || 'Opens the conjugation table'}
       >
         <View style={styles.resultLeft}>

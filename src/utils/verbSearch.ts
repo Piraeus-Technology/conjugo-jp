@@ -1,15 +1,11 @@
 import Fuse from 'fuse.js';
 import verbs from '../data/verbs.json';
-import { searchReadings } from './kana';
+import { foldHepburn, searchReadings } from './kana';
 import { MAX_SEARCH_RESULTS } from './constants';
 import {
   availableForms, conjugateReading, deriveKanjiForm, ALL_FORMS, FORM_LABELS,
   type VerbData, type ConjugationForm,
 } from './conjugate';
-
-function foldHepburn(reading: string): string {
-  return reading.replace(/づ/g, 'ず').replace(/ぢ/g, 'じ');
-}
 
 export const verbList = Object.entries(verbs as Record<string, VerbData>);
 
@@ -94,10 +90,17 @@ const beginnerFirst = (a: typeof searchData[number], b: typeof searchData[number
 
 export function searchVerbs(
   query: string,
-  passesFilters: (item: SearchResult) => boolean = () => true,
+  passesFilters?: (item: SearchResult) => boolean,
 ): SearchResult[] {
+  return searchVerbsWithExactMatches(query, passesFilters).results;
+}
+
+export function searchVerbsWithExactMatches(
+  query: string,
+  passesFilters: (item: SearchResult) => boolean = () => true,
+): { results: SearchResult[]; exactCount: number } {
   const q = query.trim().normalize('NFKC').toLowerCase();
-  if (!q) return [];
+  if (!q) return { results: [], exactCount: 0 };
   const isRomaji = /^[a-z']+$/.test(q);
   const { exact, prefixes } = searchReadings(q);
   const byForm = getConjugationIndex();
@@ -148,6 +151,7 @@ export function searchVerbs(
     if (gloss === q || gloss === `to ${q}`) addVerb(item);
   }
 
+  const exactCount = Math.min(results.length, MAX_SEARCH_RESULTS);
   const matchingReadings = searchData.filter(item =>
     prefixes.some(prefix => item.reading.startsWith(prefix) ||
       (isRomaji && foldHepburn(item.reading).startsWith(prefix))),
@@ -169,5 +173,5 @@ export function searchVerbs(
     if (key === q) continue;
     for (const { item } of fuse.search(key)) addVerb(item);
   }
-  return results.slice(0, MAX_SEARCH_RESULTS);
+  return { results: results.slice(0, MAX_SEARCH_RESULTS), exactCount };
 }
