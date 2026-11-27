@@ -1,5 +1,6 @@
 import Fuse from 'fuse.js';
 import { expandKanaLongVowels, foldHepburn, searchReadings } from './kana';
+import { normalizeGlossQuery, searchGlosses } from './searchGlosses';
 import { MAX_SEARCH_RESULTS } from './constants';
 import { searchVerbsWithExactMatches, type SearchResult } from './verbSearch';
 import {
@@ -13,8 +14,6 @@ import {
   type AdjectiveForm,
 } from './adjectives';
 
-// Combined search keeps the full verb result list in order. Exact adjective
-// matches can appear among or ahead of those rows.
 
 export type AdjectiveGroup = 'i-adjective' | 'na-adjective' | 'copula';
 
@@ -55,6 +54,8 @@ const adjectiveItems = adjectiveList.map(([word, data]) => ({
   reading: data.reading,
   translation: data.translation,
 }));
+
+const adjectiveGlosses = new Map(adjectiveList.map(([word, data]) => [word, searchGlosses(data.translation)]));
 
 const adjectiveFuse = new Fuse(adjectiveItems, {
   keys: [
@@ -131,14 +132,23 @@ function toResult(word: string, data: AdjectiveData, form: AdjectiveForm | null,
 const beginnerFirst = (a: { jlpt: string; reading: string }, b: { jlpt: string; reading: string }) =>
   b.jlpt.localeCompare(a.jlpt) || a.reading.length - b.reading.length;
 
+interface AdjectiveMatches {
+  dictionary: AdjectiveSearchResult[];
+  gloss: AdjectiveSearchResult[];
+  strong: AdjectiveSearchResult[];
+  weak: AdjectiveSearchResult[];
+}
+
 export function searchAdjectives(
   query: string,
   passesFilters: (item: WordSearchResult) => boolean = () => true,
-): { strong: AdjectiveSearchResult[]; weak: AdjectiveSearchResult[] } {
+): AdjectiveMatches {
   const q = query.trim().normalize('NFKC').toLowerCase();
   const strong: AdjectiveSearchResult[] = [];
   const weak: AdjectiveSearchResult[] = [];
-  if (!q) return { strong, weak };
+  const dictionary: AdjectiveSearchResult[] = [];
+  const gloss: AdjectiveSearchResult[] = [];
+  if (!q) return { dictionary, gloss, strong, weak };
   const seen = new Set<string>();
   const push = (list: AdjectiveSearchResult[], item: AdjectiveSearchResult) => {
     if (seen.has(item.verb) || !passesFilters(item)) return;
@@ -149,14 +159,19 @@ export function searchAdjectives(
   const { exact, prefixes } = searchReadings(q);
   const isRomaji = /^[a-z']+$/.test(q);
   const index = getFormIndex();
-  for (const key of new Set([q, ...exact])) {
-    for (const match of index.get(key) ?? []) push(strong, toResult(match.word, match.data, match.form, match.shown));
-    if (isRomaji) {
-      for (const match of romajiAliases.get(key) ?? []) push(strong, toResult(match.word, match.data, match.form, match.shown));
-    }
+  const exactForms = [...new Set([q, ...exact])].flatMap(key => [
+    ...(index.get(key) ?? []),
+    ...(isRomaji ? romajiAliases.get(key) ?? [] : []),
+  ]);
+  for (const match of exactForms) {
+    if (!match.form) push(dictionary, toResult(match.word, match.data, null));
   }
+  const glossQuery = normalizeGlossQuery(q);
   for (const [word, data] of adjectiveList) {
-    if (data.translation.toLowerCase() === q) push(strong, toResult(word, data, null));
+    if (adjectiveGlosses.get(word)?.includes(glossQuery)) push(gloss, toResult(word, data, null));
+  }
+  for (const match of exactForms) {
+    if (match.form) push(strong, toResult(match.word, match.data, match.form, match.shown));
   }
 
   if (prefixes.length) {
@@ -172,27 +187,41 @@ export function searchAdjectives(
   for (const { item } of adjectiveFuse.search(q)) {
     push(weak, toResult(item.verb, adjectiveMap[item.verb], null));
   }
-  return { strong, weak };
+  return { dictionary, gloss, strong, weak };
 }
 
 export function searchWords(
   query: string,
   passesFilters: (item: WordSearchResult) => boolean = () => true,
 ): WordSearchResult[] {
-  const { results, exactCount } = searchVerbsWithExactMatches(query, item => passesFilters({ ...item, kind: 'verb' }));
+  const { results, dictionaryCount, glossCount, exactCount } = searchVerbsWithExactMatches(
+    query, item => passesFilters({ ...item, kind: 'verb' }),
+  );
   const verbs = results.map(item => ({ ...item, kind: 'verb' as const }));
-  const { strong, weak } = searchAdjectives(query, passesFilters);
-  const exactAdjectives = strong.sort(beginnerFirst).slice(0, MAX_SEARCH_RESULTS);
+  const { dictionary, gloss, strong, weak } = searchAdjectives(query, passesFilters);
+  const q = query.trim().normalize('NFKC').toLowerCase();
+  const exactAdjectives = [
+    ...dictionary.sort((a, b) => b.jlpt.localeCompare(a.jlpt) || Number(b.verb === q) - Number(a.verb === q)),
+    ...gloss.sort(beginnerFirst),
+    ...strong.sort(beginnerFirst),
+  ].slice(0, MAX_SEARCH_RESULTS);
   const combined: WordSearchResult[] = [...verbs];
 
-  // Insert each adjective after the last exact verb at the same or an easier
-  // level. Working backward keeps the original verb indices usable.
+  // Insert adjectives after verbs of the same or an easier level within each
+  // match tier. Preserve the relative order of verb rows.
   for (const adjective of [...exactAdjectives].reverse()) {
-    let index = exactCount;
-    while (index > 0 && verbs[index - 1].jlpt < adjective.jlpt) index--;
+    const [start, end] = dictionary.includes(adjective) ? [0, dictionaryCount]
+      : gloss.includes(adjective) ? [dictionaryCount, glossCount] : [glossCount, exactCount];
+    let index = end;
+    while (index > start && (
+      verbs[index - 1].jlpt < adjective.jlpt ||
+      (start === 0 && dictionary.includes(adjective) && verbs[index - 1].jlpt === adjective.jlpt &&
+        adjective.verb === q && verbs[index - 1].verb !== q)
+    )) index--;
     combined.splice(index, 0, adjective);
   }
   return [...combined, ...weak.slice(0, MAX_SEARCH_RESULTS - exactAdjectives.length)];
+
 }
 
 // Adjectives that pass the browse filters, in data file order.

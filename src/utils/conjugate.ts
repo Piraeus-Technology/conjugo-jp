@@ -61,6 +61,7 @@ export interface VerbData {
   group: VerbGroup;
   godanRow?: GodanRow;
   translation: string;
+  searchAliases?: string[];
   jlpt: JLPTLevel;
   transitive?: boolean;
   examples?: VerbExample[];

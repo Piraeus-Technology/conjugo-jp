@@ -2,18 +2,28 @@ import verbsJson from '../data/verbs.json';
 import n5 from '../data/formExamples.n5.json';
 import n4 from '../data/formExamples.n4.json';
 import n3 from '../data/formExamples.n3.json';
+import n2 from '../data/formExamples.n2.json';
+import n1 from '../data/formExamples.n1.json';
 import {
   availableForms, conjugate, quizzableForms, ALL_FORMS, type ConjugationForm, type VerbData,
 } from '../utils/conjugate';
-import { searchVerbs } from '../utils/verbSearch';
+import { searchWords } from '../utils/wordSearch';
 
 const verbs = verbsJson as Record<string, VerbData>;
 
-describe('N5–N3 example coverage', () => {
-  it.each([['N5', n5], ['N4', n4], ['N3', n3]] as const)('gives every %s verb its example sentences', (level, file) => {
-    const atLevel = Object.keys(verbs).filter(verb => verbs[verb].jlpt === level).sort();
-    expect(Object.keys(file).sort()).toEqual(atLevel);
-  });
+describe('form example coverage', () => {
+  it.each([['N5', n5], ['N4', n4], ['N3', n3], ['N2', n2], ['N1', n1]] as const)(
+    'gives every %s verb at least one non-empty form example in its level file',
+    (level, file) => {
+      const atLevel = Object.keys(verbs).filter(verb => verbs[verb].jlpt === level).sort();
+      expect(Object.keys(file).sort()).toEqual(atLevel);
+      for (const [word, forms] of Object.entries(file)) {
+        const hasSentence = Object.values(forms).some(sentence =>
+          typeof sentence === 'string' && sentence.trim().length > 0);
+        expect([word, hasSentence]).toEqual([word, true]);
+      }
+    },
+  );
 });
 
 describe('verbs added from the JLPT lists', () => {
@@ -32,6 +42,9 @@ describe('verbs added from the JLPT lists', () => {
     ['問う', 'ta', '問うた', 'とうた'],
     ['問う', 'conditional_tara', '問うたら', 'とうたら'],
     ['問う', 'masu', '問います', 'といます'],
+    ['愛する', 'potential', '愛せる', 'あいせる'],
+    ['達する', 'causative', '達させる', 'たっさせる'],
+    ['罰する', 'passive', '罰せられる', 'ばっせられる'],
   ];
 
   it.each(truth)('conjugates %s (%s) as %s', (verb, form, display, reading) => {
@@ -48,26 +61,95 @@ describe('verbs added from the JLPT lists', () => {
     }
   });
 
-  it('never quizzes a potential spelled like another verb', () => {
-    for (const [verb, other] of [['止む', '止める'], ['建つ', '建てる'], ['溶く', '溶ける'], ['破る', '破れる'], ['片付く', '片付ける'], ['欠く', '欠ける'], ['添う', '添える']]) {
-      expect([verb, conjugate(verb, verbs[verb], 'potential').value]).toEqual([verb, other]);
-      expect([verb, quizzableForms(verbs[verb], ALL_FORMS).includes('potential')]).toEqual([verb, false]);
+  it('accounts for every potential spelled like another headword as excluded, natural, or inherited', () => {
+    const excluded = ['分かる', '含む', '止む', '片付く', '欠く', '建つ'];
+    const natural = ['立つ', '切る', '売る', '解く', '裂く', '取る', '焼く', '折る', '割る', '破る', '溶く', '添う'];
+    const inherited = [
+      'する', '入る', '届く', '続く', '込む', '触る', '並ぶ', '沈む', '浮かぶ', '退く',
+      '進む', '叶う', '抜く', '整う', '傾く', '挫く', '開く', 'つく', '向く', '廃る',
+      '落ち着く', '和らぐ', '揃う', '縮む', '間違う', '育つ', '緩む', '繋ぐ', '弾く', '剥く', '嗜む',
+    ];
+    const collisions = Object.entries(verbs).flatMap(([word, data]) => {
+      const potential = conjugate(word, data, 'potential').value;
+      return potential !== word && Object.prototype.hasOwnProperty.call(verbs, potential) ? [word] : [];
+    });
+    expect(collisions.sort()).toEqual([...excluded, ...natural, ...inherited].sort());
+    for (const [expected, group] of [[false, excluded], [true, natural]] as const) {
+      for (const word of group) {
+        expect([word, quizzableForms(verbs[word], ALL_FORMS).includes('potential')]).toEqual([word, expected]);
+      }
     }
   });
 
-  it('hides the forms 違う does not have', () => {
-    const shown = availableForms(verbs['違う'], ALL_FORMS);
-    for (const form of ['potential', 'passive', 'volitional', 'imperative', 'prohibitive'] as ConjugationForm[]) {
-      expect(shown).not.toContain(form);
-    }
-    expect(shown).toContain('nai');
+  it.each([
+    ['かぶる', 'かぶれる', true],
+    ['炊く', '炊ける', true],
+    ['苦しむ', '苦しめる', false],
+    ['付く', '付ける', false],
+  ])('keeps the expected practice status for %s → %s', (word, potential, offered) => {
+    expect(conjugate(word, verbs[word], 'potential').value).toBe(potential);
+    expect(quizzableForms(verbs[word], ALL_FORMS).includes('potential')).toBe(offered);
   });
 
-  it('finds the new verbs by romaji, and keeps English meanings ahead of romaji forms', () => {
-    expect(searchVerbs('kieru')[0]).toMatchObject({ verb: '消える' });
-    expect(searchVerbs('chigau')[0]).toMatchObject({ verb: '違う' });
-    expect(searchVerbs('watasu')[0]).toMatchObject({ verb: '渡す' });
-    // "make" is also the romaji imperative まけ of 巻く/蒔く/撒く.
-    expect(searchVerbs('make')[0]).toMatchObject({ verb: '作る' });
+  it('hides all seven unavailable 違う forms from reference tables and practice', () => {
+    const data = verbs['違う'];
+    const hidden = ['potential', 'passive', 'causative', 'causative_passive', 'imperative', 'prohibitive', 'volitional'];
+    expect(ALL_FORMS.filter(form => !availableForms(data, ALL_FORMS).includes(form))).toEqual(hidden);
+    expect(ALL_FORMS.filter(form => !quizzableForms(data, ALL_FORMS).includes(form))).toEqual(hidden);
+  });
+});
+
+describe('exact search ranking', () => {
+  it.each([
+    '止める', '立てる', '知らせる', '折れる', '焼ける', '割れる', '済ませる', '売れる',
+    '切れる', '破れる', '解ける', '取れる', '含める', '裂ける', 'くだらない',
+  ])('ranks the dictionary spelling %s first', query => {
+    expect(searchWords(query)[0]).toMatchObject({ verb: query, matchType: 'verb' });
+  });
+
+  it.each([
+    ['すませる', '済ませる'], ['sumaseru', '済ませる'], ['はれる', '晴れる'], ['さす', '差す'],
+    ['よる', '寄る'], ['すむ', '住む'], ['うつる', '移る'], ['おさえる', '抑える'], ['はく', '履く'],
+    ['kieru', '消える'], ['chigau', '違う'], ['watasu', '渡す'],
+  ])('ranks an exact reading first for %s', (query, word) => {
+    expect(searchWords(query)[0]).toMatchObject({ verb: word, matchType: 'verb' });
+  });
+
+  it.each([
+    ['とける', '溶ける', '解ける', '解く'],
+    ['さける', '避ける', '裂ける', '裂く'],
+  ])('shows both dictionary matches for %s ahead of the conjugation', (query, first, second, conjugated) => {
+    expect(searchWords(query).slice(0, 3)).toMatchObject([
+      { verb: first, matchType: 'verb' }, { verb: second, matchType: 'verb' },
+      { verb: conjugated, matchType: 'conjugation' },
+    ]);
+  });
+
+  it.each([
+    ['take', '取る', ['炊く', '焚く']],
+    ['sue', '訴える', ['吸う']],
+    ['wake', '覚める', ['沸く', '湧く']],
+    ['take along', '連れる', []],
+    ['wake up', '起きる', []],
+    ['wake up', '覚める', []],
+    ['give a ride', '乗せる', []],
+    ['make', '作る', ['巻く', '蒔く', '撒く']],
+  ] as const)('finds the %s gloss for %s ahead of matching romaji forms', (query, word, lower) => {
+    const hits = searchWords(query);
+    const rank = hits.findIndex(hit => hit.verb === word && hit.matchType === 'verb');
+    expect(rank).toBeGreaterThanOrEqual(0);
+    expect(rank).toBeLessThan(3);
+    for (const conjugated of lower) {
+      expect(hits.findIndex(hit => hit.verb === conjugated)).toBeGreaterThan(rank);
+    }
+  });
+
+  it.each([
+    ['被る', 'かぶる', 'verb'], ['被った', 'かぶる', 'conjugation'],
+    ['着く', 'つく', 'verb'], ['着いた', 'つく', 'conjugation'],
+    ['辞める', 'やめる', 'verb'], ['辞めた', 'やめる', 'conjugation'],
+    ['無くす', 'なくす', 'verb'], ['無くした', 'なくす', 'conjugation'],
+  ])('looks up %s as an alternate spelling for %s', (query, word, matchType) => {
+    expect(searchWords(query)[0]).toMatchObject({ verb: word, matchType });
   });
 });
