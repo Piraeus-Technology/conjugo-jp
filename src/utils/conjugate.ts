@@ -130,16 +130,20 @@ export const FORM_GROUPS = [
   },
 ];
 
+const ikuSoundChanges: Partial<Record<ConjugationForm, string>> = {
+  te: 'って',
+  ta: 'った',
+  conditional_tara: 'ったら',
+};
+
 function conjugateGodanReading(reading: string, row: GodanRow, form: ConjugationForm): string {
   const stem = getStem(reading);
   const rowKana = kanaRows[row];
 
-  // 行く and 〜いく/〜ゆく compounds: irregular te/ta/tara (って/った/ったら, not いて/いた).
-  // Covers both readings of 行く — いく (持って行く) and ゆく (成り行く).
-  if (row === 'ku' && (reading.endsWith('いく') || reading.endsWith('ゆく'))) {
-    if (form === 'te') return stem + 'って';
-    if (form === 'ta') return stem + 'った';
-    if (form === 'conditional_tara') return stem + 'ったら';
+  // The て, た and たら forms use いく even when the dictionary reading ends in ゆく.
+  if (row === 'ku' && /[いゆ]く$/.test(reading)) {
+    const ending = ikuSoundChanges[form];
+    if (ending) return reading.slice(0, -2) + 'い' + ending;
   }
 
   switch (form) {
@@ -533,6 +537,14 @@ export function deriveKanjiForm(verb: string, reading: string, conjugated: strin
     const pv = verb.slice(0, -2), pr = reading.slice(0, -2);
     const suf = conjugated.slice(pr.length);
     if (/^[きこく]/.test(suf)) return pv + '来' + suf.slice(1);
+  }
+
+  if (verb.endsWith('行く') && reading.endsWith('ゆく')) {
+    const readingStem = reading.slice(0, -2) + 'い';
+    const ending = conjugated.slice(readingStem.length);
+    if (conjugated.startsWith(readingStem) && Object.values(ikuSoundChanges).includes(ending)) {
+      return verb.slice(0, -1) + ending;
+    }
   }
 
   let sharedSuffix = 0;
