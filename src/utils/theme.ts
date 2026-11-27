@@ -4,6 +4,8 @@ const lightColors = {
   primary: '#BC002D',
   primaryText: '#BC002D',
   tabActive: '#BC002D',
+  speechIndicatorBg: '#BC002D',
+  speechIndicatorText: '#FFFFFF',
   primaryLight: '#D4354F',
   primaryDark: '#8C0021',
 
@@ -63,6 +65,8 @@ const darkColors = {
   primary: '#D42E47',
   primaryText: '#F06A7C',
   tabActive: '#D9485E',
+  speechIndicatorBg: '#F06A7C',
+  speechIndicatorText: '#141012',
   primaryLight: '#FF5A6E',
   primaryDark: '#FF6B7A',
 

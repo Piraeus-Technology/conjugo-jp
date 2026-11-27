@@ -1,3 +1,4 @@
+import type { JLPTLevel, VerbData } from './conjugate';
 import { dateToDayKey } from './dayKey';
 
 const MS_PER_DAY = 86_400_000;
@@ -16,6 +17,14 @@ function shuffledIndices(length: number): number[] {
   }
   permutations.set(length, indices);
   return indices;
+}
+
+export function getDailyVerbPool(
+  entries: readonly [string, VerbData][],
+  levels: readonly JLPTLevel[],
+): readonly [string, VerbData][] {
+  const eligible = entries.filter(([, data]) => levels.includes(data.jlpt));
+  return eligible.length ? eligible : entries;
 }
 
 export function getVerbOfTheDayForKey<T>(entries: readonly T[], dayKey: string): T {

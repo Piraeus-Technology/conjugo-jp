@@ -6,6 +6,7 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import HomeScreen, { styles as homeStyles } from '../screens/HomeScreen';
 import { getConjugationIndex } from '../utils/verbSearch';
 import { themes } from '../utils/theme';
+import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import verbs from '../data/verbs.json';
@@ -60,6 +61,19 @@ describe('UI regression guards', () => {
     const screen = render(React.createElement(HomeScreen));
     await act(async () => { await Promise.resolve(); });
     expect(screen.getByLabelText(/^Verb of the Day: .*, JLPT N[1-5]$/)).toBeTruthy();
+  });
+
+  it('updates the daily verb from the selected practice levels', () => {
+    const levels = usePracticeSettingsStore.getState().activeLevels;
+    const screen = render(React.createElement(HomeScreen));
+    try {
+      act(() => usePracticeSettingsStore.setState({ activeLevels: ['N1'] }));
+      expect(screen.getByRole('button', { name: /^Verb of the Day: .*, JLPT N1$/ })).toBeTruthy();
+      act(() => usePracticeSettingsStore.setState({ activeLevels: ['N5'] }));
+      expect(screen.getByRole('button', { name: /^Verb of the Day: .*, JLPT N5$/ })).toBeTruthy();
+    } finally {
+      act(() => usePracticeSettingsStore.setState({ activeLevels: levels }));
+    }
   });
 
   it('opens favorites beyond the first ten', async () => {
@@ -134,6 +148,7 @@ describe('UI regression guards', () => {
       [colors.calHighText, colors.calHigh], [colors.calMidText, colors.calMid], [colors.calLowText, colors.calLow],
       [colors.n5Text, colors.n5Bg], [colors.n4Text, colors.n4Bg], [colors.n3Text, colors.n3Bg],
       [colors.n2Text, colors.n2Bg], [colors.n1Text, colors.n1Bg], [colors.tabActive, colors.bg],
+      [colors.speechIndicatorText, colors.speechIndicatorBg],
     ];
     for (const [text, surface] of textPairs) {
       expect(contrastRatio(text, surface)).toBeGreaterThanOrEqual(4.5);

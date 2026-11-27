@@ -17,11 +17,12 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import verbs from '../data/verbs.json';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
+import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
 import { searchVerbs, verbList, type SearchResult } from '../utils/verbSearch';
 import { useTodayKey } from '../hooks/useTodayKey';
-import { getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
+import { getDailyVerbPool, getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
 import type { SearchStackParamList } from '../types/navigation';
 import { VerbData, VerbGroup, JLPTLevel } from '../utils/conjugate';
 
@@ -124,9 +125,11 @@ export default function HomeScreen() {
   }, [addToHistory, navigation]);
 
   const vodDayKey = useTodayKey();
+  const activeLevels = usePracticeSettingsStore(state => state.activeLevels);
+  const dailyVerbPool = useMemo(() => getDailyVerbPool(verbList, activeLevels), [activeLevels]);
   const [vodVerb, vodData] = useMemo(
-    () => getVerbOfTheDayForKey(verbList, vodDayKey),
-    [vodDayKey],
+    () => getVerbOfTheDayForKey(dailyVerbPool, vodDayKey),
+    [dailyVerbPool, vodDayKey],
   );
 
   const groupTagColors: Record<VerbGroup, { bg: string; text: string }> = {

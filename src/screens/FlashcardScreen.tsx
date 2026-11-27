@@ -88,9 +88,6 @@ export default function FlashcardScreen() {
   useEffect(() => {
     const sub = AppState.addEventListener('change', (state) => {
       speechGate.current.appState = state;
-      if (state === 'background' || state === 'inactive') {
-        stopSpeech();
-      }
     });
     return () => sub.remove();
   }, []);
