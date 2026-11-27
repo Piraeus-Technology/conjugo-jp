@@ -54,10 +54,22 @@ function rowOrder(data: VerbData): GodanRow[] {
   return [...new Set([row, ...commonlyConfusedRows[row], ...godanRows])];
 }
 
-function acceptedReadings(data: VerbData, form: ConjugationForm): Set<string> {
-  // Other table forms can overlap the asked form in historical or colloquial
-  // usage (for example the godan passive/potential). Keep all of them out.
-  const blocked = new Set([data.reading, ...ALL_FORMS.map(f => conjugateReading(data, f))]);
+function hintedWrongReading(data: VerbData, form: ConjugationForm): string | undefined {
+  if (form === 'te' || form === 'ta' || form === 'conditional_tara') {
+    // The frozen polite form's sound-change hints give only the answer.
+    if (data.reading === 'ございます') return undefined;
+    if (data.group === 'godan' && data.godanRow === 'ku' && /[いゆ]く$/.test(data.reading)
+        && (!data.overrides?.[form] || data.reading === 'いく')) {
+      return applySoundChange(getStem(data.reading), 'ku', form);
+    }
+  }
+  if (data.overrides?.[form]) {
+    return conjugateReading({ ...data, overrides: undefined }, form);
+  }
+}
+
+function blockedReadings(data: VerbData, form: ConjugationForm, hinted: string | undefined): Set<string> {
+  const blocked = new Set<string>();
   const stem = getStem(data.reading);
   const masuStem = conjugateReading(data, 'masu').slice(0, -2);
   if (form === 'potential') {
@@ -101,8 +113,8 @@ function acceptedReadings(data: VerbData, form: ConjugationForm): Set<string> {
   }
 
   if (data.godanRow === 'ku' && /[いゆ]く$/.test(data.reading)) {
-    // I-/yu-onbin and loss of the geminate are attested outside contemporary
-    // standard Japanese for 行く. Avoid even the usual textbook decoy here.
+    // The regular く sound change and the loss of the geminate are both attested.
+    // The quiz hint teaches the regular sound change as a mistake here.
     if (form === 'te' || form === 'ta' || form === 'conditional_tara') {
       blocked.add(applySoundChange(stem, 'ku', form));
       blocked.add(usingIchidan(data.reading, data, form));
@@ -118,18 +130,16 @@ function acceptedReadings(data: VerbData, form: ConjugationForm): Set<string> {
     if (form === 'conditional_tara') blocked.add(stem + 'うたら');
   }
 
-  if (data.godanRow === 'ru' && data.overrides?.masu && data.overrides.imperative) {
-    // Historical ～ります and ～れ survive alongside the honorific forms.
-    if (politeSuffix[form] || form === 'imperative') {
-      blocked.add(conjugateReading({ ...data, overrides: undefined }, form));
-    }
-  }
   if (data.reading === 'ございます') {
     const gozaru: VerbData = { ...data, reading: 'ござる', godanRow: 'ru', overrides: undefined };
     blocked.add(conjugateReading(gozaru, form));
     const suffix = politeSuffix[form];
     if (suffix) blocked.add('ござん' + suffix.slice(1));
   }
+  if (hinted) blocked.delete(hinted);
+  // Table forms and the dictionary reading are always ineligible.
+  blocked.add(data.reading);
+  for (const tableForm of ALL_FORMS) blocked.add(conjugateReading(data, tableForm));
   return blocked;
 }
 
@@ -184,7 +194,8 @@ function fallbackRules(data: VerbData, form: ConjugationForm): string[] {
 // Order candidates by how closely their rule matches the intended form. The
 // quiz uses the first three and then shuffles them with the correct answer.
 export function listQuizDistractors(data: VerbData, form: ConjugationForm): { primary: string[]; fallback: string[] } {
-  const seen = acceptedReadings(data, form);
+  const hinted = hintedWrongReading(data, form);
+  const seen = blockedReadings(data, form, hinted);
   const eligible = (answer: string) => {
     if (seen.has(answer)) return false;
     seen.add(answer);
@@ -192,5 +203,16 @@ export function listQuizDistractors(data: VerbData, form: ConjugationForm): { pr
   };
   const primary = wrongRules(data, form).filter(eligible);
   const fallback = primary.length < 3 ? fallbackRules(data, form).filter(eligible) : [];
+  if (hinted && ![...primary, ...fallback].slice(0, 3).includes(hinted)) {
+    // Preserve the closest existing options and make room for the mistake the hint teaches.
+    const candidates = primary.includes(hinted) ? primary : fallback;
+    const index = candidates.indexOf(hinted);
+    if (index >= 0) {
+      candidates.splice(index, 1);
+      primary.unshift(hinted);
+    } else if (eligible(hinted)) {
+      primary.unshift(hinted);
+    }
+  }
   return { primary, fallback };
 }

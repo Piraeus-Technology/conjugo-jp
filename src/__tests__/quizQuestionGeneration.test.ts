@@ -2,7 +2,7 @@ import verbsJson from '../data/verbs.json';
 import { listQuizDistractors } from '../utils/quizDistractors';
 import { generateQuestion } from '../utils/quizQuestion';
 import { generateFlashcard } from '../utils/flashcardCard';
-import { ALL_FORMS, conjugateReading, quizzableForms, type ConjugationForm, type VerbData } from '../utils/conjugate';
+import { ALL_FORMS, conjugateReading, getConjugationHint, quizzableForms, type ConjugationForm, type VerbData } from '../utils/conjugate';
 
 const verbs = verbsJson as Record<string, VerbData>;
 const entries = Object.entries(verbs);
@@ -93,6 +93,29 @@ describe('generateQuestion', () => {
     expect(checked).toBeGreaterThan(25_000);
   });
 
+  it('offers the wrong form described by the hint for every quizzable pair', () => {
+    const missing: string[] = [];
+    let described = 0;
+    for (const entry of entries) {
+      const [verb, data] = entry;
+      for (const form of quizzableForms(data, ALL_FORMS)) {
+        const hint = getConjugationHint(data, form, verb);
+        let wrong = hint.match(/\(not ([^)]+)\)/)?.[1];
+        if (!wrong && hint.includes('行く is the exception') && data.reading.endsWith('く')) {
+          const rule = hint.match(/く → (?:replace with )?([ぁ-ゖ]+)(?:\) and add ([ぁ-ゖ]+))?/);
+          if (rule) wrong = data.reading.slice(0, -1) + rule[1] + (rule[2] ?? '');
+        }
+        if (!wrong || wrong === conjugateReading(data, form)) continue;
+
+        described++;
+        const question = generateQuestion([form], () => 1, [entry]);
+        if (!question?.options.includes(wrong)) missing.push(`${verb} ${form}: ${wrong}`);
+      }
+    }
+    expect(described).toBeGreaterThan(0);
+    expect(missing).toEqual([]);
+  });
+
   it.each([
     ['食べる', 'potential', ['たべれる', 'たべれれる', 'たべえる']],
     ['見る', 'potential', ['みれる']],
@@ -103,19 +126,15 @@ describe('generateQuestion', () => {
     ['飲む', 'causative', ['のます']],
     ['食べる', 'causative', ['たべさす']],
     ['食べる', 'imperative', ['たべよ', 'たべれ', 'たべ']],
-    ['くれる', 'imperative', ['くれろ', 'くれよ', 'くれれ']],
+    ['くれる', 'imperative', ['くれよ', 'くれれ']],
     ['する', 'imperative', ['せよ', 'せい', 'しよ']],
     ['勉強する', 'imperative', ['べんきょうせよ', 'べんきょうしよ']],
     ['来る', 'imperative', ['こよ', 'これ', 'きい']],
-    ['行く', 'te', ['いいて', 'いて']],
-    ['行く', 'ta', ['いいた', 'いた']],
+    ['行く', 'te', ['いて']],
+    ['行く', 'ta', ['いた']],
     ['買う', 'ta', ['かうた']],
     ['書く', 'prohibitive', ['かきな']],
     ['起きる', 'prohibitive', ['おきな']],
-    ['くださる', 'imperative', ['くだされ']],
-    ['いらっしゃる', 'imperative', ['いらっしゃれ']],
-    ['なさる', 'masu', ['なさります']],
-    ['くださる', 'masu', ['くださります']],
     ['適する', 'nai', ['てきさない']],
     ['属する', 'nai', ['ぞくさない']],
   ] as [string, ConjugationForm, string[]][])('does not treat attested %s %s variants as wrong', (verb, form, accepted) => {
