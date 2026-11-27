@@ -14,6 +14,7 @@ import { stopSpeech } from '../utils/speech';
 import verbs from '../data/verbs.json';
 import { VerbData, JLPTLevel } from '../utils/conjugate';
 import { adjectiveList } from '../utils/adjectives';
+import { pairList } from '../utils/pairs';
 import {
   describeQuestion,
   generatePracticeQuestion,
@@ -59,6 +60,7 @@ export default function QuizScreen() {
     activeLevels,
     adjectivesEnabled,
     activeAdjectiveForms,
+    pairsEnabled,
     loaded: settingsLoaded,
     loadError: settingsLoadError,
     loadPracticeSettings,
@@ -107,7 +109,9 @@ export default function QuizScreen() {
     adjectiveEntries: adjectiveList.filter(([, d]) => activeLevels.includes(d.jlpt)),
     adjectiveForms: activeAdjectiveForms,
     adjectivesEnabled,
-  }), [activeLevels, activeForms, activeAdjectiveForms, adjectivesEnabled]);
+    pairEntries: pairList.filter(([, d]) => activeLevels.includes(d.jlpt)),
+    pairsEnabled,
+  }), [activeLevels, activeForms, activeAdjectiveForms, adjectivesEnabled, pairsEnabled]);
 
   useEffect(() => {
     if (statsLoaded && weightsLoaded && settingsLoaded) {
@@ -247,6 +251,7 @@ export default function QuizScreen() {
 
   const formLabel = view.formLabel;
   const adjectiveQuestion = question?.kind === 'adjective';
+  const pairSentence = view.pairSentence;
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.bg }]} contentContainerStyle={styles.content}>
@@ -280,6 +285,32 @@ export default function QuizScreen() {
       </View>
 
       {/* Question — fills remaining space */}
+      {pairSentence ? (
+        <View style={styles.questionContainer}>
+          <Text style={[styles.questionLabel, { color: colors.textMuted }]}>
+            {formLabel.ja} — {formLabel.en}
+          </Text>
+          <Text
+            style={[styles.pairSentence, { color: colors.primaryText }]}
+            accessibilityLabel={answered ? pairSentence.filled : pairSentence.prompt.replace('＿＿＿', ' blank ')}
+          >
+            {answered ? pairSentence.filled : pairSentence.prompt}
+          </Text>
+          {answered && (
+            <>
+              <Text style={[styles.questionTranslation, { color: colors.textSecondary }]}>
+                {pairSentence.english}
+              </Text>
+              <Text style={[styles.pairMembers, { color: colors.textMuted }]}>
+                {pairSentence.intransitive}
+              </Text>
+              <Text style={[styles.pairMembers, { color: colors.textMuted }]}>
+                {pairSentence.transitive}
+              </Text>
+            </>
+          )}
+        </View>
+      ) : (
       <View style={styles.questionContainer}>
         <Text style={[styles.questionLabel, { color: colors.textMuted }]}>
           {formLabel.ja} — {formLabel.en}
@@ -298,6 +329,7 @@ export default function QuizScreen() {
           {view.translation}
         </Text>
       </View>
+      )}
 
       {/* Options */}
       <View style={styles.optionsContainer}>
@@ -473,6 +505,18 @@ const styles = StyleSheet.create({
   questionTranslation: {
     fontSize: fonts.sizes.sm,
     fontStyle: 'italic',
+  },
+  pairSentence: {
+    fontSize: fonts.sizes.xl,
+    fontWeight: fonts.weights.bold,
+    lineHeight: 34,
+    textAlign: 'center',
+    marginVertical: spacing.sm,
+  },
+  pairMembers: {
+    fontSize: fonts.sizes.sm,
+    textAlign: 'center',
+    marginTop: 2,
   },
   optionsContainer: {
     gap: spacing.xs,

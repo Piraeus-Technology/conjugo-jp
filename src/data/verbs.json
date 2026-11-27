@@ -838,7 +838,7 @@
     "reading": "まがる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to turn",
+    "translation": "to turn; to bend, to be bent",
     "jlpt": "N5",
     "transitive": false,
     "examples": [
@@ -1435,7 +1435,7 @@
     "reading": "おこす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to wake someone up",
+    "translation": "to wake (someone) up; to cause (an accident, trouble)",
     "jlpt": "N4",
     "transitive": true,
     "examples": [
@@ -5582,6 +5582,7 @@
     "translation": "to hurt, to ache",
     "jlpt": "N3",
     "transitive": false,
+    "excludeForms": ["potential"],
     "examples": [{ "ja": "頭が痛む。", "en": "My head aches." }]
   },
   "飢える": {
@@ -11073,7 +11074,7 @@
   "収める": {
     "reading": "おさめる",
     "group": "ichidan",
-    "translation": "to obtain, to pay, to settle",
+    "translation": "to put away, to store; to obtain; to pay; to settle",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "税金を収める。", "en": "I pay taxes." }]
@@ -19001,6 +19002,293 @@
       {
         "ja": "ラジオで試合を放送する。",
         "en": "The game is broadcast on the radio."
+      }
+    ]
+  },
+  "曲げる": {
+    "reading": "まげる",
+    "group": "ichidan",
+    "translation": "to bend (something)",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "針金を指で曲げる。",
+        "en": "I bend the wire with my fingers."
+      }
+    ]
+  },
+  "詰まる": {
+    "reading": "つまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be clogged; to be packed (with)",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "台所の排水口がよく詰まる。",
+        "en": "The kitchen drain often gets clogged."
+      }
+    ]
+  },
+  "逃がす": {
+    "reading": "にがす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to set free, to let go; to let (a chance) slip",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "釣った魚を川に逃がす。",
+        "en": "I let the fish I caught go back into the river."
+      }
+    ]
+  },
+  "焦げる": {
+    "reading": "こげる",
+    "group": "ichidan",
+    "translation": "to burn, to get scorched",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "火が強すぎると魚が焦げる。",
+        "en": "If the heat is too high, the fish burns."
+      }
+    ]
+  },
+  "濁る": {
+    "reading": "にごる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to become muddy, to become cloudy",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "大雨のあとは川の水が濁る。",
+        "en": "After heavy rain, the river water turns muddy."
+      }
+    ]
+  },
+  "挟まる": {
+    "reading": "はさまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to get caught (between), to be stuck between",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "電車のドアにかばんが挟まる。",
+        "en": "A bag gets caught in the train door."
+      }
+    ]
+  },
+  "仕上がる": {
+    "reading": "しあがる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be finished, to be completed",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "注文した写真は明日の夕方に仕上がる。",
+        "en": "The photos I ordered will be ready tomorrow evening."
+      }
+    ]
+  },
+  "代える": {
+    "reading": "かえる",
+    "group": "ichidan",
+    "translation": "to replace, to substitute (one person or thing for another)",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "監督は後半に選手を代える。",
+        "en": "The coach substitutes players in the second half."
+      }
+    ]
+  },
+  "当てはめる": {
+    "reading": "あてはめる",
+    "group": "ichidan",
+    "translation": "to apply (a rule), to fit (to a case)",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "この公式を問題に当てはめる。",
+        "en": "I apply this formula to the problem."
+      }
+    ]
+  },
+  "改まる": {
+    "reading": "あらたまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be revised, to change; to become formal",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "来年の四月から規則が改まる。",
+        "en": "The rules will be revised from next April."
+      }
+    ]
+  },
+  "収まる": {
+    "reading": "おさまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to fit (into), to be put away",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "荷物が全部一つの箱に収まる。",
+        "en": "All the things fit into one box."
+      }
+    ]
+  },
+  "定まる": {
+    "reading": "さだまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be decided, to become settled",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "話し合いで新しい方針が定まる。",
+        "en": "The new policy is settled through discussion."
+      }
+    ]
+  },
+  "備わる": {
+    "reading": "そなわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be equipped (with); to be possessed of (a quality)",
+    "jlpt": "N1",
+    "transitive": false,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "examples": [
+      {
+        "ja": "経験を積めば、自然と判断力が備わる。",
+        "en": "With experience, good judgment comes naturally."
+      }
+    ]
+  },
+  "痛める": {
+    "reading": "いためる",
+    "group": "ichidan",
+    "translation": "to hurt, to injure (a part of one's body)",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "重い荷物を持つと腰を痛める。",
+        "en": "Carrying heavy luggage hurts your back."
+      }
+    ]
+  },
+  "休める": {
+    "reading": "やすめる",
+    "group": "ichidan",
+    "translation": "to rest (one's body, eyes), to give a rest",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "週末はゆっくり体を休める。",
+        "en": "I rest my body well on the weekend."
+      }
+    ]
+  },
+  "返る": {
+    "reading": "かえる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to come back, to be returned; to come to (one's senses)",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "声をかけると、すぐに返事が返ってきた。",
+        "en": "When I called out, a reply came right back."
+      }
+    ]
+  },
+  "負かす": {
+    "reading": "まかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to defeat, to beat",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "弟はチェスでよく兄を負かす。",
+        "en": "The younger brother often beats the older one at chess."
+      }
+    ]
+  },
+  "揺らす": {
+    "reading": "ゆらす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to shake, to rock, to swing (something)",
+    "jlpt": "N3",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "風が木の枝を揺らす。",
+        "en": "The wind sways the tree branches."
+      }
+    ]
+  },
+  "脱げる": {
+    "reading": "ぬげる",
+    "group": "ichidan",
+    "translation": "to come off (shoes, clothes)",
+    "jlpt": "N5",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "このサンダルは走るとすぐ脱げる。",
+        "en": "These sandals come off as soon as I run."
+      }
+    ]
+  },
+  "枯らす": {
+    "reading": "からす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to let (a plant) wither, to kill (a plant)",
+    "jlpt": "N3",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "水をやり忘れて、また花を枯らす。",
+        "en": "I forget to water the flowers and let them die again."
+      }
+    ]
+  },
+  "表れる": {
+    "reading": "あらわれる",
+    "group": "ichidan",
+    "translation": "to show, to appear (feelings, results)",
+    "jlpt": "N3",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "うれしい気持ちが顔に表れる。",
+        "en": "Happiness shows on one's face."
       }
     ]
   }

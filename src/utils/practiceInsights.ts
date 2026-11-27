@@ -1,10 +1,12 @@
 import verbs from '../data/verbs.json';
 import type { VerbData } from './conjugate';
 import { adjectiveMap, parseAdjectiveKey } from './adjectives';
+import { pairLabel, parsePairKey } from './pairs';
 import { DEFAULT_WEIGHT, decayWeight } from './spacedRepetition';
 
 // jp spaced-repetition weights are keyed by the bare verb (the verbs.json
-// kanji key) or adj:<headword> for adjectives, not by verb::tense::person like
+// kanji key), adj:<headword> for adjectives or pair:<intr>/<tr> for
+// transitivity pairs, not by verb::tense::person like
 // conjugo-es. So the only insight we can derive is which words the user
 // struggles with most — there is no form/person dimension in the key to rank.
 const verbMap = verbs as Record<string, VerbData>;
@@ -29,7 +31,11 @@ export interface PracticeInsights {
 function lookup(key: string): { verb: string; reading: string } | null {
   if (verbMap[key]) return { verb: key, reading: verbMap[key].reading };
   const adjective = parseAdjectiveKey(key);
-  return adjective ? { verb: adjective, reading: adjectiveMap[adjective].reading } : null;
+  if (adjective) return { verb: adjective, reading: adjectiveMap[adjective].reading };
+  const pair = parsePairKey(key);
+  if (!pair) return null;
+  const label = pairLabel(pair);
+  return { verb: label.words, reading: label.readings };
 }
 
 export function buildPracticeInsights(

@@ -500,7 +500,7 @@ describe('adjective practice generation', () => {
 
   it('mixes both word classes when adjectives are on, with adjective learning keys', () => {
     const random = seeded(11);
-    const kinds = { verb: 0, adjective: 0 };
+    const kinds = { verb: 0, adjective: 0, pair: 0 };
     for (let i = 0; i < 600; i++) {
       const item = generatePracticeQuestion({
         verbEntries, verbForms: ['masu', 'te'], adjectiveEntries: allAdjectives,
@@ -509,8 +509,9 @@ describe('adjective practice generation', () => {
       kinds[item.kind]++;
       const view = describeQuestion(item);
       if (item.kind === 'adjective') expect(view.srKey).toBe(adjectiveKey(item.question.word));
-      else expect(view.srKey).toBe(item.question.verb);
+      else if (item.kind === 'verb') expect(view.srKey).toBe(item.question.verb);
     }
+    expect(kinds.pair).toBe(0);
     expect(kinds.adjective).toBeGreaterThan(60);
     expect(kinds.verb).toBeGreaterThan(300);
   });

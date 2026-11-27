@@ -13,6 +13,8 @@ interface PracticeSettingsSnapshot {
   adjectivesEnabled: boolean;
   activeAdjectiveForms: AdjectiveForm[];
   adjectiveNoticeDismissed: boolean;
+  pairsEnabled: boolean;
+  pairNoticeDismissed: boolean;
 }
 
 interface PracticeSettingsStore extends PracticeSettingsSnapshot {
@@ -28,6 +30,9 @@ interface PracticeSettingsStore extends PracticeSettingsSnapshot {
   setActiveAdjectiveForms: (forms: AdjectiveForm[]) => Promise<void>;
   toggleAdjectiveForm: (form: AdjectiveForm) => Promise<void>;
   dismissAdjectiveNotice: () => Promise<void>;
+  setPairsEnabled: (enabled: boolean) => Promise<void>;
+  togglePairs: () => Promise<void>;
+  dismissPairNotice: () => Promise<void>;
   resetPracticeSettings: () => Promise<boolean>;
 }
 
@@ -74,9 +79,9 @@ function safeAdjectiveForms(forms: AdjectiveForm[]): AdjectiveForm[] {
   return valid.length > 0 ? valid : [...beginnerAdjectiveForms];
 }
 
-// A new install starts with adjectives on and never sees the "new" note.
-// Someone who already used the app keeps exactly the practice they had:
-// adjectives stay off until they turn them on, and the note tells them.
+// A new install starts with adjectives and transitivity pairs on and never
+// sees the "new" notes. Someone who already used the app keeps exactly the
+// practice they had: each stays off until they turn it on, and a note says so.
 function newInstallDefaults(): PracticeSettingsSnapshot {
   return {
     activeForms: [...beginnerForms],
@@ -84,6 +89,8 @@ function newInstallDefaults(): PracticeSettingsSnapshot {
     adjectivesEnabled: true,
     activeAdjectiveForms: [...beginnerAdjectiveForms],
     adjectiveNoticeDismissed: true,
+    pairsEnabled: true,
+    pairNoticeDismissed: true,
   };
 }
 
@@ -94,6 +101,8 @@ function snapshot(state: PracticeSettingsSnapshot): PracticeSettingsSnapshot {
     adjectivesEnabled: state.adjectivesEnabled,
     activeAdjectiveForms: state.activeAdjectiveForms,
     adjectiveNoticeDismissed: state.adjectiveNoticeDismissed,
+    pairsEnabled: state.pairsEnabled,
+    pairNoticeDismissed: state.pairNoticeDismissed,
   };
 }
 
@@ -154,6 +163,8 @@ export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get)
                 adjectivesEnabled: false,
                 activeAdjectiveForms: [...beginnerAdjectiveForms],
                 adjectiveNoticeDismissed: false,
+                pairsEnabled: false,
+                pairNoticeDismissed: false,
               }
               : newInstallDefaults();
             if (!(await safeSetItem('practiceSettings', JSON.stringify(initial)))) {
@@ -175,6 +186,9 @@ export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get)
             adjectivesEnabled: parsed?.adjectivesEnabled === true,
             activeAdjectiveForms: adjectiveForms.length > 0 ? adjectiveForms : [...beginnerAdjectiveForms],
             adjectiveNoticeDismissed: parsed?.adjectiveNoticeDismissed === true,
+            // Likewise for settings saved before transitivity pairs existed.
+            pairsEnabled: parsed?.pairsEnabled === true,
+            pairNoticeDismissed: parsed?.pairNoticeDismissed === true,
             loaded: true,
             loadError: false,
           });
@@ -234,6 +248,21 @@ export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get)
     }, 'adjective form toggle'),
 
     dismissAdjectiveNotice: () => persist({ adjectiveNoticeDismissed: true }, 'notice dismissal'),
+
+    // Turning pairs on also retires their "new" note.
+    setPairsEnabled: (enabled) => persist(
+      enabled ? { pairsEnabled: true, pairNoticeDismissed: true } : { pairsEnabled: false },
+      'pair toggle',
+    ),
+
+    togglePairs: () => persist(
+      state => state.pairsEnabled
+        ? { pairsEnabled: false }
+        : { pairsEnabled: true, pairNoticeDismissed: true },
+      'pair toggle',
+    ),
+
+    dismissPairNotice: () => persist({ pairNoticeDismissed: true }, 'pair notice dismissal'),
   };
 });
 

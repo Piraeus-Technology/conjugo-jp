@@ -62,8 +62,10 @@ describe('verbs added from the JLPT lists', () => {
   });
 
   it('accounts for every potential spelled like another headword as excluded, natural, or inherited', () => {
-    const excluded = ['分かる', '含む', '止む', '片付く', '欠く', '建つ'];
-    const natural = ['立つ', '切る', '売る', '解く', '裂く', '取る', '焼く', '折る', '割る', '破る', '溶く', '添う'];
+    // The pair partners added 痛める, 脱げる and 休める: 痛む's 痛める ("can ache")
+    // is unnatural, while 脱げる and 休める are everyday potentials.
+    const excluded = ['分かる', '含む', '止む', '片付く', '欠く', '建つ', '痛む'];
+    const natural = ['立つ', '切る', '売る', '解く', '裂く', '取る', '焼く', '折る', '割る', '破る', '溶く', '添う', '脱ぐ', '休む'];
     const inherited = [
       'する', '入る', '届く', '続く', '込む', '触る', '並ぶ', '沈む', '浮かぶ', '退く',
       '進む', '叶う', '抜く', '整う', '傾く', '挫く', '開く', 'つく', '向く', '廃る',

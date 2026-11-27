@@ -36,10 +36,14 @@ export default function PracticeSettingsScreen() {
   const {
     activeForms, activeLevels,
     adjectivesEnabled, activeAdjectiveForms, adjectiveNoticeDismissed, loaded,
+    pairsEnabled, pairNoticeDismissed,
     loadPracticeSettings, toggleForm, toggleLevel,
     setActiveForms, setActiveLevels,
     setAdjectivesEnabled, toggleAdjectives, setActiveAdjectiveForms, toggleAdjectiveForm, dismissAdjectiveNotice,
+    setPairsEnabled, togglePairs, dismissPairNotice,
   } = usePracticeSettingsStore();
+  // Transitivity pairs are sentence questions, so they live in the quiz only.
+  const showPairs = mode === 'quiz';
 
   useEffect(() => {
     loadPracticeSettings();
@@ -124,6 +128,40 @@ export default function PracticeSettingsScreen() {
               onPress={() => dismissAdjectiveNotice()}
               accessibilityRole="button"
               accessibilityLabel="Dismiss the adjectives note"
+            >
+              <Text style={[styles.noticeDismissText, { color: colors.textPrimary }]}>Not now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
+      {/* One-time note for quiz learners who used the app before pairs existed */}
+      {loaded && showPairs && !pairNoticeDismissed && (
+        <View
+          style={[styles.noticeCard, { backgroundColor: colors.card, borderColor: colors.primaryText }]}
+          accessibilityRole="summary"
+        >
+          <Text style={[styles.noticeTitle, { color: colors.textPrimary }]}>New: transitivity pairs</Text>
+          <Text style={[styles.noticeText, { color: colors.textSecondary }]}>
+            Fill in a sentence with the right verb of a pair, like 開く or 開ける, from its が or を.
+          </Text>
+          <View style={styles.noticeButtons}>
+            <TouchableOpacity
+              style={[styles.noticeButton, { backgroundColor: colors.primary }]}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                setPairsEnabled(true);
+              }}
+              accessibilityRole="button"
+              accessibilityLabel="Turn on transitivity pairs"
+            >
+              <Text style={styles.noticeButtonText}>Turn on</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.noticeButton, { borderColor: colors.textMuted, borderWidth: 1 }]}
+              onPress={() => dismissPairNotice()}
+              accessibilityRole="button"
+              accessibilityLabel="Dismiss the transitivity pairs note"
             >
               <Text style={[styles.noticeDismissText, { color: colors.textPrimary }]}>Not now</Text>
             </TouchableOpacity>
@@ -219,6 +257,18 @@ export default function PracticeSettingsScreen() {
           </View>
         </View>
       ))}
+
+      {/* Transitivity pairs (quiz only) */}
+      {showPairs && (
+        <>
+          <View style={styles.sectionHeader}>
+            <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Transitivity Pairs</Text>
+          </View>
+          <View style={[styles.card, { backgroundColor: colors.card }]}>
+            {renderCheckRow('Practice 自動詞・他動詞 pairs (開く／開ける)', pairsEnabled, togglePairs, true, 'Practice transitive and intransitive verb pairs')}
+          </View>
+        </>
+      )}
 
       {/* Levels */}
       <View style={styles.sectionHeader}>

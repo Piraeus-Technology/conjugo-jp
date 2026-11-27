@@ -54,8 +54,15 @@ const question = {
   correctAnswer: 'たべます', options: ['たべます', 'たべる', 'たべない', 'たべた'], verbData: verbs['食べる'],
 };
 
+// Pairs are their own switch, on for a new install. These screen tests drive
+// verb and adjective questions, so they run with no pairs unless one sets them.
+// The import interop copies module values once, so tests fill this one array.
+jest.mock('../utils/pairs', () => ({ ...jest.requireActual('../utils/pairs'), pairList: [] }));
+const mockedPairList = (): unknown[] => jest.requireMock('../utils/pairs').pairList;
+
 beforeEach(async () => {
   await AsyncStorage.clear();
+  mockedPairList().length = 0;
   mockRouteParams = { verb: '開く' };
   jest.spyOn(AppState, 'addEventListener').mockReturnValue({ remove: jest.fn() });
   jest.clearAllMocks();
@@ -258,6 +265,22 @@ it.each(['focused', 'blurred', 'backgrounded'])('waits for the flip and gates fl
     AppState.currentState = previousAppState;
     act(() => useThemeStore.setState({ autoTTS: false }));
   }
+});
+
+it('asks a transitivity pair as a sentence, then shows the whole sentence and both verbs', async () => {
+  const { pairList } = jest.requireActual('../utils/pairs');
+  mockedPairList().push(...pairList.filter(([, pair]: [string, { intransitive: string }]) => pair.intransitive === '開く'));
+  // 0 draws a pair, its intransitive sentence, and reverses the two options.
+  jest.spyOn(Math, 'random').mockReturnValue(0);
+  const screen = await ready(<QuizScreen />);
+  expect(screen.getByText('風でドアが＿＿＿。')).toBeTruthy();
+  expect(screen.getByText('自動詞・他動詞 — Transitive or intransitive?')).toBeTruthy();
+  expect(screen.queryByText('The door blew open in the wind.')).toBeNull();
+  await act(async () => fireEvent.press(screen.getByLabelText('Answer: あけた')));
+  expect(screen.getByText('風でドアが開いた。')).toBeTruthy();
+  expect(screen.getByText('The door blew open in the wind.')).toBeTruthy();
+  expect(screen.getByText(/no を object/)).toBeTruthy();
+  await waitFor(() => expect(useSpacedRepStore.getState().weights['pair:開く/開ける']).toBeGreaterThan(1));
 });
 
 describe('adjective practice', () => {
