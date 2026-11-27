@@ -35,16 +35,21 @@ describe('searching verbs and adjectives together', () => {
     expect(searchWords('たべる')[0]).toMatchObject({ kind: 'verb', verb: '食べる' });
   });
 
-  it('ranks exact matches by level and puts partial gloss matches after verbs', () => {
+  it('ranks dictionary forms before conjugations and exact glosses before partial matches', () => {
     const open = searchWords('open');
     expect(open[0]).toMatchObject({ kind: 'verb', verb: '開ける' });
-    expect(open.findIndex(row => row.verb === '露骨')).toBeGreaterThan(searchVerbs('open').length - 1);
-    expect(searchWords('こい')[0]).toMatchObject({ kind: 'verb', verb: '来る', matchForm: 'imperative' });
-    const katte = searchWords('かって');
-    const adjective = katte.findIndex(row => row.verb === '勝手');
-    for (const verb of ['買う', '勝つ']) {
-      expect(katte.slice(0, adjective).some(row => row.verb === verb && row.matchForm === 'te')).toBe(true);
-    }
+    expect(open.slice(0, 3)).toContainEqual(expect.objectContaining({ kind: 'adjective', verb: '露骨' }));
+    expect(searchWords('こい').slice(0, 2)).toMatchObject([
+      { kind: 'adjective', verb: '濃い' },
+      { kind: 'verb', verb: '来る', matchForm: 'imperative' },
+    ]);
+    expect(searchWords('かって').slice(0, 3)).toMatchObject([
+      { kind: 'adjective', verb: '勝手' },
+      { kind: 'verb', verb: '買う', matchForm: 'te' },
+      { kind: 'verb', verb: '勝つ', matchForm: 'te' },
+    ]);
+    const partial = searchWords('ope');
+    expect(partial.findIndex(row => row.verb === '露骨')).toBeGreaterThan(searchVerbs('ope').length - 1);
     expect(searchWords('nara')[0]).toMatchObject({ kind: 'adjective', verb: 'だ', matchForm: 'conditional_ba' });
   });
 
