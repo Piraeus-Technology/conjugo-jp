@@ -330,7 +330,7 @@ export default function FeedbackScreen() {
 
       {/* Credit required by the CC BY licence of the adjective level lists */}
       <Text style={[styles.credit, { color: colors.textMuted }]}>
-        JLPT levels for adjectives: Jonathan Waller, tanos.co.uk (CC BY)
+        JLPT levels for listed adjectives: Jonathan Waller, tanos.co.uk (CC BY)
       </Text>
 
       {/* Version */}
