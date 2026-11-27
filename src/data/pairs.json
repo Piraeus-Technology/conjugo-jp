@@ -2746,8 +2746,8 @@
       "cue": "屋上の旗が"
     },
     "transitiveSentence": {
-      "form": "dictionary",
-      "ja": "彼女は長い髪を風に{}ながら歩いた。",
+      "form": "te",
+      "ja": "彼女は長い髪を風に{}歩いた。",
       "en": "She walked with her long hair streaming in the wind.",
       "cue": "長い髪を"
     }
@@ -2766,24 +2766,6 @@
       "ja": "彼女は子どものころに父を{}。",
       "en": "She lost her father when she was a child.",
       "cue": "父を"
-    }
-  },
-  {
-    "intransitive": "着る",
-    "transitive": "着せる",
-    "intransitiveSentence": {
-      "form": "dictionary",
-      "ja": "寒くて震えていた私が上着をもう一枚{}と、体がすぐに温まった。",
-      "en": "I was shivering with cold, so I put on another layer and warmed up right away.",
-      "cue": "寒くて震えていた私が",
-      "cueNote": "is the wearer who warms up by putting on another layer."
-    },
-    "transitiveSentence": {
-      "form": "te",
-      "ja": "母は赤ちゃんに上着を{}、散歩に出かけた。",
-      "en": "My mother put a jacket on the baby and went out for a walk.",
-      "cue": "赤ちゃんに上着を",
-      "cueNote": "shows both who receives the jacket and what someone puts on them."
     }
   },
   {

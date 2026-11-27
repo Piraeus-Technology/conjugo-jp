@@ -73,12 +73,11 @@ function seeded(seed: number): () => number {
 }
 
 describe('transitivity pair data', () => {
-  it('lists each pair once, with transitivity matching the verbs and the lexical causative contrast', () => {
+  it('lists each pair once with an intransitive first verb and a transitive second verb', () => {
     const keys = pairList.map(([key]) => key);
     expect(new Set(keys).size).toBe(keys.length);
-    for (const [key, pair] of pairList) {
-      expect([pair.intransitive, verbs[pair.intransitive]?.transitive])
-        .toEqual([pair.intransitive, key === 'pair:着る/着せる']);
+    for (const [, pair] of pairList) {
+      expect([pair.intransitive, verbs[pair.intransitive]?.transitive]).toEqual([pair.intransitive, false]);
       expect([pair.transitive, verbs[pair.transitive]?.transitive]).toEqual([pair.transitive, true]);
     }
   });
@@ -94,10 +93,10 @@ describe('transitivity pair data', () => {
     }
   });
 
-  it('marks the subject with が in every intransitive sentence and a direct object with を on the other side', () => {
+  it('uses a が cue and no を in intransitive prompts and a を cue in transitive prompts', () => {
     for (const [key, pair] of pairList) {
-      expect([key, pair.intransitiveSentence.cue.endsWith('が'), pair.intransitiveSentence.ja.includes('が')])
-        .toEqual([key, true, true]);
+      expect([key, pair.intransitiveSentence.cue.endsWith('が'), pair.intransitiveSentence.ja.includes('を')])
+        .toEqual([key, true, false]);
       expect([key, pair.transitiveSentence.cue.endsWith('を')]).toEqual([key, true]);
     }
   });
@@ -167,15 +166,6 @@ describe('transitivity pair questions', () => {
     expect(view.hint).toContain('開く (自動詞');
   });
 
-  it('explains 着る and 着せる by who wears the clothes and labels both verbs as transitive', () => {
-    const clothing = pairList.find(([key]) => key === 'pair:着る/着せる')!;
-    const view = describeQuestion({ kind: 'pair', question: buildPairQuestion(clothing, 'transitive', false) });
-    expect(view.formLabel.en).toBe('Which verb fits?');
-    expect(view.hint).toContain('「赤ちゃんに上着を」 shows both who receives the jacket');
-    expect(view.pairSentence?.intransitive).toContain('着る（きる） (他動詞)');
-    expect(view.pairSentence?.transitive).toContain('着せる（きせる） (他動詞)');
-  });
-
   it('lists each verb\'s partners, including a verb with two', () => {
     expect(partnersOf('開ける')).toEqual([{ verb: '開く', reading: 'あく', translation: 'to open (intransitive)', transitive: false }]);
     expect(partnersOf('起こす').map(p => p.verb).sort()).toEqual(['起きる', '起こる']);
@@ -221,7 +211,7 @@ describe('pairs in the practice mix', () => {
     expect(run({ ...base, pairEntries: pairList, pairsEnabled: false })).toEqual(run(base));
   });
 
-  it.each<[JLPTLevel[], number]>([[['N5'], 34], [['N5', 'N4'], 84], [['N1'], 30]])(
+  it.each<[JLPTLevel[], number]>([[['N5'], 33], [['N5', 'N4'], 83], [['N1'], 30]])(
     'includes pairs from either member’s level for %j',
     (levels, count) => {
       const eligible = pairList.filter(([, pair]) => isPairEligible(pair, levels));

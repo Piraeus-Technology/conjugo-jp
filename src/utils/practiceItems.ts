@@ -156,7 +156,6 @@ export interface QuestionView {
 }
 
 export const PAIR_FORM_LABEL: FormLabel = { ja: '自動詞・他動詞', en: 'Transitive or intransitive?' };
-const RELATED_VERB_FORM_LABEL: FormLabel = { ja: '動詞の使い分け', en: 'Which verb fits?' };
 
 function describePairMember(member: PairMember): string {
   const word = member.verb === member.reading ? member.verb : `${member.verb}（${member.reading}）`;
@@ -170,7 +169,7 @@ export function describeQuestion(item: PracticeQuestion, selectedAnswer?: string
       headword: q.prompt,
       reading: '',
       translation: '',
-      formLabel: q.intransitive.transitive ? RELATED_VERB_FORM_LABEL : PAIR_FORM_LABEL,
+      formLabel: PAIR_FORM_LABEL,
       correctAnswer: q.correctAnswer,
       alsoCorrect: [],
       options: q.options,

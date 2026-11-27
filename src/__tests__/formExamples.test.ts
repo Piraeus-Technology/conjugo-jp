@@ -2372,7 +2372,7 @@ const n1ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
   nai: 578,
   potential: 307,
   passive: 312,
-  causative: 290,
+  causative: 289,
   conditional_ba: 585,
   conditional_tara: 585,
   volitional: 304,
@@ -3838,6 +3838,8 @@ const n1IntentionalOmissions: [string, ConjugationForm][] = [
   ["痛める", "volitional"],
   ["痛める", "imperative"],
   ["休める", "passive"],
+  // Instructing someone to rest uses 休ませる, the causative of 休む.
+  ["休める", "causative"],
   ["返る", "masu"],
   ["返る", "potential"],
   ["返る", "passive"],

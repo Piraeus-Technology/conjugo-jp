@@ -16,7 +16,6 @@ export interface PairSentence {
 }
 
 export interface PairData {
-  /** The first member. 着る is transitive even though it occupies this position. */
   intransitive: string;
   transitive: string;
   intransitiveSentence: PairSentence;
