@@ -16303,6 +16303,7 @@
       }
     ],
     "excludeForms": [
+      "potential",
       "passive",
       "causative",
       "causative_passive",
@@ -16339,6 +16340,7 @@
       }
     ],
     "excludeForms": [
+      "potential",
       "passive",
       "causative_passive",
       "volitional",
@@ -16595,6 +16597,7 @@
       }
     ],
     "excludeForms": [
+      "potential",
       "passive",
       "causative",
       "causative_passive",
@@ -16896,6 +16899,7 @@
       }
     ],
     "excludeForms": [
+      "potential",
       "passive",
       "causative",
       "causative_passive",
@@ -17380,6 +17384,7 @@
       }
     ],
     "excludeForms": [
+      "potential",
       "passive",
       "causative",
       "causative_passive",
@@ -17799,6 +17804,7 @@
       }
     ],
     "excludeForms": [
+      "potential",
       "passive",
       "causative",
       "causative_passive",
@@ -18645,7 +18651,8 @@
         "en": "I don’t mind if you sit here."
       }
     ],
-    "godanRow": "u"
+    "godanRow": "u",
+    "excludeForms": ["potential"]
   },
   "しまう": {
     "reading": "しまう",

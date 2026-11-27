@@ -86,9 +86,21 @@ describe('verbs added from the JLPT lists', () => {
     ['炊く', '炊ける', true],
     ['苦しむ', '苦しめる', false],
     ['付く', '付ける', false],
+    ['構う', '構える', false],
   ])('keeps the expected practice status for %s → %s', (word, potential, offered) => {
     expect(conjugate(word, verbs[word], 'potential').value).toBe(potential);
     expect(quizzableForms(verbs[word], ALL_FORMS).includes('potential')).toBe(offered);
+  });
+
+  it.each(['亡くなる', '済む', '優れる', '劣る', '基づく', '次ぐ'])(
+    'excludes the stative potential of %s from practice',
+    word => {
+      expect(quizzableForms(verbs[word], ALL_FORMS)).not.toContain('potential');
+    },
+  );
+
+  it('keeps every form of 連れる available to practice', () => {
+    expect(quizzableForms(verbs['連れる'], ALL_FORMS)).toEqual(ALL_FORMS);
   });
 
   it('hides all seven unavailable 違う forms from reference tables and practice', () => {
