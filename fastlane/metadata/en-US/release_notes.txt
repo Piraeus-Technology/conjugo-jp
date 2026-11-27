@@ -1,12 +1,8 @@
-Smarter quizzes: wrong answers now apply the wrong rule to the same form, so every question tests the conjugation itself.
+New: adjectives! Practice い-adjectives, な-adjectives and だ/です alongside your verbs, with 540+ words from N5 to N1.
 
-Also in this update:
-• Search finds verbs as you type, in romaji, hiragana or katakana.
-• Verb of the Day matches your practice levels.
-• Dark mode follows your phone's setting.
-• Speak buttons show when they're playing.
-• Better screen reader support and contrast.
-• Daily progress saves as you answer.
-• Corrected readings for 成り行く.
+• Full tables for every adjective, with the other correct ways to say each form
+• Quiz options built from real learner mistakes (高いでした, きれくない), and a "Why?" that explains the one you picked
+• Search finds an adjective from any form: たかくなかった finds 高い
+• Already using the app? Turn adjectives on in Practice settings
 
 Thanks for studying with ConjuGo!
