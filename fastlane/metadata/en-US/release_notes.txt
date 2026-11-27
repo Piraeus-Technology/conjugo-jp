@@ -1,11 +1,12 @@
-Better-balanced practice: with several JLPT levels selected, prompts now draw evenly across them instead of mostly repeating beginner verbs.
+Smarter quizzes: wrong answers now apply the wrong rule to the same form, so every question tests the conjugation itself.
 
 Also in this update:
-• Level-filtered search finds every matching verb.
-• All your favorites now show on the home screen.
-• Clearer hints for exception verbs like ある and くださる.
-• Romaji search accepts more spellings (gambaru, matcha).
-• More varied Verb of the Day.
-• Practice past midnight counts on the right day.
+• Search finds verbs as you type, in romaji, hiragana or katakana.
+• Verb of the Day matches your practice levels.
+• Dark mode follows your phone's setting.
+• Speak buttons show when they're playing.
+• Better screen reader support and contrast.
+• Daily progress saves as you answer.
+• Corrected readings for 成り行く.
 
 Thanks for studying with ConjuGo!
