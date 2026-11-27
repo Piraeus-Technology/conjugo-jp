@@ -553,7 +553,7 @@ describe('N4 form example sentences', () => {
 
 const n3dataset = n3 as Record<string, Partial<Record<ConjugationForm, string>>>;
 const n3ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
-  masu: 473,
+  masu: 474,
   te: 473,
   ta: 472,
   nai: 473,
@@ -1150,7 +1150,6 @@ const n3IntentionalOmissions: [string, ConjugationForm][] = [
   ["覚める", "volitional"],
   ["覚める", "imperative"],
   ["去る", "passive"],
-  ["優れる", "masu"],
   ['優れる', 'potential'],
   ["優れる", "conditional_ba"],
   ["優れる", "conditional_tara"],
@@ -1369,15 +1368,15 @@ const n2dataset = n2 as Record<string, Partial<Record<ConjugationForm, string>>>
 const n2ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
   masu: 531,
   te: 531,
-  ta: 531,
+  ta: 532,
   nai: 530,
   potential: 354,
-  passive: 339,
+  passive: 340,
   causative: 384,
   conditional_ba: 527,
   conditional_tara: 530,
   volitional: 366,
-  imperative: 345,
+  imperative: 346,
 };
 
 const n2IntentionalOmissions: [string, ConjugationForm][] = [
@@ -2160,8 +2159,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['暖まる', 'causative'],
   ['暖まる', 'volitional'],
   ['暖まる', 'imperative'],
-  ['争う', 'passive'],
-  ['争う', 'imperative'],
   ['慌てる', 'potential'],
   ['慌てる', 'passive'],
   ['慌てる', 'causative'],
@@ -2212,7 +2209,6 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ['建つ', 'volitional'],
   ['建つ', 'imperative'],
   ['散らす', 'causative'],
-  ['次ぐ', 'ta'],
   ['次ぐ', 'nai'],
   ['次ぐ', 'potential'],
   ['次ぐ', 'conditional_ba'],
