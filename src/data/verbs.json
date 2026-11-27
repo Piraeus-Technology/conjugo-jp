@@ -16296,12 +16296,19 @@
     "translation": "to pass away",
     "jlpt": "N4",
     "transitive": false,
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
     "examples": [
       {
         "ja": "祖父は去年亡くなった。",
         "en": "My grandfather passed away last year."
       }
+    ],
+    "excludeForms": [
+      "passive",
+      "causative",
+      "causative_passive",
+      "volitional",
+      "imperative",
+      "prohibitive"
     ]
   },
   "写す": {
@@ -16325,12 +16332,18 @@
     "translation": "to be finished; to get by",
     "jlpt": "N4",
     "transitive": false,
-    "excludeForms": ["potential", "passive", "causative_passive", "volitional", "imperative", "prohibitive"],
     "examples": [
       {
         "ja": "宿題は一時間で済む。",
         "en": "The homework takes only an hour."
       }
+    ],
+    "excludeForms": [
+      "passive",
+      "causative_passive",
+      "volitional",
+      "imperative",
+      "prohibitive"
     ]
   },
   "折れる": {
@@ -16570,13 +16583,24 @@
     "translation": "to be excellent, to excel",
     "jlpt": "N3",
     "transitive": false,
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
-    "unavailableForms": ["volitional", "imperative", "prohibitive"],
+    "unavailableForms": [
+      "volitional",
+      "imperative",
+      "prohibitive"
+    ],
     "examples": [
       {
         "ja": "彼女は語学に優れている。",
         "en": "She excels at languages."
       }
+    ],
+    "excludeForms": [
+      "passive",
+      "causative",
+      "causative_passive",
+      "volitional",
+      "imperative",
+      "prohibitive"
     ]
   },
   "済ませる": {
@@ -16860,13 +16884,24 @@
     "translation": "to be inferior",
     "jlpt": "N3",
     "transitive": false,
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
-    "unavailableForms": ["volitional", "imperative", "prohibitive"],
+    "unavailableForms": [
+      "volitional",
+      "imperative",
+      "prohibitive"
+    ],
     "examples": [
       {
         "ja": "この品は前のものに劣る。",
         "en": "This product is inferior to the previous one."
       }
+    ],
+    "excludeForms": [
+      "passive",
+      "causative",
+      "causative_passive",
+      "volitional",
+      "imperative",
+      "prohibitive"
     ]
   },
   "溺れる": {
@@ -17333,13 +17368,24 @@
     "translation": "to be based on",
     "jlpt": "N3",
     "transitive": false,
-    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
-    "unavailableForms": ["volitional", "imperative", "prohibitive"],
+    "unavailableForms": [
+      "volitional",
+      "imperative",
+      "prohibitive"
+    ],
     "examples": [
       {
         "ja": "この映画は事実に基づく。",
         "en": "This film is based on facts."
       }
+    ],
+    "excludeForms": [
+      "passive",
+      "causative",
+      "causative_passive",
+      "volitional",
+      "imperative",
+      "prohibitive"
     ]
   },
   "燃やす": {
@@ -17741,15 +17787,6 @@
     "translation": "to rank next to, to follow",
     "jlpt": "N2",
     "transitive": false,
-    "excludeForms": [
-      "potential",
-      "passive",
-      "causative",
-      "causative_passive",
-      "volitional",
-      "imperative",
-      "prohibitive"
-    ],
     "unavailableForms": [
       "volitional",
       "imperative",
@@ -17760,6 +17797,14 @@
         "ja": "大阪は東京に次ぐ大きな町だ。",
         "en": "Osaka is the largest city after Tokyo."
       }
+    ],
+    "excludeForms": [
+      "passive",
+      "causative",
+      "causative_passive",
+      "volitional",
+      "imperative",
+      "prohibitive"
     ]
   },
   "伝わる": {
