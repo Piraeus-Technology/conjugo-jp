@@ -54,6 +54,7 @@ export default function FlashcardStatsScreen() {
       weightsLoaded={weightsLoaded}
       weightsLoadError={weightsLoadError}
       allTimeOverride={allTimeOverride}
+      includePairs={false}
       onRetry={() => {
         loadSessions();
         loadStats();

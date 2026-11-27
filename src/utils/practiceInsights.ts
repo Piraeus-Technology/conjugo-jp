@@ -28,11 +28,11 @@ export interface PracticeInsights {
   weakVerbs: WeakVerb[];
 }
 
-function lookup(key: string): { verb: string; reading: string } | null {
+function lookup(key: string, includePairs: boolean): { verb: string; reading: string } | null {
   if (verbMap[key]) return { verb: key, reading: verbMap[key].reading };
   const adjective = parseAdjectiveKey(key);
   if (adjective) return { verb: adjective, reading: adjectiveMap[adjective].reading };
-  const pair = parsePairKey(key);
+  const pair = includePairs ? parsePairKey(key) : null;
   if (!pair) return null;
   const label = pairLabel(pair);
   return { verb: label.words, reading: label.readings };
@@ -42,11 +42,12 @@ export function buildPracticeInsights(
   weights: Record<string, number>,
   lastPracticedAt: Record<string, number> = {},
   now: number = Date.now(),
+  includePairs = true,
 ): PracticeInsights {
   const weakVerbs = Object.entries(weights)
     .map(([key, weight]) => ({
       key,
-      word: lookup(key),
+      word: lookup(key, includePairs),
       weight: decayWeight(weight, lastPracticedAt[key], now),
     }))
     .filter(({ word, weight }) => weight > DEFAULT_WEIGHT && word !== null)

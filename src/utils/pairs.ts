@@ -1,12 +1,8 @@
 import pairsJson from '../data/pairs.json';
 import verbsJson from '../data/verbs.json';
 import { conjugate, type ConjugationForm, type JLPTLevel, type VerbData } from './conjugate';
-import { practiceBaseWeights } from './practiceSelection';
 
-// Transitive/intransitive pairs (自動詞・他動詞). Each pair has one sentence per
-// side with a blank; the learner picks which member fills it, both offered in
-// the sentence's form. The particle is the cue: an intransitive sentence has no
-// を at all, a transitive one has a を object.
+// Each pair has one sentence per member, with both options in the sentence's form.
 
 export type PairSide = 'intransitive' | 'transitive';
 
@@ -15,22 +11,24 @@ export interface PairSentence {
   /** The sentence with {} where the verb goes. */
   ja: string;
   en: string;
+  cue: string;
+  cueNote?: string;
 }
 
 export interface PairData {
+  /** The first member. 着る is transitive even though it occupies this position. */
   intransitive: string;
   transitive: string;
   intransitiveSentence: PairSentence;
   transitiveSentence: PairSentence;
 }
 
-/** [spaced-repetition key, pair] with the level used for practice weighting. */
-export type PairEntry = [string, PairData & { jlpt: JLPTLevel }];
+/** [spaced-repetition key, pair] */
+export type PairEntry = [string, PairData];
 
 export const PAIR_BLANK = '{}';
-const PROMPT_BLANK = '＿＿＿';
+export const PAIR_PROMPT_BLANK = '＿＿＿';
 const PAIR_KEY_PREFIX = 'pair:';
-const LEVEL_RANK: Record<JLPTLevel, number> = { N5: 5, N4: 4, N3: 3, N2: 2, N1: 1 };
 
 const verbMap = verbsJson as Record<string, VerbData>;
 const pairData = pairsJson as PairData[];
@@ -39,43 +37,44 @@ export function pairKey(pair: Pick<PairData, 'intransitive' | 'transitive'>): st
   return `${PAIR_KEY_PREFIX}${pair.intransitive}/${pair.transitive}`;
 }
 
-// A pair is practised at its easier member's level: the contrast is learnable
-// as soon as the learner knows one side (曲がる N5 / 曲げる N2 is an N5 pair).
-function pairLevel(pair: PairData): JLPTLevel {
-  const levels = [verbMap[pair.intransitive].jlpt, verbMap[pair.transitive].jlpt] as JLPTLevel[];
-  return levels.reduce((a, b) => (LEVEL_RANK[b] > LEVEL_RANK[a] ? b : a));
+export function isPairEligible(pair: PairData, levels: readonly JLPTLevel[]): boolean {
+  return levels.includes(verbMap[pair.intransitive].jlpt) || levels.includes(verbMap[pair.transitive].jlpt);
 }
 
-export const pairList: PairEntry[] = pairData.map(pair => [pairKey(pair), { ...pair, jlpt: pairLevel(pair) }]);
+export const pairList: PairEntry[] = pairData.map(pair => [pairKey(pair), pair]);
 const pairByKey = new Map(pairList);
 
 export function parsePairKey(key: string): PairData | null {
   return pairByKey.get(key) ?? null;
 }
 
-export interface Partner {
-  verb: string;
-  transitive: boolean;
-}
-
-const partnerIndex = new Map<string, Partner[]>();
-for (const [, pair] of pairList) {
-  const add = (verb: string, partner: Partner) => {
-    partnerIndex.set(verb, [...(partnerIndex.get(verb) ?? []), partner]);
-  };
-  add(pair.intransitive, { verb: pair.transitive, transitive: true });
-  add(pair.transitive, { verb: pair.intransitive, transitive: false });
-}
-
-/** The verbs that form a transitivity pair with this one (起こす has two). */
-export function partnersOf(verb: string): Partner[] {
-  return partnerIndex.get(verb) ?? [];
-}
-
 export interface PairMember {
   verb: string;
   reading: string;
   translation: string;
+  transitive: boolean;
+}
+
+function member(verb: string): PairMember {
+  const { reading, translation, transitive } = verbMap[verb];
+  return { verb, reading, translation, transitive: transitive === true };
+}
+
+const partnerIndex = new Map<string, PairMember[]>();
+function addPartner(verb: string, partner: string) {
+  partnerIndex.set(verb, [...(partnerIndex.get(verb) ?? []), member(partner)]);
+}
+
+for (const [, { intransitive, transitive }] of pairList) {
+  addPartner(intransitive, transitive);
+  addPartner(transitive, intransitive);
+}
+
+const kanaTwins = new Map([['みえる', '見える'], ['きこえる', '聞こえる']]);
+
+/** The verbs that form a pair with this one (起こす has two). */
+export function partnersOf(verb: string): PairMember[] {
+  return partnerIndex.get(kanaTwins.get(verb) ?? verb) ?? [];
 }
 
 export interface PairQuestion {
@@ -87,27 +86,21 @@ export interface PairQuestion {
   /** The sentence completed with the correct verb, in kanji. */
   filled: string;
   english: string;
+  cue: string;
+  cueNote?: string;
   correctAnswer: string;
   options: string[];
   intransitive: PairMember;
   transitive: PairMember;
 }
 
-function member(verb: string): PairMember {
-  const data = verbMap[verb];
-  return { verb, reading: data.reading, translation: data.translation };
-}
-
-// Same weighting as verb practice: a per-level base share times the learner's
-// spaced-repetition weight for that pair.
 function pickPair(
   entries: readonly PairEntry[],
   getWeight: (key: string) => number,
   random: () => number,
 ): PairEntry | null {
   if (entries.length === 0) return null;
-  const base = practiceBaseWeights(entries);
-  const weights = entries.map(([key], index) => Math.max(0.01, getWeight(key)) * base[index]);
+  const weights = entries.map(([key]) => Math.max(0.01, getWeight(key)));
   let roll = random() * weights.reduce((sum, weight) => sum + weight, 0);
   for (let index = 0; index < entries.length; index++) {
     roll -= weights[index];
@@ -128,9 +121,11 @@ export function buildPairQuestion(entry: PairEntry, side: PairSide, swap: boolea
     key,
     side,
     form: sentence.form,
-    prompt: sentence.ja.replace(PAIR_BLANK, PROMPT_BLANK),
+    prompt: sentence.ja.replace(PAIR_BLANK, PAIR_PROMPT_BLANK),
     filled: sentence.ja.replace(PAIR_BLANK, correct.value),
     english: sentence.en,
+    cue: sentence.cue,
+    cueNote: sentence.cueNote,
     correctAnswer: correct.reading,
     options,
     intransitive: member(pair.intransitive),
@@ -150,19 +145,23 @@ export function generatePairQuestion(
 }
 
 export function getPairHint(question: PairQuestion): string {
-  const intr = `${question.intransitive.verb} (自動詞, ${question.intransitive.translation})`;
-  const tr = `${question.transitive.verb} (他動詞, ${question.transitive.translation})`;
-  return question.side === 'transitive'
-    ? `This sentence has an object marked with を, something someone acts on, so it takes the transitive verb ${tr}. `
-      + `Without a を object, the thing changes by itself: ${intr}.`
-    : `This sentence has no を object: the subject changes or acts by itself, so it takes the intransitive verb ${intr}. `
-      + `With a を object, someone acts on it: ${tr}.`;
+  const isTransitiveSide = question.side === 'transitive';
+  const answer = isTransitiveSide ? question.transitive : question.intransitive;
+  const other = isTransitiveSide ? question.intransitive : question.transitive;
+  const note = question.cueNote ?? (isTransitiveSide
+    ? 'marks the direct object of the action in this sentence.'
+    : 'marks the subject whose action or state the sentence describes.');
+  return `「${question.cue}」 ${note} Use ${answer.verb} (${pairMemberLabel(answer)}). `
+    + `${other.verb} (${pairMemberLabel(other)}) means “${other.translation}”.`;
+}
+
+export function pairMemberLabel(member: PairMember): string {
+  return member.transitive ? '他動詞' : '自動詞';
 }
 
 /** "開く／開ける" for stats and labels. */
 export function pairLabel(pair: Pick<PairData, 'intransitive' | 'transitive'>): { words: string; readings: string } {
-  return {
-    words: `${pair.intransitive}／${pair.transitive}`,
-    readings: `${verbMap[pair.intransitive].reading}／${verbMap[pair.transitive].reading}`,
-  };
+  const words = `${pair.intransitive}／${pair.transitive}`;
+  const readings = `${verbMap[pair.intransitive].reading}／${verbMap[pair.transitive].reading}`;
+  return { words, readings: words === readings ? '' : readings };
 }

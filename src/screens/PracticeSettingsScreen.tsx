@@ -27,6 +27,8 @@ type PracticeSettingsRouteParamList = {
   PracticeSettings: PracticeSettingsParams;
 };
 
+const PAIR_FORMS_NOTE = 'Pairs use their own sentences in common forms, mostly た and て, regardless of your Forms selection.';
+
 export default function PracticeSettingsScreen() {
   const colors = useColors();
   const navigation = useNavigation<NativeStackNavigationProp<QuizStackParamList, 'PracticeSettings'>>();
@@ -71,7 +73,14 @@ export default function PracticeSettingsScreen() {
     forms: group.forms.map(f => ({ key: f, label: `${ADJECTIVE_FORM_LABELS[f].ja} (${ADJECTIVE_FORM_LABELS[f].en})` })),
   }));
 
-  const renderCheckRow = (label: string, active: boolean, onPress: () => void, last: boolean, accessibilityLabel = label) => (
+  const renderCheckRow = (
+    label: string,
+    active: boolean,
+    onPress: () => void,
+    last: boolean,
+    accessibilityLabel = label,
+    description?: string,
+  ) => (
     <TouchableOpacity
       key={label}
       style={[
@@ -85,9 +94,13 @@ export default function PracticeSettingsScreen() {
       activeOpacity={0.7}
       accessibilityRole="checkbox"
       accessibilityLabel={accessibilityLabel}
+      accessibilityHint={description}
       accessibilityState={{ checked: active }}
     >
-      <Text style={[styles.rowText, { color: colors.textPrimary }]}>{label}</Text>
+      <View style={styles.rowCopy}>
+        <Text style={[styles.rowText, { color: colors.textPrimary }]}>{label}</Text>
+        {description && <Text style={[styles.noticeText, { color: colors.textSecondary }]}>{description}</Text>}
+      </View>
       <Ionicons
         name={active ? 'checkmark-circle' : 'ellipse-outline'}
         size={24}
@@ -143,7 +156,7 @@ export default function PracticeSettingsScreen() {
         >
           <Text style={[styles.noticeTitle, { color: colors.textPrimary }]}>New: transitivity pairs</Text>
           <Text style={[styles.noticeText, { color: colors.textSecondary }]}>
-            Fill in a sentence with the right verb of a pair, like 開く or 開ける, from its が or を.
+            Use clues such as が or を to fill in a sentence with the right verb of a pair, like 開く or 開ける.
           </Text>
           <View style={styles.noticeButtons}>
             <TouchableOpacity
@@ -265,7 +278,14 @@ export default function PracticeSettingsScreen() {
             <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Transitivity Pairs</Text>
           </View>
           <View style={[styles.card, { backgroundColor: colors.card }]}>
-            {renderCheckRow('Practice 自動詞・他動詞 pairs (開く／開ける)', pairsEnabled, togglePairs, true, 'Practice transitive and intransitive verb pairs')}
+            {renderCheckRow(
+              'Practice 自動詞・他動詞 pairs (開く／開ける)',
+              pairsEnabled,
+              togglePairs,
+              true,
+              'Practice transitive and intransitive verb pairs',
+              PAIR_FORMS_NOTE,
+            )}
           </View>
         </>
       )}
@@ -385,9 +405,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: spacing.md,
   },
-  rowText: {
+  rowCopy: {
     flexShrink: 1,
     marginRight: spacing.sm,
+  },
+  rowText: {
+    flexShrink: 1,
     fontSize: fonts.sizes.md,
     fontWeight: fonts.weights.medium,
   },

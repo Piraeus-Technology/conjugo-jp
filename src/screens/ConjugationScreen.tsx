@@ -8,9 +8,10 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import verbs from '../data/verbs.json';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useFavoritesStore } from '../store/favoritesStore';
+import { useHistoryStore } from '../store/historyStore';
 import { availableForms, conjugate, FORM_GROUPS, VerbData } from '../utils/conjugate';
 import { speak, stopSpeech } from '../utils/speech';
-import { partnersOf } from '../utils/pairs';
+import { pairMemberLabel, partnersOf } from '../utils/pairs';
 import type { SearchStackParamList } from '../types/navigation';
 
 export default function ConjugationScreen() {
@@ -21,6 +22,7 @@ export default function ConjugationScreen() {
   const highlightForm = route.params.highlightForm;
   const verbData = (verbs as Record<string, VerbData>)[verb];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();
+  const addToHistory = useHistoryStore(state => state.addToHistory);
   const scrollRef = useRef<ScrollView>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
 
@@ -141,14 +143,21 @@ export default function ConjugationScreen() {
           <TouchableOpacity
             key={partner.verb}
             style={styles.partnerRow}
-            onPress={() => navigation.push('Conjugation', { verb: partner.verb })}
+            onPress={() => {
+              addToHistory(partner.verb);
+              navigation.push('Conjugation', { verb: partner.verb });
+            }}
             accessibilityRole="button"
-            accessibilityLabel={`Open the ${partner.transitive ? 'transitive' : 'intransitive'} partner ${partner.verb}`}
+            accessibilityLabel={`Open ${partner.verb}, ${partner.reading}, ${partner.translation}`}
           >
             <Ionicons name="swap-horizontal" size={16} color={colors.primaryText} />
-            <Text style={[styles.partnerText, { color: colors.primaryText }]}>
-              {partner.transitive ? '他動詞' : '自動詞'}: {partner.verb}
-            </Text>
+            <View style={styles.partnerCopy}>
+              <Text style={[styles.partnerText, { color: colors.primaryText }]}>
+                {pairMemberLabel(partner)}: {partner.verb}
+                {partner.reading !== partner.verb ? `（${partner.reading}）` : ''}
+              </Text>
+              <Text style={[styles.partnerGloss, { color: colors.textSecondary }]}>{partner.translation}</Text>
+            </View>
             <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
           </TouchableOpacity>
         ))}
@@ -288,13 +297,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing.xs,
     marginTop: spacing.sm,
-    alignSelf: 'flex-start',
-    minHeight: 32,
+    minHeight: 44,
+    paddingVertical: spacing.xs,
   },
+  partnerCopy: { flex: 1 },
   partnerText: {
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,
   },
+  partnerGloss: { fontSize: fonts.sizes.sm },
   groupTitle: {
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,

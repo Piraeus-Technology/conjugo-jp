@@ -79,9 +79,8 @@ function safeAdjectiveForms(forms: AdjectiveForm[]): AdjectiveForm[] {
   return valid.length > 0 ? valid : [...beginnerAdjectiveForms];
 }
 
-// A new install starts with adjectives and transitivity pairs on and never
-// sees the "new" notes. Someone who already used the app keeps exactly the
-// practice they had: each stays off until they turn it on, and a note says so.
+// A new install starts with adjectives and pairs on. Existing learners get a
+// one-time note for each option that was added since they last saved settings.
 function newInstallDefaults(): PracticeSettingsSnapshot {
   return {
     activeForms: [...beginnerForms],

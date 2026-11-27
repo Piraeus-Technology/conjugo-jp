@@ -7,6 +7,7 @@ import ConjugationScreen from '../screens/ConjugationScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
 import { __resetFlashcardStatsStoreForTests } from '../store/flashcardStatsStore';
 import { __resetFlashcardSessionStoreForTests } from '../store/flashcardSessionStore';
+import { __resetHistoryStoreForTests, useHistoryStore } from '../store/historyStore';
 import { useThemeStore } from '../store/themeStore';
 import { maybeRequestStoreReview } from '../utils/storeReviewPrompt';
 import { speak, stopSpeech } from '../utils/speech';
@@ -21,7 +22,7 @@ import adjectives from '../data/adjectives.json';
 import type { AdjectiveData } from '../utils/adjectives';
 
 let mockRouteParams: { verb?: string; highlightForm?: string; mode?: string };
-const mockNavigation = { setOptions: jest.fn(), addListener: () => jest.fn() };
+const mockNavigation = { setOptions: jest.fn(), push: jest.fn(), addListener: () => jest.fn() };
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => mockNavigation,
   useFocusEffect: jest.fn(),
@@ -56,7 +57,6 @@ const question = {
 
 // Pairs are their own switch, on for a new install. These screen tests drive
 // verb and adjective questions, so they run with no pairs unless one sets them.
-// The import interop copies module values once, so tests fill this one array.
 jest.mock('../utils/pairs', () => ({ ...jest.requireActual('../utils/pairs'), pairList: [] }));
 const mockedPairList = (): unknown[] => jest.requireMock('../utils/pairs').pairList;
 
@@ -69,6 +69,7 @@ beforeEach(async () => {
   __resetQuizStoreForTests();
   __resetFlashcardSessionStoreForTests();
   __resetFlashcardStatsStoreForTests();
+  __resetHistoryStoreForTests();
   __resetSessionStoreForTests();
   __resetPracticeSettingsStoreForTests();
   __resetSpacedRepStoreForTests();
@@ -273,14 +274,31 @@ it('asks a transitivity pair as a sentence, then shows the whole sentence and bo
   // 0 draws a pair, its intransitive sentence, and reverses the two options.
   jest.spyOn(Math, 'random').mockReturnValue(0);
   const screen = await ready(<QuizScreen />);
-  expect(screen.getByText('風でドアが＿＿＿。')).toBeTruthy();
+  expect(screen.getByText('誰もいない部屋で、風にあおられてドアが＿＿＿。')).toBeTruthy();
+  expect(screen.getByLabelText('誰もいない部屋で、風にあおられてドアが空欄。')).toBeTruthy();
   expect(screen.getByText('自動詞・他動詞 — Transitive or intransitive?')).toBeTruthy();
-  expect(screen.queryByText('The door blew open in the wind.')).toBeNull();
+  expect(screen.queryByText('The wind blew the door open in an empty room.')).toBeNull();
   await act(async () => fireEvent.press(screen.getByLabelText('Answer: あけた')));
-  expect(screen.getByText('風でドアが開いた。')).toBeTruthy();
-  expect(screen.getByText('The door blew open in the wind.')).toBeTruthy();
-  expect(screen.getByText(/no を object/)).toBeTruthy();
+  expect(screen.getByText('誰もいない部屋で、風にあおられてドアが開いた。')).toBeTruthy();
+  expect(screen.getByText('The wind blew the door open in an empty room.')).toBeTruthy();
+  expect(screen.getByText('開く（あく） (自動詞) to open (intransitive)')).toBeTruthy();
+  expect(screen.getByText('開ける（あける） (他動詞) to open (something)')).toBeTruthy();
+  expect(screen.getByLabelText('Explain this verb choice')).toBeTruthy();
+  expect(screen.getByText(/「ドアが」 marks the subject/)).toBeTruthy();
   await waitFor(() => expect(useSpacedRepStore.getState().weights['pair:開く/開ける']).toBeGreaterThan(1));
+});
+
+it('shows partner readings and meanings and records the opened partner in Recent', async () => {
+  mockRouteParams = { verb: 'かかる' };
+  const screen = await ready(<ConjugationScreen />);
+  expect(screen.getByText('他動詞: 掛ける（かける）')).toBeTruthy();
+  expect(screen.getByText('to make (a phone call)')).toBeTruthy();
+  expect(screen.getByText('to hang up, to hang from')).toBeTruthy();
+
+  const partner = screen.getByRole('button', { name: /Open 掛ける, かける/ });
+  await act(async () => fireEvent.press(partner));
+  expect(mockNavigation.push).toHaveBeenCalledWith('Conjugation', { verb: '掛ける' });
+  expect(useHistoryStore.getState().history[0]).toBe('掛ける');
 });
 
 describe('adjective practice', () => {

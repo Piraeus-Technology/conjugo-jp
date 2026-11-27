@@ -14,7 +14,7 @@ import { stopSpeech } from '../utils/speech';
 import verbs from '../data/verbs.json';
 import { VerbData, JLPTLevel } from '../utils/conjugate';
 import { adjectiveList } from '../utils/adjectives';
-import { pairList } from '../utils/pairs';
+import { isPairEligible, pairList, PAIR_PROMPT_BLANK } from '../utils/pairs';
 import {
   describeQuestion,
   generatePracticeQuestion,
@@ -109,7 +109,7 @@ export default function QuizScreen() {
     adjectiveEntries: adjectiveList.filter(([, d]) => activeLevels.includes(d.jlpt)),
     adjectiveForms: activeAdjectiveForms,
     adjectivesEnabled,
-    pairEntries: pairList.filter(([, d]) => activeLevels.includes(d.jlpt)),
+    pairEntries: pairList.filter(([, pair]) => isPairEligible(pair, activeLevels)),
     pairsEnabled,
   }), [activeLevels, activeForms, activeAdjectiveForms, adjectivesEnabled, pairsEnabled]);
 
@@ -292,7 +292,8 @@ export default function QuizScreen() {
           </Text>
           <Text
             style={[styles.pairSentence, { color: colors.primaryText }]}
-            accessibilityLabel={answered ? pairSentence.filled : pairSentence.prompt.replace('＿＿＿', ' blank ')}
+            accessibilityLanguage="ja-JP"
+            accessibilityLabel={answered ? pairSentence.filled : pairSentence.prompt.replace(PAIR_PROMPT_BLANK, '空欄')}
           >
             {answered ? pairSentence.filled : pairSentence.prompt}
           </Text>
@@ -375,8 +376,8 @@ export default function QuizScreen() {
             onPress={() => setShowHint(v => !v)}
             activeOpacity={0.7}
             accessibilityRole="button"
-            accessibilityLabel="Show conjugation rule"
-            accessibilityHint={showHint ? 'Collapses the rule explanation' : 'Expands the rule explanation'}
+            accessibilityLabel={pairSentence ? 'Explain this verb choice' : 'Show conjugation rule'}
+            accessibilityHint={showHint ? 'Collapses the explanation' : 'Expands the explanation'}
             accessibilityState={{ expanded: showHint }}
           >
             <View style={styles.hintTitleRow}>

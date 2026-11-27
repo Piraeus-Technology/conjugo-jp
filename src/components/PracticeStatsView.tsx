@@ -57,6 +57,7 @@ interface PracticeStatsViewProps {
   onRetry: () => void;
   labels: PracticeStatsLabels;
   allTimeOverride?: AllTimeOverride;
+  includePairs?: boolean;
 }
 
 export default function PracticeStatsView({
@@ -70,15 +71,16 @@ export default function PracticeStatsView({
   onRetry,
   labels,
   allTimeOverride,
+  includePairs = true,
 }: PracticeStatsViewProps) {
   const colors = useColors();
   const [selectedMonth, setSelectedMonth] = useState<Date | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
-  // Quiz and flashcards share weights keyed by verb headword or adj:<headword>.
+  // Shared weights use verb headwords, adj:<headword>, and pair:<intr>/<tr> for quiz pairs.
   const insights = React.useMemo(
-    () => buildPracticeInsights(weights, lastPracticedAt ?? {}, Date.now()),
-    [weights, lastPracticedAt],
+    () => buildPracticeInsights(weights, lastPracticedAt ?? {}, Date.now(), includePairs),
+    [weights, lastPracticedAt, includePairs],
   );
 
   // Map sessions by day (each session is already one day)
@@ -378,7 +380,7 @@ export default function PracticeStatsView({
             {insights.weakVerbs.map(item => (
               <View key={item.key} style={styles.insightRow}>
                 <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>
-                  {item.verb} · {item.reading}
+                  {item.reading ? `${item.verb} · ${item.reading}` : item.verb}
                 </Text>
                 <Text style={[styles.insightValue, { color: colors.primaryText }]}>{item.weight.toFixed(1)}x</Text>
               </View>

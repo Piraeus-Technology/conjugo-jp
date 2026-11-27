@@ -111,6 +111,14 @@ describe('verbs added from the JLPT lists', () => {
     expect(ALL_FORMS.filter(form => !availableForms(data, ALL_FORMS).includes(form))).toEqual(hidden);
     expect(ALL_FORMS.filter(form => !quizzableForms(data, ALL_FORMS).includes(form))).toEqual(hidden);
   });
+
+  it('hides the same reference forms for 備わる as for 似る, including in exact search', () => {
+    expect(availableForms(verbs['備わる'], ALL_FORMS)).toEqual(availableForms(verbs['似る'], ALL_FORMS));
+    for (const form of verbs['備わる'].unavailableForms ?? []) {
+      const { reading } = conjugate('備わる', verbs['備わる'], form);
+      expect(searchWords(reading).some(hit => hit.verb === '備わる' && hit.matchForm === form)).toBe(false);
+    }
+  });
 });
 
 describe('exact search ranking', () => {

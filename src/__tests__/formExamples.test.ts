@@ -1390,17 +1390,17 @@ describe('N3 form example sentences', () => {
 
 const n2dataset = n2 as Record<string, Partial<Record<ConjugationForm, string>>>;
 const n2ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
-  masu: 540,
-  te: 540,
-  ta: 541,
-  nai: 539,
-  potential: 358,
-  passive: 343,
-  causative: 389,
-  conditional_ba: 536,
-  conditional_tara: 539,
-  volitional: 370,
-  imperative: 350,
+  masu: 544,
+  te: 544,
+  ta: 545,
+  nai: 543,
+  potential: 360,
+  passive: 345,
+  causative: 391,
+  conditional_ba: 540,
+  conditional_tara: 543,
+  volitional: 372,
+  imperative: 352,
 };
 
 const n2IntentionalOmissions: [string, ConjugationForm][] = [
@@ -2303,6 +2303,16 @@ const n2IntentionalOmissions: [string, ConjugationForm][] = [
   ["仕上がる", "volitional"],
   ["仕上がる", "imperative"],
   ["当てはめる", "passive"],
+  ['亡くす', 'potential'],
+  ['亡くす', 'passive'],
+  ['亡くす', 'causative'],
+  ['亡くす', 'volitional'],
+  ['亡くす', 'imperative'],
+  ['留まる', 'potential'],
+  ['留まる', 'passive'],
+  ['留まる', 'causative'],
+  ['留まる', 'volitional'],
+  ['留まる', 'imperative'],
 ];
 
 describe('N2 form example sentences', () => {
@@ -2356,17 +2366,17 @@ describe('N2 form example sentences', () => {
 
 const n1dataset = n1 as Record<string, Partial<Record<ConjugationForm, string>>>;
 const n1ExpectedCountsByForm: Partial<Record<ConjugationForm, number>> = {
-  masu: 579,
-  te: 584,
-  ta: 584,
-  nai: 572,
-  potential: 305,
-  passive: 310,
-  causative: 288,
-  conditional_ba: 579,
-  conditional_tara: 579,
-  volitional: 302,
-  imperative: 250,
+  masu: 585,
+  te: 590,
+  ta: 590,
+  nai: 578,
+  potential: 307,
+  passive: 312,
+  causative: 290,
+  conditional_ba: 585,
+  conditional_tara: 585,
+  volitional: 304,
+  imperative: 252,
 };
 
 const n1IntentionalOmissions: [string, ConjugationForm][] = [
@@ -3837,6 +3847,26 @@ const n1IntentionalOmissions: [string, ConjugationForm][] = [
   ["返る", "volitional"],
   ["返る", "imperative"],
   ["負かす", "causative"],
+  ['及ぶ', 'potential'],
+  ['及ぶ', 'passive'],
+  ['及ぶ', 'causative'],
+  ['及ぶ', 'volitional'],
+  ['及ぶ', 'imperative'],
+  ['尽きる', 'potential'],
+  ['尽きる', 'passive'],
+  ['尽きる', 'causative'],
+  ['尽きる', 'volitional'],
+  ['尽きる', 'imperative'],
+  ['揺らぐ', 'potential'],
+  ['揺らぐ', 'passive'],
+  ['揺らぐ', 'causative'],
+  ['揺らぐ', 'volitional'],
+  ['揺らぐ', 'imperative'],
+  ['休まる', 'potential'],
+  ['休まる', 'passive'],
+  ['休まる', 'causative'],
+  ['休まる', 'volitional'],
+  ['休まる', 'imperative'],
 ];
 
 describe('N1 form example sentences', () => {

@@ -23,7 +23,7 @@ import {
   type AdjectiveCard,
   type AdjectiveQuestion,
 } from './adjectivePractice';
-import { generatePairQuestion, getPairHint, type PairEntry, type PairQuestion } from './pairs';
+import { generatePairQuestion, getPairHint, pairMemberLabel, type PairEntry, type PairMember, type PairQuestion } from './pairs';
 
 // One practice pool covering verbs and, when the learner has them on,
 // adjectives and (quiz only) transitivity pairs. With both off, practice takes
@@ -156,6 +156,12 @@ export interface QuestionView {
 }
 
 export const PAIR_FORM_LABEL: FormLabel = { ja: '自動詞・他動詞', en: 'Transitive or intransitive?' };
+const RELATED_VERB_FORM_LABEL: FormLabel = { ja: '動詞の使い分け', en: 'Which verb fits?' };
+
+function describePairMember(member: PairMember): string {
+  const word = member.verb === member.reading ? member.verb : `${member.verb}（${member.reading}）`;
+  return `${word} (${pairMemberLabel(member)}) ${member.translation}`;
+}
 
 export function describeQuestion(item: PracticeQuestion, selectedAnswer?: string): QuestionView {
   if (item.kind === 'pair') {
@@ -164,7 +170,7 @@ export function describeQuestion(item: PracticeQuestion, selectedAnswer?: string
       headword: q.prompt,
       reading: '',
       translation: '',
-      formLabel: PAIR_FORM_LABEL,
+      formLabel: q.intransitive.transitive ? RELATED_VERB_FORM_LABEL : PAIR_FORM_LABEL,
       correctAnswer: q.correctAnswer,
       alsoCorrect: [],
       options: q.options,
@@ -174,8 +180,8 @@ export function describeQuestion(item: PracticeQuestion, selectedAnswer?: string
         prompt: q.prompt,
         filled: q.filled,
         english: q.english,
-        intransitive: `${q.intransitive.verb} (自動詞) ${q.intransitive.translation}`,
-        transitive: `${q.transitive.verb} (他動詞) ${q.transitive.translation}`,
+        intransitive: describePairMember(q.intransitive),
+        transitive: describePairMember(q.transitive),
       },
     };
   }
