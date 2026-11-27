@@ -1,0 +1,2883 @@
+[
+  {
+    "intransitive": "上がる",
+    "transitive": "上げる",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "来月から電車の料金が{}。",
+      "en": "Train fares go up next month.",
+      "cue": "電車の料金が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "分かった人は手を{}ください。",
+      "en": "If you understand, please raise your hand.",
+      "cue": "手を"
+    }
+  },
+  {
+    "intransitive": "開く",
+    "transitive": "開ける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "誰もいない部屋で、風にあおられてドアが{}。",
+      "en": "The wind blew the door open in an empty room.",
+      "cue": "ドアが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "暑いので窓を{}。",
+      "en": "It was hot, so I opened the window.",
+      "cue": "窓を"
+    }
+  },
+  {
+    "intransitive": "動く",
+    "transitive": "動かす",
+    "intransitiveSentence": {
+      "form": "nai",
+      "ja": "寒くて指が{}。",
+      "en": "It's so cold my fingers won't move.",
+      "cue": "指が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "机を少し右に{}ください。",
+      "en": "Please move the desk a little to the right.",
+      "cue": "机を"
+    }
+  },
+  {
+    "intransitive": "売れる",
+    "transitive": "売る",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "新しいゲームがよく{}。",
+      "en": "The new game sold well.",
+      "cue": "新しいゲームが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "使わなくなった本を、週末のフリーマーケットで{}ください。",
+      "en": "Please sell the books you no longer use at the weekend flea market.",
+      "cue": "使わなくなった本を"
+    }
+  },
+  {
+    "intransitive": "起きる",
+    "transitive": "起こす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "目覚ましが鳴って、弟がすぐに{}。",
+      "en": "The alarm rang and my brother got up right away.",
+      "cue": "弟が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "七時に寝ている弟を{}。",
+      "en": "I woke my sleeping brother at seven.",
+      "cue": "寝ている弟を"
+    }
+  },
+  {
+    "intransitive": "降りる",
+    "transitive": "降ろす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "乗客がバスから{}。",
+      "en": "The passengers got off the bus.",
+      "cue": "乗客が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "トラックから荷物を{}。",
+      "en": "I unloaded the luggage from the truck.",
+      "cue": "荷物を"
+    }
+  },
+  {
+    "intransitive": "終わる",
+    "transitive": "終える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "やっと試験が{}。",
+      "en": "The exam is finally over.",
+      "cue": "試験が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "明日に備えて、必要な手続きをすべて{}あります。",
+      "en": "I've completed all the necessary paperwork in preparation for tomorrow.",
+      "cue": "必要な手続きを",
+      "cueNote": "marks the task the speaker completed in advance. The 〜てある ending describes the result of that action."
+    }
+  },
+  {
+    "intransitive": "帰る",
+    "transitive": "帰す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "友だちと遊んでいた子どもが、夕方五時に自分の家に{}。",
+      "en": "The child who was playing with friends went home at five in the evening.",
+      "cue": "友だちと遊んでいた子どもが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "雨が強くなったので、先生は生徒を早く{}。",
+      "en": "The rain got heavy, so the teacher sent the students home early.",
+      "cue": "生徒を"
+    }
+  },
+  {
+    "intransitive": "かかる",
+    "transitive": "かける",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "夜中に知らない番号から電話が{}きた。",
+      "en": "A call came in the middle of the night from a number I didn't know.",
+      "cue": "電話が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "友だちに電話を{}。",
+      "en": "I called my friend.",
+      "cue": "電話を"
+    }
+  },
+  {
+    "intransitive": "かかる",
+    "transitive": "掛ける",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "壁に古い時計が{}いる。",
+      "en": "An old clock hangs on the wall.",
+      "cue": "古い時計が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "玄関に新しい絵を{}。",
+      "en": "I hung a new painting in the entrance.",
+      "cue": "新しい絵を"
+    }
+  },
+  {
+    "intransitive": "消える",
+    "transitive": "消す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "急に電気が{}。",
+      "en": "The lights suddenly went out.",
+      "cue": "電気が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "寝る前に電気を{}ください。",
+      "en": "Please turn off the lights before you go to bed.",
+      "cue": "電気を"
+    }
+  },
+  {
+    "intransitive": "聞こえる",
+    "transitive": "聞く",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "静かな夜には、遠くの波の音が{}。",
+      "en": "On quiet nights you can hear the distant waves.",
+      "cue": "遠くの波の音が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "寝る前に好きな音楽を{}。",
+      "en": "I listened to my favorite music before bed.",
+      "cue": "好きな音楽を"
+    }
+  },
+  {
+    "intransitive": "切れる",
+    "transitive": "切る",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "古いひもが{}。",
+      "en": "The old string snapped.",
+      "cue": "古いひもが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "折り紙に使う紙を、正方形に{}あります。",
+      "en": "I've cut the paper for origami into squares.",
+      "cue": "折り紙に使う紙を"
+    }
+  },
+  {
+    "intransitive": "閉まる",
+    "transitive": "閉める",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "夜八時になると、店のシャッターが自動で{}。",
+      "en": "The shop's shutter closes automatically at eight in the evening.",
+      "cue": "店のシャッターが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "出かける前に窓を{}ください。",
+      "en": "Please close the windows before you go out.",
+      "cue": "窓を"
+    }
+  },
+  {
+    "intransitive": "立つ",
+    "transitive": "立てる",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "玄関に大きな石像が{}いる。",
+      "en": "A large stone statue stands in the entrance.",
+      "cue": "大きな石像が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "店の入り口に新しい看板を{}。",
+      "en": "I put up a new sign at the shop entrance.",
+      "cue": "新しい看板を"
+    }
+  },
+  {
+    "intransitive": "つく",
+    "transitive": "つける",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "人が近づくと、玄関の明かりが自動で{}。",
+      "en": "The entryway light turns on automatically when someone approaches.",
+      "cue": "玄関の明かりが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "暗いので電気を{}ください。",
+      "en": "It's dark, so please turn on the light.",
+      "cue": "電気を"
+    }
+  },
+  {
+    "intransitive": "付く",
+    "transitive": "つける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "シャツにカレーのしみが{}。",
+      "en": "A curry stain got on my shirt.",
+      "cue": "カレーのしみが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "目印に、かばんの持ち手に赤いリボンを{}。",
+      "en": "I tied a red ribbon to the bag handle so I could recognize it.",
+      "cue": "赤いリボンを"
+    }
+  },
+  {
+    "intransitive": "出る",
+    "transitive": "出す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "風邪で熱が{}。",
+      "en": "I came down with a fever from a cold.",
+      "cue": "熱が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "先生に宿題を{}。",
+      "en": "I handed in my homework to the teacher.",
+      "cue": "宿題を"
+    }
+  },
+  {
+    "intransitive": "届く",
+    "transitive": "届ける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "昨日、母から荷物が{}。",
+      "en": "A package arrived from my mother yesterday.",
+      "cue": "荷物が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "忘れ物を交番に{}。",
+      "en": "I took the lost item to the police box.",
+      "cue": "忘れ物を"
+    }
+  },
+  {
+    "intransitive": "飛ぶ",
+    "transitive": "飛ばす",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "秋になると、鳥が南へ{}。",
+      "en": "In autumn, the birds fly south.",
+      "cue": "鳥が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "公園で紙飛行機を{}。",
+      "en": "I flew a paper airplane in the park.",
+      "cue": "紙飛行機を"
+    }
+  },
+  {
+    "intransitive": "止まる",
+    "transitive": "止める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "事故で電車が{}。",
+      "en": "The train stopped because of an accident.",
+      "cue": "電車が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "店の前に車を{}。",
+      "en": "I parked the car in front of the shop.",
+      "cue": "車を"
+    }
+  },
+  {
+    "intransitive": "泊まる",
+    "transitive": "泊める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "合宿では、同じ部屋に選手が二人ずつ{}。",
+      "en": "At training camp, the athletes stayed two to a room.",
+      "cue": "選手が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "終電を逃した友だちを家に{}。",
+      "en": "I put up a friend who missed the last train.",
+      "cue": "終電を逃した友だちを"
+    }
+  },
+  {
+    "intransitive": "取れる",
+    "transitive": "取る",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "シャツのボタンが{}。",
+      "en": "A button came off my shirt.",
+      "cue": "シャツのボタンが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "棚の上の箱を{}ください。",
+      "en": "Please get the box down from the shelf.",
+      "cue": "棚の上の箱を"
+    }
+  },
+  {
+    "intransitive": "無くなる",
+    "transitive": "なくす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "財布のお金が全部{}。",
+      "en": "All the money in my wallet is gone.",
+      "cue": "財布のお金が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "電車で傘を{}。",
+      "en": "I lost my umbrella on the train.",
+      "cue": "傘を"
+    }
+  },
+  {
+    "intransitive": "鳴る",
+    "transitive": "鳴らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "授業中に携帯電話が{}。",
+      "en": "A phone rang during class.",
+      "cue": "携帯電話が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "玄関のベルを{}。",
+      "en": "I rang the doorbell.",
+      "cue": "玄関のベルを"
+    }
+  },
+  {
+    "intransitive": "乗る",
+    "transitive": "乗せる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "ドアが開くと、乗客が次々とバスに{}。",
+      "en": "When the doors opened, the passengers boarded the bus one after another.",
+      "cue": "乗客が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "子どもを自転車の後ろに{}。",
+      "en": "I put my child on the back of the bicycle.",
+      "cue": "子どもを"
+    }
+  },
+  {
+    "intransitive": "入る",
+    "transitive": "入れる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "窓から虫が{}。",
+      "en": "A bug came in through the window.",
+      "cue": "虫が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "コーヒーに砂糖を{}。",
+      "en": "I put sugar in my coffee.",
+      "cue": "砂糖を"
+    }
+  },
+  {
+    "intransitive": "始まる",
+    "transitive": "始める",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "ベルが鳴るとすぐに一時間目の授業が{}。",
+      "en": "The first lesson starts as soon as the bell rings.",
+      "cue": "一時間目の授業が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "去年から日本語の勉強を{}。",
+      "en": "I started studying Japanese last year.",
+      "cue": "日本語の勉強を"
+    }
+  },
+  {
+    "intransitive": "見える",
+    "transitive": "見る",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "晴れた日は、ここから富士山が{}。",
+      "en": "On clear days you can see Mt. Fuji from here.",
+      "cue": "富士山が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "昨日、映画を{}。",
+      "en": "I watched a movie yesterday.",
+      "cue": "映画を"
+    }
+  },
+  {
+    "intransitive": "分かれる",
+    "transitive": "分ける",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "この先で道が二つに{}いる。",
+      "en": "The road splits in two up ahead.",
+      "cue": "道が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "ケーキを四つに{}。",
+      "en": "I cut the cake into four.",
+      "cue": "ケーキを"
+    }
+  },
+  {
+    "intransitive": "曲がる",
+    "transitive": "曲げる",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "古いくぎが{}いる。",
+      "en": "The old nail is bent.",
+      "cue": "古いくぎが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "力を入れて針金を{}。",
+      "en": "I bent the wire with some force.",
+      "cue": "針金を"
+    }
+  },
+  {
+    "intransitive": "脱げる",
+    "transitive": "脱ぐ",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "走ったら靴が{}。",
+      "en": "When I ran, my shoe came off.",
+      "cue": "靴が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "家に入る前に靴を{}ください。",
+      "en": "Please take off your shoes before coming in.",
+      "cue": "靴を"
+    }
+  },
+  {
+    "intransitive": "休まる",
+    "transitive": "休める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "温泉につかって、疲れた体がようやく{}。",
+      "en": "My tired body finally got some rest when I soaked in the hot spring.",
+      "cue": "疲れた体が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "週末は温泉で体を{}。",
+      "en": "On the weekend I rest my body at a hot spring.",
+      "cue": "体を"
+    }
+  },
+  {
+    "intransitive": "返る",
+    "transitive": "返す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "貸したお金がやっと{}きた。",
+      "en": "The money I lent finally came back.",
+      "cue": "貸したお金が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "図書館に本を{}。",
+      "en": "I returned the book to the library.",
+      "cue": "本を"
+    }
+  },
+  {
+    "intransitive": "生まれる",
+    "transitive": "産む",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "去年、姉に子どもが{}。",
+      "en": "My sister had a baby last year.",
+      "cue": "子どもが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "その犬は去年、三匹の子犬を{}。",
+      "en": "That dog gave birth to three puppies last year.",
+      "cue": "三匹の子犬を"
+    }
+  },
+  {
+    "intransitive": "温まる",
+    "transitive": "温める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "お風呂に入って体が{}。",
+      "en": "I took a bath and warmed up.",
+      "cue": "体が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "電子レンジで牛乳を{}ください。",
+      "en": "Please warm the milk in the microwave.",
+      "cue": "牛乳を"
+    }
+  },
+  {
+    "intransitive": "集まる",
+    "transitive": "集める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "駅前にたくさんの人が{}。",
+      "en": "A lot of people gathered in front of the station.",
+      "cue": "たくさんの人が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "弟は趣味で古い切手を{}いる。",
+      "en": "My brother collects old stamps as a hobby.",
+      "cue": "古い切手を"
+    }
+  },
+  {
+    "intransitive": "浮かぶ",
+    "transitive": "浮かべる",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "空に白い雲が{}いる。",
+      "en": "White clouds are floating in the sky.",
+      "cue": "白い雲が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "池におもちゃの船を{}。",
+      "en": "I floated a toy boat on the pond.",
+      "cue": "おもちゃの船を"
+    }
+  },
+  {
+    "intransitive": "移る",
+    "transitive": "移す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "先月、父の会社が新しいビルに{}。",
+      "en": "Last month my father's company moved to a new building.",
+      "cue": "父の会社が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "机を窓のそばに{}。",
+      "en": "I moved the desk next to the window.",
+      "cue": "机を"
+    }
+  },
+  {
+    "intransitive": "写る",
+    "transitive": "写す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "集合写真に私と弟が{}いる。",
+      "en": "My brother and I are in the group photo.",
+      "cue": "私と弟が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "友だちのノートを{}。",
+      "en": "I copied my friend's notes.",
+      "cue": "友だちのノートを"
+    }
+  },
+  {
+    "intransitive": "起こる",
+    "transitive": "起こす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "昨日、駅の近くで事故が{}。",
+      "en": "An accident happened near the station yesterday.",
+      "cue": "事故が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "不注意な運転で大きな事故を{}。",
+      "en": "I caused a serious accident by careless driving.",
+      "cue": "大きな事故を"
+    }
+  },
+  {
+    "intransitive": "落ちる",
+    "transitive": "落とす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "机の上からペンが{}。",
+      "en": "A pen fell off the desk.",
+      "cue": "ペンが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "駅で財布を{}。",
+      "en": "I dropped my wallet at the station.",
+      "cue": "財布を"
+    }
+  },
+  {
+    "intransitive": "驚く",
+    "transitive": "驚かす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "突然の大きな音に、みんなが{}。",
+      "en": "Everyone was startled by the sudden loud noise.",
+      "cue": "みんなが"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "弟はいつも後ろから私を{}。",
+      "en": "My brother always sneaks up and startles me.",
+      "cue": "私を"
+    }
+  },
+  {
+    "intransitive": "下りる",
+    "transitive": "下ろす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "舞台の幕が静かに{}。",
+      "en": "The stage curtain came down quietly.",
+      "cue": "舞台の幕が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "劇が終わると、係員が舞台の幕を{}。",
+      "en": "When the play ended, an attendant lowered the stage curtain.",
+      "cue": "舞台の幕を"
+    }
+  },
+  {
+    "intransitive": "折れる",
+    "transitive": "折る",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "強い風で木の枝が{}。",
+      "en": "A tree branch snapped in the strong wind.",
+      "cue": "木の枝が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "まず、この折り紙を三角形に{}ください。",
+      "en": "First, please fold this piece of origami paper into a triangle.",
+      "cue": "この折り紙を"
+    }
+  },
+  {
+    "intransitive": "片付く",
+    "transitive": "片付ける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "やっと部屋が{}。",
+      "en": "My room is finally tidy.",
+      "cue": "部屋が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "遊んだあとはおもちゃを{}ください。",
+      "en": "Please put your toys away after you play.",
+      "cue": "おもちゃを"
+    }
+  },
+  {
+    "intransitive": "叶う",
+    "transitive": "叶える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "長年の夢が{}。",
+      "en": "My long-held dream came true.",
+      "cue": "長年の夢が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "いつか必ず夢を{}。",
+      "en": "Someday I'll make my dream come true.",
+      "cue": "夢を"
+    }
+  },
+  {
+    "intransitive": "乾く",
+    "transitive": "乾かす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "天気がいいので、洗濯物がすぐ{}。",
+      "en": "The weather was nice, so the laundry dried quickly.",
+      "cue": "洗濯物が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "ドライヤーで髪を{}から寝る。",
+      "en": "I dry my hair with a hair dryer before bed.",
+      "cue": "髪を"
+    }
+  },
+  {
+    "intransitive": "変わる",
+    "transitive": "変える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "引っ越して、生活が大きく{}。",
+      "en": "My life changed a lot after the move.",
+      "cue": "生活が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "部屋の家具の配置を{}。",
+      "en": "I rearranged the furniture in my room.",
+      "cue": "部屋の家具の配置を"
+    }
+  },
+  {
+    "intransitive": "決まる",
+    "transitive": "決める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "旅行の日にちが{}。",
+      "en": "The dates for the trip have been set.",
+      "cue": "旅行の日にちが"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "明日までに行き先を{}。",
+      "en": "I'll decide where to go by tomorrow.",
+      "cue": "行き先を"
+    }
+  },
+  {
+    "intransitive": "こぼれる",
+    "transitive": "こぼす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "コップから水が{}。",
+      "en": "Water spilled out of the glass.",
+      "cue": "水が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "テーブルにジュースを{}。",
+      "en": "I spilled juice on the table.",
+      "cue": "ジュースを"
+    }
+  },
+  {
+    "intransitive": "転がる",
+    "transitive": "転がす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "ボールが坂の下まで{}。",
+      "en": "The ball rolled to the bottom of the slope.",
+      "cue": "ボールが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "大きな雪の玉を{}。",
+      "en": "I rolled a big snowball.",
+      "cue": "大きな雪の玉を"
+    }
+  },
+  {
+    "intransitive": "壊れる",
+    "transitive": "壊す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "古いテレビが{}。",
+      "en": "The old TV broke.",
+      "cue": "古いテレビが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "弟は私のおもちゃを{}。",
+      "en": "My little brother broke my toy.",
+      "cue": "私のおもちゃを"
+    }
+  },
+  {
+    "intransitive": "下がる",
+    "transitive": "下げる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "夜になって気温が{}。",
+      "en": "The temperature dropped at night.",
+      "cue": "気温が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "テレビの音を少し{}ください。",
+      "en": "Please turn the TV down a little.",
+      "cue": "テレビの音を"
+    }
+  },
+  {
+    "intransitive": "沈む",
+    "transitive": "沈める",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "夕日が海に{}。",
+      "en": "The evening sun sinks into the sea.",
+      "cue": "夕日が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "おもちゃの船をお湯に{}。",
+      "en": "I sank the toy boat in the bath water.",
+      "cue": "おもちゃの船を"
+    }
+  },
+  {
+    "intransitive": "育つ",
+    "transitive": "育てる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "庭のトマトが大きく{}。",
+      "en": "The tomatoes in the garden grew big.",
+      "cue": "庭のトマトが"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "ベランダで野菜を{}。",
+      "en": "I grow vegetables on the balcony.",
+      "cue": "野菜を"
+    }
+  },
+  {
+    "intransitive": "倒れる",
+    "transitive": "倒す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "地震で本棚が{}。",
+      "en": "The bookshelf fell over in the earthquake.",
+      "cue": "本棚が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "うっかり自転車を{}しまった。",
+      "en": "I accidentally knocked over the bicycle.",
+      "cue": "自転車を"
+    }
+  },
+  {
+    "intransitive": "助かる",
+    "transitive": "助ける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "救急隊の早い対応で、運転手の命が{}。",
+      "en": "The paramedics' quick response saved the driver's life.",
+      "cue": "運転手の命が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "川でおぼれた子どもを{}。",
+      "en": "I saved a child who was drowning in the river.",
+      "cue": "川でおぼれた子どもを"
+    }
+  },
+  {
+    "intransitive": "建つ",
+    "transitive": "建てる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "駅前に新しいビルが{}。",
+      "en": "A new building went up in front of the station.",
+      "cue": "新しいビルが"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "来年、郊外に家を{}。",
+      "en": "Next year we'll build a house in the suburbs.",
+      "cue": "家を"
+    }
+  },
+  {
+    "intransitive": "伝わる",
+    "transitive": "伝える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "うわさがすぐに町中に{}。",
+      "en": "The rumor spread through the whole town at once.",
+      "cue": "うわさが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "先生に私の気持ちを{}ください。",
+      "en": "Please tell the teacher how I feel.",
+      "cue": "私の気持ちを"
+    }
+  },
+  {
+    "intransitive": "続く",
+    "transitive": "続ける",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "この雨があさってまで{}。",
+      "en": "This rain will continue until the day after tomorrow.",
+      "cue": "この雨が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "来年も日本語の勉強を{}。",
+      "en": "I'll keep studying Japanese next year too.",
+      "cue": "日本語の勉強を"
+    }
+  },
+  {
+    "intransitive": "繋がる",
+    "transitive": "繋ぐ",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "やっと電話が{}。",
+      "en": "The call finally went through.",
+      "cue": "電話が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "子どもと手を{}歩いた。",
+      "en": "I walked holding my child's hand.",
+      "cue": "手を"
+    }
+  },
+  {
+    "intransitive": "通る",
+    "transitive": "通す",
+    "intransitiveSentence": {
+      "form": "nai",
+      "ja": "道幅が狭いので、この道には大型バスが{}。",
+      "en": "Large buses don't use this road because it is so narrow.",
+      "cue": "大型バスが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "細い針に糸を{}。",
+      "en": "I threaded a fine needle.",
+      "cue": "糸を"
+    }
+  },
+  {
+    "intransitive": "直る",
+    "transitive": "直す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "修理に出していた時計が{}。",
+      "en": "The watch I sent for repair is fixed.",
+      "cue": "修理に出していた時計が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "自転車を{}もらった。",
+      "en": "I had my bicycle fixed.",
+      "cue": "自転車を"
+    }
+  },
+  {
+    "intransitive": "治る",
+    "transitive": "治す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "一週間で風邪が{}。",
+      "en": "My cold got better in a week.",
+      "cue": "風邪が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "しっかり休んで風邪を{}ください。",
+      "en": "Get plenty of rest and get over your cold.",
+      "cue": "風邪を"
+    }
+  },
+  {
+    "intransitive": "並ぶ",
+    "transitive": "並べる",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "棚に色とりどりの花瓶が{}いる。",
+      "en": "Colorful vases are lined up on the shelf.",
+      "cue": "色とりどりの花瓶が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "テーブルにお皿を{}。",
+      "en": "I set out the plates on the table.",
+      "cue": "お皿を"
+    }
+  },
+  {
+    "intransitive": "慣れる",
+    "transitive": "慣らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "来日して半年で、留学生が日本の生活に{}。",
+      "en": "The exchange student got used to life in Japan within six months of arriving.",
+      "cue": "留学生が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "少しずつ体を寒さに{}いく。",
+      "en": "I'm getting my body used to the cold little by little.",
+      "cue": "体を"
+    }
+  },
+  {
+    "intransitive": "濡れる",
+    "transitive": "濡らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "雨で服が{}。",
+      "en": "My clothes got wet in the rain.",
+      "cue": "服が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "タオルを水で{}。",
+      "en": "I wet a towel with water.",
+      "cue": "タオルを"
+    }
+  },
+  {
+    "intransitive": "残る",
+    "transitive": "残す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "パーティーのあと、ケーキが少し{}。",
+      "en": "A little cake was left over after the party.",
+      "cue": "ケーキが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "弟はにんじんを{}。",
+      "en": "My brother left his carrots uneaten.",
+      "cue": "にんじんを"
+    }
+  },
+  {
+    "intransitive": "冷える",
+    "transitive": "冷やす",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "冷蔵庫のビールがよく{}いる。",
+      "en": "The beer in the fridge is nice and cold.",
+      "cue": "冷蔵庫のビールが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "スイカを冷蔵庫で{}。",
+      "en": "I chilled the watermelon in the fridge.",
+      "cue": "スイカを"
+    }
+  },
+  {
+    "intransitive": "増える",
+    "transitive": "増やす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "最近、外国人の観光客が{}。",
+      "en": "The number of foreign tourists has gone up recently.",
+      "cue": "外国人の観光客が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "来月から店員を{}。",
+      "en": "We'll hire more staff from next month.",
+      "cue": "店員を"
+    }
+  },
+  {
+    "intransitive": "ぶつかる",
+    "transitive": "ぶつける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "自転車が電柱に{}。",
+      "en": "A bicycle ran into a telephone pole.",
+      "cue": "自転車が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "柱に頭を{}。",
+      "en": "I hit my head on a pillar.",
+      "cue": "頭を"
+    }
+  },
+  {
+    "intransitive": "ぶら下がる",
+    "transitive": "ぶら下げる",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "天井から電球が{}いる。",
+      "en": "A light bulb is hanging from the ceiling.",
+      "cue": "電球が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "首からカメラを{}歩く。",
+      "en": "I walk around with a camera hanging from my neck.",
+      "cue": "カメラを"
+    }
+  },
+  {
+    "intransitive": "減る",
+    "transitive": "減らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "最近、体重が{}。",
+      "en": "I've lost weight recently.",
+      "cue": "体重が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "健康のために塩を{}。",
+      "en": "I'll cut down on salt for my health.",
+      "cue": "塩を"
+    }
+  },
+  {
+    "intransitive": "混ざる",
+    "transitive": "混ぜる",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "赤と白の絵の具が{}、ピンクになった。",
+      "en": "The red and white paints mixed and turned pink.",
+      "cue": "赤と白の絵の具が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "卵と砂糖をよく{}ください。",
+      "en": "Please mix the eggs and sugar well.",
+      "cue": "卵と砂糖を"
+    }
+  },
+  {
+    "intransitive": "見つかる",
+    "transitive": "見つける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "なくした鍵が{}。",
+      "en": "The key I lost turned up.",
+      "cue": "なくした鍵が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "駅の近くでいいアパートを{}。",
+      "en": "I found a good apartment near the station.",
+      "cue": "いいアパートを"
+    }
+  },
+  {
+    "intransitive": "焼ける",
+    "transitive": "焼く",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "おいしそうにパンが{}。",
+      "en": "The bread came out of the oven looking delicious.",
+      "cue": "パンが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "お客さんが来る前に、庭のグリルで肉を{}あります。",
+      "en": "I've grilled the meat outside ahead of the guests' arrival.",
+      "cue": "肉を"
+    }
+  },
+  {
+    "intransitive": "沸く",
+    "transitive": "沸かす",
+    "intransitiveSentence": {
+      "form": "conditional_tara",
+      "ja": "お湯が{}、お茶にしよう。",
+      "en": "When the water boils, let's have some tea.",
+      "cue": "お湯が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "やかんでお湯を{}。",
+      "en": "I boiled water in the kettle.",
+      "cue": "お湯を"
+    }
+  },
+  {
+    "intransitive": "割れる",
+    "transitive": "割る",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "落としたコップが{}。",
+      "en": "The glass I dropped broke.",
+      "cue": "落としたコップが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "このボウルに卵を二つ{}ください。",
+      "en": "Please crack two eggs into this bowl.",
+      "cue": "卵を"
+    }
+  },
+  {
+    "intransitive": "汚れる",
+    "transitive": "汚す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "泥で白い靴が{}。",
+      "en": "My white shoes got dirty with mud.",
+      "cue": "白い靴が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "カレーで新しいシャツを{}。",
+      "en": "I got curry on my new shirt.",
+      "cue": "新しいシャツを"
+    }
+  },
+  {
+    "intransitive": "暖まる",
+    "transitive": "暖める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "ストーブのおかげで部屋が{}。",
+      "en": "The room warmed up thanks to the heater.",
+      "cue": "部屋が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "エアコンで部屋を{}。",
+      "en": "I warmed the room with the air conditioner.",
+      "cue": "部屋を"
+    }
+  },
+  {
+    "intransitive": "当たる",
+    "transitive": "当てる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "ボールが窓に{}。",
+      "en": "The ball hit the window.",
+      "cue": "ボールが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "クイズの答えを{}。",
+      "en": "I guessed the answer to the quiz.",
+      "cue": "クイズの答えを"
+    }
+  },
+  {
+    "intransitive": "現れる",
+    "transitive": "現す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "雲の間から月が{}。",
+      "en": "The moon appeared between the clouds.",
+      "cue": "月が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "その日、彼はついに姿を{}。",
+      "en": "That day, he finally showed himself.",
+      "cue": "姿を"
+    }
+  },
+  {
+    "intransitive": "入れ替わる",
+    "transitive": "入れ替える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "試合の途中で選手が{}。",
+      "en": "Players were swapped in the middle of the game.",
+      "cue": "選手が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "窓を開けて部屋の空気を{}。",
+      "en": "I opened the window and aired out the room.",
+      "cue": "部屋の空気を"
+    }
+  },
+  {
+    "intransitive": "映る",
+    "transitive": "映す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "湖に山が{}いる。",
+      "en": "The mountain is reflected in the lake.",
+      "cue": "山が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "鏡に自分の顔を{}みた。",
+      "en": "I looked at my face in the mirror.",
+      "cue": "自分の顔を"
+    }
+  },
+  {
+    "intransitive": "埋まる",
+    "transitive": "埋める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "雪で道が{}。",
+      "en": "The road was buried in snow.",
+      "cue": "道が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "庭にタイムカプセルを{}。",
+      "en": "We buried a time capsule in the garden.",
+      "cue": "タイムカプセルを"
+    }
+  },
+  {
+    "intransitive": "落ち着く",
+    "transitive": "落ち着ける",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "日が暮れると、外の騒ぎがようやく{}。",
+      "en": "The commotion outside finally died down after dark.",
+      "cue": "外の騒ぎが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "深呼吸をして心を{}ください。",
+      "en": "Take a deep breath and calm yourself.",
+      "cue": "心を"
+    }
+  },
+  {
+    "intransitive": "隠れる",
+    "transitive": "隠す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "太陽が雲に{}。",
+      "en": "The sun went behind the clouds.",
+      "cue": "太陽が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "母のめがねをどこかに{}。",
+      "en": "I hid my mother's glasses somewhere.",
+      "cue": "母のめがねを"
+    }
+  },
+  {
+    "intransitive": "重なる",
+    "transitive": "重ねる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "二つの予定が同じ日に{}。",
+      "en": "Two plans fell on the same day.",
+      "cue": "二つの予定が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "使ったお皿を{}。",
+      "en": "I stacked the used plates.",
+      "cue": "使ったお皿を"
+    }
+  },
+  {
+    "intransitive": "加わる",
+    "transitive": "加える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "新しいメンバーがチームに{}。",
+      "en": "A new member joined the team.",
+      "cue": "新しいメンバーが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "スープに塩を少し{}ください。",
+      "en": "Please add a little salt to the soup.",
+      "cue": "塩を"
+    }
+  },
+  {
+    "intransitive": "刺さる",
+    "transitive": "刺す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "指にとげが{}。",
+      "en": "A splinter got stuck in my finger.",
+      "cue": "とげが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "肉に串を{}。",
+      "en": "I put the meat on skewers.",
+      "cue": "串を"
+    }
+  },
+  {
+    "intransitive": "冷める",
+    "transitive": "冷ます",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "早く食べないと、料理が{}。",
+      "en": "If you don't eat soon, the food will get cold.",
+      "cue": "料理が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "熱いお茶を少し{}から飲む。",
+      "en": "I let the hot tea cool a little before drinking it.",
+      "cue": "熱いお茶を"
+    }
+  },
+  {
+    "intransitive": "覚める",
+    "transitive": "覚ます",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "大きな音で目が{}。",
+      "en": "A loud noise woke me up.",
+      "cue": "目が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "コーヒーを飲んで眠気を{}。",
+      "en": "I drank coffee to shake off my sleepiness.",
+      "cue": "眠気を"
+    }
+  },
+  {
+    "intransitive": "締まる",
+    "transitive": "締める",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "このびんのふたが固く{}いて、開かない。",
+      "en": "The lid on this jar is screwed on tight and won't open.",
+      "cue": "このびんのふたが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "車に乗ったら、シートベルトを{}ください。",
+      "en": "Please fasten your seatbelt once you get in the car.",
+      "cue": "シートベルトを"
+    }
+  },
+  {
+    "intransitive": "進む",
+    "transitive": "進める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "工事が予定どおりに{}。",
+      "en": "The construction went ahead on schedule.",
+      "cue": "工事が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "来週から計画を{}。",
+      "en": "We'll move the plan forward from next week.",
+      "cue": "計画を"
+    }
+  },
+  {
+    "intransitive": "ずれる",
+    "transitive": "ずらす",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "写真の位置が少し{}いる。",
+      "en": "The photo is slightly out of position.",
+      "cue": "写真の位置が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "会議の時間を一時間{}もらった。",
+      "en": "I had the meeting moved by an hour.",
+      "cue": "会議の時間を"
+    }
+  },
+  {
+    "intransitive": "染まる",
+    "transitive": "染める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "夕日で空が赤く{}。",
+      "en": "The sky turned red in the evening sun.",
+      "cue": "空が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "美容院で髪を茶色に{}。",
+      "en": "I had my hair dyed brown at the salon.",
+      "cue": "髪を"
+    }
+  },
+  {
+    "intransitive": "溜まる",
+    "transitive": "溜める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "雨で庭に水が{}。",
+      "en": "Water collected in the garden from the rain.",
+      "cue": "水が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "旅行のためにお金を{}いる。",
+      "en": "I'm saving up money for a trip.",
+      "cue": "お金を"
+    }
+  },
+  {
+    "intransitive": "縮む",
+    "transitive": "縮める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "洗濯したら、セーターが{}。",
+      "en": "The sweater shrank in the wash.",
+      "cue": "セーターが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "近道を使って、時間を{}。",
+      "en": "I took a shortcut and saved time.",
+      "cue": "時間を"
+    }
+  },
+  {
+    "intransitive": "散る",
+    "transitive": "散らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "強い風で桜の花が{}。",
+      "en": "The cherry blossoms scattered in the strong wind.",
+      "cue": "桜の花が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "サラダの上にパセリを{}。",
+      "en": "I sprinkled parsley over the salad.",
+      "cue": "パセリを"
+    }
+  },
+  {
+    "intransitive": "繋がる",
+    "transitive": "繋げる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "二つの駅が新しい地下道で{}。",
+      "en": "The two stations were linked by a new underground passage.",
+      "cue": "二つの駅が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "二つのケーブルを{}ください。",
+      "en": "Please connect the two cables.",
+      "cue": "二つのケーブルを"
+    }
+  },
+  {
+    "intransitive": "溶ける",
+    "transitive": "溶かす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "暖かくなって、雪が{}。",
+      "en": "It got warmer and the snow melted.",
+      "cue": "雪が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "お湯で砂糖を{}。",
+      "en": "I dissolved the sugar in hot water.",
+      "cue": "砂糖を"
+    }
+  },
+  {
+    "intransitive": "解ける",
+    "transitive": "解く",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "靴のひもが{}。",
+      "en": "My shoelace came undone.",
+      "cue": "靴のひもが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "荷物のひもを{}あるから、すぐに箱を開けられます。",
+      "en": "The string around the package is already untied, so you can open the box right away.",
+      "cue": "荷物のひもを"
+    }
+  },
+  {
+    "intransitive": "流れる",
+    "transitive": "流す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "店の中に静かな音楽が{}いる。",
+      "en": "Quiet music is playing in the shop.",
+      "cue": "静かな音楽が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "シャワーで汗を{}から寝る。",
+      "en": "I rinse off the sweat in the shower before bed.",
+      "cue": "汗を"
+    }
+  },
+  {
+    "intransitive": "抜ける",
+    "transitive": "抜く",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "最近、髪の毛がよく{}。",
+      "en": "My hair has been falling out a lot lately.",
+      "cue": "髪の毛が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "植え替えの前に、花壇の雑草を全部{}あります。",
+      "en": "I've pulled all the weeds from the flower bed before replanting.",
+      "cue": "花壇の雑草を"
+    }
+  },
+  {
+    "intransitive": "伸びる",
+    "transitive": "伸ばす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "一年で背が五センチ{}。",
+      "en": "I grew five centimeters in a year.",
+      "cue": "背が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "髪を長く{}いる。",
+      "en": "I'm growing my hair long.",
+      "cue": "髪を"
+    }
+  },
+  {
+    "intransitive": "延びる",
+    "transitive": "延ばす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "雨で試合が来週に{}。",
+      "en": "The game was put off to next week because of rain.",
+      "cue": "試合が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "出張をもう一日{}。",
+      "en": "I extended my business trip by one more day.",
+      "cue": "出張を"
+    }
+  },
+  {
+    "intransitive": "外れる",
+    "transitive": "外す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "天気予報が{}。",
+      "en": "The weather forecast was wrong.",
+      "cue": "天気予報が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "診察の前に腕時計を{}ください。",
+      "en": "Please take off your watch before the examination.",
+      "cue": "腕時計を"
+    }
+  },
+  {
+    "intransitive": "離れる",
+    "transitive": "離す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "駅と学校が少し{}いる。",
+      "en": "The station and the school are a little way apart.",
+      "cue": "駅と学校が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "ハンドルから手を{}はいけない。",
+      "en": "You mustn't take your hands off the steering wheel.",
+      "cue": "手を"
+    }
+  },
+  {
+    "intransitive": "広がる",
+    "transitive": "広げる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "火事の火が隣の家にまで{}。",
+      "en": "The fire spread to the house next door.",
+      "cue": "火事の火が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "テーブルに地図を{}。",
+      "en": "I spread the map out on the table.",
+      "cue": "地図を"
+    }
+  },
+  {
+    "intransitive": "深まる",
+    "transitive": "深める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "話し合いで二人の理解が{}。",
+      "en": "Talking it over deepened their understanding of each other.",
+      "cue": "二人の理解が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "このクラスでは、日本の文化について理解を{}。",
+      "en": "In this class, we deepen our understanding of Japanese culture.",
+      "cue": "理解を"
+    }
+  },
+  {
+    "intransitive": "回る",
+    "transitive": "回す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "風で風車が{}いる。",
+      "en": "The windmill is turning in the wind.",
+      "cue": "風車が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "ドアのノブを右に{}ください。",
+      "en": "Please turn the doorknob to the right.",
+      "cue": "ドアのノブを"
+    }
+  },
+  {
+    "intransitive": "満ちる",
+    "transitive": "満たす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "夕方になって潮が{}。",
+      "en": "The tide came in toward evening.",
+      "cue": "潮が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "コップを水で{}。",
+      "en": "I filled the glass with water.",
+      "cue": "コップを"
+    }
+  },
+  {
+    "intransitive": "向く",
+    "transitive": "向ける",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "この部屋の窓が全部、南に{}いる。",
+      "en": "All the windows in this room face south.",
+      "cue": "この部屋の窓が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "カメラをこちらに{}ください。",
+      "en": "Please point the camera this way.",
+      "cue": "カメラを"
+    }
+  },
+  {
+    "intransitive": "剥ける",
+    "transitive": "剥く",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "日焼けで背中の皮が{}。",
+      "en": "The skin on my back peeled from sunburn.",
+      "cue": "背中の皮が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "りんごの皮を{}ください。",
+      "en": "Please peel the apple.",
+      "cue": "りんごの皮を"
+    }
+  },
+  {
+    "intransitive": "燃える",
+    "transitive": "燃やす",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "暖炉で木が赤く{}いる。",
+      "en": "The wood is burning red in the fireplace.",
+      "cue": "木が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "庭で落ち葉を{}。",
+      "en": "I burned fallen leaves in the garden.",
+      "cue": "落ち葉を"
+    }
+  },
+  {
+    "intransitive": "戻る",
+    "transitive": "戻す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "迷子になった犬が夜になって家に{}。",
+      "en": "The dog that had gotten lost came home after dark.",
+      "cue": "迷子になった犬が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "使った本を棚に{}ください。",
+      "en": "Please put the books you used back on the shelf.",
+      "cue": "使った本を"
+    }
+  },
+  {
+    "intransitive": "破れる",
+    "transitive": "破る",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "転んで、ズボンのひざが{}。",
+      "en": "I fell and tore the knee of my trousers.",
+      "cue": "ズボンのひざが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "いらない紙を半分に{}ください。",
+      "en": "Please tear the paper you don't need in half.",
+      "cue": "いらない紙を"
+    }
+  },
+  {
+    "intransitive": "緩む",
+    "transitive": "緩める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "古い椅子のねじが{}。",
+      "en": "A screw on the old chair came loose.",
+      "cue": "古い椅子のねじが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "食べすぎて、ベルトを少し{}。",
+      "en": "I ate too much and loosened my belt a little.",
+      "cue": "ベルトを"
+    }
+  },
+  {
+    "intransitive": "煮える",
+    "transitive": "煮る",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "じゃがいもがやわらかく{}。",
+      "en": "The potatoes have cooked until soft.",
+      "cue": "じゃがいもが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "弱火で野菜を{}ください。",
+      "en": "Please simmer the vegetables over low heat.",
+      "cue": "野菜を"
+    }
+  },
+  {
+    "intransitive": "揺れる",
+    "transitive": "揺らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "地震で家が大きく{}。",
+      "en": "The house shook hard in the earthquake.",
+      "cue": "家が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "赤ちゃんを寝かせようと、ゆりかごをそっと{}。",
+      "en": "I gently rocked the cradle to get the baby to sleep.",
+      "cue": "ゆりかごを"
+    }
+  },
+  {
+    "intransitive": "枯れる",
+    "transitive": "枯らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "暑さで庭の花が{}。",
+      "en": "The flowers in the garden withered in the heat.",
+      "cue": "庭の花が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "旅行中に鉢植えを{}。",
+      "en": "I let the potted plant die while I was away.",
+      "cue": "鉢植えを"
+    }
+  },
+  {
+    "intransitive": "逃げる",
+    "transitive": "逃がす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "鳥がかごから{}。",
+      "en": "The bird escaped from its cage.",
+      "cue": "鳥が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "釣った魚を川に{}。",
+      "en": "I let the fish I caught go back into the river.",
+      "cue": "釣った魚を"
+    }
+  },
+  {
+    "intransitive": "詰まる",
+    "transitive": "詰める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "台所の排水口が{}。",
+      "en": "The kitchen drain got clogged.",
+      "cue": "台所の排水口が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "かばんに服を{}出かけた。",
+      "en": "I packed clothes into my bag and set out.",
+      "cue": "服を"
+    }
+  },
+  {
+    "intransitive": "表れる",
+    "transitive": "表す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "緊張が顔に{}いる。",
+      "en": "The nerves show on his face.",
+      "cue": "緊張が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "言葉で感謝の気持ちを{}。",
+      "en": "I put my gratitude into words.",
+      "cue": "感謝の気持ちを"
+    }
+  },
+  {
+    "intransitive": "当てはまる",
+    "transitive": "当てはめる",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "次の三つの例には、同じ規則が{}。",
+      "en": "The same rule applies to the following three examples.",
+      "cue": "同じ規則が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "公式に数字を{}計算する。",
+      "en": "I plug the numbers into the formula and calculate.",
+      "cue": "数字を"
+    }
+  },
+  {
+    "intransitive": "痛む",
+    "transitive": "痛める",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "雨の日は古い傷が{}。",
+      "en": "My old wound aches on rainy days.",
+      "cue": "古い傷が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "重い荷物を持って腰を{}。",
+      "en": "I hurt my back carrying heavy luggage.",
+      "cue": "腰を"
+    }
+  },
+  {
+    "intransitive": "備わる",
+    "transitive": "備える",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "この部屋にはエアコンが{}いる。",
+      "en": "This room has air conditioning.",
+      "cue": "エアコンが"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "学校はすべての教室にパソコンを{}。",
+      "en": "The school will equip every classroom with a computer.",
+      "cue": "パソコンを"
+    }
+  },
+  {
+    "intransitive": "負ける",
+    "transitive": "負かす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "前回の優勝チームが決勝で{}。",
+      "en": "The previous champions lost in the final.",
+      "cue": "前回の優勝チームが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "弟は初めて父を将棋で{}。",
+      "en": "My brother beat our father at shogi for the first time.",
+      "cue": "父を"
+    }
+  },
+  {
+    "intransitive": "傾く",
+    "transitive": "傾ける",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "地震のあと、家が少し{}いる。",
+      "en": "Since the earthquake, the house has been leaning a little.",
+      "cue": "家が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "ペットボトルを少し{}、水を注いだ。",
+      "en": "I tilted the bottle a little and poured the water.",
+      "cue": "ペットボトルを"
+    }
+  },
+  {
+    "intransitive": "崩れる",
+    "transitive": "崩す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "大雨で山の斜面が{}。",
+      "en": "The mountainside collapsed in the heavy rain.",
+      "cue": "山の斜面が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "積み上げた積み木をわざと{}。",
+      "en": "I knocked down the stacked blocks on purpose.",
+      "cue": "積み上げた積み木を"
+    }
+  },
+  {
+    "intransitive": "裂ける",
+    "transitive": "裂く",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "強い風で旗が{}。",
+      "en": "The flag tore in the strong wind.",
+      "cue": "旗が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "ひもにするために、布を細長く{}あります。",
+      "en": "I've torn the cloth into narrow strips to use as ties.",
+      "cue": "布を"
+    }
+  },
+  {
+    "intransitive": "狭まる",
+    "transitive": "狭める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "工事で道の幅が{}。",
+      "en": "The road narrowed because of the construction.",
+      "cue": "道の幅が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "歩道を広げるために車道を{}。",
+      "en": "They narrowed the roadway to widen the sidewalk.",
+      "cue": "車道を"
+    }
+  },
+  {
+    "intransitive": "逸れる",
+    "transitive": "逸らす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "台風の進路が東に{}。",
+      "en": "The typhoon veered off to the east.",
+      "cue": "台風の進路が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "恥ずかしくて目を{}。",
+      "en": "I was embarrassed and looked away.",
+      "cue": "目を"
+    }
+  },
+  {
+    "intransitive": "揃う",
+    "transitive": "揃える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "注文した部品がやっと全部{}。",
+      "en": "All the parts we ordered have finally arrived.",
+      "cue": "注文した部品が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "靴をきちんと{}ください。",
+      "en": "Please line up your shoes neatly.",
+      "cue": "靴を"
+    }
+  },
+  {
+    "intransitive": "高まる",
+    "transitive": "高める",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "選挙への関心が{}いる。",
+      "en": "Interest in the election is growing.",
+      "cue": "選挙への関心が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "練習で集中力を{}。",
+      "en": "I build my concentration through practice.",
+      "cue": "集中力を"
+    }
+  },
+  {
+    "intransitive": "潰れる",
+    "transitive": "潰す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "不景気で近所の店が{}。",
+      "en": "A shop in the neighborhood went under in the recession.",
+      "cue": "近所の店が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "じゃがいもをフォークで{}ください。",
+      "en": "Please mash the potatoes with a fork.",
+      "cue": "じゃがいもを"
+    }
+  },
+  {
+    "intransitive": "強まる",
+    "transitive": "強める",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "夜になると、風がさらに{}。",
+      "en": "At night the wind will get even stronger.",
+      "cue": "風が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "火を少し{}ください。",
+      "en": "Please turn up the heat a little.",
+      "cue": "火を"
+    }
+  },
+  {
+    "intransitive": "整う",
+    "transitive": "整える",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "出発の準備が{}。",
+      "en": "Everything is ready for departure.",
+      "cue": "出発の準備が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "面接の前に髪を{}おく。",
+      "en": "I tidy my hair before the interview.",
+      "cue": "髪を"
+    }
+  },
+  {
+    "intransitive": "載る",
+    "transitive": "載せる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "私の作文が新聞に{}。",
+      "en": "My essay appeared in the newspaper.",
+      "cue": "私の作文が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "棚の上に箱を{}。",
+      "en": "I put the box on top of the shelf.",
+      "cue": "箱を"
+    }
+  },
+  {
+    "intransitive": "生える",
+    "transitive": "生やす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "庭に雑草がたくさん{}。",
+      "en": "A lot of weeds came up in the garden.",
+      "cue": "雑草が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "父はひげを{}いる。",
+      "en": "My father has a beard.",
+      "cue": "ひげを"
+    }
+  },
+  {
+    "intransitive": "剥がれる",
+    "transitive": "剥がす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "壁のポスターが{}。",
+      "en": "The poster on the wall came off.",
+      "cue": "壁のポスターが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "古いシールを{}ください。",
+      "en": "Please peel off the old sticker.",
+      "cue": "古いシールを"
+    }
+  },
+  {
+    "intransitive": "嵌まる",
+    "transitive": "嵌める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "車のタイヤが溝に{}。",
+      "en": "The car's tire got stuck in a ditch.",
+      "cue": "車のタイヤが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "左手の薬指に指輪を{}。",
+      "en": "I put the ring on my left ring finger.",
+      "cue": "指輪を"
+    }
+  },
+  {
+    "intransitive": "早まる",
+    "transitive": "早める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "会議の時間が一時間{}。",
+      "en": "The meeting was moved up an hour.",
+      "cue": "会議の時間が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "雨が降りそうなので、出発を{}。",
+      "en": "It looked like rain, so we left earlier than planned.",
+      "cue": "出発を"
+    }
+  },
+  {
+    "intransitive": "浸る",
+    "transitive": "浸す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "大雨で道路が水に{}いる。",
+      "en": "The road is under water after the heavy rain.",
+      "cue": "道路が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "豆を一晩水に{}おく。",
+      "en": "I leave the beans to soak in water overnight.",
+      "cue": "豆を"
+    }
+  },
+  {
+    "intransitive": "広まる",
+    "transitive": "広める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "その店の評判がネットで{}。",
+      "en": "The shop's reputation spread online.",
+      "cue": "その店の評判が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "日本の料理を世界に{}。",
+      "en": "We'll spread Japanese cooking around the world.",
+      "cue": "日本の料理を"
+    }
+  },
+  {
+    "intransitive": "塞がる",
+    "transitive": "塞ぐ",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "事故で道が{}いる。",
+      "en": "The road is blocked because of an accident.",
+      "cue": "道が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "大きな音に驚いて、両手で耳を{}。",
+      "en": "Startled by the loud noise, I covered my ears with both hands.",
+      "cue": "耳を"
+    }
+  },
+  {
+    "intransitive": "儲かる",
+    "transitive": "儲ける",
+    "intransitiveSentence": {
+      "form": "dictionary",
+      "ja": "お金が{}からといって、楽な仕事とは限らない。",
+      "en": "Just because a job makes you money doesn't mean it's easy.",
+      "cue": "お金が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "彼は株で大金を{}。",
+      "en": "He made a fortune on stocks.",
+      "cue": "大金を"
+    }
+  },
+  {
+    "intransitive": "漏れる",
+    "transitive": "漏らす",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "水道管から水が{}いる。",
+      "en": "Water is leaking from the pipe.",
+      "cue": "水が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "秘密を友だちに{}。",
+      "en": "I let the secret slip to a friend.",
+      "cue": "秘密を"
+    }
+  },
+  {
+    "intransitive": "和らぐ",
+    "transitive": "和らげる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "春になって、寒さが{}。",
+      "en": "Spring came and the cold eased.",
+      "cue": "寒さが"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "この薬は痛みを{}。",
+      "en": "This medicine relieves pain.",
+      "cue": "痛みを"
+    }
+  },
+  {
+    "intransitive": "弱まる",
+    "transitive": "弱める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "夕方になって、雨が{}。",
+      "en": "The rain eased off toward evening.",
+      "cue": "雨が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "ガスの火を{}ください。",
+      "en": "Please turn down the gas.",
+      "cue": "ガスの火を"
+    }
+  },
+  {
+    "intransitive": "焦げる",
+    "transitive": "焦がす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "火が強くて、魚が{}。",
+      "en": "The heat was too high and the fish burned.",
+      "cue": "魚が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "うっかりして鍋を{}。",
+      "en": "I carelessly scorched the pot.",
+      "cue": "鍋を"
+    }
+  },
+  {
+    "intransitive": "濁る",
+    "transitive": "濁す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "大雨のあと、川が{}。",
+      "en": "The river turned muddy after the heavy rain.",
+      "cue": "川が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "答えにくい質問に、彼は言葉を{}。",
+      "en": "Faced with an awkward question, he gave a vague answer.",
+      "cue": "言葉を"
+    }
+  },
+  {
+    "intransitive": "挟まる",
+    "transitive": "挟む",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "電車のドアにかばんが{}。",
+      "en": "A bag got caught in the train door.",
+      "cue": "かばんが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "パンにハムを{}食べた。",
+      "en": "I put ham between bread and ate it.",
+      "cue": "ハムを"
+    }
+  },
+  {
+    "intransitive": "仕上がる",
+    "transitive": "仕上げる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "注文していた服が{}。",
+      "en": "The clothes I ordered are finished.",
+      "cue": "注文していた服が"
+    },
+    "transitiveSentence": {
+      "form": "masu",
+      "ja": "明日までにレポートを{}。",
+      "en": "I'll finish the report by tomorrow.",
+      "cue": "レポートを"
+    }
+  },
+  {
+    "intransitive": "代わる",
+    "transitive": "代える",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "来月から担当者が{}。",
+      "en": "The person in charge will change next month.",
+      "cue": "担当者が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "監督は後半に選手を{}。",
+      "en": "The coach substituted a player in the second half.",
+      "cue": "選手を"
+    }
+  },
+  {
+    "intransitive": "改まる",
+    "transitive": "改める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "新年になって、規則が{}。",
+      "en": "With the new year, the rules were revised.",
+      "cue": "規則が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "悪い習慣を{}ください。",
+      "en": "Please change your bad habits.",
+      "cue": "悪い習慣を"
+    }
+  },
+  {
+    "intransitive": "収まる",
+    "transitive": "収める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "荷物が全部箱に{}。",
+      "en": "All the things fit into the box.",
+      "cue": "荷物が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "書類をファイルに{}。",
+      "en": "I put the documents away in a file.",
+      "cue": "書類を"
+    }
+  },
+  {
+    "intransitive": "定まる",
+    "transitive": "定める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "ようやく会社の方針が{}。",
+      "en": "The company's policy was finally settled.",
+      "cue": "会社の方針が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "政府は新しいルールを{}。",
+      "en": "The government set new rules.",
+      "cue": "新しいルールを"
+    }
+  },
+  {
+    "intransitive": "覆る",
+    "transitive": "覆す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "最後の一点で試合の結果が{}。",
+      "en": "The final point overturned the result of the match.",
+      "cue": "試合の結果が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "その発見はこれまでの常識を{}。",
+      "en": "The discovery overturned what everyone had believed.",
+      "cue": "これまでの常識を"
+    }
+  },
+  {
+    "intransitive": "鎮まる",
+    "transitive": "鎮める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "しばらくして、会場の騒ぎが{}。",
+      "en": "After a while, the commotion in the hall died down.",
+      "cue": "会場の騒ぎが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "深呼吸をして気持ちを{}。",
+      "en": "I took a deep breath and calmed my feelings.",
+      "cue": "気持ちを"
+    }
+  },
+  {
+    "intransitive": "轟く",
+    "transitive": "轟かす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "遠くで雷が{}。",
+      "en": "Thunder rumbled in the distance.",
+      "cue": "雷が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "彼は世界に名を{}。",
+      "en": "He made his name known around the world.",
+      "cue": "名を"
+    }
+  },
+  {
+    "intransitive": "翻る",
+    "transitive": "翻す",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "屋根の上で旗が{}いる。",
+      "en": "A flag is fluttering on the roof.",
+      "cue": "旗が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "彼は直前になって意見を{}。",
+      "en": "He reversed his opinion at the last minute.",
+      "cue": "意見を"
+    }
+  },
+  {
+    "intransitive": "滅びる",
+    "transitive": "滅ぼす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "かつて栄えた王国が千年前に{}。",
+      "en": "A once-prosperous kingdom fell a thousand years ago.",
+      "cue": "かつて栄えた王国が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "その戦争が一つの国を{}。",
+      "en": "That war destroyed a nation.",
+      "cue": "一つの国を"
+    }
+  },
+  {
+    "intransitive": "纏まる",
+    "transitive": "纏める",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "長い話し合いで、ようやく意見が{}。",
+      "en": "After a long discussion, opinions finally came together.",
+      "cue": "意見が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "会議の内容を一枚に{}ください。",
+      "en": "Please summarize the meeting on one page.",
+      "cue": "会議の内容を"
+    }
+  },
+  {
+    "intransitive": "捕まる",
+    "transitive": "捕まえる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "逃げていた犯人が警察に{}。",
+      "en": "The fugitive was caught by the police.",
+      "cue": "逃げていた犯人が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "警察が駅で犯人を{}。",
+      "en": "The police caught the suspect at the station.",
+      "cue": "犯人を"
+    }
+  },
+  {
+    "intransitive": "合う",
+    "transitive": "合わせる",
+    "intransitiveSentence": {
+      "form": "masu",
+      "ja": "このふたが瓶の口にぴったり{}。",
+      "en": "This lid fits the opening of the jar perfectly.",
+      "cue": "このふたが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "カーテンの色を壁の色に{}。",
+      "en": "I matched the color of the curtains to the walls.",
+      "cue": "カーテンの色を"
+    }
+  },
+  {
+    "intransitive": "済む",
+    "transitive": "済ませる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "思ったより早く、引っ越しの手続きが{}。",
+      "en": "The moving paperwork was done sooner than expected.",
+      "cue": "引っ越しの手続きが"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "出発前に銀行で用事を{}。",
+      "en": "I took care of an errand at the bank before leaving.",
+      "cue": "用事を"
+    }
+  },
+  {
+    "intransitive": "遅れる",
+    "transitive": "遅らせる",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "大雪で電車が十分{}。",
+      "en": "The train was ten minutes late because of the heavy snow.",
+      "cue": "電車が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "全員が集まるまで、出発を{}。",
+      "en": "We delayed departure until everyone had arrived.",
+      "cue": "出発を"
+    }
+  },
+  {
+    "intransitive": "積もる",
+    "transitive": "積む",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "屋根に雪が厚く{}いる。",
+      "en": "A thick layer of snow has built up on the roof.",
+      "cue": "雪が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "壁ぎわに空き箱を高く{}。",
+      "en": "I stacked the empty boxes high against the wall.",
+      "cue": "空き箱を"
+    }
+  },
+  {
+    "intransitive": "潤う",
+    "transitive": "潤す",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "雨が降って、乾いていた畑の土が{}。",
+      "en": "Rain fell and moistened the dry soil in the field.",
+      "cue": "乾いていた畑の土が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "夕立が乾ききった畑の土を{}。",
+      "en": "An evening shower moistened the parched soil in the field.",
+      "cue": "乾ききった畑の土を"
+    }
+  },
+  {
+    "intransitive": "靡く",
+    "transitive": "靡かす",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "強い風で屋上の旗が{}いる。",
+      "en": "The flag on the roof is fluttering in the strong wind.",
+      "cue": "屋上の旗が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "彼女は長い髪を風に{}歩いた。",
+      "en": "She walked with her long hair streaming in the wind.",
+      "cue": "長い髪を"
+    }
+  },
+  {
+    "intransitive": "亡くなる",
+    "transitive": "亡くす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "父が九十歳で静かに{}。",
+      "en": "My father passed away peacefully at ninety.",
+      "cue": "父が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "彼女は子どものころに父を{}。",
+      "en": "She lost her father when she was a child.",
+      "cue": "父を"
+    }
+  },
+  {
+    "intransitive": "留まる",
+    "transitive": "留める",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "書類がクリップで{}いる。",
+      "en": "The documents are held together with a paper clip.",
+      "cue": "書類が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "書類をクリップで{}ください。",
+      "en": "Please clip the documents together.",
+      "cue": "書類を"
+    }
+  },
+  {
+    "intransitive": "膨らむ",
+    "transitive": "膨らます",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "暑さで風船が少し{}。",
+      "en": "The balloon expanded a little in the heat.",
+      "cue": "風船が"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "風船を{}ください。",
+      "en": "Please blow up the balloon.",
+      "cue": "風船を"
+    }
+  },
+  {
+    "intransitive": "寝る",
+    "transitive": "寝かせる",
+    "intransitiveSentence": {
+      "form": "te",
+      "ja": "遊び疲れた子どもがソファで{}しまった。",
+      "en": "Worn out from playing, the child fell asleep on the sofa.",
+      "cue": "遊び疲れた子どもが"
+    },
+    "transitiveSentence": {
+      "form": "te",
+      "ja": "母が赤ちゃんをベッドに{}から、部屋を出た。",
+      "en": "My mother put the baby to bed and then left the room.",
+      "cue": "赤ちゃんを"
+    }
+  },
+  {
+    "intransitive": "生きる",
+    "transitive": "生かす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "この金魚が十五年も{}。",
+      "en": "This goldfish lived for a full fifteen years.",
+      "cue": "この金魚が"
+    },
+    "transitiveSentence": {
+      "form": "dictionary",
+      "ja": "助けた魚を{}には、きれいな水が必要です。",
+      "en": "We need clean water to keep the fish we rescued alive.",
+      "cue": "助けた魚を"
+    }
+  },
+  {
+    "intransitive": "及ぶ",
+    "transitive": "及ぼす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "工事の影響が隣の町にまで{}。",
+      "en": "The effects of the construction reached as far as the next town.",
+      "cue": "工事の影響が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "長引く工事が周辺の店の売り上げに影響を{}。",
+      "en": "The prolonged construction affected sales at nearby shops.",
+      "cue": "影響を"
+    }
+  },
+  {
+    "intransitive": "尽きる",
+    "transitive": "尽くす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "長い旅の途中で食料が{}。",
+      "en": "Our food ran out partway through the long journey.",
+      "cue": "食料が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "彼は家族を捜すためにあらゆる手を{}。",
+      "en": "He tried every possible means to find his family.",
+      "cue": "あらゆる手を"
+    }
+  },
+  {
+    "intransitive": "揺らぐ",
+    "transitive": "揺るがす",
+    "intransitiveSentence": {
+      "form": "ta",
+      "ja": "不正が発覚し、会社への信頼が{}。",
+      "en": "Trust in the company wavered after the wrongdoing came to light.",
+      "cue": "会社への信頼が"
+    },
+    "transitiveSentence": {
+      "form": "ta",
+      "ja": "その不祥事が会社への信頼を{}。",
+      "en": "The scandal shook trust in the company.",
+      "cue": "会社への信頼を"
+    }
+  }
+]

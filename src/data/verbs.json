@@ -254,7 +254,7 @@
   "出る": {
     "reading": "でる",
     "group": "ichidan",
-    "translation": "to go out, to leave",
+    "translation": "to go out, to leave; to appear or develop (e.g. a fever)",
     "jlpt": "N5",
     "transitive": false,
     "examples": [
@@ -448,7 +448,7 @@
   "開ける": {
     "reading": "あける",
     "group": "ichidan",
-    "translation": "to open",
+    "translation": "to open (something)",
     "jlpt": "N5",
     "transitive": true,
     "examples": [
@@ -461,7 +461,7 @@
   "閉める": {
     "reading": "しめる",
     "group": "ichidan",
-    "translation": "to close",
+    "translation": "to close (something)",
     "jlpt": "N5",
     "transitive": true,
     "examples": [
@@ -807,7 +807,7 @@
     "reading": "かかる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to take (time or money); to hang, to be hung",
+    "translation": "to take (time or money); to be hung; to come in (a phone call)",
     "jlpt": "N5",
     "transitive": false,
     "examples": [
@@ -838,7 +838,7 @@
     "reading": "まがる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to turn",
+    "translation": "to turn; to bend, to be bent",
     "jlpt": "N5",
     "transitive": false,
     "examples": [
@@ -1435,7 +1435,7 @@
     "reading": "おこす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to wake someone up",
+    "translation": "to wake (someone) up; to cause (an accident, trouble)",
     "jlpt": "N4",
     "transitive": true,
     "examples": [
@@ -1742,7 +1742,7 @@
   "並べる": {
     "reading": "ならべる",
     "group": "ichidan",
-    "translation": "to line up (transitive)",
+    "translation": "to line up or arrange (things)",
     "jlpt": "N4",
     "transitive": true,
     "examples": [
@@ -2075,7 +2075,7 @@
     "reading": "なおす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to cure, to heal",
+    "translation": "to cure (an illness); to heal (an injury)",
     "jlpt": "N4",
     "transitive": true,
     "examples": [
@@ -2102,7 +2102,7 @@
   "温める": {
     "reading": "あたためる",
     "group": "ichidan",
-    "translation": "to warm up",
+    "translation": "to warm (something, especially food or the body)",
     "jlpt": "N4",
     "transitive": true,
     "examples": [
@@ -2569,7 +2569,7 @@
     "reading": "さす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to stab, to sting",
+    "translation": "to pierce (something); to stab or sting",
     "jlpt": "N3",
     "transitive": true,
     "examples": [
@@ -3436,7 +3436,7 @@
     "reading": "はずす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to remove, to miss",
+    "translation": "to remove (something attached or worn); to miss (a target)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "眼鏡を外す。", "en": "I take off my glasses." }]
@@ -3556,7 +3556,7 @@
     "reading": "ちる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to scatter, to fall (petals)",
+    "translation": "to scatter, to fall (e.g. petals)",
     "jlpt": "N3",
     "transitive": false,
     "examples": [{ "ja": "桜が散る。", "en": "Cherry blossoms scatter." }]
@@ -3582,7 +3582,7 @@
     "reading": "つむ",
     "group": "godan",
     "godanRow": "mu",
-    "translation": "to pile up, to accumulate",
+    "translation": "to stack or pile up (things); to accumulate (e.g. experience)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "経験を積む。", "en": "I gain experience." }]
@@ -3661,7 +3661,7 @@
     "reading": "かわかす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to dry something",
+    "translation": "to dry (something)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "髪を乾かす。", "en": "I dry my hair." }]
@@ -3923,7 +3923,7 @@
     "reading": "さく",
     "group": "godan",
     "godanRow": "ku",
-    "translation": "to tear, to split",
+    "translation": "to tear or split (something)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "布を裂く。", "en": "I tear the cloth." }]
@@ -4111,7 +4111,7 @@
   "傾ける": {
     "reading": "かたむける",
     "group": "ichidan",
-    "translation": "to tilt, to devote",
+    "translation": "to tilt (something); to devote (energy or attention)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "耳を傾ける。", "en": "I lend an ear." }]
@@ -4637,7 +4637,7 @@
   "外れる": {
     "reading": "はずれる",
     "group": "ichidan",
-    "translation": "to come off, to miss",
+    "translation": "to come off; to turn out wrong (a guess or forecast)",
     "jlpt": "N3",
     "transitive": false,
     "examples": [{ "ja": "ボタンが外れる。", "en": "The button comes off." }]
@@ -4673,7 +4673,7 @@
     "reading": "とかす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to melt, to dissolve",
+    "translation": "to melt or dissolve (something)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "バターを溶かす。", "en": "I melt the butter." }]
@@ -5434,7 +5434,7 @@
   "広げる": {
     "reading": "ひろげる",
     "group": "ichidan",
-    "translation": "to widen, to spread out",
+    "translation": "to spread out or widen (something)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "地図を広げる。", "en": "I spread out the map." }]
@@ -5478,7 +5478,7 @@
     "reading": "まわす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to turn, to rotate",
+    "translation": "to turn or rotate (something)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "ハンドルを回す。", "en": "I turn the steering wheel." }]
@@ -5570,7 +5570,7 @@
   "暖める": {
     "reading": "あたためる",
     "group": "ichidan",
-    "translation": "to warm up (something)",
+    "translation": "to heat (a room or the air)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "スープを暖める。", "en": "I warm up the soup." }]
@@ -5582,6 +5582,7 @@
     "translation": "to hurt, to ache",
     "jlpt": "N3",
     "transitive": false,
+    "excludeForms": ["potential"],
     "examples": [{ "ja": "頭が痛む。", "en": "My head aches." }]
   },
   "飢える": {
@@ -5893,7 +5894,7 @@
     "reading": "こがす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to burn, to scorch",
+    "translation": "to burn or scorch (something)",
     "jlpt": "N1",
     "transitive": true,
     "examples": [{ "ja": "パンを焦がす。", "en": "I burn the bread." }]
@@ -6492,7 +6493,7 @@
     "reading": "とおす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to let pass, to carry through",
+    "translation": "to let (someone or something) through; to thread; to carry through",
     "jlpt": "N4",
     "transitive": true,
     "examples": [{ "ja": "針に糸を通す。", "en": "I thread the needle." }]
@@ -7031,7 +7032,7 @@
   "和らげる": {
     "reading": "やわらげる",
     "group": "ichidan",
-    "translation": "to soften, to relieve",
+    "translation": "to soften or relieve (something)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "緊張を和らげる。", "en": "I relieve the tension." }]
@@ -7057,7 +7058,7 @@
     "reading": "もらす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to leak, to let slip",
+    "translation": "to let (something) leak; to let (a secret) slip",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "秘密を漏らす。", "en": "I let the secret slip." }]
@@ -7075,7 +7076,7 @@
     "reading": "はがす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to peel off, to strip",
+    "translation": "to peel or strip (something) off",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "シールを剥がす。", "en": "I peel off the sticker." }]
@@ -8221,7 +8222,7 @@
     "reading": "なる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to ring, to sound",
+    "translation": "to ring, to make a sound (a bell, phone, etc.)",
     "jlpt": "N5",
     "transitive": false,
     "examples": [{ "ja": "電話が鳴る。", "en": "The phone rings." }]
@@ -8239,7 +8240,7 @@
     "reading": "うごく",
     "group": "godan",
     "godanRow": "ku",
-    "translation": "to move",
+    "translation": "to move, to be in motion",
     "jlpt": "N5",
     "transitive": false,
     "examples": [{ "ja": "車が動く。", "en": "The car moves." }]
@@ -8365,7 +8366,7 @@
   "溶ける": {
     "reading": "とける",
     "group": "ichidan",
-    "translation": "to melt, to dissolve",
+    "translation": "to melt or dissolve (of a substance)",
     "jlpt": "N3",
     "transitive": false,
     "examples": [{ "ja": "氷が溶ける。", "en": "The ice melts." }]
@@ -9646,7 +9647,7 @@
   "緩める": {
     "reading": "ゆるめる",
     "group": "ichidan",
-    "translation": "to loosen, to relax",
+    "translation": "to loosen (something); to relax (tension)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [{ "ja": "ネクタイを緩める。", "en": "I loosen my tie." }]
@@ -10011,7 +10012,7 @@
   "嵌める": {
     "reading": "はめる",
     "group": "ichidan",
-    "translation": "to fit in, to set (a trap)",
+    "translation": "to fit (something) into place; to put on (a ring); to set (a trap)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "指輪を嵌める。", "en": "I put on a ring." }]
@@ -10707,7 +10708,7 @@
   "落ち着ける": {
     "reading": "おちつける",
     "group": "ichidan",
-    "translation": "to settle down, to calm (someone)",
+    "translation": "to calm (oneself, someone, or a feeling)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "気持ちを落ち着ける。", "en": "I calm my feelings." }]
@@ -10956,7 +10957,7 @@
   "早める": {
     "reading": "はやめる",
     "group": "ichidan",
-    "translation": "to hasten, to speed up",
+    "translation": "to move (something) to an earlier time; to speed up",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "足を早める。", "en": "I speed up my pace." }]
@@ -11049,7 +11050,7 @@
   "広める": {
     "reading": "ひろめる",
     "group": "ichidan",
-    "translation": "to spread, to propagate",
+    "translation": "to spread or promote (something)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [{ "ja": "知識を広める。", "en": "I spread knowledge." }]
@@ -11073,10 +11074,10 @@
   "収める": {
     "reading": "おさめる",
     "group": "ichidan",
-    "translation": "to obtain, to pay, to settle",
+    "translation": "to put away, to store; to obtain; to settle",
     "jlpt": "N2",
     "transitive": true,
-    "examples": [{ "ja": "税金を収める。", "en": "I pay taxes." }]
+    "examples": [{ "ja": "書類を引き出しに収める。", "en": "I put the documents away in a drawer." }]
   },
   "治める": {
     "reading": "おさめる",
@@ -11449,7 +11450,7 @@
     "reading": "つなぐ",
     "group": "godan",
     "godanRow": "gu",
-    "translation": "to connect, to tie",
+    "translation": "to join or connect (two things); to tie; to hold (hands)",
     "jlpt": "N4",
     "excludeForms": ["potential"],
     "transitive": true,
@@ -12725,7 +12726,7 @@
     "reading": "こぼす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to spill, to complain",
+    "translation": "to spill (something); to complain",
     "jlpt": "N4",
     "transitive": true,
     "examples": [{ "ja": "水をこぼす。", "en": "I spill water." }]
@@ -15798,7 +15799,7 @@
     "reading": "おる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to break, to fold, to snap",
+    "translation": "to snap or fold (something)",
     "jlpt": "N4",
     "transitive": true,
     "examples": [{ "ja": "木の枝を折る。", "en": "I break a tree branch." }]
@@ -15816,7 +15817,7 @@
     "reading": "わる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to break, to split, to divide",
+    "translation": "to crack, split, or divide (something)",
     "jlpt": "N4",
     "transitive": true,
     "examples": [{ "ja": "コップを割る。", "en": "I break a glass." }]
@@ -16393,7 +16394,7 @@
   "焼ける": {
     "reading": "やける",
     "group": "ichidan",
-    "translation": "to be baked, to be grilled; to burn",
+    "translation": "to be baked or grilled; to burn",
     "jlpt": "N4",
     "transitive": false,
     "examples": [
@@ -16419,7 +16420,7 @@
   "割れる": {
     "reading": "われる",
     "group": "ichidan",
-    "translation": "to break, to crack",
+    "translation": "to crack open or break apart",
     "jlpt": "N4",
     "transitive": false,
     "examples": [
@@ -16500,7 +16501,7 @@
     "reading": "さます",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to cool, to let cool",
+    "translation": "to cool (something) down; to let (something) cool",
     "jlpt": "N2",
     "transitive": true,
     "examples": [
@@ -16514,7 +16515,7 @@
     "reading": "さます",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to wake up (from sleep); to shake off (drowsiness, a stupor)",
+    "translation": "to shake off (sleepiness or a stupor); to wake oneself up",
     "jlpt": "N3",
     "transitive": true,
     "examples": [
@@ -16527,7 +16528,7 @@
   "覚める": {
     "reading": "さめる",
     "group": "ichidan",
-    "translation": "to wake up; to wake (from sleep)",
+    "translation": "to wake up; to wake (from sleep); to wear off (e.g. drowsiness or a stupor)",
     "jlpt": "N3",
     "transitive": false,
     "examples": [
@@ -16664,7 +16665,7 @@
   "当てる": {
     "reading": "あてる",
     "group": "ichidan",
-    "translation": "to hit; to guess correctly",
+    "translation": "to hit (a target); to guess correctly",
     "jlpt": "N3",
     "transitive": true,
     "examples": [
@@ -16829,7 +16830,7 @@
   "売れる": {
     "reading": "うれる",
     "group": "ichidan",
-    "translation": "to sell, to be sold",
+    "translation": "to be sold; to sell well",
     "jlpt": "N3",
     "transitive": false,
     "examples": [
@@ -17022,7 +17023,7 @@
     "reading": "かくす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to hide, to conceal",
+    "translation": "to hide or conceal (someone or something)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [
@@ -17035,7 +17036,7 @@
   "隠れる": {
     "reading": "かくれる",
     "group": "ichidan",
-    "translation": "to hide",
+    "translation": "to hide oneself; to go out of sight",
     "jlpt": "N3",
     "transitive": false,
     "examples": [
@@ -17048,7 +17049,7 @@
   "重ねる": {
     "reading": "かさねる",
     "group": "ichidan",
-    "translation": "to pile up; to repeat",
+    "translation": "to stack (things); to repeat",
     "jlpt": "N2",
     "transitive": true,
     "examples": [
@@ -17107,7 +17108,7 @@
     "reading": "かわる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to take the place of, to replace",
+    "translation": "to change over (of the person in a role); to take over from someone",
     "jlpt": "N2",
     "transitive": false,
     "examples": [
@@ -17425,7 +17426,7 @@
     "reading": "やぶる",
     "group": "godan",
     "godanRow": "ru",
-    "translation": "to tear; to break (a rule, a promise, or a record)",
+    "translation": "to tear or rip (something); to break (a rule, a promise, or a record)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [
@@ -17505,7 +17506,7 @@
   "分かれる": {
     "reading": "わかれる",
     "group": "ichidan",
-    "translation": "to split up; to divide into groups or branches",
+    "translation": "to split apart; to branch off or separate into groups",
     "jlpt": "N2",
     "transitive": false,
     "examples": [
@@ -17761,7 +17762,7 @@
     "reading": "ちらす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to scatter",
+    "translation": "to scatter or sprinkle (something)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [
@@ -17950,7 +17951,7 @@
   "流れる": {
     "reading": "ながれる",
     "group": "ichidan",
-    "translation": "to flow",
+    "translation": "to flow; to play or be heard (music, a broadcast)",
     "jlpt": "N3",
     "transitive": false,
     "examples": [
@@ -17964,7 +17965,7 @@
     "reading": "ならす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to ring, to sound",
+    "translation": "to ring or sound (something)",
     "jlpt": "N2",
     "transitive": true,
     "examples": [
@@ -18333,7 +18334,7 @@
   "裂ける": {
     "reading": "さける",
     "group": "ichidan",
-    "translation": "to split, to tear",
+    "translation": "to split open, to tear apart",
     "jlpt": "N1",
     "transitive": false,
     "examples": [
@@ -18504,7 +18505,7 @@
     "reading": "はやす",
     "group": "godan",
     "godanRow": "su",
-    "translation": "to grow (a beard)",
+    "translation": "to let or cause (hair, a beard, or plants) to grow",
     "jlpt": "N1",
     "transitive": true,
     "examples": [
@@ -18557,7 +18558,7 @@
   "移す": {
     "reading": "うつす",
     "group": "godan",
-    "translation": "to move, to transfer; to pass on (an infection)",
+    "translation": "to move or transfer (something or someone); to pass on (an infection)",
     "jlpt": "N3",
     "transitive": true,
     "examples": [
@@ -19001,6 +19002,431 @@
       {
         "ja": "ラジオで試合を放送する。",
         "en": "The game is broadcast on the radio."
+      }
+    ]
+  },
+  "曲げる": {
+    "reading": "まげる",
+    "group": "ichidan",
+    "translation": "to bend (something)",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "針金を指で曲げる。",
+        "en": "I bend the wire with my fingers."
+      }
+    ]
+  },
+  "詰まる": {
+    "reading": "つまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be clogged; to be packed (with)",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "台所の排水口がよく詰まる。",
+        "en": "The kitchen drain often gets clogged."
+      }
+    ]
+  },
+  "逃がす": {
+    "reading": "にがす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to set free, to let go; to let (a chance) slip",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "釣った魚を川に逃がす。",
+        "en": "I let the fish I caught go back into the river."
+      }
+    ]
+  },
+  "焦げる": {
+    "reading": "こげる",
+    "group": "ichidan",
+    "translation": "to burn, to get scorched",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "火が強すぎると魚が焦げる。",
+        "en": "If the heat is too high, the fish burns."
+      }
+    ]
+  },
+  "濁る": {
+    "reading": "にごる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to become muddy, to become cloudy",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "大雨のあとは川の水が濁る。",
+        "en": "After heavy rain, the river water turns muddy."
+      }
+    ]
+  },
+  "挟まる": {
+    "reading": "はさまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to get caught (between), to be stuck between",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "電車のドアにかばんが挟まる。",
+        "en": "A bag gets caught in the train door."
+      }
+    ]
+  },
+  "仕上がる": {
+    "reading": "しあがる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be finished, to be completed",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "注文した写真は明日の夕方に仕上がる。",
+        "en": "The photos I ordered will be ready tomorrow evening."
+      }
+    ]
+  },
+  "代える": {
+    "reading": "かえる",
+    "group": "ichidan",
+    "translation": "to replace, to substitute (one person or thing for another)",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "監督は後半に選手を代える。",
+        "en": "The coach substitutes players in the second half."
+      }
+    ]
+  },
+  "当てはめる": {
+    "reading": "あてはめる",
+    "group": "ichidan",
+    "translation": "to apply (a rule), to fit (to a case)",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "この公式を問題に当てはめる。",
+        "en": "I apply this formula to the problem."
+      }
+    ]
+  },
+  "改まる": {
+    "reading": "あらたまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be revised, to change; to become formal",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "来年の四月から規則が改まる。",
+        "en": "The rules will be revised from next April."
+      }
+    ]
+  },
+  "収まる": {
+    "reading": "おさまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to fit (into), to be put away",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "荷物が全部一つの箱に収まる。",
+        "en": "All the things fit into one box."
+      }
+    ]
+  },
+  "定まる": {
+    "reading": "さだまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be decided, to become settled",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "話し合いで新しい方針が定まる。",
+        "en": "The new policy is settled through discussion."
+      }
+    ]
+  },
+  "備わる": {
+    "reading": "そなわる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to be equipped (with); to be possessed of (a quality)",
+    "jlpt": "N1",
+    "transitive": false,
+    "excludeForms": ["potential", "passive", "causative", "causative_passive", "volitional", "imperative", "prohibitive"],
+    "unavailableForms": ["volitional", "imperative", "prohibitive"],
+    "examples": [
+      {
+        "ja": "経験を積めば、自然と判断力が備わる。",
+        "en": "With experience, good judgment comes naturally."
+      }
+    ]
+  },
+  "痛める": {
+    "reading": "いためる",
+    "group": "ichidan",
+    "translation": "to hurt or injure (a part of one's body)",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "重い荷物を持つと腰を痛める。",
+        "en": "Carrying heavy luggage hurts your back."
+      }
+    ]
+  },
+  "休める": {
+    "reading": "やすめる",
+    "group": "ichidan",
+    "translation": "to rest (one's body, eyes), to give a rest",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "週末はゆっくり体を休める。",
+        "en": "I rest my body well on the weekend."
+      }
+    ]
+  },
+  "返る": {
+    "reading": "かえる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to come back, to be returned; to come to (one's senses)",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "声をかけると、すぐに返事が返ってきた。",
+        "en": "When I called out, a reply came right back."
+      }
+    ]
+  },
+  "負かす": {
+    "reading": "まかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to defeat, to beat",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "弟はチェスでよく兄を負かす。",
+        "en": "The younger brother often beats the older one at chess."
+      }
+    ]
+  },
+  "揺らす": {
+    "reading": "ゆらす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to rock or shake (something); to make (something) sway",
+    "jlpt": "N3",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "風が木の枝を揺らす。",
+        "en": "The wind sways the tree branches."
+      }
+    ]
+  },
+  "脱げる": {
+    "reading": "ぬげる",
+    "group": "ichidan",
+    "translation": "to come off (shoes, clothes)",
+    "jlpt": "N5",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "このサンダルは走るとすぐ脱げる。",
+        "en": "These sandals come off as soon as I run."
+      }
+    ]
+  },
+  "枯らす": {
+    "reading": "からす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to let (a plant) wither, to kill (a plant)",
+    "jlpt": "N3",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "水をやり忘れて、また花を枯らす。",
+        "en": "I forget to water the flowers and let them die again."
+      }
+    ]
+  },
+  "表れる": {
+    "reading": "あらわれる",
+    "group": "ichidan",
+    "translation": "to become apparent; to show through (feelings, results)",
+    "jlpt": "N3",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "うれしい気持ちが顔に表れる。",
+        "en": "Happiness shows on one's face."
+      }
+    ]
+  },
+  "亡くす": {
+    "reading": "なくす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to lose (someone) to death",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "物語の冒頭で、主人公は母親を亡くす。",
+        "en": "At the beginning of the story, the main character loses their mother."
+      }
+    ]
+  },
+  "着せる": {
+    "reading": "きせる",
+    "group": "ichidan",
+    "translation": "to dress (someone); to put (clothes) on someone",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "子どもに暖かい上着を着せる。",
+        "en": "I put a warm jacket on my child."
+      }
+    ]
+  },
+  "留まる": {
+    "reading": "とまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to stay fastened in place; to perch",
+    "jlpt": "N2",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "書類がクリップで留まる。",
+        "en": "The papers stay together with a clip."
+      }
+    ]
+  },
+  "膨らます": {
+    "reading": "ふくらます",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to inflate (something); to puff out",
+    "jlpt": "N2",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "誕生日の飾りにする風船を膨らます。",
+        "en": "I blow up balloons to decorate for the birthday."
+      }
+    ]
+  },
+  "寝かせる": {
+    "reading": "ねかせる",
+    "group": "ichidan",
+    "translation": "to put (someone) to bed; to lay down; to let (dough) rest",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "赤ちゃんを静かな部屋で寝かせる。",
+        "en": "I put the baby to bed in a quiet room."
+      }
+    ]
+  },
+  "生かす": {
+    "reading": "いかす",
+    "group": "godan",
+    "godanRow": "su",
+    "translation": "to keep (someone or something) alive; to put to good use",
+    "jlpt": "N1",
+    "transitive": true,
+    "examples": [
+      {
+        "ja": "きれいな水で弱った魚を生かす。",
+        "en": "I keep the weakened fish alive with clean water."
+      }
+    ]
+  },
+  "及ぶ": {
+    "reading": "およぶ",
+    "group": "godan",
+    "godanRow": "bu",
+    "translation": "to reach, to extend; to amount to",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "工事の影響が周辺の店にも及ぶ。",
+        "en": "The effects of construction extend to nearby shops."
+      }
+    ]
+  },
+  "尽きる": {
+    "reading": "つきる",
+    "group": "ichidan",
+    "translation": "to run out; to be exhausted",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "無駄遣いを続ければ、貯金が尽きる。",
+        "en": "If I keep wasting money, my savings will run out."
+      }
+    ]
+  },
+  "揺らぐ": {
+    "reading": "ゆらぐ",
+    "group": "godan",
+    "godanRow": "gu",
+    "translation": "to sway; to waver or become unstable",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "ろうそくの炎が風で揺らぐ。",
+        "en": "The candle flame flickers in the wind."
+      }
+    ]
+  },
+  "休まる": {
+    "reading": "やすまる",
+    "group": "godan",
+    "godanRow": "ru",
+    "translation": "to feel rested; to be at ease",
+    "jlpt": "N1",
+    "transitive": false,
+    "examples": [
+      {
+        "ja": "静かな場所に来ると心が休まる。",
+        "en": "I feel at ease when I come somewhere quiet."
       }
     ]
   }

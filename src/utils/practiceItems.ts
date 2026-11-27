@@ -23,21 +23,25 @@ import {
   type AdjectiveCard,
   type AdjectiveQuestion,
 } from './adjectivePractice';
+import { generatePairQuestion, getPairHint, pairMemberLabel, type PairEntry, type PairMember, type PairQuestion } from './pairs';
 
 // One practice pool covering verbs and, when the learner has them on,
-// adjectives. With adjectives off, practice takes exactly the verb path it
-// always has.
+// adjectives and (quiz only) transitivity pairs. With both off, practice takes
+// exactly the verb path it always has.
 export interface PracticePool {
   verbEntries: [string, VerbData][];
   verbForms: ConjugationForm[];
   adjectiveEntries: AdjectiveEntry[];
   adjectiveForms: AdjectiveForm[];
   adjectivesEnabled: boolean;
+  pairEntries?: PairEntry[];
+  pairsEnabled?: boolean;
 }
 
 export type PracticeQuestion =
   | { kind: 'verb'; question: Question }
-  | { kind: 'adjective'; question: AdjectiveQuestion };
+  | { kind: 'adjective'; question: AdjectiveQuestion }
+  | { kind: 'pair'; question: PairQuestion };
 
 export type PracticeCard =
   | { kind: 'verb'; card: Flashcard }
@@ -47,17 +51,37 @@ function usesAdjectives(pool: PracticePool): boolean {
   return pool.adjectivesEnabled && pool.adjectiveForms.length > 0 && pool.adjectiveEntries.length > 0;
 }
 
+function countEligibleVerbs(pool: PracticePool): number {
+  let verbs = 0;
+  for (const [, data] of pool.verbEntries) {
+    if (quizzableForms(data, pool.verbForms).length > 0) verbs++;
+  }
+  return verbs;
+}
+
 // Draw a word class in proportion to how many eligible words each has.
 function drawAdjective(pool: PracticePool, random: () => number): boolean {
   if (!usesAdjectives(pool)) return false;
   const adjectives = countEligibleAdjectives(pool.adjectiveEntries, pool.adjectiveForms);
   if (adjectives === 0) return false;
-  let verbs = 0;
-  for (const [, data] of pool.verbEntries) {
-    if (quizzableForms(data, pool.verbForms).length > 0) verbs++;
-  }
+  const verbs = countEligibleVerbs(pool);
   if (verbs === 0) return true;
   return random() < adjectives / (adjectives + verbs);
+}
+
+function usesPairs(pool: PracticePool): boolean {
+  return pool.pairsEnabled === true && (pool.pairEntries?.length ?? 0) > 0;
+}
+
+// A pair is drawn in proportion too, counting as two words because it drills
+// two verbs. With pairs off this draws nothing, so practice is unchanged.
+function drawPair(pool: PracticePool, random: () => number): boolean {
+  if (!usesPairs(pool)) return false;
+  const pairs = 2 * pool.pairEntries!.length;
+  const adjectives = usesAdjectives(pool) ? countEligibleAdjectives(pool.adjectiveEntries, pool.adjectiveForms) : 0;
+  const others = countEligibleVerbs(pool) + adjectives;
+  if (others === 0) return true;
+  return random() < pairs / (pairs + others);
 }
 
 export function generatePracticeQuestion(
@@ -65,6 +89,10 @@ export function generatePracticeQuestion(
   getWeight: (key: string) => number,
   random: () => number = Math.random,
 ): PracticeQuestion | null {
+  if (drawPair(pool, random)) {
+    const question = generatePairQuestion(pool.pairEntries!, getWeight, random);
+    if (question) return { kind: 'pair', question };
+  }
   if (drawAdjective(pool, random)) {
     const question = generateAdjectiveQuestion(pool.adjectiveForms, getWeight, pool.adjectiveEntries, random);
     if (question) return { kind: 'adjective', question };
@@ -74,6 +102,10 @@ export function generatePracticeQuestion(
   if (usesAdjectives(pool)) {
     const question = generateAdjectiveQuestion(pool.adjectiveForms, getWeight, pool.adjectiveEntries, random);
     if (question) return { kind: 'adjective', question };
+  }
+  if (usesPairs(pool)) {
+    const question = generatePairQuestion(pool.pairEntries!, getWeight, random);
+    if (question) return { kind: 'pair', question };
   }
   return null;
 }
@@ -111,11 +143,47 @@ export interface QuestionView {
   alsoCorrect: string[];
   options: string[];
   hint: string;
-  /** Spaced-repetition key: the bare headword for verbs, adj:<headword> otherwise. */
+  /** Spaced-repetition key: the bare headword for verbs, adj:<headword> or pair:<intr>/<tr> otherwise. */
   srKey: string;
+  /** Present for a transitivity pair: the sentence replaces the headword. */
+  pairSentence?: {
+    prompt: string;
+    filled: string;
+    english: string;
+    intransitive: string;
+    transitive: string;
+  };
+}
+
+export const PAIR_FORM_LABEL: FormLabel = { ja: '自動詞・他動詞', en: 'Transitive or intransitive?' };
+
+function describePairMember(member: PairMember): string {
+  const word = member.verb === member.reading ? member.verb : `${member.verb}（${member.reading}）`;
+  return `${word} (${pairMemberLabel(member)}) ${member.translation}`;
 }
 
 export function describeQuestion(item: PracticeQuestion, selectedAnswer?: string): QuestionView {
+  if (item.kind === 'pair') {
+    const q = item.question;
+    return {
+      headword: q.prompt,
+      reading: '',
+      translation: '',
+      formLabel: PAIR_FORM_LABEL,
+      correctAnswer: q.correctAnswer,
+      alsoCorrect: [],
+      options: q.options,
+      hint: getPairHint(q),
+      srKey: q.key,
+      pairSentence: {
+        prompt: q.prompt,
+        filled: q.filled,
+        english: q.english,
+        intransitive: describePairMember(q.intransitive),
+        transitive: describePairMember(q.transitive),
+      },
+    };
+  }
   if (item.kind === 'verb') {
     const q = item.question;
     return {

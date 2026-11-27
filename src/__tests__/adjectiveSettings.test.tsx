@@ -93,6 +93,9 @@ describe('adjective practice settings', () => {
       adjectivesEnabled: true,
       activeAdjectiveForms: beginnerAdjectiveForms,
       adjectiveNoticeDismissed: true,
+      // Settings that predate pairs keep them off, with their note pending.
+      pairsEnabled: false,
+      pairNoticeDismissed: false,
     });
   });
 
@@ -115,6 +118,8 @@ describe('adjective practice settings', () => {
       adjectivesEnabled: true,
       activeAdjectiveForms: beginnerAdjectiveForms,
       adjectiveNoticeDismissed: true,
+      pairsEnabled: true,
+      pairNoticeDismissed: true,
     };
     expect(usePracticeSettingsStore.getState()).toMatchObject(defaults);
     expect(await stored()).toEqual(defaults);

@@ -1,23 +1,28 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import verbs from '../data/verbs.json';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useFavoritesStore } from '../store/favoritesStore';
+import { useHistoryStore } from '../store/historyStore';
 import { availableForms, conjugate, FORM_GROUPS, VerbData } from '../utils/conjugate';
 import { speak, stopSpeech } from '../utils/speech';
+import { pairMemberLabel, partnersOf } from '../utils/pairs';
 import type { SearchStackParamList } from '../types/navigation';
 
 export default function ConjugationScreen() {
   const colors = useColors();
   const route = useRoute<RouteProp<SearchStackParamList, 'Conjugation'>>();
+  const navigation = useNavigation<NativeStackNavigationProp<SearchStackParamList, 'Conjugation'>>();
   const verb = route.params.verb;
   const highlightForm = route.params.highlightForm;
   const verbData = (verbs as Record<string, VerbData>)[verb];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();
+  const addToHistory = useHistoryStore(state => state.addToHistory);
   const scrollRef = useRef<ScrollView>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
 
@@ -82,6 +87,7 @@ export default function ConjugationScreen() {
     ? { bg: colors.transitiveBg, text: colors.transitiveText, label: '他動詞' }
     : { bg: colors.intransitiveBg, text: colors.intransitiveText, label: '自動詞' };
   const favorited = isFavorite(verb);
+  const partners = partnersOf(verb);
   const toggleGroup = (title: string) => {
     setCollapsedGroups(current => ({ ...current, [title]: !current[title] }));
   };
@@ -132,6 +138,29 @@ export default function ConjugationScreen() {
             </View>
           )}
         </View>
+        {/* Its transitivity partner(s): 開く ⇄ 開ける */}
+        {partners.map(partner => (
+          <TouchableOpacity
+            key={partner.verb}
+            style={styles.partnerRow}
+            onPress={() => {
+              addToHistory(partner.verb);
+              navigation.push('Conjugation', { verb: partner.verb });
+            }}
+            accessibilityRole="button"
+            accessibilityLabel={`Open ${partner.verb}, ${partner.reading}, ${partner.translation}`}
+          >
+            <Ionicons name="swap-horizontal" size={16} color={colors.primaryText} />
+            <View style={styles.partnerCopy}>
+              <Text style={[styles.partnerText, { color: colors.primaryText }]}>
+                {pairMemberLabel(partner)}: {partner.verb}
+                {partner.reading !== partner.verb ? `（${partner.reading}）` : ''}
+              </Text>
+              <Text style={[styles.partnerGloss, { color: colors.textSecondary }]}>{partner.translation}</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
+          </TouchableOpacity>
+        ))}
       </View>
 
       {/* Conjugation Groups */}
@@ -263,6 +292,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: spacing.sm,
   },
+  partnerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginTop: spacing.sm,
+    minHeight: 44,
+    paddingVertical: spacing.xs,
+  },
+  partnerCopy: { flex: 1 },
+  partnerText: {
+    fontSize: fonts.sizes.sm,
+    fontWeight: fonts.weights.semibold,
+  },
+  partnerGloss: { fontSize: fonts.sizes.sm },
   groupTitle: {
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,
