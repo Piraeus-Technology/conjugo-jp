@@ -11,6 +11,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import HomeScreen from './src/screens/HomeScreen';
 import ConjugationScreen from './src/screens/ConjugationScreen';
+import AdjectiveScreen from './src/screens/AdjectiveScreen';
 import FeedbackScreen from './src/screens/FeedbackScreen';
 import FlashcardScreen from './src/screens/FlashcardScreen';
 import QuizScreen from './src/screens/QuizScreen';
@@ -67,6 +68,13 @@ function SearchStackScreen() {
         component={ConjugationScreen}
         options={({ route }: { route: RouteProp<SearchStackParamList, 'Conjugation'> }) => ({
           title: route.params.verb,
+        })}
+      />
+      <SearchStack.Screen
+        name="Adjective"
+        component={AdjectiveScreen}
+        options={({ route }: { route: RouteProp<SearchStackParamList, 'Adjective'> }) => ({
+          title: route.params.word,
         })}
       />
     </SearchStack.Navigator>

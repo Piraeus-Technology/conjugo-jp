@@ -2,12 +2,20 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ALL_FORMS, FORM_GROUPS } from '../utils/conjugate';
 import type { ConjugationForm, JLPTLevel } from '../utils/conjugate';
+import { ADJECTIVE_FORM_GROUPS } from '../utils/adjectives';
+import type { AdjectiveForm } from '../utils/adjectives';
 import { safeSetItem } from '../utils/safeStorage';
 import { createStoreQueue } from '../utils/storeQueue';
 
-interface PracticeSettingsStore {
+interface PracticeSettingsSnapshot {
   activeForms: ConjugationForm[];
   activeLevels: JLPTLevel[];
+  adjectivesEnabled: boolean;
+  activeAdjectiveForms: AdjectiveForm[];
+  adjectiveNoticeDismissed: boolean;
+}
+
+interface PracticeSettingsStore extends PracticeSettingsSnapshot {
   loaded: boolean;
   loadError: boolean;
   loadPracticeSettings: () => Promise<void>;
@@ -15,6 +23,10 @@ interface PracticeSettingsStore {
   setActiveLevels: (levels: JLPTLevel[]) => Promise<void>;
   toggleForm: (form: ConjugationForm) => Promise<void>;
   toggleLevel: (level: JLPTLevel) => Promise<void>;
+  setAdjectivesEnabled: (enabled: boolean) => Promise<void>;
+  setActiveAdjectiveForms: (forms: AdjectiveForm[]) => Promise<void>;
+  toggleAdjectiveForm: (form: AdjectiveForm) => Promise<void>;
+  dismissAdjectiveNotice: () => Promise<void>;
   resetPracticeSettings: () => Promise<boolean>;
 }
 
@@ -22,10 +34,14 @@ interface PracticeSettingsStore {
 const allForms: ConjugationForm[] = Array.from(new Set(
   FORM_GROUPS.flatMap(group => group.forms).filter(form => form !== 'dictionary'),
 ));
+const allAdjectiveForms: AdjectiveForm[] = Array.from(new Set(
+  ADJECTIVE_FORM_GROUPS.flatMap(group => group.forms),
+));
 
 const allLevels: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
 export const beginnerForms: ConjugationForm[] = ['masu', 'masu_negative', 'masu_past', 'te', 'ta', 'nai'];
 export const beginnerLevels: JLPTLevel[] = ['N5', 'N4'];
+export const beginnerAdjectiveForms: AdjectiveForm[] = ['polite', 'negative', 'polite_negative', 'past', 'polite_past', 'te'];
 
 // These keys are written by 1.4.0 even when Practice Settings was never
 // changed. App boot resolves this before navigation can create new activity.
@@ -52,175 +68,174 @@ function safeLevels(levels: JLPTLevel[]): JLPTLevel[] {
   return valid.length > 0 ? valid : ['N5'];
 }
 
-export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get) => ({
-  activeForms: [...beginnerForms],
-  activeLevels: [...beginnerLevels],
-  loaded: false,
-  loadError: false,
+function safeAdjectiveForms(forms: AdjectiveForm[]): AdjectiveForm[] {
+  const valid = parseStoredSubset(forms, allAdjectiveForms);
+  return valid.length > 0 ? valid : [...beginnerAdjectiveForms];
+}
 
-  loadPracticeSettings: async () => {
-    if (get().loaded) return;
-    set({ loadError: false });
-    return queue.runLoad(async () => {
+// A new install starts with adjectives on and never sees the "new" note.
+// Someone who already used the app keeps exactly the practice they had:
+// adjectives stay off until they turn them on, and the note tells them.
+function newInstallDefaults(): PracticeSettingsSnapshot {
+  return {
+    activeForms: [...beginnerForms],
+    activeLevels: [...beginnerLevels],
+    adjectivesEnabled: true,
+    activeAdjectiveForms: [...beginnerAdjectiveForms],
+    adjectiveNoticeDismissed: true,
+  };
+}
+
+function snapshot(state: PracticeSettingsSnapshot): PracticeSettingsSnapshot {
+  return {
+    activeForms: state.activeForms,
+    activeLevels: state.activeLevels,
+    adjectivesEnabled: state.adjectivesEnabled,
+    activeAdjectiveForms: state.activeAdjectiveForms,
+    adjectiveNoticeDismissed: state.adjectiveNoticeDismissed,
+  };
+}
+
+export const usePracticeSettingsStore = create<PracticeSettingsStore>((set, get) => {
+  // Persist the whole snapshot with one change applied, then publish it. The
+  // change is computed inside the queue, from the state the previous queued
+  // write left, so two quick toggles never overwrite each other.
+  type Change = Partial<PracticeSettingsSnapshot> | null;
+  const persist = async (
+    change: Change | ((state: PracticeSettingsSnapshot) => Change),
+    action: string,
+  ) => {
+    if (!get().loaded) {
+      await get().loadPracticeSettings();
+    }
+    if (!get().loaded) {
+      console.warn(`Skipping practice ${action}: store never loaded`);
+      return;
+    }
+    return queue.enqueue(async () => {
+      const current = snapshot(get());
+      const resolved = typeof change === 'function' ? change(current) : change;
+      if (!resolved) return;
+      const next = { ...current, ...resolved };
+      if (!(await safeSetItem('practiceSettings', JSON.stringify(next)))) {
+        console.warn('Practice settings not persisted');
+        return;
+      }
+      set(resolved);
+    });
+  };
+
+  // Toggle one member of a list setting, never emptying it.
+  function toggled<T>(list: T[], item: T): T[] | null {
+    if (list.includes(item)) return list.length <= 1 ? null : list.filter(x => x !== item);
+    return [...list, item];
+  }
+
+  return {
+    ...newInstallDefaults(),
+    loaded: false,
+    loadError: false,
+
+    loadPracticeSettings: async () => {
       if (get().loaded) return;
-      try {
-        const stored = await AsyncStorage.getItem('practiceSettings');
-        if (stored === null) {
-          const legacyValues = await Promise.all(legacyKeys.map(key => AsyncStorage.getItem(key)));
-          const returning = legacyValues.some(value => value !== null);
-          const initial = {
-            activeForms: [...(returning ? allForms : beginnerForms)],
-            activeLevels: [...(returning ? allLevels : beginnerLevels)],
-          };
-          if (!(await safeSetItem('practiceSettings', JSON.stringify(initial)))) {
-            set({ loadError: true });
+      set({ loadError: false });
+      return queue.runLoad(async () => {
+        if (get().loaded) return;
+        try {
+          const stored = await AsyncStorage.getItem('practiceSettings');
+          if (stored === null) {
+            const legacyValues = await Promise.all(legacyKeys.map(key => AsyncStorage.getItem(key)));
+            const returning = legacyValues.some(value => value !== null);
+            const initial: PracticeSettingsSnapshot = returning
+              ? {
+                activeForms: [...allForms],
+                activeLevels: [...allLevels],
+                adjectivesEnabled: false,
+                activeAdjectiveForms: [...beginnerAdjectiveForms],
+                adjectiveNoticeDismissed: false,
+              }
+              : newInstallDefaults();
+            if (!(await safeSetItem('practiceSettings', JSON.stringify(initial)))) {
+              set({ loadError: true });
+              return;
+            }
+            set({ ...initial, loaded: true, loadError: false });
             return;
           }
-          set({ ...initial, loaded: true, loadError: false });
-          return;
+          const parsed = stored ? JSON.parse(stored) : {};
+          const forms = parseStoredSubset(parsed?.activeForms, validForms);
+          const levels = parseStoredSubset(parsed?.activeLevels, allLevels);
+          const adjectiveForms = parseStoredSubset(parsed?.activeAdjectiveForms, allAdjectiveForms);
+          set({
+            activeForms: forms.length > 0 ? forms : [...allForms],
+            activeLevels: levels.length > 0 ? levels : [...allLevels],
+            // Settings saved before adjectives existed have none of these
+            // fields: that learner keeps verbs only and sees the note.
+            adjectivesEnabled: parsed?.adjectivesEnabled === true,
+            activeAdjectiveForms: adjectiveForms.length > 0 ? adjectiveForms : [...beginnerAdjectiveForms],
+            adjectiveNoticeDismissed: parsed?.adjectiveNoticeDismissed === true,
+            loaded: true,
+            loadError: false,
+          });
+        } catch (e) {
+          console.warn('Failed to load practice settings:', e);
+          set({ loadError: true });
         }
-        const parsed = stored ? JSON.parse(stored) : {};
-        const forms = parseStoredSubset(parsed?.activeForms, validForms);
-        const levels = parseStoredSubset(parsed?.activeLevels, allLevels);
-        set({
-          activeForms: forms.length > 0 ? forms : [...allForms],
-          activeLevels: levels.length > 0 ? levels : [...allLevels],
-          loaded: true,
-          loadError: false,
-        });
-      } catch (e) {
-        console.warn('Failed to load practice settings:', e);
-        set({ loadError: true });
-      }
-    });
-  },
+      });
+    },
 
-  resetPracticeSettings: async () => {
-    let reset = false;
-    await queue.enqueue(async () => {
-      const defaults = { activeForms: [...beginnerForms], activeLevels: [...beginnerLevels] };
-      if (!(await safeSetItem('practiceSettings', JSON.stringify(defaults)))) return;
-      set({ ...defaults, loaded: true, loadError: false });
-      reset = true;
-    });
-    return reset;
-  },
+    resetPracticeSettings: async () => {
+      let reset = false;
+      await queue.enqueue(async () => {
+        const defaults = newInstallDefaults();
+        if (!(await safeSetItem('practiceSettings', JSON.stringify(defaults)))) return;
+        set({ ...defaults, loaded: true, loadError: false });
+        reset = true;
+      });
+      return reset;
+    },
 
-  setActiveForms: async (forms) => {
-    if (!get().loaded) {
-      await get().loadPracticeSettings();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping practice form update: store never loaded');
-      return;
-    }
-    return queue.enqueue(async () => {
-      const nextForms = safeForms(forms);
-      const nextLevels = get().activeLevels;
-      const persisted = await safeSetItem(
-        'practiceSettings',
-        JSON.stringify({ activeForms: nextForms, activeLevels: nextLevels }),
-      );
-      if (!persisted) {
-        console.warn('Practice settings not persisted');
-        return;
-      }
-      set({ activeForms: nextForms });
-    });
-  },
+    setActiveForms: (forms) => persist({ activeForms: safeForms(forms) }, 'form update'),
 
-  setActiveLevels: async (levels) => {
-    if (!get().loaded) {
-      await get().loadPracticeSettings();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping practice level update: store never loaded');
-      return;
-    }
-    return queue.enqueue(async () => {
-      const nextForms = get().activeForms;
-      const nextLevels = safeLevels(levels);
-      const persisted = await safeSetItem(
-        'practiceSettings',
-        JSON.stringify({ activeForms: nextForms, activeLevels: nextLevels }),
-      );
-      if (!persisted) {
-        console.warn('Practice settings not persisted');
-        return;
-      }
-      set({ activeLevels: nextLevels });
-    });
-  },
+    setActiveLevels: (levels) => persist({ activeLevels: safeLevels(levels) }, 'level update'),
 
-  toggleForm: async (form) => {
-    if (!get().loaded) {
-      await get().loadPracticeSettings();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping practice form toggle: store never loaded');
-      return;
-    }
-    return queue.enqueue(async () => {
-      const current = get().activeForms;
-      const levels = get().activeLevels;
-      let updated: ConjugationForm[];
-      if (current.includes(form)) {
-        if (current.length <= 1) return;
-        updated = current.filter(f => f !== form);
-      } else {
-        updated = [...current, form];
-      }
-      const persisted = await safeSetItem(
-        'practiceSettings',
-        JSON.stringify({ activeForms: updated, activeLevels: levels }),
-      );
-      if (!persisted) {
-        console.warn('Practice settings not persisted');
-        return;
-      }
-      set({ activeForms: updated });
-    });
-  },
+    toggleForm: (form) => persist(state => {
+      const updated = toggled(state.activeForms, form);
+      return updated && { activeForms: updated };
+    }, 'form toggle'),
 
-  toggleLevel: async (level) => {
-    if (!get().loaded) {
-      await get().loadPracticeSettings();
-    }
-    if (!get().loaded) {
-      console.warn('Skipping practice level toggle: store never loaded');
-      return;
-    }
-    return queue.enqueue(async () => {
-      const current = get().activeLevels;
-      const forms = get().activeForms;
-      let updated: JLPTLevel[];
-      if (current.includes(level)) {
-        if (current.length <= 1) return;
-        updated = current.filter(l => l !== level);
-      } else {
-        updated = [...current, level];
-      }
-      const persisted = await safeSetItem(
-        'practiceSettings',
-        JSON.stringify({ activeForms: forms, activeLevels: updated }),
-      );
-      if (!persisted) {
-        console.warn('Practice settings not persisted');
-        return;
-      }
-      set({ activeLevels: updated });
-    });
-  },
-}));
+    toggleLevel: (level) => persist(state => {
+      const updated = toggled(state.activeLevels, level);
+      return updated && { activeLevels: updated };
+    }, 'level toggle'),
+
+    // Turning adjectives on also retires the "new" note.
+    setAdjectivesEnabled: (enabled) => persist(
+      enabled ? { adjectivesEnabled: true, adjectiveNoticeDismissed: true } : { adjectivesEnabled: false },
+      'adjective toggle',
+    ),
+
+    setActiveAdjectiveForms: (forms) => persist(
+      { activeAdjectiveForms: safeAdjectiveForms(forms) },
+      'adjective form update',
+    ),
+
+    toggleAdjectiveForm: (form) => persist(state => {
+      const updated = toggled(state.activeAdjectiveForms, form);
+      return updated && { activeAdjectiveForms: updated };
+    }, 'adjective form toggle'),
+
+    dismissAdjectiveNotice: () => persist({ adjectiveNoticeDismissed: true }, 'notice dismissal'),
+  };
+});
 
 export function __resetPracticeSettingsStoreForTests() {
   queue.reset();
   usePracticeSettingsStore.setState({
-    activeForms: [...beginnerForms],
-    activeLevels: [...beginnerLevels],
+    ...newInstallDefaults(),
     loaded: false,
     loadError: false,
   });
 }
 
-export { allForms, allLevels };
+export { allForms, allLevels, allAdjectiveForms };

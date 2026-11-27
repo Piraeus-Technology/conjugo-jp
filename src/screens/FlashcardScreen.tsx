@@ -15,13 +15,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import verbs from '../data/verbs.json';
+import { VerbData, JLPTLevel } from '../utils/conjugate';
+import { adjectiveList } from '../utils/adjectives';
 import {
-  FORM_LABELS,
-  VerbData,
-  JLPTLevel,
-} from '../utils/conjugate';
-import { getExampleSentence } from '../utils/formExamples';
-import { generateFlashcard, type Flashcard } from '../utils/flashcardCard';
+  describeCard,
+  generatePracticeCard,
+  type PracticeCard,
+  type PracticePool,
+} from '../utils/practiceItems';
 import { speak, stopSpeech } from '../utils/speech';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
@@ -42,6 +43,8 @@ export default function FlashcardScreen() {
   const {
     activeForms,
     activeLevels,
+    adjectivesEnabled,
+    activeAdjectiveForms,
     loaded: settingsLoaded,
     loadError: settingsLoadError,
     loadPracticeSettings,
@@ -56,11 +59,15 @@ export default function FlashcardScreen() {
     recordResult,
   } = useSpacedRepStore();
   const { autoTTS } = useThemeStore();
-  const filteredEntries = useMemo(() =>
-    allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
-    [activeLevels]
-  );
-  const [card, setCard] = useState<Flashcard | null>(null);
+  const pool = useMemo((): PracticePool => ({
+    verbEntries: allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
+    verbForms: activeForms,
+    adjectiveEntries: adjectiveList.filter(([, d]) => activeLevels.includes(d.jlpt)),
+    adjectiveForms: activeAdjectiveForms,
+    adjectivesEnabled,
+  }), [activeLevels, activeForms, activeAdjectiveForms, adjectivesEnabled]);
+  const [card, setCard] = useState<PracticeCard | null>(null);
+  const view = useMemo(() => (card ? describeCard(card) : null), [card]);
   const [flipped, setFlipped] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const isAnimating = useRef(false);
@@ -116,9 +123,9 @@ export default function FlashcardScreen() {
       isAnimating.current = false;
       hasGradedCard.current = false;
       setFlipped(false);
-      setCard(generateFlashcard(filteredEntries, activeForms, getWeight));
+      setCard(generatePracticeCard(pool, getWeight));
     });
-  }, [settingsLoaded, weightsLoaded, activeForms, filteredEntries, flipAnim, getWeight]);
+  }, [settingsLoaded, weightsLoaded, pool, flipAnim, getWeight]);
 
   const flipToFront = () => {
     isAnimating.current = true;
@@ -132,7 +139,7 @@ export default function FlashcardScreen() {
         hasGradedCard.current = false;
         return;
       }
-      setCard(generateFlashcard(filteredEntries, activeForms, getWeight));
+      setCard(generatePracticeCard(pool, getWeight));
       setFlipped(false);
       isAnimating.current = false;
       hasGradedCard.current = false;
@@ -140,7 +147,7 @@ export default function FlashcardScreen() {
   };
 
   const flip = () => {
-    if (!card || isAnimating.current || flipped) return;
+    if (!view || isAnimating.current || flipped) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setFlipped(true);
     isAnimating.current = true;
@@ -156,7 +163,7 @@ export default function FlashcardScreen() {
         speechGate.current.focused &&
         speechGate.current.appState === 'active'
       ) {
-        speak(card.answer);
+        speak(view.answer);
       }
     });
   };
@@ -164,26 +171,26 @@ export default function FlashcardScreen() {
   const handleGotIt = () => {
     // Synchronous ref guard: flipped is stale state during the flip-back
     // animation, so a rapid double-tap would otherwise record the card twice.
-    if (!card || !flipped || hasGradedCard.current) return;
+    if (!view || !flipped || hasGradedCard.current) return;
     hasGradedCard.current = true;
     stopSpeech();
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     recordProgress(true);
     recordReview(true).catch(() => {});
-    recordResult(card.verb, true).catch(() => {});
+    recordResult(view.srKey, true).catch(() => {});
     flipToFront();
   };
 
   const handleMissed = () => {
-    if (!card || !flipped || hasGradedCard.current) return;
+    if (!view || !flipped || hasGradedCard.current) return;
     hasGradedCard.current = true;
     stopSpeech();
     setFlipped(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     recordProgress(false);
     recordReview(false).catch(() => {});
-    recordResult(card.verb, false).catch(() => {});
+    recordResult(view.srKey, false).catch(() => {});
     flipToFront();
   };
 
@@ -239,14 +246,15 @@ export default function FlashcardScreen() {
     </View>
   );
 
-  if (!card) return (
+  if (!view) return (
     <View style={[styles.container, { backgroundColor: colors.bg, justifyContent: 'center', alignItems: 'center' }]}>
-      <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>No matching verbs</Text>
+      <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>No matching words</Text>
     </View>
   );
 
-  const formLabel = FORM_LABELS[card.form];
-  const exampleSentence = getExampleSentence(card.verb, card.form);
+  const formLabel = view.formLabel;
+  const exampleSentence = view.example;
+  const alsoCorrect = view.alsoCorrect.length > 0 ? `Also correct: ${view.alsoCorrect.join('、')}` : null;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>
@@ -294,7 +302,7 @@ export default function FlashcardScreen() {
               onPress={flip}
               activeOpacity={0.95}
               accessibilityRole="button"
-              accessibilityLabel={`Tap to reveal ${formLabel.en} (${formLabel.ja}) form of ${card.verb}, ${card.reading}, ${card.translation}.${formLabel.meaning ? ` Meaning: ${formLabel.meaning}` : ''}`}
+              accessibilityLabel={`Tap to reveal ${formLabel.en} (${formLabel.ja}) form of ${view.headword}, ${view.reading}, ${view.translation}.${formLabel.meaning ? ` Meaning: ${formLabel.meaning}` : ''}`}
               accessibilityHint="Flips the card to reveal the answer"
             >
               <Text style={[styles.formLabel, { color: colors.textSecondary }]}>
@@ -310,13 +318,13 @@ export default function FlashcardScreen() {
                 numberOfLines={1}
                 adjustsFontSizeToFit
               >
-                {card.verb}
+                {view.headword}
               </Text>
               <Text style={[styles.readingText, { color: colors.textSecondary }]}>
-                {card.reading}
+                {view.reading}
               </Text>
               <Text style={[styles.translationText, { color: colors.textSecondary }]}>
-                {card.translation}
+                {view.translation}
               </Text>
               <Text style={[styles.tapHint, { color: colors.textMuted }]}>
                 Tap to reveal
@@ -348,7 +356,7 @@ export default function FlashcardScreen() {
               <View
                 style={styles.backContent}
                 accessible
-                accessibilityLabel={`${formLabel.ja}, ${formLabel.en}${formLabel.meaning ? `, ${formLabel.meaning}` : ''}. Answer: ${card.answer}. ${card.verb}, ${card.translation}${exampleSentence ? `. Example: ${exampleSentence}` : ''}`}
+                accessibilityLabel={`${formLabel.ja}, ${formLabel.en}${formLabel.meaning ? `, ${formLabel.meaning}` : ''}. Answer: ${view.answer}.${alsoCorrect ? ` ${alsoCorrect}.` : ''} ${view.headword}, ${view.translation}${exampleSentence ? `. Example: ${exampleSentence}` : ''}`}
                 accessibilityHint="Use Got it or Missed to grade this card"
               >
                 <Text style={[styles.formLabel, { color: colors.textSecondary }]}>
@@ -364,13 +372,18 @@ export default function FlashcardScreen() {
                   numberOfLines={1}
                   adjustsFontSizeToFit
                 >
-                  {card.answer}
+                  {view.answer}
                 </Text>
+                {alsoCorrect && (
+                  <Text style={[styles.alsoCorrectText, { color: colors.textSecondary }]}>
+                    {alsoCorrect}
+                  </Text>
+                )}
                 <Text style={[styles.contextText, { color: colors.textSecondary }]}>
-                  {card.verb}
+                  {view.headword}
                 </Text>
                 <Text style={[styles.answerTranslation, { color: colors.textMuted }]}>
-                  {card.translation}
+                  {view.translation}
                 </Text>
                 {exampleSentence && (
                   <>
@@ -387,10 +400,10 @@ export default function FlashcardScreen() {
               <TouchableOpacity
                 style={[styles.speakButton, { backgroundColor: colors.primary }]}
                 onPress={() => {
-                  if (flipped && !hasGradedCard.current) speak(card.answer);
+                  if (flipped && !hasGradedCard.current) speak(view.answer);
                 }}
                 accessibilityRole="button"
-                accessibilityLabel={`Play pronunciation of ${card.answer}`}
+                accessibilityLabel={`Play pronunciation of ${view.answer}`}
               >
                 <Ionicons name="volume-medium" size={20} color="#fff" />
               </TouchableOpacity>
@@ -547,6 +560,11 @@ const styles = StyleSheet.create({
   answerTranslation: {
     fontSize: fonts.sizes.md,
     fontStyle: 'italic',
+    marginBottom: spacing.sm,
+    textAlign: 'center',
+  },
+  alsoCorrectText: {
+    fontSize: fonts.sizes.sm,
     marginBottom: spacing.sm,
     textAlign: 'center',
   },

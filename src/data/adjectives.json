@@ -1,0 +1,6577 @@
+{
+  "青い": {
+    "reading": "あおい",
+    "class": "i",
+    "translation": "blue",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "空が青いです。",
+        "en": "The sky is blue."
+      }
+    ]
+  },
+  "赤い": {
+    "reading": "あかい",
+    "class": "i",
+    "translation": "red",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "赤いりんごを買いました。",
+        "en": "I bought a red apple."
+      }
+    ]
+  },
+  "明るい": {
+    "reading": "あかるい",
+    "class": "i",
+    "translation": "bright",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この部屋は明るいです。",
+        "en": "This room is bright."
+      }
+    ]
+  },
+  "暖かい": {
+    "reading": "あたたかい",
+    "class": "i",
+    "translation": "warm (weather)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "今日は暖かいですね。",
+        "en": "It's warm today, isn't it?"
+      }
+    ]
+  },
+  "新しい": {
+    "reading": "あたらしい",
+    "class": "i",
+    "translation": "new",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "新しい靴が欲しいです。",
+        "en": "I want new shoes."
+      }
+    ]
+  },
+  "暑い": {
+    "reading": "あつい",
+    "class": "i",
+    "translation": "hot (weather)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "夏は暑いです。",
+        "en": "Summer is hot."
+      }
+    ]
+  },
+  "熱い": {
+    "reading": "あつい",
+    "class": "i",
+    "translation": "hot (to the touch)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このお茶は熱いです。",
+        "en": "This tea is hot."
+      }
+    ]
+  },
+  "厚い": {
+    "reading": "あつい",
+    "class": "i",
+    "translation": "thick",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "厚い本を読みました。",
+        "en": "I read a thick book."
+      }
+    ]
+  },
+  "危ない": {
+    "reading": "あぶない",
+    "class": "i",
+    "translation": "dangerous",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "その道は危ないです。",
+        "en": "That road is dangerous."
+      }
+    ]
+  },
+  "甘い": {
+    "reading": "あまい",
+    "class": "i",
+    "translation": "sweet",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このケーキは甘いです。",
+        "en": "This cake is sweet."
+      }
+    ]
+  },
+  "忙しい": {
+    "reading": "いそがしい",
+    "class": "i",
+    "translation": "busy",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "父は毎日忙しいです。",
+        "en": "My father is busy every day."
+      }
+    ]
+  },
+  "痛い": {
+    "reading": "いたい",
+    "class": "i",
+    "translation": "painful",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "頭が痛いです。",
+        "en": "I have a headache."
+      }
+    ]
+  },
+  "いい": {
+    "reading": "いい",
+    "class": "i",
+    "translation": "good",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "今日は天気がいいです。",
+        "en": "The weather is nice today."
+      }
+    ],
+    "irregular": "ii",
+    "note": "Irregular: every form except いい / いいです is built on よ- (よくない, よかった)."
+  },
+  "薄い": {
+    "reading": "うすい",
+    "class": "i",
+    "translation": "thin; weak (taste)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このスープは味が薄いです。",
+        "en": "This soup tastes weak."
+      }
+    ]
+  },
+  "うるさい": {
+    "reading": "うるさい",
+    "class": "i",
+    "translation": "noisy",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "隣の部屋がうるさいです。",
+        "en": "The next room is noisy."
+      }
+    ]
+  },
+  "おいしい": {
+    "reading": "おいしい",
+    "class": "i",
+    "translation": "delicious",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この店のラーメンはおいしいです。",
+        "en": "This shop's ramen is delicious."
+      }
+    ]
+  },
+  "多い": {
+    "reading": "おおい",
+    "class": "i",
+    "translation": "many, a lot",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この町は人が多いです。",
+        "en": "This town has a lot of people."
+      }
+    ]
+  },
+  "大きい": {
+    "reading": "おおきい",
+    "class": "i",
+    "translation": "big",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "大きい犬がいます。",
+        "en": "There is a big dog."
+      }
+    ]
+  },
+  "遅い": {
+    "reading": "おそい",
+    "class": "i",
+    "translation": "slow; late",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "バスが遅いです。",
+        "en": "The bus is late."
+      }
+    ]
+  },
+  "重い": {
+    "reading": "おもい",
+    "class": "i",
+    "translation": "heavy",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このかばんは重いです。",
+        "en": "This bag is heavy."
+      }
+    ]
+  },
+  "面白い": {
+    "reading": "おもしろい",
+    "class": "i",
+    "translation": "interesting; funny",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この映画は面白いです。",
+        "en": "This movie is interesting."
+      }
+    ]
+  },
+  "辛い": {
+    "reading": "からい",
+    "class": "i",
+    "translation": "spicy",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "カレーが少し辛いです。",
+        "en": "The curry is a little spicy."
+      }
+    ]
+  },
+  "軽い": {
+    "reading": "かるい",
+    "class": "i",
+    "translation": "light (weight)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このカメラは軽いです。",
+        "en": "This camera is light."
+      }
+    ]
+  },
+  "かわいい": {
+    "reading": "かわいい",
+    "class": "i",
+    "translation": "cute",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "妹の猫はかわいいです。",
+        "en": "My younger sister's cat is cute."
+      }
+    ],
+    "note": "Regular い-adjective although it ends in いい: かわいくない, never かわよくない."
+  },
+  "黄色い": {
+    "reading": "きいろい",
+    "class": "i",
+    "translation": "yellow",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "黄色い花が咲いています。",
+        "en": "Yellow flowers are blooming."
+      }
+    ]
+  },
+  "汚い": {
+    "reading": "きたない",
+    "class": "i",
+    "translation": "dirty",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "部屋が汚いです。",
+        "en": "The room is dirty."
+      }
+    ]
+  },
+  "暗い": {
+    "reading": "くらい",
+    "class": "i",
+    "translation": "dark",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "外はもう暗いです。",
+        "en": "It's already dark outside."
+      }
+    ]
+  },
+  "黒い": {
+    "reading": "くろい",
+    "class": "i",
+    "translation": "black",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "黒いコートを着ています。",
+        "en": "I'm wearing a black coat."
+      }
+    ]
+  },
+  "寒い": {
+    "reading": "さむい",
+    "class": "i",
+    "translation": "cold (weather)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "冬の朝は寒いです。",
+        "en": "Winter mornings are cold."
+      }
+    ]
+  },
+  "白い": {
+    "reading": "しろい",
+    "class": "i",
+    "translation": "white",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "白いシャツを洗いました。",
+        "en": "I washed the white shirt."
+      }
+    ]
+  },
+  "少ない": {
+    "reading": "すくない",
+    "class": "i",
+    "translation": "few, little",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "今日は車が少ないです。",
+        "en": "There are few cars today."
+      }
+    ]
+  },
+  "涼しい": {
+    "reading": "すずしい",
+    "class": "i",
+    "translation": "cool (weather)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "朝は涼しいです。",
+        "en": "Mornings are cool."
+      }
+    ]
+  },
+  "狭い": {
+    "reading": "せまい",
+    "class": "i",
+    "translation": "narrow; cramped",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "私のアパートは狭いです。",
+        "en": "My apartment is cramped."
+      }
+    ]
+  },
+  "高い": {
+    "reading": "たかい",
+    "class": "i",
+    "translation": "tall; expensive",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この時計は高いです。",
+        "en": "This watch is expensive."
+      }
+    ]
+  },
+  "楽しい": {
+    "reading": "たのしい",
+    "class": "i",
+    "translation": "fun",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "旅行は楽しいです。",
+        "en": "Traveling is fun."
+      }
+    ]
+  },
+  "小さい": {
+    "reading": "ちいさい",
+    "class": "i",
+    "translation": "small",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "小さい子どもが泣いています。",
+        "en": "A small child is crying."
+      }
+    ]
+  },
+  "近い": {
+    "reading": "ちかい",
+    "class": "i",
+    "translation": "near",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "駅は家から近いです。",
+        "en": "The station is close to my house."
+      }
+    ]
+  },
+  "つまらない": {
+    "reading": "つまらない",
+    "class": "i",
+    "translation": "boring",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "その本はつまらないです。",
+        "en": "That book is boring."
+      }
+    ]
+  },
+  "冷たい": {
+    "reading": "つめたい",
+    "class": "i",
+    "translation": "cold (to the touch)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "冷たい水を飲みたいです。",
+        "en": "I want to drink cold water."
+      }
+    ]
+  },
+  "強い": {
+    "reading": "つよい",
+    "class": "i",
+    "translation": "strong",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "今日は風が強いです。",
+        "en": "The wind is strong today."
+      }
+    ]
+  },
+  "遠い": {
+    "reading": "とおい",
+    "class": "i",
+    "translation": "far",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "学校は遠いです。",
+        "en": "School is far away."
+      }
+    ]
+  },
+  "長い": {
+    "reading": "ながい",
+    "class": "i",
+    "translation": "long",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "姉は髪が長いです。",
+        "en": "My older sister has long hair."
+      }
+    ]
+  },
+  "ぬるい": {
+    "reading": "ぬるい",
+    "class": "i",
+    "translation": "lukewarm",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このコーヒーはぬるいです。",
+        "en": "This coffee is lukewarm."
+      }
+    ]
+  },
+  "早い": {
+    "reading": "はやい",
+    "class": "i",
+    "translation": "early",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "母は朝が早いです。",
+        "en": "My mother gets up early."
+      }
+    ]
+  },
+  "速い": {
+    "reading": "はやい",
+    "class": "i",
+    "translation": "fast",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "あの車はとても速いです。",
+        "en": "That car is very fast."
+      }
+    ]
+  },
+  "低い": {
+    "reading": "ひくい",
+    "class": "i",
+    "translation": "low; short (height)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この椅子は低いです。",
+        "en": "This chair is low."
+      }
+    ]
+  },
+  "広い": {
+    "reading": "ひろい",
+    "class": "i",
+    "translation": "spacious, wide",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この公園は広いです。",
+        "en": "This park is big."
+      }
+    ]
+  },
+  "太い": {
+    "reading": "ふとい",
+    "class": "i",
+    "translation": "thick; fat",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "太いペンで書いてください。",
+        "en": "Please write with a thick pen."
+      }
+    ]
+  },
+  "古い": {
+    "reading": "ふるい",
+    "class": "i",
+    "translation": "old (things)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "これは古い写真です。",
+        "en": "This is an old photo."
+      }
+    ]
+  },
+  "欲しい": {
+    "reading": "ほしい",
+    "class": "i",
+    "translation": "wanted",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "新しいパソコンが欲しいです。",
+        "en": "I want a new computer."
+      }
+    ]
+  },
+  "細い": {
+    "reading": "ほそい",
+    "class": "i",
+    "translation": "thin; slender",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "細い道を歩きました。",
+        "en": "I walked along a narrow road."
+      }
+    ]
+  },
+  "まずい": {
+    "reading": "まずい",
+    "class": "i",
+    "translation": "bad-tasting",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この料理はまずいです。",
+        "en": "This food tastes bad."
+      }
+    ]
+  },
+  "短い": {
+    "reading": "みじかい",
+    "class": "i",
+    "translation": "short (length)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "夏休みは短いです。",
+        "en": "Summer vacation is short."
+      }
+    ]
+  },
+  "難しい": {
+    "reading": "むずかしい",
+    "class": "i",
+    "translation": "difficult",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "漢字は難しいです。",
+        "en": "Kanji are difficult."
+      }
+    ]
+  },
+  "易しい": {
+    "reading": "やさしい",
+    "class": "i",
+    "translation": "easy",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このテストは易しいです。",
+        "en": "This test is easy."
+      }
+    ]
+  },
+  "安い": {
+    "reading": "やすい",
+    "class": "i",
+    "translation": "cheap",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この店の野菜は安いです。",
+        "en": "This shop's vegetables are cheap."
+      }
+    ]
+  },
+  "弱い": {
+    "reading": "よわい",
+    "class": "i",
+    "translation": "weak",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "弟は体が弱いです。",
+        "en": "My younger brother is physically weak."
+      }
+    ]
+  },
+  "若い": {
+    "reading": "わかい",
+    "class": "i",
+    "translation": "young",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "先生はまだ若いです。",
+        "en": "The teacher is still young."
+      }
+    ]
+  },
+  "悪い": {
+    "reading": "わるい",
+    "class": "i",
+    "translation": "bad",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "今日は天気が悪いです。",
+        "en": "The weather is bad today."
+      }
+    ]
+  },
+  "嫌": {
+    "reading": "いや",
+    "class": "na",
+    "translation": "unpleasant, disagreeable",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "雨の日は嫌です。",
+        "en": "I don't like rainy days."
+      }
+    ]
+  },
+  "いろいろ": {
+    "reading": "いろいろ",
+    "class": "na",
+    "translation": "various",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "いろいろな国に行きました。",
+        "en": "I went to various countries."
+      }
+    ]
+  },
+  "同じ": {
+    "reading": "おなじ",
+    "class": "na",
+    "translation": "same",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "兄と私は同じ学校に行っています。",
+        "en": "My older brother and I go to the same school."
+      }
+    ],
+    "overrides": {
+      "before_noun": "おなじ",
+      "adverb": "おなじように"
+    },
+    "note": "No な before a noun (同じ本). Its adverb is 同じように (同じに is also used, e.g. 同じにする).",
+    "variants": {
+      "adverb": [
+        "おなじに"
+      ]
+    },
+    "iTwin": true
+  },
+  "嫌い": {
+    "reading": "きらい",
+    "class": "na",
+    "translation": "disliked",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "私は魚が嫌いです。",
+        "en": "I don't like fish."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "きれい": {
+    "reading": "きれい",
+    "class": "na",
+    "translation": "pretty; clean",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この花はきれいです。",
+        "en": "This flower is pretty."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "元気": {
+    "reading": "げんき",
+    "class": "na",
+    "translation": "healthy; energetic",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "おばあさんはとても元気です。",
+        "en": "My grandmother is very energetic."
+      }
+    ]
+  },
+  "静か": {
+    "reading": "しずか",
+    "class": "na",
+    "translation": "quiet",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "図書館は静かです。",
+        "en": "The library is quiet."
+      }
+    ]
+  },
+  "上手": {
+    "reading": "じょうず",
+    "class": "na",
+    "translation": "skilled, good at",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "友だちは歌が上手です。",
+        "en": "My friend is good at singing."
+      }
+    ]
+  },
+  "丈夫": {
+    "reading": "じょうぶ",
+    "class": "na",
+    "translation": "sturdy; healthy",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "このかばんは丈夫です。",
+        "en": "This bag is sturdy."
+      }
+    ]
+  },
+  "好き": {
+    "reading": "すき",
+    "class": "na",
+    "translation": "liked",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "私は音楽が好きです。",
+        "en": "I like music."
+      }
+    ]
+  },
+  "大丈夫": {
+    "reading": "だいじょうぶ",
+    "class": "na",
+    "translation": "all right, OK",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "明日は大丈夫です。",
+        "en": "Tomorrow is fine for me."
+      }
+    ]
+  },
+  "大好き": {
+    "reading": "だいすき",
+    "class": "na",
+    "translation": "loved, really liked",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "弟はゲームが大好きです。",
+        "en": "My younger brother loves games."
+      }
+    ]
+  },
+  "大切": {
+    "reading": "たいせつ",
+    "class": "na",
+    "translation": "important, precious",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "家族は大切です。",
+        "en": "Family is important."
+      }
+    ]
+  },
+  "にぎやか": {
+    "reading": "にぎやか",
+    "class": "na",
+    "translation": "lively, busy",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "駅の前はにぎやかです。",
+        "en": "The area in front of the station is lively."
+      }
+    ]
+  },
+  "下手": {
+    "reading": "へた",
+    "class": "na",
+    "translation": "unskilled, bad at",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "私は料理が下手です。",
+        "en": "I'm bad at cooking."
+      }
+    ]
+  },
+  "便利": {
+    "reading": "べんり",
+    "class": "na",
+    "translation": "convenient, useful",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "この辞書は便利です。",
+        "en": "This dictionary is useful."
+      }
+    ]
+  },
+  "有名": {
+    "reading": "ゆうめい",
+    "class": "na",
+    "translation": "famous",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "これは有名なレストランです。",
+        "en": "This is a famous restaurant."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "りっぱ": {
+    "reading": "りっぱ",
+    "class": "na",
+    "translation": "splendid, fine",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "りっぱな家ですね。",
+        "en": "What a splendid house."
+      }
+    ]
+  },
+  "大変": {
+    "reading": "たいへん",
+    "class": "na",
+    "translation": "hard, tough; terrible",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "仕事が大変です。",
+        "en": "Work is tough."
+      }
+    ]
+  },
+  "暇": {
+    "reading": "ひま",
+    "class": "na",
+    "translation": "free (time)",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "日曜日は暇です。",
+        "en": "I'm free on Sunday."
+      }
+    ]
+  },
+  "だ": {
+    "reading": "だ",
+    "class": "copula",
+    "translation": "is, am, are (copula); polite です",
+    "jlpt": "N5",
+    "examples": [
+      {
+        "ja": "明日は休みです。",
+        "en": "Tomorrow is a day off."
+      }
+    ]
+  },
+  "苦い": {
+    "reading": "にがい",
+    "class": "i",
+    "translation": "bitter",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この薬は苦いです。",
+        "en": "This medicine is bitter."
+      }
+    ]
+  },
+  "柔らかい": {
+    "reading": "やわらかい",
+    "class": "i",
+    "translation": "soft",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "このパンは柔らかいです。",
+        "en": "This bread is soft."
+      }
+    ]
+  },
+  "厳しい": {
+    "reading": "きびしい",
+    "class": "i",
+    "translation": "strict; severe",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "父は厳しいです。",
+        "en": "My father is strict."
+      }
+    ]
+  },
+  "深い": {
+    "reading": "ふかい",
+    "class": "i",
+    "translation": "deep",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この川は深いです。",
+        "en": "This river is deep."
+      }
+    ]
+  },
+  "悲しい": {
+    "reading": "かなしい",
+    "class": "i",
+    "translation": "sad",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "友だちが引っ越して悲しいです。",
+        "en": "I'm sad because my friend moved away."
+      }
+    ]
+  },
+  "浅い": {
+    "reading": "あさい",
+    "class": "i",
+    "translation": "shallow",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "このプールは浅いです。",
+        "en": "This pool is shallow."
+      }
+    ]
+  },
+  "怖い": {
+    "reading": "こわい",
+    "class": "i",
+    "translation": "scary; afraid",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "夜の道は怖いです。",
+        "en": "The road at night is scary."
+      }
+    ]
+  },
+  "恥ずかしい": {
+    "reading": "はずかしい",
+    "class": "i",
+    "translation": "embarrassing; shy",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "人の前で話すのは恥ずかしいです。",
+        "en": "Speaking in front of people is embarrassing."
+      }
+    ]
+  },
+  "美しい": {
+    "reading": "うつくしい",
+    "class": "i",
+    "translation": "beautiful",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "山の景色が美しいです。",
+        "en": "The mountain scenery is beautiful."
+      }
+    ]
+  },
+  "素晴らしい": {
+    "reading": "すばらしい",
+    "class": "i",
+    "translation": "wonderful",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "素晴らしい映画でした。",
+        "en": "It was a wonderful movie."
+      }
+    ]
+  },
+  "おかしい": {
+    "reading": "おかしい",
+    "class": "i",
+    "translation": "strange; funny",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この時計はおかしいです。",
+        "en": "Something is wrong with this clock."
+      }
+    ]
+  },
+  "細かい": {
+    "reading": "こまかい",
+    "class": "i",
+    "translation": "fine, small; detailed",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "細かいお金がありません。",
+        "en": "I don't have any small change."
+      }
+    ]
+  },
+  "珍しい": {
+    "reading": "めずらしい",
+    "class": "i",
+    "translation": "rare, unusual",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "ここで雪が降るのは珍しいです。",
+        "en": "It's unusual for snow to fall here."
+      }
+    ]
+  },
+  "寂しい": {
+    "reading": "さびしい",
+    "class": "i",
+    "translation": "lonely",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "一人で寂しいです。",
+        "en": "I'm lonely on my own."
+      }
+    ]
+  },
+  "よろしい": {
+    "reading": "よろしい",
+    "class": "i",
+    "translation": "good, all right (polite)",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "よろしければ、こちらにお座りください。",
+        "en": "If you like, please sit here."
+      }
+    ]
+  },
+  "すごい": {
+    "reading": "すごい",
+    "class": "i",
+    "translation": "amazing; tremendous",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "その選手はすごいです。",
+        "en": "That athlete is amazing."
+      }
+    ]
+  },
+  "ひどい": {
+    "reading": "ひどい",
+    "class": "i",
+    "translation": "terrible; cruel",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "ひどい雨ですね。",
+        "en": "What terrible rain."
+      }
+    ]
+  },
+  "うまい": {
+    "reading": "うまい",
+    "class": "i",
+    "translation": "good at; tasty",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "兄はテニスがうまいです。",
+        "en": "My older brother is good at tennis."
+      }
+    ]
+  },
+  "正しい": {
+    "reading": "ただしい",
+    "class": "i",
+    "translation": "correct, right",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "あなたの答えは正しいです。",
+        "en": "Your answer is correct."
+      }
+    ]
+  },
+  "眠い": {
+    "reading": "ねむい",
+    "class": "i",
+    "translation": "sleepy",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "今日はとても眠いです。",
+        "en": "I'm very sleepy today."
+      }
+    ]
+  },
+  "優しい": {
+    "reading": "やさしい",
+    "class": "i",
+    "translation": "kind, gentle",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "先生はとても優しいです。",
+        "en": "The teacher is very kind."
+      }
+    ]
+  },
+  "嬉しい": {
+    "reading": "うれしい",
+    "class": "i",
+    "translation": "happy, glad",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "プレゼントをもらって嬉しいです。",
+        "en": "I'm happy I got a present."
+      }
+    ]
+  },
+  "かっこいい": {
+    "reading": "かっこいい",
+    "class": "i",
+    "translation": "cool, good-looking",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "その車はかっこいいです。",
+        "en": "That car is cool."
+      }
+    ],
+    "irregular": "ii",
+    "note": "Irregular like いい: every form except かっこいい / かっこいいです is built on かっこよ-."
+  },
+  "だめ": {
+    "reading": "だめ",
+    "class": "na",
+    "translation": "no good; not allowed",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "ここで写真を撮るのはだめです。",
+        "en": "Taking photos here is not allowed."
+      }
+    ]
+  },
+  "失礼": {
+    "reading": "しつれい",
+    "class": "na",
+    "translation": "rude, impolite",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "それは失礼な質問です。",
+        "en": "That's a rude question."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "一生懸命": {
+    "reading": "いっしょうけんめい",
+    "class": "na",
+    "translation": "with all one's effort",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "弟は一生懸命に勉強しています。",
+        "en": "My younger brother is studying as hard as he can."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "複雑": {
+    "reading": "ふくざつ",
+    "class": "na",
+    "translation": "complicated",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この問題は複雑です。",
+        "en": "This problem is complicated."
+      }
+    ]
+  },
+  "大事": {
+    "reading": "だいじ",
+    "class": "na",
+    "translation": "important; precious",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "大事な話があります。",
+        "en": "I have something important to tell you."
+      }
+    ]
+  },
+  "必要": {
+    "reading": "ひつよう",
+    "class": "na",
+    "translation": "necessary",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "旅行にはパスポートが必要です。",
+        "en": "You need a passport to travel."
+      }
+    ]
+  },
+  "盛ん": {
+    "reading": "さかん",
+    "class": "na",
+    "translation": "popular, thriving",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この町はサッカーが盛んです。",
+        "en": "Soccer is popular in this town."
+      }
+    ]
+  },
+  "残念": {
+    "reading": "ざんねん",
+    "class": "na",
+    "translation": "disappointing, a pity",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "試合に負けて残念です。",
+        "en": "It's a pity we lost the match."
+      }
+    ]
+  },
+  "丁寧": {
+    "reading": "ていねい",
+    "class": "na",
+    "translation": "polite; careful",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "店員はとても丁寧です。",
+        "en": "The shop clerk is very polite."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "無理": {
+    "reading": "むり",
+    "class": "na",
+    "translation": "impossible; unreasonable",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "一日で全部読むのは無理です。",
+        "en": "Reading it all in one day is impossible."
+      }
+    ]
+  },
+  "適当": {
+    "reading": "てきとう",
+    "class": "na",
+    "translation": "suitable; half-hearted",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "適当な場所を探しています。",
+        "en": "I'm looking for a suitable place."
+      }
+    ]
+  },
+  "親切": {
+    "reading": "しんせつ",
+    "class": "na",
+    "translation": "kind",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "駅員さんは親切でした。",
+        "en": "The station attendant was kind."
+      }
+    ]
+  },
+  "熱心": {
+    "reading": "ねっしん",
+    "class": "na",
+    "translation": "eager, enthusiastic",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "学生たちは熱心です。",
+        "en": "The students are enthusiastic."
+      }
+    ]
+  },
+  "変": {
+    "reading": "へん",
+    "class": "na",
+    "translation": "strange, odd",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "変な音がします。",
+        "en": "I hear a strange noise."
+      }
+    ]
+  },
+  "確か": {
+    "reading": "たしか",
+    "class": "na",
+    "translation": "certain, reliable",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "それは確かな情報です。",
+        "en": "That's reliable information."
+      }
+    ]
+  },
+  "真面目": {
+    "reading": "まじめ",
+    "class": "na",
+    "translation": "serious, diligent",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "兄は真面目な人です。",
+        "en": "My older brother is a serious person."
+      }
+    ]
+  },
+  "邪魔": {
+    "reading": "じゃま",
+    "class": "na",
+    "translation": "in the way, a hindrance",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "その箱は邪魔です。",
+        "en": "That box is in the way."
+      }
+    ]
+  },
+  "不便": {
+    "reading": "ふべん",
+    "class": "na",
+    "translation": "inconvenient",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この町はバスがなくて不便です。",
+        "en": "This town is inconvenient because there are no buses."
+      }
+    ]
+  },
+  "十分": {
+    "reading": "じゅうぶん",
+    "class": "na",
+    "translation": "enough, sufficient",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "時間は十分です。",
+        "en": "There's enough time."
+      }
+    ]
+  },
+  "危険": {
+    "reading": "きけん",
+    "class": "na",
+    "translation": "dangerous",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この川で泳ぐのは危険です。",
+        "en": "Swimming in this river is dangerous."
+      }
+    ]
+  },
+  "自由": {
+    "reading": "じゆう",
+    "class": "na",
+    "translation": "free",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "週末は自由な時間が多いです。",
+        "en": "I have a lot of free time on weekends."
+      }
+    ]
+  },
+  "簡単": {
+    "reading": "かんたん",
+    "class": "na",
+    "translation": "easy, simple",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この料理は簡単です。",
+        "en": "This dish is easy to make."
+      }
+    ]
+  },
+  "特別": {
+    "reading": "とくべつ",
+    "class": "na",
+    "translation": "special",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "今日は特別な日です。",
+        "en": "Today is a special day."
+      }
+    ]
+  },
+  "安全": {
+    "reading": "あんぜん",
+    "class": "na",
+    "translation": "safe",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "この町は安全です。",
+        "en": "This town is safe."
+      }
+    ]
+  },
+  "急": {
+    "reading": "きゅう",
+    "class": "na",
+    "translation": "sudden; steep",
+    "jlpt": "N4",
+    "examples": [
+      {
+        "ja": "急な用事ができました。",
+        "en": "Something urgent came up."
+      }
+    ]
+  },
+  "親しい": {
+    "reading": "したしい",
+    "class": "i",
+    "translation": "close, intimate",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼とは親しい友だちです。",
+        "en": "He and I are close friends."
+      }
+    ]
+  },
+  "すっぱい": {
+    "reading": "すっぱい",
+    "class": "i",
+    "translation": "sour",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "このレモンはすっぱいです。",
+        "en": "This lemon is sour."
+      }
+    ]
+  },
+  "鋭い": {
+    "reading": "するどい",
+    "class": "i",
+    "translation": "sharp",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "このナイフは鋭いです。",
+        "en": "This knife is sharp."
+      }
+    ]
+  },
+  "温かい": {
+    "reading": "あたたかい",
+    "class": "i",
+    "translation": "warm (to the touch; of feelings)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "温かいスープを飲みました。",
+        "en": "I had some warm soup."
+      }
+    ]
+  },
+  "羨ましい": {
+    "reading": "うらやましい",
+    "class": "i",
+    "translation": "envious",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "休みが長くて羨ましいです。",
+        "en": "I envy your long holiday."
+      }
+    ]
+  },
+  "幼い": {
+    "reading": "おさない",
+    "class": "i",
+    "translation": "very young, little",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "幼いころ、大阪に住んでいました。",
+        "en": "When I was little, I lived in Osaka."
+      }
+    ]
+  },
+  "恐ろしい": {
+    "reading": "おそろしい",
+    "class": "i",
+    "translation": "terrifying",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "恐ろしい夢を見ました。",
+        "en": "I had a terrifying dream."
+      }
+    ]
+  },
+  "大人しい": {
+    "reading": "おとなしい",
+    "class": "i",
+    "translation": "quiet, well-behaved",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この犬は大人しいです。",
+        "en": "This dog is well-behaved."
+      }
+    ]
+  },
+  "賢い": {
+    "reading": "かしこい",
+    "class": "i",
+    "translation": "clever, wise",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "カラスは賢い鳥です。",
+        "en": "Crows are clever birds."
+      }
+    ]
+  },
+  "硬い": {
+    "reading": "かたい",
+    "class": "i",
+    "translation": "hard, stiff",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "このパンは硬いです。",
+        "en": "This bread is hard."
+      }
+    ]
+  },
+  "かゆい": {
+    "reading": "かゆい",
+    "class": "i",
+    "translation": "itchy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "蚊に刺されて、腕がかゆいです。",
+        "en": "A mosquito bit me and my arm is itchy."
+      }
+    ]
+  },
+  "かわいらしい": {
+    "reading": "かわいらしい",
+    "class": "i",
+    "translation": "lovely, sweet",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "かわいらしい人形ですね。",
+        "en": "What a lovely doll."
+      }
+    ]
+  },
+  "きつい": {
+    "reading": "きつい",
+    "class": "i",
+    "translation": "tight; tough",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "このズボンは少しきついです。",
+        "en": "These trousers are a bit tight."
+      }
+    ]
+  },
+  "臭い": {
+    "reading": "くさい",
+    "class": "i",
+    "translation": "smelly",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "ごみが臭いです。",
+        "en": "The garbage smells."
+      }
+    ]
+  },
+  "悔しい": {
+    "reading": "くやしい",
+    "class": "i",
+    "translation": "frustrating, galling",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "試合に負けて悔しいです。",
+        "en": "I'm frustrated that we lost the match."
+      }
+    ]
+  },
+  "苦しい": {
+    "reading": "くるしい",
+    "class": "i",
+    "translation": "painful, hard to bear",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "走ったので息が苦しいです。",
+        "en": "I ran, so I'm out of breath."
+      }
+    ]
+  },
+  "詳しい": {
+    "reading": "くわしい",
+    "class": "i",
+    "translation": "detailed; knowledgeable",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "兄は車に詳しいです。",
+        "en": "My older brother knows a lot about cars."
+      }
+    ]
+  },
+  "濃い": {
+    "reading": "こい",
+    "class": "i",
+    "translation": "strong, thick, dark (taste, colour)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "このコーヒーは濃いです。",
+        "en": "This coffee is strong."
+      }
+    ]
+  },
+  "蒸し暑い": {
+    "reading": "むしあつい",
+    "class": "i",
+    "translation": "humid, muggy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "日本の夏は蒸し暑いです。",
+        "en": "Japanese summers are humid."
+      }
+    ]
+  },
+  "もったいない": {
+    "reading": "もったいない",
+    "class": "i",
+    "translation": "wasteful",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "食べ物を捨てるのはもったいないです。",
+        "en": "Throwing food away is wasteful."
+      }
+    ]
+  },
+  "つらい": {
+    "reading": "つらい",
+    "class": "i",
+    "translation": "hard, painful (to bear)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "朝早く起きるのはつらいです。",
+        "en": "Getting up early is hard."
+      }
+    ]
+  },
+  "激しい": {
+    "reading": "はげしい",
+    "class": "i",
+    "translation": "violent, intense",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "昨日は激しい雨が降りました。",
+        "en": "There was heavy rain yesterday."
+      }
+    ]
+  },
+  "等しい": {
+    "reading": "ひとしい",
+    "class": "i",
+    "translation": "equal",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "二つの線の長さは等しいです。",
+        "en": "The two lines are equal in length."
+      }
+    ]
+  },
+  "貧しい": {
+    "reading": "まずしい",
+    "class": "i",
+    "translation": "poor",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "昔、この村は貧しかったです。",
+        "en": "Long ago, this village was poor."
+      }
+    ]
+  },
+  "まぶしい": {
+    "reading": "まぶしい",
+    "class": "i",
+    "translation": "dazzling, glaring",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "太陽がまぶしいです。",
+        "en": "The sun is dazzling."
+      }
+    ]
+  },
+  "様々": {
+    "reading": "さまざま",
+    "class": "na",
+    "translation": "various",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "様々な意見があります。",
+        "en": "There are various opinions."
+      }
+    ]
+  },
+  "幸せ": {
+    "reading": "しあわせ",
+    "class": "na",
+    "translation": "happy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "家族と一緒にいて幸せです。",
+        "en": "I'm happy being with my family."
+      }
+    ]
+  },
+  "地味": {
+    "reading": "じみ",
+    "class": "na",
+    "translation": "plain, subdued",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼女はいつも地味な服を着ています。",
+        "en": "She always wears plain clothes."
+      }
+    ]
+  },
+  "重大": {
+    "reading": "じゅうだい",
+    "class": "na",
+    "translation": "serious, grave",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "重大な問題が起きました。",
+        "en": "A serious problem has arisen."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "重要": {
+    "reading": "じゅうよう",
+    "class": "na",
+    "translation": "important",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "これは重要な会議です。",
+        "en": "This is an important meeting."
+      }
+    ]
+  },
+  "順調": {
+    "reading": "じゅんちょう",
+    "class": "na",
+    "translation": "going smoothly",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "仕事は順調です。",
+        "en": "Work is going smoothly."
+      }
+    ]
+  },
+  "正直": {
+    "reading": "しょうじき",
+    "class": "na",
+    "translation": "honest",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "正直に話してください。",
+        "en": "Please tell me honestly."
+      }
+    ]
+  },
+  "真剣": {
+    "reading": "しんけん",
+    "class": "na",
+    "translation": "serious, earnest",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼は真剣な顔で聞いていました。",
+        "en": "He was listening with a serious look."
+      }
+    ]
+  },
+  "深刻": {
+    "reading": "しんこく",
+    "class": "na",
+    "translation": "serious, grave",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "水不足が深刻です。",
+        "en": "The water shortage is serious."
+      }
+    ]
+  },
+  "新鮮": {
+    "reading": "しんせん",
+    "class": "na",
+    "translation": "fresh",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この魚は新鮮です。",
+        "en": "This fish is fresh."
+      }
+    ]
+  },
+  "慎重": {
+    "reading": "しんちょう",
+    "class": "na",
+    "translation": "careful, cautious",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "慎重に運転してください。",
+        "en": "Please drive carefully."
+      }
+    ]
+  },
+  "すてき": {
+    "reading": "すてき",
+    "class": "na",
+    "translation": "lovely, nice",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "すてきなワンピースですね。",
+        "en": "What a lovely dress."
+      }
+    ]
+  },
+  "正確": {
+    "reading": "せいかく",
+    "class": "na",
+    "translation": "accurate, exact",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この時計は正確です。",
+        "en": "This watch is accurate."
+      }
+    ]
+  },
+  "清潔": {
+    "reading": "せいけつ",
+    "class": "na",
+    "translation": "clean, hygienic",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "ホテルの部屋は清潔でした。",
+        "en": "The hotel room was clean."
+      }
+    ]
+  },
+  "正式": {
+    "reading": "せいしき",
+    "class": "na",
+    "translation": "formal, official",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "来月、正式に発表します。",
+        "en": "We will announce it officially next month."
+      }
+    ]
+  },
+  "贅沢": {
+    "reading": "ぜいたく",
+    "class": "na",
+    "translation": "luxurious, extravagant",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "たまには贅沢な食事もいいですね。",
+        "en": "A luxurious meal now and then is nice."
+      }
+    ]
+  },
+  "積極的": {
+    "reading": "せっきょくてき",
+    "class": "na",
+    "translation": "active, proactive",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼女は授業で積極的に発言します。",
+        "en": "She speaks up actively in class."
+      }
+    ]
+  },
+  "明らか": {
+    "reading": "あきらか",
+    "class": "na",
+    "translation": "clear, obvious",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼のミスは明らかです。",
+        "en": "His mistake is obvious."
+      }
+    ]
+  },
+  "新た": {
+    "reading": "あらた",
+    "class": "na",
+    "translation": "new, fresh",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "新たな計画を立てました。",
+        "en": "We drew up a new plan."
+      }
+    ]
+  },
+  "意外": {
+    "reading": "いがい",
+    "class": "na",
+    "translation": "unexpected, surprising",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "試験は意外に簡単でした。",
+        "en": "The exam was surprisingly easy."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "異常": {
+    "reading": "いじょう",
+    "class": "na",
+    "translation": "abnormal, unusual",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "今年の夏は異常な暑さです。",
+        "en": "This summer's heat is abnormal."
+      }
+    ]
+  },
+  "意地悪": {
+    "reading": "いじわる",
+    "class": "na",
+    "translation": "mean, spiteful",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "意地悪なことを言わないでください。",
+        "en": "Please don't say mean things."
+      }
+    ],
+    "iTwin": true
+  },
+  "偉大": {
+    "reading": "いだい",
+    "class": "na",
+    "translation": "great, mighty",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼は偉大な科学者です。",
+        "en": "He is a great scientist."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "おしゃれ": {
+    "reading": "おしゃれ",
+    "class": "na",
+    "translation": "stylish, fashionable",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "姉はおしゃれです。",
+        "en": "My older sister is stylish."
+      }
+    ]
+  },
+  "穏やか": {
+    "reading": "おだやか",
+    "class": "na",
+    "translation": "calm, gentle",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "今日の海は穏やかです。",
+        "en": "The sea is calm today."
+      }
+    ]
+  },
+  "温暖": {
+    "reading": "おんだん",
+    "class": "na",
+    "translation": "mild, warm (climate)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この地方は気候が温暖です。",
+        "en": "This region has a mild climate."
+      }
+    ]
+  },
+  "快適": {
+    "reading": "かいてき",
+    "class": "na",
+    "translation": "comfortable, pleasant",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "新しい家はとても快適です。",
+        "en": "The new house is very comfortable."
+      }
+    ]
+  },
+  "確実": {
+    "reading": "かくじつ",
+    "class": "na",
+    "translation": "certain, reliable",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この方法が一番確実です。",
+        "en": "This method is the most reliable."
+      }
+    ]
+  },
+  "かわいそう": {
+    "reading": "かわいそう",
+    "class": "na",
+    "translation": "pitiful, poor (thing)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "雨の中で待っている犬がかわいそうです。",
+        "en": "I feel sorry for the dog waiting in the rain."
+      }
+    ]
+  },
+  "可能": {
+    "reading": "かのう",
+    "class": "na",
+    "translation": "possible",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "明日までに終わらせるのは可能です。",
+        "en": "It's possible to finish by tomorrow."
+      }
+    ]
+  },
+  "完全": {
+    "reading": "かんぜん",
+    "class": "na",
+    "translation": "complete, perfect",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "計画は完全に失敗しました。",
+        "en": "The plan failed completely."
+      }
+    ]
+  },
+  "貴重": {
+    "reading": "きちょう",
+    "class": "na",
+    "translation": "valuable, precious",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "貴重な経験をしました。",
+        "en": "I had a valuable experience."
+      }
+    ]
+  },
+  "気の毒": {
+    "reading": "きのどく",
+    "class": "na",
+    "translation": "unfortunate, pitiable",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "事故にあった人は気の毒です。",
+        "en": "I feel sorry for the people in the accident."
+      }
+    ]
+  },
+  "奇妙": {
+    "reading": "きみょう",
+    "class": "na",
+    "translation": "strange, odd",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "奇妙な話を聞きました。",
+        "en": "I heard a strange story."
+      }
+    ]
+  },
+  "急激": {
+    "reading": "きゅうげき",
+    "class": "na",
+    "translation": "sudden, sharp",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "気温が急激に下がりました。",
+        "en": "The temperature dropped sharply."
+      }
+    ]
+  },
+  "急速": {
+    "reading": "きゅうそく",
+    "class": "na",
+    "translation": "rapid",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "町は急速に変わりました。",
+        "en": "The town changed rapidly."
+      }
+    ]
+  },
+  "器用": {
+    "reading": "きよう",
+    "class": "na",
+    "translation": "skilful (with one's hands)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "父は手先が器用です。",
+        "en": "My father is good with his hands."
+      }
+    ]
+  },
+  "強力": {
+    "reading": "きょうりょく",
+    "class": "na",
+    "translation": "powerful, strong",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "強力な薬を飲みました。",
+        "en": "I took a strong medicine."
+      }
+    ]
+  },
+  "巨大": {
+    "reading": "きょだい",
+    "class": "na",
+    "translation": "huge, gigantic",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "巨大なビルが建ちました。",
+        "en": "A huge building went up."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "けち": {
+    "reading": "けち",
+    "class": "na",
+    "translation": "stingy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼はけちな人です。",
+        "en": "He is a stingy person."
+      }
+    ]
+  },
+  "幸運": {
+    "reading": "こううん",
+    "class": "na",
+    "translation": "lucky, fortunate",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "私たちは幸運でした。",
+        "en": "We were lucky."
+      }
+    ]
+  },
+  "高価": {
+    "reading": "こうか",
+    "class": "na",
+    "translation": "expensive, costly",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "高価な時計をもらいました。",
+        "en": "I was given an expensive watch."
+      }
+    ]
+  },
+  "豪華": {
+    "reading": "ごうか",
+    "class": "na",
+    "translation": "luxurious, gorgeous",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "テーブルに豪華な料理が並んでいました。",
+        "en": "A luxurious spread was laid out on the table."
+      }
+    ]
+  },
+  "公正": {
+    "reading": "こうせい",
+    "class": "na",
+    "translation": "fair, just",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "公正な判断をしてください。",
+        "en": "Please make a fair judgement."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "幸福": {
+    "reading": "こうふく",
+    "class": "na",
+    "translation": "happy (formal)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "祖母は幸福な人生を送りました。",
+        "en": "My grandmother lived a happy life."
+      }
+    ]
+  },
+  "公平": {
+    "reading": "こうへい",
+    "class": "na",
+    "translation": "fair, impartial",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "先生はみんなに公平です。",
+        "en": "The teacher is fair to everyone."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "困難": {
+    "reading": "こんなん",
+    "class": "na",
+    "translation": "difficult",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "その計画は実行が困難です。",
+        "en": "That plan is difficult to carry out."
+      }
+    ]
+  },
+  "幸い": {
+    "reading": "さいわい",
+    "class": "na",
+    "translation": "fortunate, lucky",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "幸いなことに、けが人はいませんでした。",
+        "en": "Fortunately, nobody was hurt."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "満足": {
+    "reading": "まんぞく",
+    "class": "na",
+    "translation": "satisfied; satisfactory",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "今回の結果に満足です。",
+        "en": "I'm satisfied with this result."
+      }
+    ]
+  },
+  "見事": {
+    "reading": "みごと",
+    "class": "na",
+    "translation": "splendid, magnificent",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "見事な桜ですね。",
+        "en": "What magnificent cherry blossoms."
+      }
+    ]
+  },
+  "妙": {
+    "reading": "みょう",
+    "class": "na",
+    "translation": "strange, odd",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "妙な音が聞こえます。",
+        "en": "I can hear a strange sound."
+      }
+    ]
+  },
+  "無駄": {
+    "reading": "むだ",
+    "class": "na",
+    "translation": "wasteful, useless",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "時間を無駄にしないでください。",
+        "en": "Please don't waste time."
+      }
+    ]
+  },
+  "明確": {
+    "reading": "めいかく",
+    "class": "na",
+    "translation": "clear, precise",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "明確な答えがほしいです。",
+        "en": "I want a clear answer."
+      }
+    ]
+  },
+  "迷惑": {
+    "reading": "めいわく",
+    "class": "na",
+    "translation": "annoying, a nuisance",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "夜遅くの電話は迷惑です。",
+        "en": "Late-night phone calls are a nuisance."
+      }
+    ]
+  },
+  "面倒": {
+    "reading": "めんどう",
+    "class": "na",
+    "translation": "troublesome, a hassle",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "毎日料理するのは面倒です。",
+        "en": "Cooking every day is a hassle."
+      }
+    ]
+  },
+  "厄介": {
+    "reading": "やっかい",
+    "class": "na",
+    "translation": "troublesome, tricky",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "厄介な問題が起きました。",
+        "en": "A tricky problem has come up."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "有効": {
+    "reading": "ゆうこう",
+    "class": "na",
+    "translation": "valid, effective",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "このチケットは今日まで有効です。",
+        "en": "This ticket is valid until today."
+      }
+    ]
+  },
+  "優秀": {
+    "reading": "ゆうしゅう",
+    "class": "na",
+    "translation": "excellent",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼女は優秀な学生です。",
+        "en": "She is an excellent student."
+      }
+    ]
+  },
+  "有能": {
+    "reading": "ゆうのう",
+    "class": "na",
+    "translation": "capable, competent",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "有能な社員を探しています。",
+        "en": "We are looking for capable employees."
+      }
+    ]
+  },
+  "有利": {
+    "reading": "ゆうり",
+    "class": "na",
+    "translation": "advantageous",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "英語ができると就職に有利です。",
+        "en": "Speaking English is an advantage when looking for a job."
+      }
+    ]
+  },
+  "愉快": {
+    "reading": "ゆかい",
+    "class": "na",
+    "translation": "pleasant, amusing",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "愉快な仲間と旅行しました。",
+        "en": "I travelled with a fun group of friends."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "豊か": {
+    "reading": "ゆたか",
+    "class": "na",
+    "translation": "rich, abundant",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この国は自然が豊かです。",
+        "en": "This country is rich in nature."
+      }
+    ]
+  },
+  "容易": {
+    "reading": "ようい",
+    "class": "na",
+    "translation": "easy (formal)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "その問題を解くのは容易ではありません。",
+        "en": "That problem is not easy to solve."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "陽気": {
+    "reading": "ようき",
+    "class": "na",
+    "translation": "cheerful",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼はいつも陽気です。",
+        "en": "He is always cheerful."
+      }
+    ]
+  },
+  "余分": {
+    "reading": "よぶん",
+    "class": "na",
+    "translation": "extra, surplus",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "余分なお金はありません。",
+        "en": "I don't have any spare money."
+      }
+    ]
+  },
+  "楽": {
+    "reading": "らく",
+    "class": "na",
+    "translation": "easy, comfortable",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この仕事は楽です。",
+        "en": "This job is easy."
+      }
+    ]
+  },
+  "利口": {
+    "reading": "りこう",
+    "class": "na",
+    "translation": "clever",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この犬はとても利口です。",
+        "en": "This dog is very clever."
+      }
+    ]
+  },
+  "冷静": {
+    "reading": "れいせい",
+    "class": "na",
+    "translation": "calm, composed",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "冷静に考えましょう。",
+        "en": "Let's think about it calmly."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "わがまま": {
+    "reading": "わがまま",
+    "class": "na",
+    "translation": "selfish",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "弟はわがままです。",
+        "en": "My younger brother is selfish."
+      }
+    ]
+  },
+  "わずか": {
+    "reading": "わずか",
+    "class": "na",
+    "translation": "slight, only a little",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "残りはわずかです。",
+        "en": "There is only a little left."
+      }
+    ]
+  },
+  "粗末": {
+    "reading": "そまつ",
+    "class": "na",
+    "translation": "crude; careless (with)",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "食べ物を粗末にしてはいけません。",
+        "en": "You mustn't waste food."
+      }
+    ]
+  },
+  "退屈": {
+    "reading": "たいくつ",
+    "class": "na",
+    "translation": "boring",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "会議は退屈でした。",
+        "en": "The meeting was boring."
+      }
+    ]
+  },
+  "平ら": {
+    "reading": "たいら",
+    "class": "na",
+    "translation": "flat, level",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この道は平らです。",
+        "en": "This road is flat."
+      }
+    ]
+  },
+  "単純": {
+    "reading": "たんじゅん",
+    "class": "na",
+    "translation": "simple",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "単純な間違いをしました。",
+        "en": "I made a simple mistake."
+      }
+    ]
+  },
+  "適切": {
+    "reading": "てきせつ",
+    "class": "na",
+    "translation": "appropriate",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "適切な言葉を選んでください。",
+        "en": "Please choose appropriate words."
+      }
+    ]
+  },
+  "適度": {
+    "reading": "てきど",
+    "class": "na",
+    "translation": "moderate",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "適度な運動は体にいいです。",
+        "en": "Moderate exercise is good for you."
+      }
+    ]
+  },
+  "得意": {
+    "reading": "とくい",
+    "class": "na",
+    "translation": "good at, strong point",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "私は数学が得意です。",
+        "en": "I'm good at maths."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "独特": {
+    "reading": "どくとく",
+    "class": "na",
+    "translation": "unique, distinctive",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この料理は独特な味がします。",
+        "en": "This dish has a distinctive taste."
+      }
+    ]
+  },
+  "苦手": {
+    "reading": "にがて",
+    "class": "na",
+    "translation": "weak at, not fond of",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "私は人前で話すのが苦手です。",
+        "en": "I'm not good at speaking in public."
+      }
+    ]
+  },
+  "莫大": {
+    "reading": "ばくだい",
+    "class": "na",
+    "translation": "enormous, vast",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "莫大なお金がかかりました。",
+        "en": "It cost an enormous amount of money."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "派手": {
+    "reading": "はで",
+    "class": "na",
+    "translation": "flashy, showy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "派手な色のシャツですね。",
+        "en": "That shirt is a flashy colour."
+      }
+    ]
+  },
+  "ハンサム": {
+    "reading": "ハンサム",
+    "class": "na",
+    "translation": "handsome",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼はハンサムです。",
+        "en": "He is handsome."
+      }
+    ]
+  },
+  "必死": {
+    "reading": "ひっし",
+    "class": "na",
+    "translation": "desperate, frantic",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "必死に走りました。",
+        "en": "I ran for my life."
+      }
+    ]
+  },
+  "微妙": {
+    "reading": "びみょう",
+    "class": "na",
+    "translation": "subtle; iffy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "その答えは微妙です。",
+        "en": "That answer is debatable."
+      }
+    ]
+  },
+  "平等": {
+    "reading": "びょうどう",
+    "class": "na",
+    "translation": "equal",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "法の前では、みんな平等です。",
+        "en": "Everyone is equal before the law."
+      }
+    ]
+  },
+  "不安": {
+    "reading": "ふあん",
+    "class": "na",
+    "translation": "anxious, uneasy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "明日の試験が不安です。",
+        "en": "I'm anxious about tomorrow's exam."
+      }
+    ]
+  },
+  "不幸": {
+    "reading": "ふこう",
+    "class": "na",
+    "translation": "unhappy, unfortunate",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "不幸な事故がありました。",
+        "en": "There was an unfortunate accident."
+      }
+    ]
+  },
+  "無事": {
+    "reading": "ぶじ",
+    "class": "na",
+    "translation": "safe, without incident",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "無事に家に着きました。",
+        "en": "I got home safely."
+      }
+    ]
+  },
+  "不思議": {
+    "reading": "ふしぎ",
+    "class": "na",
+    "translation": "mysterious, strange",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "不思議な夢を見ました。",
+        "en": "I had a strange dream."
+      }
+    ]
+  },
+  "不自由": {
+    "reading": "ふじゆう",
+    "class": "na",
+    "translation": "inconvenient; lacking",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "車がないと不自由です。",
+        "en": "Life is inconvenient without a car."
+      }
+    ]
+  },
+  "不満": {
+    "reading": "ふまん",
+    "class": "na",
+    "translation": "dissatisfied",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "給料に不満です。",
+        "en": "I'm unhappy with my salary."
+      }
+    ]
+  },
+  "不利": {
+    "reading": "ふり",
+    "class": "na",
+    "translation": "disadvantageous",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この条件は私たちに不利です。",
+        "en": "These conditions are against us."
+      }
+    ]
+  },
+  "平和": {
+    "reading": "へいわ",
+    "class": "na",
+    "translation": "peaceful",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "平和な世界を作りたいです。",
+        "en": "I want to create a peaceful world."
+      }
+    ]
+  },
+  "豊富": {
+    "reading": "ほうふ",
+    "class": "na",
+    "translation": "abundant, plentiful",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "この店は品物が豊富です。",
+        "en": "This shop has a wide range of goods."
+      }
+    ]
+  },
+  "真っ赤": {
+    "reading": "まっか",
+    "class": "na",
+    "translation": "bright red",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "彼の顔は真っ赤になりました。",
+        "en": "His face turned bright red."
+      }
+    ]
+  },
+  "精巧": {
+    "reading": "せいこう",
+    "class": "na",
+    "translation": "elaborate, exquisite",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "精巧な模型を作りました。",
+        "en": "I made an elaborate model."
+      }
+    ]
+  },
+  "自然": {
+    "reading": "しぜん",
+    "class": "na",
+    "translation": "natural",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "自然な日本語を話したいです。",
+        "en": "I want to speak natural Japanese."
+      }
+    ]
+  },
+  "健康": {
+    "reading": "けんこう",
+    "class": "na",
+    "translation": "healthy",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "祖父は九十歳ですが、健康です。",
+        "en": "My grandfather is ninety, but healthy."
+      }
+    ]
+  },
+  "馬鹿": {
+    "reading": "ばか",
+    "class": "na",
+    "translation": "foolish, stupid",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "馬鹿なことをしてしまいました。",
+        "en": "I did something stupid."
+      }
+    ]
+  },
+  "哀れ": {
+    "reading": "あわれ",
+    "class": "na",
+    "translation": "pitiful, sad",
+    "jlpt": "N3",
+    "examples": [
+      {
+        "ja": "哀れな話ですね。",
+        "en": "What a sad story."
+      }
+    ]
+  },
+  "青白い": {
+    "reading": "あおじろい",
+    "class": "i",
+    "translation": "pale",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は顔が青白いです。",
+        "en": "He looks pale."
+      }
+    ]
+  },
+  "厚かましい": {
+    "reading": "あつかましい",
+    "class": "i",
+    "translation": "shameless, pushy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "厚かましいお願いですが、手伝ってもらえませんか。",
+        "en": "It's a cheeky request, but could you help me?"
+      }
+    ]
+  },
+  "危うい": {
+    "reading": "あやうい",
+    "class": "i",
+    "translation": "precarious, at risk",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "会社の経営が危うい状態です。",
+        "en": "The company is in a precarious state."
+      }
+    ]
+  },
+  "怪しい": {
+    "reading": "あやしい",
+    "class": "i",
+    "translation": "suspicious, dubious",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "怪しい男が家の前に立っています。",
+        "en": "A suspicious man is standing in front of the house."
+      }
+    ]
+  },
+  "荒い": {
+    "reading": "あらい",
+    "class": "i",
+    "translation": "rough, violent",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "今日は波が荒いです。",
+        "en": "The waves are rough today."
+      }
+    ]
+  },
+  "粗い": {
+    "reading": "あらい",
+    "class": "i",
+    "translation": "coarse",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "この布は目が粗いです。",
+        "en": "This cloth has a coarse weave."
+      }
+    ]
+  },
+  "ありがたい": {
+    "reading": "ありがたい",
+    "class": "i",
+    "translation": "grateful; welcome",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "手伝ってくれて、本当にありがたいです。",
+        "en": "I'm really grateful for your help."
+      }
+    ]
+  },
+  "慌ただしい": {
+    "reading": "あわただしい",
+    "class": "i",
+    "translation": "hectic, hurried",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "年末は慌ただしいです。",
+        "en": "The end of the year is hectic."
+      }
+    ]
+  },
+  "勇ましい": {
+    "reading": "いさましい",
+    "class": "i",
+    "translation": "brave, valiant",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は勇ましく火の中に入っていきました。",
+        "en": "He bravely went into the fire."
+      }
+    ]
+  },
+  "薄暗い": {
+    "reading": "うすぐらい",
+    "class": "i",
+    "translation": "dim, gloomy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "部屋の中は薄暗いです。",
+        "en": "It's dim inside the room."
+      }
+    ]
+  },
+  "偉い": {
+    "reading": "えらい",
+    "class": "i",
+    "translation": "admirable; important",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "毎日勉強して偉いですね。",
+        "en": "You study every day. Good for you."
+      }
+    ]
+  },
+  "惜しい": {
+    "reading": "おしい",
+    "class": "i",
+    "translation": "regrettable; so close",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "あと一点で合格だったのに、惜しいです。",
+        "en": "One more point and I'd have passed. So close."
+      }
+    ]
+  },
+  "思いがけない": {
+    "reading": "おもいがけない",
+    "class": "i",
+    "translation": "unexpected",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "思いがけないプレゼントをもらいました。",
+        "en": "I received an unexpected present."
+      }
+    ]
+  },
+  "重たい": {
+    "reading": "おもたい",
+    "class": "i",
+    "translation": "heavy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "この箱は重たいです。",
+        "en": "This box is heavy."
+      }
+    ]
+  },
+  "清い": {
+    "reading": "きよい",
+    "class": "i",
+    "translation": "pure, clear",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "清い川の水を飲みました。",
+        "en": "I drank the clear river water."
+      }
+    ]
+  },
+  "くだらない": {
+    "reading": "くだらない",
+    "class": "i",
+    "translation": "trivial, worthless",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "くだらない話はやめてください。",
+        "en": "Please stop talking nonsense."
+      }
+    ]
+  },
+  "くどい": {
+    "reading": "くどい",
+    "class": "i",
+    "translation": "long-winded; heavy (taste)",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼の説明はくどいです。",
+        "en": "His explanation is long-winded."
+      }
+    ]
+  },
+  "煙い": {
+    "reading": "けむい",
+    "class": "i",
+    "translation": "smoky",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "たき火の近くは煙いです。",
+        "en": "It's smoky near the bonfire."
+      }
+    ]
+  },
+  "険しい": {
+    "reading": "けわしい",
+    "class": "i",
+    "translation": "steep; stern",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "険しい山道を登りました。",
+        "en": "We climbed a steep mountain path."
+      }
+    ]
+  },
+  "恋しい": {
+    "reading": "こいしい",
+    "class": "i",
+    "translation": "longed for, missed",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "冬になると、夏が恋しいです。",
+        "en": "When winter comes, I miss summer."
+      }
+    ]
+  },
+  "騒がしい": {
+    "reading": "さわがしい",
+    "class": "i",
+    "translation": "noisy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "教室が騒がしいです。",
+        "en": "The classroom is noisy."
+      }
+    ]
+  },
+  "塩辛い": {
+    "reading": "しおからい",
+    "class": "i",
+    "translation": "salty",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "このスープは塩辛いです。",
+        "en": "This soup is salty."
+      }
+    ]
+  },
+  "四角い": {
+    "reading": "しかくい",
+    "class": "i",
+    "translation": "square",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "四角い箱を買いました。",
+        "en": "I bought a square box."
+      }
+    ]
+  },
+  "しつこい": {
+    "reading": "しつこい",
+    "class": "i",
+    "translation": "persistent, pushy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "しつこいセールスの電話が来ました。",
+        "en": "I got a pushy sales call."
+      }
+    ]
+  },
+  "図々しい": {
+    "reading": "ずうずうしい",
+    "class": "i",
+    "translation": "brazen, cheeky",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は図々しい人です。",
+        "en": "He is a cheeky person."
+      }
+    ]
+  },
+  "ずるい": {
+    "reading": "ずるい",
+    "class": "i",
+    "translation": "sly, unfair",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "一人だけ休むのはずるいです。",
+        "en": "It's unfair for just one person to take a break."
+      }
+    ]
+  },
+  "騒々しい": {
+    "reading": "そうぞうしい",
+    "class": "i",
+    "translation": "noisy, boisterous",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "外が騒々しいですね。",
+        "en": "It's noisy outside, isn't it?"
+      }
+    ]
+  },
+  "そそっかしい": {
+    "reading": "そそっかしい",
+    "class": "i",
+    "translation": "careless, hasty",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "私はそそっかしいので、よく物を忘れます。",
+        "en": "I'm careless, so I often forget things."
+      }
+    ]
+  },
+  "頼もしい": {
+    "reading": "たのもしい",
+    "class": "i",
+    "translation": "reliable, dependable",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "新しいリーダーは頼もしいです。",
+        "en": "The new leader is very dependable."
+      }
+    ]
+  },
+  "だらしない": {
+    "reading": "だらしない",
+    "class": "i",
+    "translation": "sloppy, slovenly",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "だらしない格好で外に出ないでください。",
+        "en": "Please don't go out looking sloppy."
+      }
+    ]
+  },
+  "力強い": {
+    "reading": "ちからづよい",
+    "class": "i",
+    "translation": "powerful, forceful",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は力強い声で話しました。",
+        "en": "He spoke in a powerful voice."
+      }
+    ]
+  },
+  "茶色い": {
+    "reading": "ちゃいろい",
+    "class": "i",
+    "translation": "brown",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "茶色い靴をはいています。",
+        "en": "I'm wearing brown shoes."
+      }
+    ]
+  },
+  "懐かしい": {
+    "reading": "なつかしい",
+    "class": "i",
+    "translation": "nostalgic, dear",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "この写真は懐かしいです。",
+        "en": "This photo brings back memories."
+      }
+    ]
+  },
+  "憎い": {
+    "reading": "にくい",
+    "class": "i",
+    "translation": "hateful",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "犯人が憎いです。",
+        "en": "I hate the culprit."
+      }
+    ]
+  },
+  "憎らしい": {
+    "reading": "にくらしい",
+    "class": "i",
+    "translation": "hateful; provoking",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼の憎らしい態度に腹が立ちました。",
+        "en": "His provoking attitude made me angry."
+      }
+    ]
+  },
+  "鈍い": {
+    "reading": "にぶい",
+    "class": "i",
+    "translation": "dull, slow",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "このナイフは切れ味が鈍いです。",
+        "en": "This knife is dull."
+      }
+    ]
+  },
+  "ばからしい": {
+    "reading": "ばからしい",
+    "class": "i",
+    "translation": "absurd, silly",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "そんなことで悩むのはばからしいです。",
+        "en": "Worrying about something like that is absurd."
+      }
+    ]
+  },
+  "甚だしい": {
+    "reading": "はなはだしい",
+    "class": "i",
+    "translation": "extreme, gross",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "それは甚だしい誤解です。",
+        "en": "That is a gross misunderstanding."
+      }
+    ]
+  },
+  "みっともない": {
+    "reading": "みっともない",
+    "class": "i",
+    "translation": "shameful, unseemly",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "そんな格好はみっともないです。",
+        "en": "Dressing like that is embarrassing."
+      }
+    ]
+  },
+  "醜い": {
+    "reading": "みにくい",
+    "class": "i",
+    "translation": "ugly",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "醜い争いはやめましょう。",
+        "en": "Let's stop this ugly quarrel."
+      }
+    ]
+  },
+  "めでたい": {
+    "reading": "めでたい",
+    "class": "i",
+    "translation": "happy, auspicious",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "二人の結婚は本当にめでたいです。",
+        "en": "Their marriage is truly a happy event."
+      }
+    ]
+  },
+  "面倒くさい": {
+    "reading": "めんどうくさい",
+    "class": "i",
+    "translation": "bothersome, a pain",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "毎日掃除するのは面倒くさいです。",
+        "en": "Cleaning every day is a pain."
+      }
+    ]
+  },
+  "ものすごい": {
+    "reading": "ものすごい",
+    "class": "i",
+    "translation": "tremendous",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "ものすごい数の人が集まりました。",
+        "en": "A tremendous number of people gathered."
+      }
+    ]
+  },
+  "やかましい": {
+    "reading": "やかましい",
+    "class": "i",
+    "translation": "noisy; fussy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "隣の犬がやかましいです。",
+        "en": "The neighbour's dog is noisy."
+      }
+    ]
+  },
+  "緩い": {
+    "reading": "ゆるい",
+    "class": "i",
+    "translation": "loose; lenient",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "このベルトは緩いです。",
+        "en": "This belt is loose."
+      }
+    ]
+  },
+  "若々しい": {
+    "reading": "わかわかしい",
+    "class": "i",
+    "translation": "youthful",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "母は若々しいです。",
+        "en": "My mother looks youthful."
+      }
+    ]
+  },
+  "あいまい": {
+    "reading": "あいまい",
+    "class": "na",
+    "translation": "vague",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼の返事はあいまいでした。",
+        "en": "His reply was vague."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "安易": {
+    "reading": "あんい",
+    "class": "na",
+    "translation": "easy-going, facile",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "安易な考えは危険です。",
+        "en": "Facile thinking is dangerous."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "おおざっぱ": {
+    "reading": "おおざっぱ",
+    "class": "na",
+    "translation": "rough, sloppy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "父の料理はおおざっぱです。",
+        "en": "My father's cooking is rough and ready."
+      }
+    ]
+  },
+  "過剰": {
+    "reading": "かじょう",
+    "class": "na",
+    "translation": "excessive",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "過剰な期待はしないでください。",
+        "en": "Please don't expect too much."
+      }
+    ]
+  },
+  "下品": {
+    "reading": "げひん",
+    "class": "na",
+    "translation": "vulgar",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "下品な言葉を使わないでください。",
+        "en": "Please don't use vulgar language."
+      }
+    ]
+  },
+  "謙虚": {
+    "reading": "けんきょ",
+    "class": "na",
+    "translation": "modest, humble",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼はいつも謙虚です。",
+        "en": "He is always modest."
+      }
+    ]
+  },
+  "厳重": {
+    "reading": "げんじゅう",
+    "class": "na",
+    "translation": "strict, tight",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "会場の警備は厳重です。",
+        "en": "Security at the venue is tight."
+      }
+    ]
+  },
+  "懸命": {
+    "reading": "けんめい",
+    "class": "na",
+    "translation": "eager, earnest",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼女は懸命に働いています。",
+        "en": "She is working hard."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "強引": {
+    "reading": "ごういん",
+    "class": "na",
+    "translation": "pushy, forcible",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は強引に話を進めました。",
+        "en": "He forced the discussion through."
+      }
+    ]
+  },
+  "高級": {
+    "reading": "こうきゅう",
+    "class": "na",
+    "translation": "high-class",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "高級なホテルに泊まりました。",
+        "en": "We stayed at a high-class hotel."
+      }
+    ]
+  },
+  "さかさま": {
+    "reading": "さかさま",
+    "class": "na",
+    "translation": "upside down",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "絵がさかさまです。",
+        "en": "The picture is upside down."
+      }
+    ]
+  },
+  "さわやか": {
+    "reading": "さわやか",
+    "class": "na",
+    "translation": "refreshing",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "今朝はさわやかな天気です。",
+        "en": "It's refreshing weather this morning."
+      }
+    ]
+  },
+  "純粋": {
+    "reading": "じゅんすい",
+    "class": "na",
+    "translation": "pure",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "子どもの心は純粋です。",
+        "en": "A child's heart is pure."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "消極的": {
+    "reading": "しょうきょくてき",
+    "class": "na",
+    "translation": "passive, unenthusiastic",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は何事にも消極的です。",
+        "en": "He is passive about everything."
+      }
+    ]
+  },
+  "上品": {
+    "reading": "じょうひん",
+    "class": "na",
+    "translation": "elegant, refined",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼女は上品な話し方をします。",
+        "en": "She speaks elegantly."
+      }
+    ]
+  },
+  "垂直": {
+    "reading": "すいちょく",
+    "class": "na",
+    "translation": "vertical, perpendicular",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "紙に垂直な線を引いてください。",
+        "en": "Please draw a vertical line on the paper."
+      }
+    ]
+  },
+  "水平": {
+    "reading": "すいへい",
+    "class": "na",
+    "translation": "horizontal, level",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "棚を水平に取り付けてください。",
+        "en": "Please mount the shelf level."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "素直": {
+    "reading": "すなお",
+    "class": "na",
+    "translation": "obedient; frank",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は素直な子どもです。",
+        "en": "He is a good-natured child."
+      }
+    ]
+  },
+  "スマート": {
+    "reading": "スマート",
+    "class": "na",
+    "translation": "slim, slender",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "兄はスマートです。",
+        "en": "My older brother is slim."
+      }
+    ]
+  },
+  "率直": {
+    "reading": "そっちょく",
+    "class": "na",
+    "translation": "frank, candid",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "率直な意見を聞かせてください。",
+        "en": "Please give me your frank opinion."
+      }
+    ]
+  },
+  "妥当": {
+    "reading": "だとう",
+    "class": "na",
+    "translation": "appropriate, reasonable",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "その値段は妥当です。",
+        "en": "That price is reasonable."
+      }
+    ]
+  },
+  "強気": {
+    "reading": "つよき",
+    "class": "na",
+    "translation": "confident, aggressive",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は交渉で強気でした。",
+        "en": "He was assertive in the negotiations."
+      }
+    ]
+  },
+  "的確": {
+    "reading": "てきかく",
+    "class": "na",
+    "translation": "precise, accurate",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "先生は的確なアドバイスをくれました。",
+        "en": "The teacher gave me precise advice."
+      }
+    ]
+  },
+  "手頃": {
+    "reading": "てごろ",
+    "class": "na",
+    "translation": "reasonable (price); handy",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "手頃な値段の店を探しています。",
+        "en": "I'm looking for a reasonably priced shop."
+      }
+    ]
+  },
+  "でたらめ": {
+    "reading": "でたらめ",
+    "class": "na",
+    "translation": "nonsense; random",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "でたらめな話を信じないでください。",
+        "en": "Please don't believe that nonsense."
+      }
+    ]
+  },
+  "透明": {
+    "reading": "とうめい",
+    "class": "na",
+    "translation": "transparent",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "透明なガラスのコップです。",
+        "en": "It's a clear glass cup."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "特殊": {
+    "reading": "とくしゅ",
+    "class": "na",
+    "translation": "special, peculiar",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "これは特殊な機械です。",
+        "en": "This is a special machine."
+      }
+    ]
+  },
+  "生意気": {
+    "reading": "なまいき",
+    "class": "na",
+    "translation": "cheeky, impertinent",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "弟は生意気なことばかり言います。",
+        "en": "My younger brother keeps saying cheeky things."
+      }
+    ]
+  },
+  "のんき": {
+    "reading": "のんき",
+    "class": "na",
+    "translation": "carefree, easygoing",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼はのんきな性格です。",
+        "en": "He has an easygoing personality."
+      }
+    ]
+  },
+  "卑怯": {
+    "reading": "ひきょう",
+    "class": "na",
+    "translation": "cowardly, unfair",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "後ろから攻撃するのは卑怯です。",
+        "en": "Attacking from behind is cowardly."
+      }
+    ]
+  },
+  "皮肉": {
+    "reading": "ひにく",
+    "class": "na",
+    "translation": "ironic",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "皮肉なことに、彼はその日だけ休みでした。",
+        "en": "Ironically, that was the one day he was off."
+      }
+    ]
+  },
+  "不運": {
+    "reading": "ふうん",
+    "class": "na",
+    "translation": "unlucky",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は不運な事故にあいました。",
+        "en": "He was in an unlucky accident."
+      }
+    ]
+  },
+  "不規則": {
+    "reading": "ふきそく",
+    "class": "na",
+    "translation": "irregular",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "最近、生活が不規則です。",
+        "en": "My daily routine is irregular lately."
+      }
+    ]
+  },
+  "不潔": {
+    "reading": "ふけつ",
+    "class": "na",
+    "translation": "unclean, dirty",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "不潔な手で食べないでください。",
+        "en": "Please don't eat with dirty hands."
+      }
+    ]
+  },
+  "物騒": {
+    "reading": "ぶっそう",
+    "class": "na",
+    "translation": "unsafe, dangerous",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "最近、この辺りは物騒です。",
+        "en": "This area has become unsafe recently."
+      }
+    ]
+  },
+  "平気": {
+    "reading": "へいき",
+    "class": "na",
+    "translation": "unconcerned, fine",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "彼は寒さが平気です。",
+        "en": "He doesn't mind the cold."
+      }
+    ]
+  },
+  "平凡": {
+    "reading": "へいぼん",
+    "class": "na",
+    "translation": "ordinary",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "平凡な毎日が一番幸せです。",
+        "en": "An ordinary daily life is the happiest."
+      }
+    ]
+  },
+  "膨大": {
+    "reading": "ぼうだい",
+    "class": "na",
+    "translation": "enormous, vast",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "膨大な資料を読みました。",
+        "en": "I read a vast amount of material."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "朗らか": {
+    "reading": "ほがらか",
+    "class": "na",
+    "translation": "cheerful, sunny",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "朗らかな笑い声が聞こえます。",
+        "en": "I can hear cheerful laughter."
+      }
+    ]
+  },
+  "真っ暗": {
+    "reading": "まっくら",
+    "class": "na",
+    "translation": "pitch dark",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "外は真っ暗です。",
+        "en": "It's pitch dark outside."
+      }
+    ]
+  },
+  "真っ黒": {
+    "reading": "まっくろ",
+    "class": "na",
+    "translation": "jet black",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "海で遊んで、真っ黒に日焼けしました。",
+        "en": "I got deeply tanned playing at the beach."
+      }
+    ],
+    "iTwin": true
+  },
+  "真っ青": {
+    "reading": "まっさお",
+    "class": "na",
+    "translation": "deep blue; deathly pale",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "空が真っ青です。",
+        "en": "The sky is deep blue."
+      }
+    ]
+  },
+  "真っ白": {
+    "reading": "まっしろ",
+    "class": "na",
+    "translation": "pure white",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "山は雪で真っ白です。",
+        "en": "The mountain is white with snow."
+      }
+    ],
+    "iTwin": true
+  },
+  "まれ": {
+    "reading": "まれ",
+    "class": "na",
+    "translation": "rare",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "このような例はまれです。",
+        "en": "Cases like this are rare."
+      }
+    ]
+  },
+  "みじめ": {
+    "reading": "みじめ",
+    "class": "na",
+    "translation": "miserable",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "試験に落ちて、みじめな気持ちです。",
+        "en": "I failed the exam and feel miserable."
+      }
+    ]
+  },
+  "めちゃくちゃ": {
+    "reading": "めちゃくちゃ",
+    "class": "na",
+    "translation": "a mess; absurd",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "部屋がめちゃくちゃです。",
+        "en": "The room is a total mess."
+      }
+    ]
+  },
+  "モダン": {
+    "reading": "モダン",
+    "class": "na",
+    "translation": "modern",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "モダンなデザインの家です。",
+        "en": "It's a house with a modern design."
+      }
+    ]
+  },
+  "余計": {
+    "reading": "よけい",
+    "class": "na",
+    "translation": "unnecessary, uncalled-for",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "余計なことを言わないでください。",
+        "en": "Please don't say unnecessary things."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "乱暴": {
+    "reading": "らんぼう",
+    "class": "na",
+    "translation": "rough, violent",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "乱暴な運転は危ないです。",
+        "en": "Reckless driving is dangerous."
+      }
+    ]
+  },
+  "高度": {
+    "reading": "こうど",
+    "class": "na",
+    "translation": "advanced, high-level",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "この仕事には高度な技術が必要です。",
+        "en": "This job requires advanced skills."
+      }
+    ]
+  },
+  "幼稚": {
+    "reading": "ようち",
+    "class": "na",
+    "translation": "childish",
+    "jlpt": "N2",
+    "examples": [
+      {
+        "ja": "幼稚なことはやめてください。",
+        "en": "Please stop being childish."
+      }
+    ]
+  },
+  "心強い": {
+    "reading": "こころづよい",
+    "class": "i",
+    "translation": "reassuring",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "あなたがいてくれて心強いです。",
+        "en": "Having you here is reassuring."
+      }
+    ]
+  },
+  "心細い": {
+    "reading": "こころぼそい",
+    "class": "i",
+    "translation": "uneasy, forlorn",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "一人で外国に行くのは心細いです。",
+        "en": "Going abroad alone makes me uneasy."
+      }
+    ]
+  },
+  "快い": {
+    "reading": "こころよい",
+    "class": "i",
+    "translation": "pleasant; willing",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は快く引き受けてくれました。",
+        "en": "He willingly took it on."
+      }
+    ]
+  },
+  "好ましい": {
+    "reading": "このましい",
+    "class": "i",
+    "translation": "desirable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "その変化は好ましいです。",
+        "en": "That change is desirable."
+      }
+    ]
+  },
+  "けがらわしい": {
+    "reading": "けがらわしい",
+    "class": "i",
+    "translation": "filthy, disgusting",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "けがらわしい話は聞きたくありません。",
+        "en": "I don't want to hear such filthy talk."
+      }
+    ]
+  },
+  "煙たい": {
+    "reading": "けむたい",
+    "class": "i",
+    "translation": "smoky; awkward to be around",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "部屋がたばこで煙たいです。",
+        "en": "The room is smoky from cigarettes."
+      }
+    ]
+  },
+  "尊い": {
+    "reading": "とうとい",
+    "class": "i",
+    "translation": "precious, noble",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "命は尊いものです。",
+        "en": "Life is precious."
+      }
+    ]
+  },
+  "乏しい": {
+    "reading": "とぼしい",
+    "class": "i",
+    "translation": "scarce, lacking",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この地域は水が乏しいです。",
+        "en": "This region is short of water."
+      }
+    ]
+  },
+  "情けない": {
+    "reading": "なさけない",
+    "class": "i",
+    "translation": "pathetic, shameful",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "こんな失敗をするなんて、情けないです。",
+        "en": "Making a mistake like this is pathetic."
+      }
+    ]
+  },
+  "情け深い": {
+    "reading": "なさけぶかい",
+    "class": "i",
+    "translation": "compassionate",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼女は情け深い人です。",
+        "en": "She is a compassionate person."
+      }
+    ]
+  },
+  "名高い": {
+    "reading": "なだかい",
+    "class": "i",
+    "translation": "famous, renowned",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "ここは桜で名高いお寺です。",
+        "en": "This temple is renowned for its cherry blossoms."
+      }
+    ]
+  },
+  "何気ない": {
+    "reading": "なにげない",
+    "class": "i",
+    "translation": "casual, offhand",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "何気ない一言で彼を傷つけてしまいました。",
+        "en": "I hurt him with an offhand remark."
+      }
+    ]
+  },
+  "生臭い": {
+    "reading": "なまぐさい",
+    "class": "i",
+    "translation": "fishy-smelling",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "台所が生臭いです。",
+        "en": "The kitchen smells fishy."
+      }
+    ]
+  },
+  "生ぬるい": {
+    "reading": "なまぬるい",
+    "class": "i",
+    "translation": "lukewarm; half-hearted",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "このビールは生ぬるいです。",
+        "en": "This beer is lukewarm."
+      }
+    ]
+  },
+  "悩ましい": {
+    "reading": "なやましい",
+    "class": "i",
+    "translation": "troubling, vexing",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "どちらを選ぶか、悩ましい問題です。",
+        "en": "Which one to choose is a vexing question."
+      }
+    ]
+  },
+  "なれなれしい": {
+    "reading": "なれなれしい",
+    "class": "i",
+    "translation": "overly familiar",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "初対面なのに、彼はなれなれしいです。",
+        "en": "He's overly familiar for someone I've just met."
+      }
+    ]
+  },
+  "眠たい": {
+    "reading": "ねむたい",
+    "class": "i",
+    "translation": "sleepy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "昼ご飯の後は眠たいです。",
+        "en": "I'm sleepy after lunch."
+      }
+    ]
+  },
+  "望ましい": {
+    "reading": "のぞましい",
+    "class": "i",
+    "translation": "desirable, advisable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "早めに申し込むことが望ましいです。",
+        "en": "It's advisable to apply early."
+      }
+    ]
+  },
+  "著しい": {
+    "reading": "いちじるしい",
+    "class": "i",
+    "translation": "remarkable, marked",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼の日本語は著しく上達しました。",
+        "en": "His Japanese has improved remarkably."
+      }
+    ]
+  },
+  "卑しい": {
+    "reading": "いやしい",
+    "class": "i",
+    "translation": "base, mean",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "他人の物を欲しがるのは卑しいことです。",
+        "en": "Coveting other people's things is base."
+      }
+    ]
+  },
+  "いやらしい": {
+    "reading": "いやらしい",
+    "class": "i",
+    "translation": "nasty, unpleasant",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "人の失敗を笑うなんて、いやらしい人ですね。",
+        "en": "Laughing at other people's mistakes. What a nasty person."
+      }
+    ]
+  },
+  "うっとうしい": {
+    "reading": "うっとうしい",
+    "class": "i",
+    "translation": "gloomy; annoying",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "雨が続いて、うっとうしいです。",
+        "en": "This endless rain is depressing."
+      }
+    ]
+  },
+  "おっかない": {
+    "reading": "おっかない",
+    "class": "i",
+    "translation": "scary (casual)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "あの先生はおっかないです。",
+        "en": "That teacher is scary."
+      }
+    ]
+  },
+  "おびただしい": {
+    "reading": "おびただしい",
+    "class": "i",
+    "translation": "enormous (in number)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "おびただしい数の鳥が空を飛んでいます。",
+        "en": "An enormous number of birds is flying overhead."
+      }
+    ]
+  },
+  "きまりわるい": {
+    "reading": "きまりわるい",
+    "class": "i",
+    "translation": "embarrassed, awkward",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "名前を間違えて、きまりわるかったです。",
+        "en": "I got the name wrong and felt awkward."
+      }
+    ]
+  },
+  "くすぐったい": {
+    "reading": "くすぐったい",
+    "class": "i",
+    "translation": "ticklish",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "足の裏がくすぐったいです。",
+        "en": "The soles of my feet are ticklish."
+      }
+    ]
+  },
+  "あくどい": {
+    "reading": "あくどい",
+    "class": "i",
+    "translation": "crooked, unscrupulous",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "あくどい商売をする会社です。",
+        "en": "It's a company with crooked business practices."
+      }
+    ]
+  },
+  "浅ましい": {
+    "reading": "あさましい",
+    "class": "i",
+    "translation": "despicable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "お金のためにうそをつくのは浅ましいです。",
+        "en": "Lying for money is despicable."
+      }
+    ]
+  },
+  "あっけない": {
+    "reading": "あっけない",
+    "class": "i",
+    "translation": "disappointingly quick",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "試合はあっけなく終わりました。",
+        "en": "The match was over disappointingly quickly."
+      }
+    ]
+  },
+  "荒っぽい": {
+    "reading": "あらっぽい",
+    "class": "i",
+    "translation": "rough",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は運転が荒っぽいです。",
+        "en": "He drives roughly."
+      }
+    ]
+  },
+  "すがすがしい": {
+    "reading": "すがすがしい",
+    "class": "i",
+    "translation": "refreshing",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "朝の空気はすがすがしいです。",
+        "en": "The morning air is refreshing."
+      }
+    ]
+  },
+  "すばしこい": {
+    "reading": "すばしこい",
+    "class": "i",
+    "translation": "nimble",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "猫はすばしこい動物です。",
+        "en": "Cats are nimble animals."
+      }
+    ]
+  },
+  "素早い": {
+    "reading": "すばやい",
+    "class": "i",
+    "translation": "quick",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は素早く答えました。",
+        "en": "He answered quickly."
+      }
+    ]
+  },
+  "切ない": {
+    "reading": "せつない",
+    "class": "i",
+    "translation": "heartbreaking, wistful",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "別れはいつも切ないです。",
+        "en": "Partings are always heartbreaking."
+      }
+    ]
+  },
+  "そっけない": {
+    "reading": "そっけない",
+    "class": "i",
+    "translation": "curt, cold",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼女の返事はそっけなかったです。",
+        "en": "Her reply was curt."
+      }
+    ]
+  },
+  "たくましい": {
+    "reading": "たくましい",
+    "class": "i",
+    "translation": "sturdy; resilient",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼はたくましい体をしています。",
+        "en": "He has a sturdy build."
+      }
+    ]
+  },
+  "たやすい": {
+    "reading": "たやすい",
+    "class": "i",
+    "translation": "easy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "それはたやすいことではありません。",
+        "en": "That is no easy matter."
+      }
+    ]
+  },
+  "だるい": {
+    "reading": "だるい",
+    "class": "i",
+    "translation": "sluggish, listless",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "熱があって、体がだるいです。",
+        "en": "I have a fever and feel sluggish."
+      }
+    ]
+  },
+  "でかい": {
+    "reading": "でかい",
+    "class": "i",
+    "translation": "huge (casual)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "でかい犬ですね。",
+        "en": "What a huge dog."
+      }
+    ]
+  },
+  "煩わしい": {
+    "reading": "わずらわしい",
+    "class": "i",
+    "translation": "troublesome, a nuisance",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "手続きが煩わしいです。",
+        "en": "The paperwork is a nuisance."
+      }
+    ]
+  },
+  "はかない": {
+    "reading": "はかない",
+    "class": "i",
+    "translation": "fleeting, transient",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "桜の花ははかないです。",
+        "en": "Cherry blossoms are fleeting."
+      }
+    ]
+  },
+  "ばかばかしい": {
+    "reading": "ばかばかしい",
+    "class": "i",
+    "translation": "ridiculous",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "ばかばかしい話ですね。",
+        "en": "What a ridiculous story."
+      }
+    ]
+  },
+  "しぶとい": {
+    "reading": "しぶとい",
+    "class": "i",
+    "translation": "tenacious",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "あのチームはしぶといです。",
+        "en": "That team is tenacious."
+      }
+    ]
+  },
+  "ふさわしい": {
+    "reading": "ふさわしい",
+    "class": "i",
+    "translation": "suitable, fitting",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "その服はパーティーにふさわしくないです。",
+        "en": "Those clothes aren't suitable for the party."
+      }
+    ]
+  },
+  "紛らわしい": {
+    "reading": "まぎらわしい",
+    "class": "i",
+    "translation": "confusing, misleading",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この二つの漢字は紛らわしいです。",
+        "en": "These two kanji are easy to confuse."
+      }
+    ]
+  },
+  "待ち遠しい": {
+    "reading": "まちどおしい",
+    "class": "i",
+    "translation": "eagerly awaited",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "夏休みが待ち遠しいです。",
+        "en": "I can't wait for the summer holidays."
+      }
+    ]
+  },
+  "真ん丸い": {
+    "reading": "まんまるい",
+    "class": "i",
+    "translation": "perfectly round",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "今夜は真ん丸い月が出ています。",
+        "en": "There's a perfectly round moon out tonight."
+      }
+    ]
+  },
+  "見苦しい": {
+    "reading": "みぐるしい",
+    "class": "i",
+    "translation": "unseemly, unsightly",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "言い訳をするのは見苦しいです。",
+        "en": "Making excuses is unseemly."
+      }
+    ]
+  },
+  "みすぼらしい": {
+    "reading": "みすぼらしい",
+    "class": "i",
+    "translation": "shabby",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "みすぼらしい服を着た男が立っていました。",
+        "en": "A man in shabby clothes was standing there."
+      }
+    ]
+  },
+  "むなしい": {
+    "reading": "むなしい",
+    "class": "i",
+    "translation": "empty, futile",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "一人で食べる夕食はむなしいです。",
+        "en": "Eating dinner alone feels empty."
+      }
+    ]
+  },
+  "目覚ましい": {
+    "reading": "めざましい",
+    "class": "i",
+    "translation": "remarkable, striking",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この町は目覚ましい発展をとげました。",
+        "en": "This town has developed remarkably."
+      }
+    ]
+  },
+  "物足りない": {
+    "reading": "ものたりない",
+    "class": "i",
+    "translation": "unsatisfying, lacking something",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この料理は少し物足りないです。",
+        "en": "This dish is a little lacking."
+      }
+    ]
+  },
+  "脆い": {
+    "reading": "もろい",
+    "class": "i",
+    "translation": "brittle, fragile",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "このガラスは脆いです。",
+        "en": "This glass is fragile."
+      }
+    ]
+  },
+  "安っぽい": {
+    "reading": "やすっぽい",
+    "class": "i",
+    "translation": "cheap-looking",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この時計は安っぽいです。",
+        "en": "This watch looks cheap."
+      }
+    ]
+  },
+  "ややこしい": {
+    "reading": "ややこしい",
+    "class": "i",
+    "translation": "complicated",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "説明がややこしいです。",
+        "en": "The explanation is complicated."
+      }
+    ]
+  },
+  "欲深い": {
+    "reading": "よくふかい",
+    "class": "i",
+    "translation": "greedy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は欲深い人です。",
+        "en": "He is a greedy person."
+      }
+    ]
+  },
+  "華々しい": {
+    "reading": "はなばなしい",
+    "class": "i",
+    "translation": "brilliant, spectacular",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼女は華々しいデビューをしました。",
+        "en": "She made a spectacular debut."
+      }
+    ]
+  },
+  "久しい": {
+    "reading": "ひさしい",
+    "class": "i",
+    "translation": "long (time)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼と会わなくなって久しいです。",
+        "en": "It's been a long time since I last saw him."
+      }
+    ]
+  },
+  "平たい": {
+    "reading": "ひらたい",
+    "class": "i",
+    "translation": "flat",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "平たいお皿を出してください。",
+        "en": "Please bring out a flat plate."
+      }
+    ]
+  },
+  "厳密": {
+    "reading": "げんみつ",
+    "class": "na",
+    "translation": "strict, precise",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "厳密に言うと、それは正しくありません。",
+        "en": "Strictly speaking, that isn't right."
+      }
+    ]
+  },
+  "賢明": {
+    "reading": "けんめい",
+    "class": "na",
+    "translation": "wise",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "それは賢明な判断です。",
+        "en": "That's a wise decision."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "高尚": {
+    "reading": "こうしょう",
+    "class": "na",
+    "translation": "refined, lofty",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "高尚な趣味をお持ちですね。",
+        "en": "You have refined tastes."
+      }
+    ]
+  },
+  "好調": {
+    "reading": "こうちょう",
+    "class": "na",
+    "translation": "going well, in good shape",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "新製品の売れ行きは好調です。",
+        "en": "Sales of the new product are going well."
+      }
+    ]
+  },
+  "巧妙": {
+    "reading": "こうみょう",
+    "class": "na",
+    "translation": "clever, ingenious",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "巧妙な手口でだまされました。",
+        "en": "I was taken in by an ingenious trick."
+      }
+    ]
+  },
+  "小柄": {
+    "reading": "こがら",
+    "class": "na",
+    "translation": "small (build)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼女は小柄です。",
+        "en": "She is petite."
+      }
+    ]
+  },
+  "滑稽": {
+    "reading": "こっけい",
+    "class": "na",
+    "translation": "comical",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼の話し方は滑稽です。",
+        "en": "The way he talks is comical."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "孤独": {
+    "reading": "こどく",
+    "class": "na",
+    "translation": "lonely, solitary",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "都会で孤独な生活を送っています。",
+        "en": "I live a solitary life in the city."
+      }
+    ]
+  },
+  "細やか": {
+    "reading": "こまやか",
+    "class": "na",
+    "translation": "thoughtful, attentive",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "細やかな心づかいに感謝します。",
+        "en": "Thank you for your thoughtful consideration."
+      }
+    ]
+  },
+  "雑": {
+    "reading": "ざつ",
+    "class": "na",
+    "translation": "sloppy, rough",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼の仕事は雑です。",
+        "en": "His work is sloppy."
+      }
+    ]
+  },
+  "残酷": {
+    "reading": "ざんこく",
+    "class": "na",
+    "translation": "cruel",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "残酷な映画は見たくないです。",
+        "en": "I don't want to watch cruel films."
+      }
+    ]
+  },
+  "健全": {
+    "reading": "けんぜん",
+    "class": "na",
+    "translation": "healthy, sound",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "健全な体に健全な心が宿ります。",
+        "en": "A sound mind lives in a sound body."
+      }
+    ]
+  },
+  "ドライ": {
+    "reading": "ドライ",
+    "class": "na",
+    "translation": "unsentimental, businesslike",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は人間関係がドライです。",
+        "en": "He's unsentimental about relationships."
+      }
+    ]
+  },
+  "鈍感": {
+    "reading": "どんかん",
+    "class": "na",
+    "translation": "insensitive, obtuse",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は人の気持ちに鈍感です。",
+        "en": "He is insensitive to other people's feelings."
+      }
+    ]
+  },
+  "和やか": {
+    "reading": "なごやか",
+    "class": "na",
+    "translation": "friendly, harmonious",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "会は和やかな雰囲気でした。",
+        "en": "The gathering had a friendly atmosphere."
+      }
+    ]
+  },
+  "滑らか": {
+    "reading": "なめらか",
+    "class": "na",
+    "translation": "smooth",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この石は表面が滑らかです。",
+        "en": "This stone has a smooth surface."
+      }
+    ]
+  },
+  "のどか": {
+    "reading": "のどか",
+    "class": "na",
+    "translation": "peaceful, tranquil",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "のどかな田舎で育ちました。",
+        "en": "I grew up in the peaceful countryside."
+      }
+    ]
+  },
+  "一様": {
+    "reading": "いちよう",
+    "class": "na",
+    "translation": "uniform, equal",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "みんな一様に驚きました。",
+        "en": "Everyone was equally surprised."
+      }
+    ]
+  },
+  "陰気": {
+    "reading": "いんき",
+    "class": "na",
+    "translation": "gloomy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "陰気な顔をしないでください。",
+        "en": "Please don't look so gloomy."
+      }
+    ]
+  },
+  "エレガント": {
+    "reading": "エレガント",
+    "class": "na",
+    "translation": "elegant",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "エレガントなドレスですね。",
+        "en": "What an elegant dress."
+      }
+    ]
+  },
+  "円滑": {
+    "reading": "えんかつ",
+    "class": "na",
+    "translation": "smooth (running)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "会議は円滑に進みました。",
+        "en": "The meeting went smoothly."
+      }
+    ]
+  },
+  "婉曲": {
+    "reading": "えんきょく",
+    "class": "na",
+    "translation": "indirect, roundabout",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は婉曲に断りました。",
+        "en": "He declined in a roundabout way."
+      }
+    ]
+  },
+  "円満": {
+    "reading": "えんまん",
+    "class": "na",
+    "translation": "harmonious, amicable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "二人は円満な家庭を築きました。",
+        "en": "The two of them built a harmonious home."
+      }
+    ]
+  },
+  "大柄": {
+    "reading": "おおがら",
+    "class": "na",
+    "translation": "large (build)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は大柄な男性です。",
+        "en": "He is a big man."
+      }
+    ]
+  },
+  "おおげさ": {
+    "reading": "おおげさ",
+    "class": "na",
+    "translation": "exaggerated",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼はいつも話がおおげさです。",
+        "en": "He always exaggerates."
+      }
+    ]
+  },
+  "大幅": {
+    "reading": "おおはば",
+    "class": "na",
+    "translation": "substantial, large-scale",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "電車が大幅に遅れました。",
+        "en": "The train was badly delayed."
+      }
+    ]
+  },
+  "臆病": {
+    "reading": "おくびょう",
+    "class": "na",
+    "translation": "cowardly, timid",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "私は臆病なので、夜は一人で外に出ません。",
+        "en": "I'm timid, so I don't go out alone at night."
+      }
+    ]
+  },
+  "厳か": {
+    "reading": "おごそか",
+    "class": "na",
+    "translation": "solemn",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "式は厳かに行われました。",
+        "en": "The ceremony was held solemnly."
+      }
+    ]
+  },
+  "愚か": {
+    "reading": "おろか",
+    "class": "na",
+    "translation": "foolish",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "愚かな間違いをしました。",
+        "en": "I made a foolish mistake."
+      }
+    ]
+  },
+  "おろそか": {
+    "reading": "おろそか",
+    "class": "na",
+    "translation": "negligent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "勉強をおろそかにしてはいけません。",
+        "en": "You mustn't neglect your studies."
+      }
+    ]
+  },
+  "温和": {
+    "reading": "おんわ",
+    "class": "na",
+    "translation": "gentle, mild",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は温和な性格です。",
+        "en": "He has a gentle personality."
+      }
+    ]
+  },
+  "かすか": {
+    "reading": "かすか",
+    "class": "na",
+    "translation": "faint",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "かすかな音が聞こえました。",
+        "en": "I heard a faint sound."
+      }
+    ]
+  },
+  "勝手": {
+    "reading": "かって",
+    "class": "na",
+    "translation": "selfish; as one pleases",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "勝手なことをしないでください。",
+        "en": "Please don't just do as you please."
+      }
+    ]
+  },
+  "活発": {
+    "reading": "かっぱつ",
+    "class": "na",
+    "translation": "lively, active",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼女は活発な子どもです。",
+        "en": "She is a lively child."
+      }
+    ]
+  },
+  "簡潔": {
+    "reading": "かんけつ",
+    "class": "na",
+    "translation": "concise",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "簡潔に説明してください。",
+        "en": "Please explain concisely."
+      }
+    ]
+  },
+  "頑固": {
+    "reading": "がんこ",
+    "class": "na",
+    "translation": "stubborn",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "祖父は頑固です。",
+        "en": "My grandfather is stubborn."
+      }
+    ]
+  },
+  "頑丈": {
+    "reading": "がんじょう",
+    "class": "na",
+    "translation": "sturdy, solid",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "頑丈な箱に入れました。",
+        "en": "I put it in a sturdy box."
+      }
+    ]
+  },
+  "肝心": {
+    "reading": "かんじん",
+    "class": "na",
+    "translation": "essential, crucial",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "肝心なことを忘れていました。",
+        "en": "I'd forgotten the most important thing."
+      }
+    ]
+  },
+  "簡素": {
+    "reading": "かんそ",
+    "class": "na",
+    "translation": "simple, plain",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "簡素な部屋に住んでいます。",
+        "en": "I live in a simple room."
+      }
+    ]
+  },
+  "完璧": {
+    "reading": "かんぺき",
+    "class": "na",
+    "translation": "perfect",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼の発音は完璧です。",
+        "en": "His pronunciation is perfect."
+      }
+    ]
+  },
+  "寛容": {
+    "reading": "かんよう",
+    "class": "na",
+    "translation": "tolerant",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は他人の失敗に寛容です。",
+        "en": "He is tolerant of other people's mistakes."
+      }
+    ]
+  },
+  "気軽": {
+    "reading": "きがる",
+    "class": "na",
+    "translation": "casual, lighthearted",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "いつでも気軽に声をかけてください。",
+        "en": "Feel free to come and talk to me any time."
+      }
+    ],
+    "iTwin": true
+  },
+  "きざ": {
+    "reading": "きざ",
+    "class": "na",
+    "translation": "affected, pretentious",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼の話し方はきざです。",
+        "en": "The way he talks is pretentious."
+      }
+    ]
+  },
+  "几帳面": {
+    "reading": "きちょうめん",
+    "class": "na",
+    "translation": "meticulous",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "姉は几帳面な性格です。",
+        "en": "My older sister is meticulous."
+      }
+    ]
+  },
+  "生真面目": {
+    "reading": "きまじめ",
+    "class": "na",
+    "translation": "overly serious, earnest",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は生真面目な人です。",
+        "en": "He is a very earnest person."
+      }
+    ]
+  },
+  "華奢": {
+    "reading": "きゃしゃ",
+    "class": "na",
+    "translation": "delicate, slender",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼女は華奢な体つきです。",
+        "en": "She has a slender build."
+      }
+    ]
+  },
+  "窮屈": {
+    "reading": "きゅうくつ",
+    "class": "na",
+    "translation": "cramped; tight",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この靴は窮屈です。",
+        "en": "These shoes are tight."
+      }
+    ]
+  },
+  "強硬": {
+    "reading": "きょうこう",
+    "class": "na",
+    "translation": "firm, hard-line",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "政府は強硬な態度をとりました。",
+        "en": "The government took a hard-line stance."
+      }
+    ]
+  },
+  "強烈": {
+    "reading": "きょうれつ",
+    "class": "na",
+    "translation": "intense",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "強烈な日差しに注意してください。",
+        "en": "Watch out for the intense sunlight."
+      }
+    ]
+  },
+  "極端": {
+    "reading": "きょくたん",
+    "class": "na",
+    "translation": "extreme",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "極端な考えは危険です。",
+        "en": "Extreme ideas are dangerous."
+      }
+    ]
+  },
+  "清らか": {
+    "reading": "きよらか",
+    "class": "na",
+    "translation": "pure, clear",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "清らかな水が流れています。",
+        "en": "Clear water is flowing."
+      }
+    ]
+  },
+  "きらびやか": {
+    "reading": "きらびやか",
+    "class": "na",
+    "translation": "gorgeous, dazzling",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "きらびやかな衣装で踊りました。",
+        "en": "They danced in dazzling costumes."
+      }
+    ]
+  },
+  "勤勉": {
+    "reading": "きんべん",
+    "class": "na",
+    "translation": "diligent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は勤勉な学生です。",
+        "en": "He is a diligent student."
+      }
+    ]
+  },
+  "軽快": {
+    "reading": "けいかい",
+    "class": "na",
+    "translation": "light, nimble",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "軽快な音楽が流れています。",
+        "en": "Light, upbeat music is playing."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "軽率": {
+    "reading": "けいそつ",
+    "class": "na",
+    "translation": "rash, careless",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "軽率な発言をしてしまいました。",
+        "en": "I made a careless remark."
+      }
+    ]
+  },
+  "鮮やか": {
+    "reading": "あざやか",
+    "class": "na",
+    "translation": "vivid",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "鮮やかな色の花が咲いています。",
+        "en": "Brightly coloured flowers are blooming."
+      }
+    ]
+  },
+  "あやふや": {
+    "reading": "あやふや",
+    "class": "na",
+    "translation": "vague, uncertain",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "記憶があやふやです。",
+        "en": "My memory is hazy."
+      }
+    ]
+  },
+  "いい加減": {
+    "reading": "いいかげん",
+    "class": "na",
+    "translation": "careless, irresponsible",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "いい加減な仕事をしないでください。",
+        "en": "Please don't do sloppy work."
+      }
+    ]
+  },
+  "神聖": {
+    "reading": "しんせい",
+    "class": "na",
+    "translation": "sacred",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "ここは神聖な場所です。",
+        "en": "This is a sacred place."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "迅速": {
+    "reading": "じんそく",
+    "class": "na",
+    "translation": "prompt, swift",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "迅速な対応をお願いします。",
+        "en": "We ask for a prompt response."
+      }
+    ]
+  },
+  "健やか": {
+    "reading": "すこやか",
+    "class": "na",
+    "translation": "healthy, sound",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "子どもたちが健やかに育っています。",
+        "en": "The children are growing up healthy."
+      }
+    ]
+  },
+  "速やか": {
+    "reading": "すみやか",
+    "class": "na",
+    "translation": "prompt, speedy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "速やかに会場から出てください。",
+        "en": "Please leave the venue promptly."
+      }
+    ]
+  },
+  "誠実": {
+    "reading": "せいじつ",
+    "class": "na",
+    "translation": "sincere",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は誠実な人です。",
+        "en": "He is a sincere person."
+      }
+    ]
+  },
+  "清純": {
+    "reading": "せいじゅん",
+    "class": "na",
+    "translation": "pure, innocent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "清純なイメージの歌手です。",
+        "en": "She's a singer with a wholesome image."
+      }
+    ]
+  },
+  "正常": {
+    "reading": "せいじょう",
+    "class": "na",
+    "translation": "normal",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "検査の結果は正常でした。",
+        "en": "The test results were normal."
+      }
+    ]
+  },
+  "盛大": {
+    "reading": "せいだい",
+    "class": "na",
+    "translation": "grand, magnificent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "盛大なパーティーが開かれました。",
+        "en": "A grand party was held."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "正当": {
+    "reading": "せいとう",
+    "class": "na",
+    "translation": "just, legitimate",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "正当な理由があります。",
+        "en": "There's a legitimate reason."
+      }
+    ]
+  },
+  "精密": {
+    "reading": "せいみつ",
+    "class": "na",
+    "translation": "precise",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "これは精密な機械です。",
+        "en": "This is a precision machine."
+      }
+    ]
+  },
+  "切実": {
+    "reading": "せつじつ",
+    "class": "na",
+    "translation": "pressing, earnest",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "水不足は切実な問題です。",
+        "en": "The water shortage is a pressing problem."
+      }
+    ]
+  },
+  "先天的": {
+    "reading": "せんてんてき",
+    "class": "na",
+    "translation": "innate, congenital",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼には先天的な才能があります。",
+        "en": "He has an innate talent."
+      }
+    ]
+  },
+  "善良": {
+    "reading": "ぜんりょう",
+    "class": "na",
+    "translation": "good, virtuous",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は善良な市民です。",
+        "en": "He is a good citizen."
+      }
+    ]
+  },
+  "壮大": {
+    "reading": "そうだい",
+    "class": "na",
+    "translation": "grand, magnificent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "壮大な景色が広がっています。",
+        "en": "A magnificent view stretches out before us."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "素朴": {
+    "reading": "そぼく",
+    "class": "na",
+    "translation": "simple, unsophisticated",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "素朴な味の料理です。",
+        "en": "It's a dish with a simple, honest taste."
+      }
+    ]
+  },
+  "ぞんざい": {
+    "reading": "ぞんざい",
+    "class": "na",
+    "translation": "rough, careless",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "物をぞんざいに扱わないでください。",
+        "en": "Please don't handle things carelessly."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "大胆": {
+    "reading": "だいたん",
+    "class": "na",
+    "translation": "bold",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "大胆なデザインの服です。",
+        "en": "These clothes have a bold design."
+      }
+    ]
+  },
+  "対等": {
+    "reading": "たいとう",
+    "class": "na",
+    "translation": "equal, on equal terms",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "私たちは対等な関係です。",
+        "en": "We're on equal terms."
+      }
+    ]
+  },
+  "タイムリー": {
+    "reading": "タイムリー",
+    "class": "na",
+    "translation": "timely",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "タイムリーな話題ですね。",
+        "en": "That's a timely topic."
+      }
+    ]
+  },
+  "巧み": {
+    "reading": "たくみ",
+    "class": "na",
+    "translation": "skilful",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は巧みに話をそらしました。",
+        "en": "He skilfully changed the subject."
+      }
+    ]
+  },
+  "達者": {
+    "reading": "たっしゃ",
+    "class": "na",
+    "translation": "skilled; in good health",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は英語が達者です。",
+        "en": "He's fluent in English."
+      }
+    ]
+  },
+  "多忙": {
+    "reading": "たぼう",
+    "class": "na",
+    "translation": "very busy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "多忙な毎日を送っています。",
+        "en": "I lead a very busy life."
+      }
+    ]
+  },
+  "多様": {
+    "reading": "たよう",
+    "class": "na",
+    "translation": "diverse",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "多様な意見を聞きました。",
+        "en": "We heard a wide range of opinions."
+      }
+    ]
+  },
+  "短気": {
+    "reading": "たんき",
+    "class": "na",
+    "translation": "short-tempered",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "父は短気です。",
+        "en": "My father is short-tempered."
+      }
+    ]
+  },
+  "単調": {
+    "reading": "たんちょう",
+    "class": "na",
+    "translation": "monotonous",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "単調な仕事に飽きました。",
+        "en": "I'm tired of monotonous work."
+      }
+    ]
+  },
+  "知的": {
+    "reading": "ちてき",
+    "class": "na",
+    "translation": "intellectual",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "知的な会話を楽しみました。",
+        "en": "We enjoyed an intellectual conversation."
+      }
+    ]
+  },
+  "重宝": {
+    "reading": "ちょうほう",
+    "class": "na",
+    "translation": "handy, useful",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "この鍋はとても重宝です。",
+        "en": "This pot is very handy."
+      }
+    ]
+  },
+  "著名": {
+    "reading": "ちょめい",
+    "class": "na",
+    "translation": "famous, eminent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "著名な作家が講演しました。",
+        "en": "An eminent author gave a lecture."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "痛切": {
+    "reading": "つうせつ",
+    "class": "na",
+    "translation": "keen, acute",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "経験の大切さを痛切に感じました。",
+        "en": "I keenly felt the value of experience."
+      }
+    ]
+  },
+  "手軽": {
+    "reading": "てがる",
+    "class": "na",
+    "translation": "easy, simple",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "手軽な料理を教えてください。",
+        "en": "Please teach me an easy dish."
+      }
+    ],
+    "iTwin": true
+  },
+  "露骨": {
+    "reading": "ろこつ",
+    "class": "na",
+    "translation": "blatant, open",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は露骨に嫌な顔をしました。",
+        "en": "He openly made a face."
+      }
+    ]
+  },
+  "ロマンチック": {
+    "reading": "ロマンチック",
+    "class": "na",
+    "translation": "romantic",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "ロマンチックな映画が好きです。",
+        "en": "I like romantic films."
+      }
+    ]
+  },
+  "質素": {
+    "reading": "しっそ",
+    "class": "na",
+    "translation": "frugal, simple",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "祖父母は質素な生活をしています。",
+        "en": "My grandparents live frugally."
+      }
+    ]
+  },
+  "しとやか": {
+    "reading": "しとやか",
+    "class": "na",
+    "translation": "graceful, ladylike",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼女はしとやかな人です。",
+        "en": "She is a graceful person."
+      }
+    ]
+  },
+  "しなやか": {
+    "reading": "しなやか",
+    "class": "na",
+    "translation": "supple, flexible",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "猫の体はしなやかです。",
+        "en": "Cats' bodies are supple."
+      }
+    ]
+  },
+  "柔軟": {
+    "reading": "じゅうなん",
+    "class": "na",
+    "translation": "flexible",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "柔軟な考え方が必要です。",
+        "en": "A flexible way of thinking is needed."
+      }
+    ]
+  },
+  "敏感": {
+    "reading": "びんかん",
+    "class": "na",
+    "translation": "sensitive",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "私は寒さに敏感です。",
+        "en": "I'm sensitive to the cold."
+      }
+    ]
+  },
+  "貧弱": {
+    "reading": "ひんじゃく",
+    "class": "na",
+    "translation": "poor, meagre",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "内容が貧弱な報告書です。",
+        "en": "It's a report with meagre content."
+      }
+    ]
+  },
+  "頻繁": {
+    "reading": "ひんぱん",
+    "class": "na",
+    "translation": "frequent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "最近、地震が頻繁に起きています。",
+        "en": "Earthquakes have been frequent recently."
+      }
+    ]
+  },
+  "貧乏": {
+    "reading": "びんぼう",
+    "class": "na",
+    "translation": "poor",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "学生のころは貧乏でした。",
+        "en": "I was poor when I was a student."
+      }
+    ]
+  },
+  "不可欠": {
+    "reading": "ふかけつ",
+    "class": "na",
+    "translation": "indispensable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "水は生活に不可欠です。",
+        "en": "Water is indispensable to life."
+      }
+    ]
+  },
+  "不吉": {
+    "reading": "ふきつ",
+    "class": "na",
+    "translation": "ominous",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "不吉な夢を見ました。",
+        "en": "I had an ominous dream."
+      }
+    ]
+  },
+  "不審": {
+    "reading": "ふしん",
+    "class": "na",
+    "translation": "suspicious",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "不審な人物を見かけたら、連絡してください。",
+        "en": "If you see anyone suspicious, please let us know."
+      }
+    ]
+  },
+  "不当": {
+    "reading": "ふとう",
+    "class": "na",
+    "translation": "unjust",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "不当な扱いを受けました。",
+        "en": "I was treated unjustly."
+      }
+    ]
+  },
+  "無難": {
+    "reading": "ぶなん",
+    "class": "na",
+    "translation": "safe, acceptable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "無難な色を選びました。",
+        "en": "I chose a safe colour."
+      }
+    ]
+  },
+  "無礼": {
+    "reading": "ぶれい",
+    "class": "na",
+    "translation": "rude",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "無礼な態度をとってはいけません。",
+        "en": "You mustn't behave rudely."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  },
+  "未熟": {
+    "reading": "みじゅく",
+    "class": "na",
+    "translation": "inexperienced, immature",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "私はまだ未熟です。",
+        "en": "I'm still inexperienced."
+      }
+    ]
+  },
+  "身近": {
+    "reading": "みぢか",
+    "class": "na",
+    "translation": "familiar, close to home",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "環境問題は身近な問題です。",
+        "en": "Environmental problems are close to home."
+      }
+    ],
+    "iTwin": true
+  },
+  "密接": {
+    "reading": "みっせつ",
+    "class": "na",
+    "translation": "close (connection)",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "二つの問題は密接に関係しています。",
+        "en": "The two problems are closely related."
+      }
+    ]
+  },
+  "無意味": {
+    "reading": "むいみ",
+    "class": "na",
+    "translation": "meaningless, pointless",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "無意味な会議が多いです。",
+        "en": "There are a lot of pointless meetings."
+      }
+    ]
+  },
+  "無口": {
+    "reading": "むくち",
+    "class": "na",
+    "translation": "quiet, taciturn",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "父は無口な人です。",
+        "en": "My father is a man of few words."
+      }
+    ]
+  },
+  "無邪気": {
+    "reading": "むじゃき",
+    "class": "na",
+    "translation": "innocent",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "子どもたちの無邪気な笑顔が好きです。",
+        "en": "I love the children's innocent smiles."
+      }
+    ]
+  },
+  "無茶": {
+    "reading": "むちゃ",
+    "class": "na",
+    "translation": "reckless; unreasonable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "無茶なことをしないでください。",
+        "en": "Please don't do anything reckless."
+      }
+    ]
+  },
+  "明白": {
+    "reading": "めいはく",
+    "class": "na",
+    "translation": "obvious, plain",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼がうそをついているのは明白です。",
+        "en": "It's obvious that he's lying."
+      }
+    ]
+  },
+  "明瞭": {
+    "reading": "めいりょう",
+    "class": "na",
+    "translation": "clear, distinct",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼の発音は明瞭です。",
+        "en": "His pronunciation is clear."
+      }
+    ]
+  },
+  "明朗": {
+    "reading": "めいろう",
+    "class": "na",
+    "translation": "cheerful; above-board",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "明朗な会計を心がけています。",
+        "en": "We make a point of keeping our accounts transparent."
+      }
+    ]
+  },
+  "猛烈": {
+    "reading": "もうれつ",
+    "class": "na",
+    "translation": "fierce, intense",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "猛烈な暑さが続いています。",
+        "en": "The intense heat continues."
+      }
+    ]
+  },
+  "憂鬱": {
+    "reading": "ゆううつ",
+    "class": "na",
+    "translation": "depressed, gloomy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "月曜日の朝は憂鬱です。",
+        "en": "Monday mornings are depressing."
+      }
+    ]
+  },
+  "有益": {
+    "reading": "ゆうえき",
+    "class": "na",
+    "translation": "beneficial, useful",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "有益な情報をありがとうございます。",
+        "en": "Thank you for the useful information."
+      }
+    ]
+  },
+  "勇敢": {
+    "reading": "ゆうかん",
+    "class": "na",
+    "translation": "brave",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "勇敢な消防士が子どもを助けました。",
+        "en": "A brave firefighter rescued the child."
+      }
+    ]
+  },
+  "優美": {
+    "reading": "ゆうび",
+    "class": "na",
+    "translation": "graceful, elegant",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "優美な踊りに見とれました。",
+        "en": "I was captivated by the graceful dance."
+      }
+    ]
+  },
+  "有望": {
+    "reading": "ゆうぼう",
+    "class": "na",
+    "translation": "promising",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は有望な若手選手です。",
+        "en": "He is a promising young player."
+      }
+    ]
+  },
+  "有力": {
+    "reading": "ゆうりょく",
+    "class": "na",
+    "translation": "influential, leading",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は有力な候補です。",
+        "en": "He is a leading candidate."
+      }
+    ]
+  },
+  "ユニーク": {
+    "reading": "ユニーク",
+    "class": "na",
+    "translation": "original, unique",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "ユニークなアイデアですね。",
+        "en": "What an original idea."
+      }
+    ]
+  },
+  "緩やか": {
+    "reading": "ゆるやか",
+    "class": "na",
+    "translation": "gentle, gradual",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "緩やかな坂を上りました。",
+        "en": "We went up a gentle slope."
+      }
+    ]
+  },
+  "良好": {
+    "reading": "りょうこう",
+    "class": "na",
+    "translation": "good, favourable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "二国の関係は良好です。",
+        "en": "Relations between the two countries are good."
+      }
+    ]
+  },
+  "良質": {
+    "reading": "りょうしつ",
+    "class": "na",
+    "translation": "good-quality",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "良質な材料を使っています。",
+        "en": "We use good-quality materials."
+      }
+    ]
+  },
+  "ルーズ": {
+    "reading": "ルーズ",
+    "class": "na",
+    "translation": "lax, sloppy",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼は時間にルーズです。",
+        "en": "He's sloppy about time."
+      }
+    ]
+  },
+  "冷酷": {
+    "reading": "れいこく",
+    "class": "na",
+    "translation": "cruel, cold-hearted",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "冷酷な人物が登場します。",
+        "en": "A cold-hearted character appears."
+      }
+    ]
+  },
+  "冷淡": {
+    "reading": "れいたん",
+    "class": "na",
+    "translation": "indifferent, cold",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼の態度は冷淡でした。",
+        "en": "His attitude was cold."
+      }
+    ]
+  },
+  "華やか": {
+    "reading": "はなやか",
+    "class": "na",
+    "translation": "showy, gorgeous",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "華やかな服装の人が集まりました。",
+        "en": "Glamorously dressed people gathered."
+      }
+    ]
+  },
+  "遥か": {
+    "reading": "はるか",
+    "class": "na",
+    "translation": "far, distant",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "遥か遠くに山が見えます。",
+        "en": "I can see mountains far in the distance."
+      }
+    ]
+  },
+  "悲惨": {
+    "reading": "ひさん",
+    "class": "na",
+    "translation": "tragic, miserable",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "悲惨な事故がありました。",
+        "en": "There was a tragic accident."
+      }
+    ]
+  },
+  "ひそか": {
+    "reading": "ひそか",
+    "class": "na",
+    "translation": "secret, private",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "彼はひそかに計画を立てていました。",
+        "en": "He was secretly making plans."
+      }
+    ]
+  },
+  "気まぐれ": {
+    "reading": "きまぐれ",
+    "class": "na",
+    "translation": "whimsical, fickle",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "山の天気は気まぐれです。",
+        "en": "Mountain weather is fickle."
+      }
+    ]
+  },
+  "詳細": {
+    "reading": "しょうさい",
+    "class": "na",
+    "translation": "detailed",
+    "jlpt": "N1",
+    "examples": [
+      {
+        "ja": "詳細な説明をお願いします。",
+        "en": "Please give a detailed explanation."
+      }
+    ],
+    "note": "な-adjective although it ends in い."
+  }
+}

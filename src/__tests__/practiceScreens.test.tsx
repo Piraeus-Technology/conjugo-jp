@@ -2,7 +2,7 @@ import React from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AccessibilityInfo, Animated, AppState, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { act, fireEvent, render } from '@testing-library/react-native';
+import { act, fireEvent, render, waitFor } from '@testing-library/react-native';
 import ConjugationScreen from '../screens/ConjugationScreen';
 import FlashcardScreen from '../screens/FlashcardScreen';
 import { __resetFlashcardStatsStoreForTests } from '../store/flashcardStatsStore';
@@ -15,8 +15,10 @@ import QuizScreen from '../screens/QuizScreen';
 import { __resetPracticeSettingsStoreForTests, allForms, allLevels, usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { __resetQuizStoreForTests, useQuizStore } from '../store/quizStore';
 import { __resetSessionStoreForTests } from '../store/sessionStore';
-import { __resetSpacedRepStoreForTests } from '../store/spacedRepStore';
+import { __resetSpacedRepStoreForTests, useSpacedRepStore } from '../store/spacedRepStore';
 import verbs from '../data/verbs.json';
+import adjectives from '../data/adjectives.json';
+import type { AdjectiveData } from '../utils/adjectives';
 
 let mockRouteParams: { verb?: string; highlightForm?: string; mode?: string };
 const mockNavigation = { setOptions: jest.fn(), addListener: () => jest.fn() };
@@ -39,6 +41,13 @@ jest.mock('../utils/storeReviewPrompt', () => ({ maybeRequestStoreReview: jest.f
 jest.mock('../utils/speech', () => ({ speak: jest.fn(), stopSpeech: jest.fn() }));
 jest.mock('../utils/flashcardCard', () => ({ generateFlashcard: jest.fn() }));
 jest.mock('../utils/quizQuestion', () => ({ generateQuestion: jest.fn() }));
+// These screens' verb expectations stay deterministic: with no eligible
+// adjectives the practice pool always takes the verb path.
+jest.mock('../utils/adjectivePractice', () => ({
+  countEligibleAdjectives: jest.fn(() => 0),
+  generateAdjectiveQuestion: jest.fn(() => null),
+  generateAdjectiveCard: jest.fn(() => null),
+}));
 
 const question = {
   verb: '食べる', reading: 'たべる', translation: 'to eat', form: 'masu' as const,
@@ -249,4 +258,47 @@ it.each(['focused', 'blurred', 'backgrounded'])('waits for the flip and gates fl
     AppState.currentState = previousAppState;
     act(() => useThemeStore.setState({ autoTTS: false }));
   }
+});
+
+describe('adjective practice', () => {
+  const takai = (adjectives as Record<string, AdjectiveData>)['高い'];
+  afterEach(() => {
+    const mocked = jest.requireMock('../utils/adjectivePractice');
+    mocked.countEligibleAdjectives.mockReturnValue(0);
+    mocked.generateAdjectiveQuestion.mockReturnValue(null);
+    mocked.generateAdjectiveCard.mockReturnValue(null);
+  });
+
+  it('asks an adjective, explains the mistake, and records it under the adjective key', async () => {
+    const mocked = jest.requireMock('../utils/adjectivePractice');
+    mocked.countEligibleAdjectives.mockReturnValue(100000);
+    mocked.generateAdjectiveQuestion.mockReturnValue({
+      word: '高い', reading: 'たかい', translation: takai.translation, form: 'polite_past',
+      correctAnswer: 'たかかったです',
+      options: ['たかかったです', 'たかいでした', 'たかかったでした', 'たかいかったです'],
+      data: takai,
+    });
+    jest.spyOn(Math, 'random').mockReturnValue(0);
+    const screen = await ready(<QuizScreen />);
+    expect(screen.getByText('高い')).toBeTruthy();
+    expect(screen.getByText('丁寧過去形 — Polite Past')).toBeTruthy();
+    await act(async () => fireEvent.press(screen.getByLabelText('Answer: たかいでした')));
+    expect(screen.getByText(/don't take でした/)).toBeTruthy();
+    await waitFor(() => expect(useSpacedRepStore.getState().weights['adj:高い']).toBeGreaterThan(1));
+    expect(useSpacedRepStore.getState().weights['高い']).toBeUndefined();
+  });
+
+  it('shows the also-correct forms on the back of an adjective card', async () => {
+    const mocked = jest.requireMock('../utils/adjectivePractice');
+    mocked.countEligibleAdjectives.mockReturnValue(100000);
+    mocked.generateAdjectiveCard.mockReturnValue({
+      word: '高い', reading: 'たかい', translation: takai.translation, form: 'polite_negative',
+      answer: 'たかくないです', alsoCorrect: ['たかくありません'], data: takai,
+    });
+    jest.spyOn(Math, 'random').mockReturnValue(0);
+    const screen = await ready(<FlashcardScreen />);
+    fireEvent.press(screen.getByLabelText(/^Tap to reveal /));
+    expect(screen.getByText('Also correct: たかくありません')).toBeTruthy();
+    expect(screen.getByLabelText(/Answer: たかくないです\. Also correct: たかくありません\./)).toBeTruthy();
+  });
 });

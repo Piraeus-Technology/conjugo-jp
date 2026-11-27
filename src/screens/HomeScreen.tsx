@@ -20,25 +20,38 @@ import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { usePracticeSettingsStore } from '../store/practiceSettingsStore';
 import { useHistoryStore } from '../store/historyStore';
 import { useFavoritesStore } from '../store/favoritesStore';
-import { searchVerbs, verbList, type SearchResult } from '../utils/verbSearch';
+import { verbList } from '../utils/verbSearch';
+import {
+  browseAdjectives,
+  searchWords,
+  type AdjectiveGroup,
+  type WordSearchResult,
+} from '../utils/wordSearch';
+import { adjectiveKey, adjectiveMap, parseAdjectiveKey } from '../utils/adjectives';
 import { useTodayKey } from '../hooks/useTodayKey';
 import { getDailyVerbPool, getVerbOfTheDayForKey } from '../utils/verbOfTheDay';
 import type { SearchStackParamList } from '../types/navigation';
 import { VerbData, VerbGroup, JLPTLevel } from '../utils/conjugate';
 
 type NavProp = NativeStackNavigationProp<SearchStackParamList>;
+type WordGroup = VerbGroup | AdjectiveGroup;
 
-const groupColors: Record<VerbGroup, { bg: string; text: string; label: string }> = {
-  godan: { bg: '', text: '', label: '五段' },
-  ichidan: { bg: '', text: '', label: '一段' },
-  irregular: { bg: '', text: '', label: '不規則' },
+const groupLabels: Record<WordGroup, string> = {
+  godan: '五段',
+  ichidan: '一段',
+  irregular: '不規則',
+  'i-adjective': 'い形容詞',
+  'na-adjective': 'な形容詞',
+  copula: 'だ・です',
 };
 
 const levelFilters: JLPTLevel[] = ['N5', 'N4', 'N3', 'N2', 'N1'];
-const groupFilters: { value: VerbGroup; label: string }[] = [
+const groupFilters: { value: WordGroup; label: string }[] = [
   { value: 'godan', label: '五段 (Godan)' },
   { value: 'ichidan', label: '一段 (Ichidan)' },
   { value: 'irregular', label: '不規則 (Irregular)' },
+  { value: 'i-adjective', label: 'い形容詞 (i-adj.)' },
+  { value: 'na-adjective', label: 'な形容詞 (na-adj.)' },
 ];
 const transitivityFilters: { value: boolean; label: string }[] = [
   { value: true, label: '他動詞 (Trans.)' },
@@ -53,7 +66,7 @@ export default function HomeScreen() {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [selectedLevels, setSelectedLevels] = useState<JLPTLevel[]>([]);
-  const [selectedGroups, setSelectedGroups] = useState<VerbGroup[]>([]);
+  const [selectedGroups, setSelectedGroups] = useState<WordGroup[]>([]);
   const [selectedTransitivity, setSelectedTransitivity] = useState<boolean[]>([]);
 
   useEffect(() => {
@@ -78,7 +91,7 @@ export default function HomeScreen() {
     );
   }, []);
 
-  const toggleGroup = useCallback((group: VerbGroup) => {
+  const toggleGroup = useCallback((group: WordGroup) => {
     setSelectedGroups(current =>
       current.includes(group) ? current.filter(item => item !== group) : [...current, group]
     );
@@ -92,17 +105,18 @@ export default function HomeScreen() {
 
   const passesFilters = useCallback((item: { jlpt?: string; group?: string; transitive?: boolean }) => {
     const matchesLevel = selectedLevels.length === 0 || selectedLevels.includes(item.jlpt as JLPTLevel);
-    const matchesGroup = selectedGroups.length === 0 || selectedGroups.includes(item.group as VerbGroup);
+    const matchesGroup = selectedGroups.length === 0 || selectedGroups.includes(item.group as WordGroup);
     const matchesTransitivity = selectedTransitivity.length === 0 ||
       (item.transitive !== undefined && selectedTransitivity.includes(item.transitive));
     return matchesLevel && matchesGroup && matchesTransitivity;
   }, [selectedLevels, selectedGroups, selectedTransitivity]);
 
-  const filteredVerbResults = useMemo((): SearchResult[] => {
+  const filteredVerbResults = useMemo((): WordSearchResult[] => {
     if (!hasActiveFilters) return [];
-    return verbList
+    const verbRows: WordSearchResult[] = verbList
       .filter(([, data]) => passesFilters(data))
       .map(([verb, data]) => ({
+        kind: 'verb',
         verb,
         reading: data.reading,
         translation: data.translation,
@@ -111,18 +125,29 @@ export default function HomeScreen() {
         transitive: data.transitive,
         matchType: 'verb',
       }));
+    return [...verbRows, ...browseAdjectives(passesFilters)];
   }, [hasActiveFilters, passesFilters]);
 
-  const results = useMemo((): SearchResult[] => {
+  const results = useMemo((): WordSearchResult[] => {
     if (!query.trim()) return filteredVerbResults;
     if (!debouncedQuery.trim()) return [];
-    return searchVerbs(debouncedQuery, passesFilters);
+    return searchWords(debouncedQuery, passesFilters);
   }, [query, debouncedQuery, filteredVerbResults, passesFilters]);
 
   const handleVerbPress = useCallback((verb: string, highlightForm?: string) => {
     addToHistory(verb);
     navigation.navigate('Conjugation', { verb, highlightForm });
   }, [addToHistory, navigation]);
+
+  const handleAdjectivePress = useCallback((word: string, highlightForm?: string) => {
+    addToHistory(adjectiveKey(word));
+    navigation.navigate('Adjective', { word, highlightForm });
+  }, [addToHistory, navigation]);
+
+  const handleResultPress = useCallback((item: WordSearchResult) => {
+    if (item.kind === 'adjective') handleAdjectivePress(item.verb, item.matchForm);
+    else handleVerbPress(item.verb, item.matchForm);
+  }, [handleAdjectivePress, handleVerbPress]);
 
   const vodDayKey = useTodayKey();
   const activeLevels = usePracticeSettingsStore(state => state.activeLevels);
@@ -132,10 +157,13 @@ export default function HomeScreen() {
     [dailyVerbPool, vodDayKey],
   );
 
-  const groupTagColors: Record<VerbGroup, { bg: string; text: string }> = {
+  const groupTagColors: Record<WordGroup, { bg: string; text: string }> = {
     godan: { bg: colors.godanTag, text: colors.godanTagText },
     ichidan: { bg: colors.ichidanTag, text: colors.ichidanTagText },
     irregular: { bg: colors.irregularTag, text: colors.irregularTagText },
+    'i-adjective': { bg: colors.pillBg, text: colors.pillText },
+    'na-adjective': { bg: colors.pillBg, text: colors.pillText },
+    copula: { bg: colors.pillBg, text: colors.pillText },
   };
 
   const getLevelTagColors = (level: string) => {
@@ -198,17 +226,17 @@ export default function HomeScreen() {
     );
   };
 
-  const renderVerbItem = ({ item }: { item: SearchResult }) => {
-    const tagColor = groupTagColors[item.group as VerbGroup];
+  const renderVerbItem = ({ item }: { item: WordSearchResult }) => {
+    const tagColor = groupTagColors[item.group as WordGroup];
     const levelTagColor = getLevelTagColors(item.jlpt);
     return (
       <TouchableOpacity
         style={[styles.resultItem, { backgroundColor: colors.card }]}
-        onPress={() => handleVerbPress(item.verb, item.matchForm)}
+        onPress={() => handleResultPress(item)}
         activeOpacity={0.7}
         accessibilityRole="button"
         accessibilityLabel={`${item.verb}, ${item.reading}, ${item.translation}`}
-        accessibilityHint={item.matchDetail || 'Opens conjugation table'}
+        accessibilityHint={item.matchDetail || 'Opens the conjugation table'}
       >
         <View style={styles.resultLeft}>
           <Text style={[styles.resultVerb, { color: colors.textPrimary }]}>{item.verb}</Text>
@@ -226,7 +254,7 @@ export default function HomeScreen() {
           <View style={styles.tagRow}>
             <View style={[styles.tag, { backgroundColor: tagColor.bg }]}>
               <Text style={[styles.tagText, { color: tagColor.text }]}>
-                {groupColors[item.group as VerbGroup].label}
+                {groupLabels[item.group as WordGroup]}
               </Text>
             </View>
             <View style={[styles.tag, { backgroundColor: levelTagColor.bg }]}>
@@ -251,29 +279,34 @@ export default function HomeScreen() {
     );
   };
 
-  const renderSwipeableRow = (verb: string, type: 'favorite' | 'history') => {
-    const data = (verbs as Record<string, VerbData>)[verb];
+  // Favorites and history hold verb headwords and adj:<headword> keys.
+  const renderSwipeableRow = (key: string, type: 'favorite' | 'history') => {
+    const adjective = parseAdjectiveKey(key);
+    const data = adjective
+      ? adjectiveMap[adjective]
+      : (verbs as Record<string, VerbData>)[key];
     if (!data) return null;
+    const verb = adjective ?? key;
 
     const handleSwipeDelete = () => {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       if (type === 'favorite') {
-        toggleFavorite(verb);
+        toggleFavorite(key);
       } else {
-        removeFromHistory(verb);
+        removeFromHistory(key);
       }
     };
 
     return (
       <Swipeable
-        key={verb + type}
+        key={key + type}
         renderRightActions={renderDeleteAction}
         onSwipeableOpen={handleSwipeDelete}
         overshootRight={false}
       >
         <TouchableOpacity
           style={[styles.historyItem, { backgroundColor: colors.bg }]}
-          onPress={() => handleVerbPress(verb)}
+          onPress={() => (adjective ? handleAdjectivePress(adjective) : handleVerbPress(verb))}
           activeOpacity={0.6}
           accessibilityRole="button"
           accessibilityLabel={`${verb}, ${data.reading}, ${data.translation}`}
@@ -309,13 +342,13 @@ export default function HomeScreen() {
         <Ionicons name="search" size={18} color={colors.textMuted} />
         <TextInput
           style={[styles.searchInput, { color: colors.textPrimary }]}
-          placeholder="Search verbs (kanji, hiragana, romaji, English)..."
+          placeholder="Search verbs & adjectives (kanji, kana, romaji, English)..."
           placeholderTextColor={colors.textMuted}
           value={query}
           onChangeText={setQuery}
           autoCorrect={false}
           autoCapitalize="none"
-          accessibilityLabel="Search Japanese verbs"
+          accessibilityLabel="Search Japanese verbs and adjectives"
           accessibilityHint="Search by kanji, hiragana, romaji, English, or conjugated form"
         />
         {query.length > 0 && (
@@ -353,11 +386,11 @@ export default function HomeScreen() {
           data={results}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
-          keyExtractor={(item) => item.verb + item.matchType}
+          keyExtractor={(item) => item.kind + item.verb + item.matchType}
           renderItem={renderVerbItem}
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={query.trim() !== debouncedQuery.trim() ? null : (
-            <Text style={[styles.emptyText, { color: colors.textMuted }]}>No matching verbs</Text>
+            <Text style={[styles.emptyText, { color: colors.textMuted }]}>No matching words</Text>
           )}
         />
       ) : (
@@ -378,7 +411,7 @@ export default function HomeScreen() {
             <View style={styles.vodBadgeRow}>
               <View style={[styles.vodBadge, { backgroundColor: groupTagColors[vodData.group].bg }]}>
                 <Text style={[styles.vodBadgeText, { color: groupTagColors[vodData.group].text }]}>
-                  {groupColors[vodData.group].label}
+                  {groupLabels[vodData.group]}
                 </Text>
               </View>
               <View style={[styles.vodBadge, { backgroundColor: vodLevelTagColor.bg }]}>
@@ -424,7 +457,7 @@ export default function HomeScreen() {
               <Text style={styles.heroEmoji}>📖</Text>
               <Text style={[styles.heroTitle, { color: colors.textPrimary }]}>ConjuGo JP</Text>
               <Text style={[styles.heroSubtitle, { color: colors.textSecondary }]}>
-                Search for any Japanese verb or conjugation
+                Search for any Japanese verb, adjective or conjugation
               </Text>
             </View>
           )}

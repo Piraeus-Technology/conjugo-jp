@@ -66,4 +66,12 @@ describe('practiceInsights (bare-verb weights)', () => {
     });
     expect(buildPracticeInsights(weights).weakVerbs.length).toBe(5);
   });
+
+  test('includes weak adjectives under their headword and ignores unknown adjective keys', () => {
+    const { weakVerbs } = buildPracticeInsights({ 'adj:高い': 4, 飲む: 2, 'adj:不明': 5 });
+    expect(weakVerbs).toEqual([
+      { key: 'adj:高い', verb: '高い', reading: 'たかい', weight: 4 },
+      { key: '飲む', verb: '飲む', reading: 'のむ', weight: 2 },
+    ]);
+  });
 });

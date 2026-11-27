@@ -112,20 +112,20 @@ describe('UI regression guards', () => {
   it.each([false, true])('shows the empty message only after debounce with a filter active: %s', async (filter) => {
     const screen = render(React.createElement(HomeScreen));
     if (filter) fireEvent.press(screen.getByLabelText('Filter by N5'));
-    const search = screen.getByLabelText('Search Japanese verbs');
+    const search = screen.getByLabelText('Search Japanese verbs and adjectives');
     fireEvent.changeText(search, '🦉');
-    expect(screen.queryByText('No matching verbs')).toBeNull();
-    await waitFor(() => expect(screen.getByText('No matching verbs')).toBeTruthy());
+    expect(screen.queryByText('No matching words')).toBeNull();
+    await waitFor(() => expect(screen.getByText('No matching words')).toBeTruthy());
     fireEvent.changeText(search, '食べる');
-    expect(screen.queryByText('No matching verbs')).toBeNull();
+    expect(screen.queryByText('No matching words')).toBeNull();
   });
 
   it('finds N1 suru verbs after filtering rather than truncating them first', async () => {
     const screen = render(React.createElement(HomeScreen));
     fireEvent.press(screen.getByLabelText('Filter by N1'));
-    fireEvent.changeText(screen.getByLabelText('Search Japanese verbs'), 'する');
+    fireEvent.changeText(screen.getByLabelText('Search Japanese verbs and adjectives'), 'する');
     await waitFor(() => expect(screen.getByText('寄与する')).toBeTruthy());
-    expect(screen.queryByText('No matching verbs')).toBeNull();
+    expect(screen.queryByText('No matching words')).toBeNull();
   });
 
   it.each(['light', 'dark'] as const)('keeps themed text and interactive outlines legible in %s mode', mode => {

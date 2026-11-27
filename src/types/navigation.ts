@@ -3,6 +3,7 @@ export type PracticeSettingsParams = { mode: 'quiz' | 'flashcards' };
 export type SearchStackParamList = {
   SearchHome: undefined;
   Conjugation: { verb: string; highlightForm?: string };
+  Adjective: { word: string; highlightForm?: string };
 };
 
 export type QuizStackParamList = {

@@ -376,9 +376,9 @@ export default function PracticeStatsView({
         <>
           <Text style={[styles.sectionTitle, { color: colors.textSecondary, marginTop: spacing.lg }]}>Weak Areas</Text>
           <View style={[styles.insightCard, { backgroundColor: colors.card }]}>
-            <Text style={[styles.insightTitle, { color: colors.textPrimary }]}>Weakest verbs</Text>
+            <Text style={[styles.insightTitle, { color: colors.textPrimary }]}>Weakest words</Text>
             {insights.weakVerbs.map(item => (
-              <View key={item.verb} style={styles.insightRow}>
+              <View key={item.key} style={styles.insightRow}>
                 <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>
                   {item.verb} · {item.reading}
                 </Text>
