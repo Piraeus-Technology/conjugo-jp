@@ -1094,7 +1094,7 @@
     "reading": "すばらしい",
     "class": "i",
     "translation": "wonderful",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "素晴らしい映画でした。",
@@ -1154,7 +1154,7 @@
     "reading": "よろしい",
     "class": "i",
     "translation": "good, all right (polite)",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "よろしければ、こちらにお座りください。",
@@ -1190,7 +1190,7 @@
     "reading": "うまい",
     "class": "i",
     "translation": "good at; tasty",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "兄はテニスがうまいです。",
@@ -1238,7 +1238,7 @@
     "reading": "うれしい",
     "class": "i",
     "translation": "happy, glad",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "プレゼントをもらって嬉しいです。",
@@ -1264,7 +1264,7 @@
     "reading": "だめ",
     "class": "na",
     "translation": "no good; not allowed",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "ここで写真を撮るのはだめです。",
@@ -1416,7 +1416,7 @@
     "reading": "ねっしん",
     "class": "na",
     "translation": "eager, enthusiastic",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "学生たちは熱心です。",
@@ -1452,7 +1452,7 @@
     "reading": "まじめ",
     "class": "na",
     "translation": "serious, diligent",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "兄は真面目な人です。",
@@ -1464,7 +1464,7 @@
     "reading": "じゃま",
     "class": "na",
     "translation": "in the way, a hindrance",
-    "jlpt": "N4",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "その箱は邪魔です。",
@@ -1599,7 +1599,7 @@
     "reading": "すっぱい",
     "class": "i",
     "translation": "sour",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "このレモンはすっぱいです。",
@@ -1635,7 +1635,7 @@
     "reading": "うらやましい",
     "class": "i",
     "translation": "envious",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "休みが長くて羨ましいです。",
@@ -1671,7 +1671,7 @@
     "reading": "おとなしい",
     "class": "i",
     "translation": "quiet, well-behaved",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "この犬は大人しいです。",
@@ -1695,7 +1695,7 @@
     "reading": "かたい",
     "class": "i",
     "translation": "hard, stiff",
-    "jlpt": "N3",
+    "jlpt": "N4",
     "examples": [
       {
         "ja": "このパンは硬いです。",
@@ -1707,7 +1707,7 @@
     "reading": "かゆい",
     "class": "i",
     "translation": "itchy",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "蚊に刺されて、腕がかゆいです。",
@@ -1755,7 +1755,7 @@
     "reading": "くやしい",
     "class": "i",
     "translation": "frustrating, galling",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "試合に負けて悔しいです。",
@@ -1803,7 +1803,7 @@
     "reading": "むしあつい",
     "class": "i",
     "translation": "humid, muggy",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "日本の夏は蒸し暑いです。",
@@ -1815,7 +1815,7 @@
     "reading": "もったいない",
     "class": "i",
     "translation": "wasteful",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "食べ物を捨てるのはもったいないです。",
@@ -1875,7 +1875,7 @@
     "reading": "まぶしい",
     "class": "i",
     "translation": "dazzling, glaring",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "太陽がまぶしいです。",
@@ -1916,7 +1916,7 @@
     "reading": "じみ",
     "class": "na",
     "translation": "plain, subdued",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "彼女はいつも地味な服を着ています。",
@@ -2151,7 +2151,7 @@
     "reading": "いじわる",
     "class": "na",
     "translation": "mean, spiteful",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "意地悪なことを言わないでください。",
@@ -2177,7 +2177,7 @@
     "reading": "おしゃれ",
     "class": "na",
     "translation": "stylish, fashionable",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "姉はおしゃれです。",
@@ -2423,7 +2423,7 @@
     "reading": "こうせい",
     "class": "na",
     "translation": "fair, just",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "公正な判断をしてください。",
@@ -2901,7 +2901,7 @@
     "reading": "はで",
     "class": "na",
     "translation": "flashy, showy",
-    "jlpt": "N3",
+    "jlpt": "N2",
     "examples": [
       {
         "ja": "派手な色のシャツですね。",
@@ -3096,7 +3096,7 @@
     "reading": "せいこう",
     "class": "na",
     "translation": "elaborate, exquisite",
-    "jlpt": "N3",
+    "jlpt": "N1",
     "examples": [
       {
         "ja": "精巧な模型を作りました。",
@@ -3221,7 +3221,7 @@
     "reading": "あらい",
     "class": "i",
     "translation": "coarse",
-    "jlpt": "N2",
+    "jlpt": "N3",
     "examples": [
       {
         "ja": "この布は目が粗いです。",
@@ -3976,7 +3976,7 @@
     "reading": "そっちょく",
     "class": "na",
     "translation": "frank, candid",
-    "jlpt": "N2",
+    "jlpt": "N1",
     "examples": [
       {
         "ja": "率直な意見を聞かせてください。",
