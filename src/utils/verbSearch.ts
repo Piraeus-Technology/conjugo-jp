@@ -132,23 +132,25 @@ export function searchVerbsWithExactMatches(
     });
   }
 
+  const fuzzy = fuse.search(q);
+  function addVerb(item: typeof searchData[number]) {
+    add({ ...item, matchType: 'verb' });
+  }
+
+  // Strong English matches come first, then exact forms. An English verb gloss
+  // outranks a romaji reading of some conjugated form: "make" is 作る, not the
+  // imperative まけ of 巻く/蒔く/撒く. They also survive a reading-prefix flood.
+  for (const { item } of fuzzy) {
+    const gloss = item.translation.toLowerCase();
+    if (gloss === q || gloss === `to ${q}`) addVerb(item);
+  }
+
   const exactKeys = new Set([...exact, q]);
   for (const key of exactKeys) {
     for (const match of byForm.get(key) ?? []) addForm(match);
     if (isRomaji) {
       for (const match of hepburnAliases.get(key) ?? []) addForm(match);
     }
-  }
-
-  const fuzzy = fuse.search(q);
-  function addVerb(item: typeof searchData[number]) {
-    add({ ...item, matchType: 'verb' });
-  }
-
-  // Preserve strong English matches when a word is also a reading prefix.
-  for (const { item } of fuzzy) {
-    const gloss = item.translation.toLowerCase();
-    if (gloss === q || gloss === `to ${q}`) addVerb(item);
   }
 
   const exactCount = Math.min(results.length, MAX_SEARCH_RESULTS);

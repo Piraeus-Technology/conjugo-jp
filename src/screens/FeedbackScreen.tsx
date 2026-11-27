@@ -328,9 +328,9 @@ export default function FeedbackScreen() {
         <Text style={[styles.linkText, { color: colors.textPrimary }]}>Privacy Policy</Text>
       </TouchableOpacity>
 
-      {/* Credit required by the CC BY licence of the adjective level lists */}
+      {/* Credit required by the CC BY licence of the level lists used for adjectives and the verbs added in 1.6.0 */}
       <Text style={[styles.credit, { color: colors.textMuted }]}>
-        JLPT levels for adjectives: Jonathan Waller, tanos.co.uk (CC BY)
+        JLPT levels for adjectives and newer verbs: Jonathan Waller, tanos.co.uk (CC BY)
       </Text>
 
       {/* Version */}
