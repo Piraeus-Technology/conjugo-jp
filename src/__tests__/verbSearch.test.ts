@@ -37,6 +37,12 @@ describe('verb search', () => {
     expect(searchVerbs('tabemasu')[0].matchDetail).toContain('ます');
   });
 
+  it('matches 成り行く by its て-form reading', () => {
+    expect(searchVerbs('なりいって')).toContainEqual(
+      expect.objectContaining({ verb: '成り行く', matchForm: 'te' }),
+    );
+  });
+
   it('keeps exact conjugations and English headwords near the top', () => {
     expect(searchVerbs('tabemasu')[0]).toMatchObject({ verb: '食べる', matchForm: 'masu' });
     expect(searchVerbs('itta').slice(0, 3).map(row => row.verb)).toEqual(['行く', '言う', '要る']);

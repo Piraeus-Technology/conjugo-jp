@@ -363,21 +363,27 @@ describe('Special verb: 行く (iku) irregular te-form', () => {
   });
 });
 
-describe('〜ゆく compounds (成り行く) use the irregular 行く te/ta', () => {
-  // No overrides: the engine must detect the ゆく reading of 行く, not apply the
-  // regular godan-ku rule (which would give the wrong なりゆいて / なりゆいた).
+describe('〜ゆく compounds (成り行く) use the いく reading for te/ta/tara', () => {
+  // The dictionary reading ends in ゆく. The three sound-change forms use いく.
   const nariyuku = godan('なりゆく', 'ku');
 
-  test('te form: なりゆって (not なりゆいて)', () => {
-    expect(conjugateReading(nariyuku, 'te')).toBe('なりゆって');
+  test('te form: なりいって', () => {
+    expect(conjugateReading(nariyuku, 'te')).toBe('なりいって');
   });
 
-  test('ta form: なりゆった (not なりゆいた)', () => {
-    expect(conjugateReading(nariyuku, 'ta')).toBe('なりゆった');
+  test('ta form: なりいった', () => {
+    expect(conjugateReading(nariyuku, 'ta')).toBe('なりいった');
   });
 
-  test('conditional_tara: なりゆったら', () => {
-    expect(conjugateReading(nariyuku, 'conditional_tara')).toBe('なりゆったら');
+  test('conditional_tara: なりいったら', () => {
+    expect(conjugateReading(nariyuku, 'conditional_tara')).toBe('なりいったら');
+  });
+
+  test('te, ta and tara forms display 行', () => {
+    const forms = ['te', 'ta', 'conditional_tara'] as const;
+    expect(forms.map(form => conjugate('成り行く', nariyuku, form).value)).toEqual([
+      '成り行って', '成り行った', '成り行ったら',
+    ]);
   });
 
   test('masu form (regular): なりゆきます', () => {
