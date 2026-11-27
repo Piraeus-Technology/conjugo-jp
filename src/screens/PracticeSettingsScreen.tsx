@@ -13,7 +13,14 @@ import type { RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { FORM_LABELS, FORM_GROUPS } from '../utils/conjugate';
-import { usePracticeSettingsStore, allForms, allLevels } from '../store/practiceSettingsStore';
+import { ADJECTIVE_FORM_GROUPS, ADJECTIVE_FORM_LABELS } from '../utils/adjectives';
+import {
+  usePracticeSettingsStore,
+  allForms,
+  allLevels,
+  allAdjectiveForms,
+  beginnerAdjectiveForms,
+} from '../store/practiceSettingsStore';
 import type { PracticeSettingsParams, QuizStackParamList } from '../types/navigation';
 
 type PracticeSettingsRouteParamList = {
@@ -28,8 +35,10 @@ export default function PracticeSettingsScreen() {
 
   const {
     activeForms, activeLevels,
+    adjectivesEnabled, activeAdjectiveForms, adjectiveNoticeDismissed, loaded,
     loadPracticeSettings, toggleForm, toggleLevel,
     setActiveForms, setActiveLevels,
+    setAdjectivesEnabled, toggleAdjectives, setActiveAdjectiveForms, toggleAdjectiveForm, dismissAdjectiveNotice,
   } = usePracticeSettingsStore();
 
   useEffect(() => {
@@ -38,6 +47,7 @@ export default function PracticeSettingsScreen() {
 
   const allFormsSelected = activeForms.length === allForms.length;
   const allLevelsSelected = activeLevels.length === allLevels.length;
+  const allAdjectiveFormsSelected = activeAdjectiveForms.length === allAdjectiveForms.length;
 
   const handleStart = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -52,14 +62,78 @@ export default function PracticeSettingsScreen() {
       .map(f => ({ key: f, label: `${FORM_LABELS[f].ja} (${FORM_LABELS[f].en})` })),
   })).filter(g => g.forms.length > 0);
 
+  const adjectiveFormGroups = ADJECTIVE_FORM_GROUPS.map(group => ({
+    title: `${group.titleJa} — ${group.title}`,
+    forms: group.forms.map(f => ({ key: f, label: `${ADJECTIVE_FORM_LABELS[f].ja} (${ADJECTIVE_FORM_LABELS[f].en})` })),
+  }));
+
+  const renderCheckRow = (label: string, active: boolean, onPress: () => void, last: boolean, accessibilityLabel = label) => (
+    <TouchableOpacity
+      key={label}
+      style={[
+        styles.row,
+        !last && { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.divider },
+      ]}
+      onPress={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        onPress();
+      }}
+      activeOpacity={0.7}
+      accessibilityRole="checkbox"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityState={{ checked: active }}
+    >
+      <Text style={[styles.rowText, { color: colors.textPrimary }]}>{label}</Text>
+      <Ionicons
+        name={active ? 'checkmark-circle' : 'ellipse-outline'}
+        size={24}
+        color={active ? colors.primaryText : colors.uncheckedOutline}
+      />
+    </TouchableOpacity>
+  );
+
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: colors.bg }]}
       contentContainerStyle={styles.content}
     >
+      {/* One-time note for learners who used the app before adjectives existed */}
+      {loaded && !adjectiveNoticeDismissed && (
+        <View
+          style={[styles.noticeCard, { backgroundColor: colors.card, borderColor: colors.primaryText }]}
+          accessibilityRole="summary"
+        >
+          <Text style={[styles.noticeTitle, { color: colors.textPrimary }]}>New: adjectives and だ/です</Text>
+          <Text style={[styles.noticeText, { color: colors.textSecondary }]}>
+            Practice い-adjectives, な-adjectives and だ/です alongside your verbs.
+          </Text>
+          <View style={styles.noticeButtons}>
+            <TouchableOpacity
+              style={[styles.noticeButton, { backgroundColor: colors.primary }]}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                setAdjectivesEnabled(true);
+              }}
+              accessibilityRole="button"
+              accessibilityLabel="Turn on adjectives"
+            >
+              <Text style={styles.noticeButtonText}>Turn on</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.noticeButton, { borderColor: colors.textMuted, borderWidth: 1 }]}
+              onPress={() => dismissAdjectiveNotice()}
+              accessibilityRole="button"
+              accessibilityLabel="Dismiss the adjectives note"
+            >
+              <Text style={[styles.noticeDismissText, { color: colors.textPrimary }]}>Not now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
       {/* Forms */}
       <View style={styles.sectionHeader}>
-        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Forms</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Verb Forms</Text>
         <TouchableOpacity
           style={styles.selectAllButton}
           onPress={() => {
@@ -105,6 +179,43 @@ export default function PracticeSettingsScreen() {
                 </TouchableOpacity>
               );
             })}
+          </View>
+        </View>
+      ))}
+
+      {/* Adjectives */}
+      <View style={styles.sectionHeader}>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>Adjectives</Text>
+        {adjectivesEnabled && (
+          <TouchableOpacity
+            style={styles.selectAllButton}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              setActiveAdjectiveForms(allAdjectiveFormsSelected ? [...beginnerAdjectiveForms] : [...allAdjectiveForms]);
+            }}
+            accessibilityRole="button"
+            accessibilityLabel={allAdjectiveFormsSelected ? 'Select recommended adjective forms' : 'Select all adjective forms'}
+          >
+            <Text style={[styles.selectAllText, { color: colors.primaryText }]}>
+              {allAdjectiveFormsSelected ? 'Recommended forms' : 'Select All'}
+            </Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      <View style={[styles.card, { backgroundColor: colors.card }]}>
+        {renderCheckRow('Practice い/な-adjectives and だ/です', adjectivesEnabled, toggleAdjectives, true)}
+      </View>
+      {adjectivesEnabled && adjectiveFormGroups.map((group) => (
+        <View key={group.title}>
+          <Text style={[styles.groupLabel, { color: colors.textMuted }]}>{group.title}</Text>
+          <View style={[styles.card, { backgroundColor: colors.card }]}>
+            {group.forms.map((item, i) => renderCheckRow(
+              item.label,
+              activeAdjectiveForms.includes(item.key),
+              () => toggleAdjectiveForm(item.key),
+              i === group.forms.length - 1,
+              `Adjective form, ${item.label}`,
+            ))}
           </View>
         </View>
       ))}
@@ -177,6 +288,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: spacing.lg, paddingBottom: 40 },
   sectionHeader: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -184,6 +296,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
   },
   sectionTitle: {
+    flexShrink: 1,
     fontSize: fonts.sizes.sm,
     fontWeight: fonts.weights.semibold,
     textTransform: 'uppercase',
@@ -223,8 +336,47 @@ const styles = StyleSheet.create({
     padding: spacing.md,
   },
   rowText: {
+    flexShrink: 1,
+    marginRight: spacing.sm,
     fontSize: fonts.sizes.md,
     fontWeight: fonts.weights.medium,
+  },
+  noticeCard: {
+    borderRadius: radius.md,
+    borderWidth: 1,
+    padding: spacing.md,
+    marginTop: spacing.sm,
+  },
+  noticeTitle: {
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.bold,
+  },
+  noticeText: {
+    fontSize: fonts.sizes.sm,
+    lineHeight: 20,
+    marginTop: spacing.xs,
+  },
+  noticeButtons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    marginTop: spacing.md,
+  },
+  noticeButton: {
+    maxWidth: '100%',
+    minHeight: 44,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.lg,
+    borderRadius: radius.md,
+  },
+  noticeButtonText: {
+    color: '#fff',
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.semibold,
+  },
+  noticeDismissText: {
+    fontSize: fonts.sizes.md,
+    fontWeight: fonts.weights.semibold,
   },
   startButton: {
     flexDirection: 'row',

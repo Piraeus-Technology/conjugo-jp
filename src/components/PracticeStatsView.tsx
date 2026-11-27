@@ -75,8 +75,7 @@ export default function PracticeStatsView({
   const [selectedMonth, setSelectedMonth] = useState<Date | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
-  // jp weights are bare-verb and shared by quiz + flashcards, so the weakest
-  // verbs are surfaced on both stats tabs.
+  // Quiz and flashcards share weights keyed by verb headword or adj:<headword>.
   const insights = React.useMemo(
     () => buildPracticeInsights(weights, lastPracticedAt ?? {}, Date.now()),
     [weights, lastPracticedAt],
@@ -370,15 +369,14 @@ export default function PracticeStatsView({
         </View>
       </View>
 
-      {/* Weakest verbs — jp's only weight-derived insight (bare-verb, shared
-          across quiz + flashcards) */}
+      {/* Weakest words from the weights shared by quiz and flashcards. */}
       {weightsLoaded && insights.weakVerbs.length > 0 && (
         <>
           <Text style={[styles.sectionTitle, { color: colors.textSecondary, marginTop: spacing.lg }]}>Weak Areas</Text>
           <View style={[styles.insightCard, { backgroundColor: colors.card }]}>
-            <Text style={[styles.insightTitle, { color: colors.textPrimary }]}>Weakest verbs</Text>
+            <Text style={[styles.insightTitle, { color: colors.textPrimary }]}>Weakest words</Text>
             {insights.weakVerbs.map(item => (
-              <View key={item.verb} style={styles.insightRow}>
+              <View key={item.key} style={styles.insightRow}>
                 <Text style={[styles.insightLabel, { color: colors.textPrimary }]}>
                   {item.verb} · {item.reading}
                 </Text>

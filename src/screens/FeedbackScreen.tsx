@@ -271,7 +271,7 @@ export default function FeedbackScreen() {
         <Text style={styles.rowEmoji}>💬</Text>
         <View style={styles.rowInfo}>
           <Text style={[styles.rowTitle, { color: colors.textPrimary }]}>Send Feedback</Text>
-          <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>Bug reports, suggestions, missing verbs</Text>
+          <Text style={[styles.rowSubtitle, { color: colors.textSecondary }]}>Bug reports, suggestions, missing words</Text>
         </View>
       </TouchableOpacity>
 
@@ -297,7 +297,7 @@ export default function FeedbackScreen() {
         style={[styles.rowCard, { backgroundColor: colors.card }]}
         onPress={() => {
           Share.share({
-            message: `Check out ConjuGo JP — a Japanese verb conjugation app! ${
+            message: `Check out ConjuGo JP — a Japanese verb and adjective conjugation app! ${
               Platform.OS === 'android' ? ANDROID_STORE_URL : IOS_STORE_URL
             }`,
           }).catch(() => Alert.alert('Sharing Unavailable', 'Could not open the share sheet.'));
@@ -328,6 +328,11 @@ export default function FeedbackScreen() {
         <Text style={[styles.linkText, { color: colors.textPrimary }]}>Privacy Policy</Text>
       </TouchableOpacity>
 
+      {/* Credit required by the CC BY licence of the adjective level lists */}
+      <Text style={[styles.credit, { color: colors.textMuted }]}>
+        JLPT levels for adjectives: Jonathan Waller, tanos.co.uk (CC BY)
+      </Text>
+
       {/* Version */}
       <Text style={[styles.version, { color: colors.textMuted }]}>
         ConjuGo JP v{APP_VERSION}
@@ -338,6 +343,11 @@ export default function FeedbackScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  credit: {
+    fontSize: fonts.sizes.xs,
+    textAlign: 'center',
+    marginTop: spacing.lg,
+  },
   content: { padding: spacing.lg },
   sectionTitle: {
     fontSize: fonts.sizes.sm,

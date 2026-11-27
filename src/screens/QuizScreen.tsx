@@ -12,13 +12,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Constants from 'expo-constants';
 import { stopSpeech } from '../utils/speech';
 import verbs from '../data/verbs.json';
+import { VerbData, JLPTLevel } from '../utils/conjugate';
+import { adjectiveList } from '../utils/adjectives';
 import {
-  getConjugationHint,
-  FORM_LABELS,
-  VerbData,
-  JLPTLevel,
-} from '../utils/conjugate';
-import { generateQuestion, Question } from '../utils/quizQuestion';
+  describeQuestion,
+  generatePracticeQuestion,
+  type PracticePool,
+  type PracticeQuestion,
+} from '../utils/practiceItems';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
@@ -56,12 +57,14 @@ export default function QuizScreen() {
   const {
     activeForms,
     activeLevels,
+    adjectivesEnabled,
+    activeAdjectiveForms,
     loaded: settingsLoaded,
     loadError: settingsLoadError,
     loadPracticeSettings,
   } = usePracticeSettingsStore();
   const { sessions, loadSessions, saveSession } = useSessionStore();
-  const [question, setQuestion] = useState<Question | null>(null);
+  const [question, setQuestion] = useState<PracticeQuestion | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showHint, setShowHint] = useState(true);
   const hasRecordedAnswer = React.useRef(false);
@@ -98,26 +101,33 @@ export default function QuizScreen() {
     });
   }, [navigation, colors]);
 
-  const filteredEntries = useMemo(() =>
-    allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
-    [activeLevels]
-  );
+  const pool = useMemo((): PracticePool => ({
+    verbEntries: allVerbEntries.filter(([, d]) => activeLevels.includes(d.jlpt as JLPTLevel)),
+    verbForms: activeForms,
+    adjectiveEntries: adjectiveList.filter(([, d]) => activeLevels.includes(d.jlpt)),
+    adjectiveForms: activeAdjectiveForms,
+    adjectivesEnabled,
+  }), [activeLevels, activeForms, activeAdjectiveForms, adjectivesEnabled]);
 
   useEffect(() => {
     if (statsLoaded && weightsLoaded && settingsLoaded) {
-      setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
+      setQuestion(generatePracticeQuestion(pool, getWeight));
       setSelectedAnswer(null);
       hasRecordedAnswer.current = false;
     }
-  }, [statsLoaded, weightsLoaded, settingsLoaded, activeForms, filteredEntries, getWeight]);
+  }, [statsLoaded, weightsLoaded, settingsLoaded, pool, getWeight]);
 
-  const isCorrect = selectedAnswer === question?.correctAnswer;
+  const view = useMemo(
+    () => (question ? describeQuestion(question, selectedAnswer ?? undefined) : null),
+    [question, selectedAnswer],
+  );
+  const isCorrect = selectedAnswer === view?.correctAnswer;
   const answered = selectedAnswer !== null;
 
   const handleAnswer = (answer: string) => {
     // Synchronous ref guard: `answered` is stale state on a rapid double-tap,
     // which would otherwise record the same question twice.
-    if (hasRecordedAnswer.current || !question) return;
+    if (hasRecordedAnswer.current || !view) return;
     hasRecordedAnswer.current = true;
     setSelectedAnswer(answer);
     const stats = useQuizStore.getState();
@@ -125,10 +135,10 @@ export default function QuizScreen() {
       visit.current = { resetCount: stats.resetCount, initialTotal: stats.totalQuestions, answers: 0, streak: 0 };
     }
     const progress = visit.current;
-    const correct = answer === question.correctAnswer;
+    const correct = answer === view.correctAnswer;
     AccessibilityInfo.announceForAccessibility(correct
       ? 'Correct'
-      : `Incorrect. Correct answer: ${question.correctAnswer}`);
+      : `Incorrect. Correct answer: ${view.correctAnswer}`);
     progress.streak = correct ? progress.streak + 1 : 0;
     recordProgress(correct, progress.streak);
     if (correct) {
@@ -151,13 +161,13 @@ export default function QuizScreen() {
       recordAnswer(false, 0);
     }
     progress.answers++;
-    recordResult(question.verb, correct).catch(() => {});
+    recordResult(view.srKey, correct).catch(() => {});
   };
 
   const handleNext = () => {
     if (!hasRecordedAnswer.current) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    setQuestion(generateQuestion(activeForms, getWeight, filteredEntries));
+    setQuestion(generatePracticeQuestion(pool, getWeight));
     setSelectedAnswer(null);
     setShowHint(true);
     hasRecordedAnswer.current = false;
@@ -179,10 +189,10 @@ export default function QuizScreen() {
   const sessionScore = (todaySession?.correct || 0) + unsavedCorrect;
 
   const getOptionStyle = (option: string) => {
-    if (!answered || !question) {
+    if (!answered || !view) {
       return { backgroundColor: colors.card, borderColor: colors.border };
     }
-    if (option === question.correctAnswer) {
+    if (option === view.correctAnswer) {
       return { backgroundColor: colors.successBg, borderColor: colors.successText };
     }
     if (option === selectedAnswer && !isCorrect) {
@@ -192,8 +202,8 @@ export default function QuizScreen() {
   };
 
   const getOptionTextColor = (option: string) => {
-    if (!answered || !question) return colors.textPrimary;
-    if (option === question.correctAnswer) return colors.successText;
+    if (!answered || !view) return colors.textPrimary;
+    if (option === view.correctAnswer) return colors.successText;
     if (option === selectedAnswer && !isCorrect) return colors.errorText;
     return colors.textMuted;
   };
@@ -229,14 +239,14 @@ export default function QuizScreen() {
     </View>
   );
 
-  if (!question) return (
+  if (!view) return (
     <View style={[styles.container, { backgroundColor: colors.bg, justifyContent: 'center', alignItems: 'center' }]}>
-      <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>No matching verbs</Text>
+      <Text style={{ color: colors.textMuted, fontSize: fonts.sizes.md }}>No matching words</Text>
     </View>
   );
 
-  const formLabel = FORM_LABELS[question.form];
-  const hint = getConjugationHint(question.verbData, question.form, question.verb);
+  const formLabel = view.formLabel;
+  const adjectiveQuestion = question?.kind === 'adjective';
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.bg }]} contentContainerStyle={styles.content}>
@@ -279,19 +289,19 @@ export default function QuizScreen() {
           numberOfLines={1}
           adjustsFontSizeToFit
         >
-          {question.verb}
+          {view.headword}
         </Text>
         <Text style={[styles.questionReading, { color: colors.textSecondary }]}>
-          {question.reading}
+          {view.reading}
         </Text>
         <Text style={[styles.questionTranslation, { color: colors.textSecondary }]}>
-          {question.translation}
+          {view.translation}
         </Text>
       </View>
 
       {/* Options */}
       <View style={styles.optionsContainer}>
-        {question.options.map((option, index) => (
+        {view.options.map((option, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.optionButton, getOptionStyle(option)]}
@@ -299,28 +309,32 @@ export default function QuizScreen() {
             activeOpacity={answered ? 1 : 0.7}
             disabled={answered}
             accessibilityRole="button"
-            accessibilityLabel={`Answer: ${option}${answered && option === question.correctAnswer
+            accessibilityLabel={`Answer: ${option}${answered && option === view.correctAnswer
               ? ', correct'
-              : selectedAnswer === option ? `, incorrect. Correct answer: ${question.correctAnswer}` : ''}`}
+              : selectedAnswer === option ? `, incorrect. Correct answer: ${view.correctAnswer}` : ''}`}
             accessibilityState={{ disabled: answered, selected: selectedAnswer === option }}
           >
             <Text
-              style={[styles.optionText, { color: getOptionTextColor(option) }]}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.7}
+              style={[styles.optionText, adjectiveQuestion && styles.wrappingOptionText, { color: getOptionTextColor(option) }]}
+              {...(adjectiveQuestion ? {} : { numberOfLines: 1, adjustsFontSizeToFit: true, minimumFontScale: 0.7 })}
             >
               {option}
             </Text>
-            {answered && option === question.correctAnswer && (
+            {answered && option === view.correctAnswer && (
               <Ionicons name="checkmark-circle" size={22} color={colors.successText} style={{ marginLeft: 8 }} />
             )}
-            {answered && option === selectedAnswer && !isCorrect && option !== question.correctAnswer && (
+            {answered && option === selectedAnswer && !isCorrect && option !== view.correctAnswer && (
               <Ionicons name="close-circle" size={22} color={colors.errorText} style={{ marginLeft: 8 }} />
             )}
           </TouchableOpacity>
         ))}
       </View>
+
+      {answered && view.alsoCorrect.length > 0 && (
+        <Text style={[styles.alsoCorrectText, { color: colors.textSecondary }]}>
+          Also correct: {view.alsoCorrect.join('、')}
+        </Text>
+      )}
 
       {answered && !isCorrect && (
         <View style={[styles.hintCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
@@ -345,7 +359,7 @@ export default function QuizScreen() {
           </TouchableOpacity>
           {showHint && (
             <Text style={[styles.hintText, { color: colors.textSecondary }]}>
-              {hint}
+              {view.hint}
             </Text>
           )}
         </View>
@@ -498,6 +512,15 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: fonts.sizes.lg,
     fontWeight: fonts.weights.semibold,
+  },
+  wrappingOptionText: {
+    flexShrink: 1,
+    textAlign: 'center',
+  },
+  alsoCorrectText: {
+    fontSize: fonts.sizes.sm,
+    marginTop: spacing.xs,
+    marginBottom: spacing.xs,
   },
   bottomRow: {
     flexDirection: 'row',
