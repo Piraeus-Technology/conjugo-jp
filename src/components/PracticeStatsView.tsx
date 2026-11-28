@@ -79,6 +79,7 @@ export default function PracticeStatsView({
 
   // Shared weights use verb headwords, adj:<headword>, and pair:<intr>/<tr> for quiz pairs.
   const insights = React.useMemo(
+    // eslint-disable-next-line react-hooks/purity -- timestamp the practice data snapshot when its inputs change
     () => buildPracticeInsights(weights, lastPracticedAt ?? {}, Date.now(), includePairs),
     [weights, lastPracticedAt, includePairs],
   );

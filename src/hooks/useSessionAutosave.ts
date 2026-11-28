@@ -40,7 +40,7 @@ export function useSessionAutosave({ save, readResetCount }: {
     retryTimer.current = null;
   }, []);
 
-  const saveNow = React.useCallback((): Promise<void> => {
+  const saveNow = React.useCallback(function saveNow(): Promise<void> {
     clearRetry();
     const run = async () => {
       const pending = getPending();

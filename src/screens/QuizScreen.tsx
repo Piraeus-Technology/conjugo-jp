@@ -115,6 +115,7 @@ export default function QuizScreen() {
 
   useEffect(() => {
     if (statsLoaded && weightsLoaded && settingsLoaded) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- initialize the question when the practice stores finish loading
       setQuestion(generatePracticeQuestion(pool, getWeight));
       setSelectedAnswer(null);
       hasRecordedAnswer.current = false;

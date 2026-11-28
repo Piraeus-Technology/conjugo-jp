@@ -86,6 +86,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     if (!query.trim()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing the input also resets the pending search
       setDebouncedQuery('');
       return;
     }
