@@ -75,12 +75,13 @@ afterEach(() => {
   __resetIapLifecycleForTests();
 });
 
-test('tip jar matches ES listener, SKU, and purchase-start recovery behavior', async () => {
+test('registers tip listeners before connecting, loads the tip SKU, ignores other products, and alerts on a purchase error', async () => {
   const { result } = await loadTipJar();
   expect(iap.purchaseUpdatedListener).toHaveBeenCalledTimes(1);
   expect(iap.purchaseUpdatedListener).toHaveBeenCalledWith(expect.any(Function), { dedupeTransactionIOS: false });
   expect(iap.purchaseUpdatedListener.mock.invocationCallOrder[0]).toBeLessThan(iap.initConnection.mock.invocationCallOrder[0]);
   expect(iap.purchaseErrorListener).toHaveBeenCalledTimes(1);
+  expect(iap.purchaseErrorListener.mock.invocationCallOrder[0]).toBeLessThan(iap.initConnection.mock.invocationCallOrder[0]);
   expect(iap.fetchProducts).toHaveBeenCalledWith({ skus: [sku], type: 'in-app' });
   expect(result.current.products[0].displayPrice).toBe('$0.99');
 
@@ -92,20 +93,36 @@ test('tip jar matches ES listener, SKU, and purchase-start recovery behavior', a
   expect(result.current.loading).toBe(false);
 });
 
-test('ignores a same-frame second tap and stays busy until the first request settles', async () => {
-  let finish!: () => void;
-  iap.requestPurchase.mockImplementationOnce(() => new Promise<null>(resolve => { finish = () => resolve(null); }));
+test.each(['ios', 'android'] as const)('blocks repeat %s taps until the tip is finished and thanked', async platform => {
+  Platform.OS = platform;
+  let resolveRequest!: (purchase: object) => void;
+  let resolveFinish!: () => void;
+  iap.requestPurchase.mockImplementationOnce(() => new Promise(resolve => { resolveRequest = resolve; }));
+  iap.finishTransaction.mockImplementationOnce(() => new Promise<void>(resolve => { resolveFinish = resolve; }));
   const { result } = await loadTipJar();
-  act(() => {
-    void result.current.tip(sku);
+  let request!: Promise<void>;
+  await act(async () => {
+    request = result.current.tip(sku);
     void result.current.tip(sku);
   });
   expect(iap.requestPurchase).toHaveBeenCalledTimes(1);
+  const purchase = receipt('held-finish-' + platform, requestMarker());
   expect(result.current.loading).toBe(true);
-  act(() => publishError('user-cancelled'));
+
+  let finishing!: Promise<void>;
+  await act(async () => { finishing = publish(purchase); });
+  expect(iap.finishTransaction).toHaveBeenCalledWith({ purchase, isConsumable: true });
+  await act(async () => { resolveRequest(purchase); await request; });
   expect(result.current.loading).toBe(true);
-  await act(async () => finish());
+  await act(async () => result.current.tip(sku));
+  expect(iap.requestPurchase).toHaveBeenCalledTimes(1);
+  expect(Alert.alert).not.toHaveBeenCalled();
+
+  await act(async () => { resolveFinish(); await finishing; });
   expect(result.current.loading).toBe(false);
+  expect(Alert.alert).toHaveBeenCalledTimes(1);
+  expect(Alert.alert).toHaveBeenCalledWith('Thank You!', expect.any(String));
+  expect(iap.finishTransaction).toHaveBeenCalledTimes(1);
   await act(async () => result.current.tip(sku));
   expect(iap.requestPurchase).toHaveBeenCalledTimes(2);
 });
@@ -182,31 +199,7 @@ test('keeps a newer attempt active when an earlier error arrives', async () => {
   expect(Alert.alert).toHaveBeenCalledWith('Thank You!', expect.any(String));
 });
 
-test('waits for the earlier Play request to drain before dispatching a retry', async () => {
-  Platform.OS = 'android';
-  const { result } = await loadTipJar();
-  jest.useFakeTimers();
-  let rejectOld!: (error: object) => void;
-  iap.requestPurchase.mockImplementationOnce(() => new Promise((_resolve, reject) => { rejectOld = reject; }));
-  let oldRequest!: Promise<void>;
-  let retry!: Promise<void>;
-  await act(async () => { oldRequest = result.current.tip(sku); });
-  expect(iap.requestPurchase).toHaveBeenCalledTimes(1);
-  act(() => jest.advanceTimersByTime(120_000));
-  await act(async () => { retry = result.current.tip(sku); });
-  expect(iap.requestPurchase).toHaveBeenCalledTimes(1);
-  expect(result.current.loading).toBe(true);
-
-  await act(async () => {
-    rejectOld({ code: 'network-error' });
-    await Promise.all([oldRequest, retry]);
-  });
-  expect(iap.requestPurchase).toHaveBeenCalledTimes(2);
-  expect(result.current.loading).toBe(false);
-  expect(Alert.alert).not.toHaveBeenCalled();
-});
-
-test('keeps a silent Play result recoverable and reconnects on the next tap', async () => {
+test('quietly returns on an empty Play result, reconnects after a disconnect event, and thanks for the later marked receipt', async () => {
   Platform.OS = 'android';
   const { result } = await loadTipJar();
   iap.requestPurchase.mockResolvedValueOnce([]);
@@ -218,15 +211,36 @@ test('keeps a silent Play result recoverable and reconnects on the next tap', as
 
   act(() => publishError('service-disconnected'));
   const calls = iap.initConnection.mock.calls.length;
+  const fetches = iap.fetchProducts.mock.calls.length;
   await act(async () => result.current.tip(sku));
   expect(iap.initConnection).toHaveBeenCalledTimes(calls + 1);
-  expect(iap.fetchProducts).toHaveBeenCalledTimes(2);
+  expect(iap.fetchProducts).toHaveBeenCalledTimes(fetches + 1);
+  expect(iap.fetchProducts.mock.invocationCallOrder.at(-1)).toBeLessThan(iap.requestPurchase.mock.invocationCallOrder.at(-1));
   expect(iap.requestPurchase).toHaveBeenCalledTimes(2);
 
   const purchase = receipt('play-deferred', marker);
   await act(async () => publish(purchase));
   expect(iap.finishTransaction).toHaveBeenCalledWith({ purchase, isConsumable: true });
   expect(Alert.alert).toHaveBeenCalledWith('Thank You!', expect.any(String));
+});
+
+test('reconciles a Play receipt once without a failure alert when the dispatched purchase loses its connection', async () => {
+  Platform.OS = 'android';
+  const { result } = await loadTipJar();
+  let purchase!: ReturnType<typeof receipt>;
+  iap.requestPurchase.mockImplementationOnce(async () => {
+    purchase = receipt('play-disconnect', requestMarker());
+    iap.getAvailablePurchases.mockResolvedValueOnce([purchase]);
+    throw { code: 'service-disconnected' };
+  });
+  await act(async () => result.current.tip(sku));
+  expect(result.current.loading).toBe(false);
+  await waitFor(() => expect(Alert.alert).toHaveBeenCalledWith('Thank You!', expect.any(String)));
+  await act(async () => publish(purchase));
+  expect(iap.finishTransaction).toHaveBeenCalledTimes(1);
+  expect(iap.finishTransaction).toHaveBeenCalledWith({ purchase, isConsumable: true });
+  expect(Alert.alert).not.toHaveBeenCalledWith('Purchase Failed', expect.any(String));
+  expect(Alert.alert).toHaveBeenCalledTimes(1);
 });
 
 test('retries ItemNotOwned while Play still reports the purchase', async () => {

@@ -38,6 +38,7 @@ interface TipAttempt {
   token: string;
   deadline: number;
   timeout: ReturnType<typeof setTimeout>;
+  receiptReceived: boolean;
 }
 
 const attempts = new Map<string, TipAttempt>();
@@ -45,6 +46,13 @@ const finishing = new Set<string>();
 const finished = new Set<string>();
 const attentionNotified = new Set<string>();
 let playRequest: Promise<void> | undefined;
+
+function showUnconfirmedPlayPurchase() {
+  Alert.alert(
+    'Purchase Needs Attention',
+    'Google Play is still handling the previous purchase request. Check your Google Play purchase history before leaving another tip.',
+  );
+}
 
 function createAttemptToken(): string {
   // Both stores can echo an opaque per-attempt marker. It contains no user data.
@@ -67,6 +75,7 @@ function useTipJarController() {
   const activeAttempt = useRef<TipAttempt | null>(null);
   const handlers = useRef<{
     preparePurchase: () => Promise<boolean>;
+    retryIfUnavailable: () => void;
     purchase: (purchase: Purchase) => Promise<void>;
     error: (error: Partial<ExpoPurchaseError> | undefined, attempt?: TipAttempt) => void;
   } | null>(null);
@@ -77,6 +86,15 @@ function useTipJarController() {
     activeAttempt.current = null;
     setLoading(false);
   }, []);
+
+  const expire = useCallback((attempt: TipAttempt) => {
+    if (activeAttempt.current !== attempt || attempt.receiptReceived) return;
+    if (Platform.OS === 'android') {
+      if (attempts.has(attempt.token)) showUnconfirmedPlayPurchase();
+      else setUnavailable(true);
+    }
+    settle(attempt);
+  }, [settle]);
 
   useEffect(() => {
     const iap = iapModule;
@@ -94,10 +112,11 @@ function useTipJarController() {
 
     const checkConnection = (error: unknown) => {
       const code = (error as ExpoPurchaseError | undefined)?.code;
-      if (!mounted || Platform.OS !== 'android' || (code !== codes.ServiceDisconnected && code !== codes.NotPrepared)) return;
+      if (!mounted || Platform.OS !== 'android' || (code !== codes.ServiceDisconnected && code !== codes.NotPrepared)) return false;
       connected = false;
       needsProduct = true;
       // Keep the displayed product so the next tap can reconnect and refresh it.
+      return true;
     };
 
     const finishTip = async (purchase: Purchase, key: string) => {
@@ -119,14 +138,17 @@ function useTipJarController() {
       const token = getAttemptToken(purchase);
       const attempt = token ? attempts.get(token) : undefined;
       if (purchase.purchaseState === 'pending') {
-        if (attempt) settle(attempt);
+        if (attempt && !attempt.receiptReceived) settle(attempt);
         return;
       }
       if (purchase.purchaseState !== 'purchased') return;
-      if (attempt) settle(attempt);
       const key = getTipTransactionKey(purchase, Platform.OS);
       if (!key || finished.has(key) || finishing.has(key)) return;
 
+      if (attempt) {
+        attempt.receiptReceived = true;
+        clearTimeout(attempt.timeout);
+      }
       finishing.add(key);
       try {
         await finishTip(purchase, key);
@@ -148,9 +170,10 @@ function useTipJarController() {
         }
       } finally {
         finishing.delete(key);
+        if (attempt) settle(attempt);
       }
     };
-    const recover = async () => {
+    const recover = async (retryDisconnect = true): Promise<void> => {
       try {
         const purchases = Platform.OS === 'ios'
           ? await iap.getPendingTransactionsIOS()
@@ -160,7 +183,10 @@ function useTipJarController() {
           await handlePurchase(purchase);
         }
       } catch (error) {
-        checkConnection(error);
+        if (checkConnection(error) && retryDisconnect && await connect()) {
+          await recover(false);
+          return;
+        }
         console.warn('Failed to recover tip transactions:', error);
         if (mounted && Platform.OS === 'ios') {
           // The history query publishes verified entries even if another entry
@@ -178,8 +204,8 @@ function useTipJarController() {
       }
     };
 
-    const loadProduct = async () => {
-      if (!needsProduct) return true;
+    const loadProduct = async (recheck = false) => {
+      if (!needsProduct && !recheck) return true;
       try {
         const items: ProductOrSubscription[] | null = await iap.fetchProducts({ skus: [TIP_SKU], type: 'in-app' });
         if (!mounted || !connected) return false;
@@ -187,11 +213,12 @@ function useTipJarController() {
           Boolean(item.displayPrice?.trim()) &&
           (!('productStatusAndroid' in item) || item.productStatusAndroid == null || item.productStatusAndroid === 'ok'));
         needsProduct = !product;
-        setProduct(product ?? null);
+        if (product) setProduct(product);
         setUnavailable(needsProduct);
         return !needsProduct;
       } catch (error) {
         checkConnection(error);
+        needsProduct = true;
         if (mounted) setUnavailable(true);
         return false;
       }
@@ -215,7 +242,10 @@ function useTipJarController() {
         }
         setUnsupported(false);
         connected = await iap.initConnection();
-        if (mounted && !connected) setUnavailable(true);
+        if (mounted && !connected) {
+          needsProduct = true;
+          setUnavailable(true);
+        }
         return mounted && connected;
       })().catch(error => {
         connected = false;
@@ -229,16 +259,22 @@ function useTipJarController() {
     const refresh = () => {
       if (sweep || !mounted) return;
       sweep = (async () => {
-        if (await connect()) await Promise.all([recover(), loadProduct()]);
+        if (await connect(Platform.OS === 'android')) await Promise.all([recover(), loadProduct()]);
       })().catch(error => {
         console.warn('Failed to connect to the tip jar store:', error);
       }).finally(() => { sweep = undefined; });
     };
 
     const preparePurchase = async () => {
-      // Play discards its native client on disconnect. Check even if the
-      // disconnect happened while idle and no error has reached JavaScript.
-      return await connect(true) && await loadProduct();
+      try {
+        // A successful init may have replaced a disconnected Play client.
+        // Always load the product on the client that will handle the purchase.
+        if (await connect(true) && await loadProduct(true)) return true;
+      } catch (error) {
+        console.warn('Failed to prepare the tip jar store:', error);
+      }
+      if (mounted) setUnavailable(true);
+      return false;
     };
 
     function handlePurchaseError(error: Partial<ExpoPurchaseError> | undefined, attempt?: TipAttempt) {
@@ -246,11 +282,18 @@ function useTipJarController() {
       checkConnection(error);
       const code = error?.code;
       if (error?.productId && error.productId !== TIP_SKU) return;
+      if (attempt && Platform.OS === 'android' && code === codes.ServiceDisconnected) {
+        // The request may already have charged. Keep its marker for recovery.
+        if (!attempt.receiptReceived) settle(attempt);
+        if (sweep) void sweep.then(refresh);
+        else refresh();
+        return;
+      }
       const retryable = code === codes.AlreadyOwned || code === codes.ItemNotOwned || code === codes.DuplicatePurchase;
       if (retryable) refresh();
       // Store error events have no attempt marker. Only a rejection from a
       // specific request can settle that request.
-      if (!attempt || attempt !== activeAttempt.current) return;
+      if (!attempt || attempt !== activeAttempt.current || attempt.receiptReceived) return;
       settle(attempt);
       if (retryable || code === codes.DeferredPayment || code === codes.Pending) return;
       attempts.delete(attempt.token);
@@ -258,12 +301,17 @@ function useTipJarController() {
       Alert.alert('Purchase Failed', 'Something went wrong. Please try again.');
     }
 
-    handlers.current = { preparePurchase, purchase: handlePurchase, error: handlePurchaseError };
+    handlers.current = {
+      preparePurchase,
+      retryIfUnavailable: () => { if (!connected || needsProduct) refresh(); },
+      purchase: handlePurchase,
+      error: handlePurchaseError,
+    };
     refresh();
     const appState = AppState.addEventListener('change', state => {
       if (state !== 'active') return;
       const attempt = activeAttempt.current;
-      if (attempt && attempt.deadline <= Date.now()) settle(attempt);
+      if (attempt && attempt.deadline <= Date.now()) expire(attempt);
       refresh();
     });
 
@@ -278,27 +326,31 @@ function useTipJarController() {
       attemptRef.current = null;
       releaseIapConnection(purchaseListener ? iap.endConnection : undefined);
     };
-  }, [settle]);
+  }, [expire, settle]);
+
+  const retryIfUnavailable = useCallback(() => handlers.current?.retryIfUnavailable(), []);
 
   const tip = useCallback(async (sku: string) => {
     const handler = handlers.current;
-    if (!iapModule || !handler || !product || sku !== TIP_SKU || activeAttempt.current) return;
+    if (!iapModule || !handler || !product || unavailable || sku !== TIP_SKU || activeAttempt.current) return;
+    const isAndroid = Platform.OS === 'android';
+    if (isAndroid && playRequest) {
+      // Expo IAP shares pending Play promises across requests. An old request
+      // can settle a new one, so report its unconfirmed outcome immediately.
+      showUnconfirmedPlayPurchase();
+      return;
+    }
     const token = createAttemptToken();
     const attempt: TipAttempt = {
       token,
       deadline: Date.now() + OUTCOME_TIMEOUT_MS,
-      timeout: setTimeout(() => settle(attempt), OUTCOME_TIMEOUT_MS),
+      timeout: setTimeout(() => expire(attempt), OUTCOME_TIMEOUT_MS),
+      receiptReceived: false,
     };
     activeAttempt.current = attempt;
     setLoading(true);
     try {
-      const isAndroid = Platform.OS === 'android';
       if (isAndroid) {
-        // Expo IAP 6.6 shares pending Android purchase promises. Let the
-        // old native request drain after a watchdog timeout before starting
-        // another, so the old request cannot reject the new one.
-        if (playRequest) await playRequest;
-        if (attempt !== activeAttempt.current) return;
         const ready = await handler.preparePurchase();
         if (attempt !== activeAttempt.current) return;
         if (!ready) {
@@ -323,23 +375,27 @@ function useTipJarController() {
       }
       const result = await request;
       const purchases = Array.isArray(result) ? result : result ? [result] : [];
-      // The store can return no receipt for a deferred payment. Keep its
-      // marker so a later receipt still gets a thank-you.
-      if (purchases.length === 0) settle(attempt);
       const tipPurchases = purchases.filter(item => item.productId === TIP_SKU &&
         (item.purchaseState === 'purchased' || item.purchaseState === 'pending'));
+      const markedPurchases = tipPurchases.filter(purchase => getAttemptToken(purchase) === token);
+      for (const purchase of markedPurchases) await handlers.current?.purchase(purchase);
+
+      // Empty and unrecognized results can be followed by a late receipt.
+      // Release the button but retain the marker for a possible thank-you.
+      if (!attempt.receiptReceived) settle(attempt);
       // Play can return an already-owned receipt in place of a new purchase.
-      if (tipPurchases.length > 0 && !tipPurchases.some(purchase => getAttemptToken(purchase) === token)) {
-        settle(attempt);
+      if (!attempt.receiptReceived && tipPurchases.length > 0 && markedPurchases.length === 0) {
         attempts.delete(token);
       }
-      for (const purchase of purchases) await handlers.current?.purchase(purchase);
+      for (const purchase of tipPurchases) {
+        if (getAttemptToken(purchase) !== token) await handlers.current?.purchase(purchase);
+      }
     } catch (error) {
       handlers.current?.error(error as ExpoPurchaseError | undefined, attempt);
     }
-  }, [product, settle]);
+  }, [expire, product, settle, unavailable]);
 
-  return { products: product ? [product] : [], loading, unavailable, unsupported, tip };
+  return { products: product ? [product] : [], loading, unavailable, unsupported, tip, retryIfUnavailable };
 }
 
 const TipJarContext = createContext<ReturnType<typeof useTipJarController> | null>(null);

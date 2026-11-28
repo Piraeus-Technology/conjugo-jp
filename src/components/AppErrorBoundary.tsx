@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 interface AppErrorBoundaryState {
   hasError: boolean;
@@ -28,6 +28,7 @@ export default class AppErrorBoundary extends React.Component<
         accessibilityRole="alert"
         accessibilityLabel="ConjuGo JP encountered an unexpected error"
       >
+        <StatusBar barStyle="dark-content" />
         <Text style={styles.title}>Something went wrong</Text>
         <Text style={styles.message}>
           Your saved progress is still on this device. Try loading the app again.

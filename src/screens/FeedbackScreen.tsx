@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Constants from 'expo-constants';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColors, fonts, spacing, radius } from '../utils/theme';
 import { useThemeStore } from '../store/themeStore';
@@ -51,7 +51,9 @@ export default function FeedbackScreen() {
     unavailable: tipUnavailable,
     unsupported: tipUnsupported,
     tip,
+    retryIfUnavailable,
   } = useTipJar();
+  useFocusEffect(retryIfUnavailable);
 
   const handleRateApp = async () => {
     if (Platform.OS === 'android') {
@@ -225,7 +227,7 @@ export default function FeedbackScreen() {
       {(products.length > 0 || tipUnavailable) && (
         <>
           <Text style={[styles.sectionTitle, { color: colors.textSecondary, marginTop: spacing.lg }]}>Tip Jar</Text>
-          {products.length > 0 ? (
+          {products.length > 0 && (!tipUnavailable || tipLoading) ? (
             <>
               <Text style={[styles.tipDescription, { color: colors.textSecondary }]}>
                 ConjuGo JP is free with no ads. If you find it helpful, consider leaving a tip!

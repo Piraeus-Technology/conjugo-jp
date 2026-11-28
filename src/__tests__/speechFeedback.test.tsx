@@ -11,7 +11,6 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 jest.mock('expo-speech', () => ({
   stop: jest.fn().mockResolvedValue(undefined),
   speak: jest.fn(),
-  VoiceQuality: { Default: 'Default', Enhanced: 'Enhanced' },
   getAvailableVoicesAsync: jest.fn().mockResolvedValue([]),
   isSpeakingAsync: jest.fn().mockResolvedValue(false),
 }));
@@ -93,26 +92,11 @@ it('lingers briefly on normal completion and clears immediately when the app bac
   expect(Speech.stop).toHaveBeenCalledTimes(3);
 });
 
-it('selects an installed offline Japanese voice on Android', async () => {
+it('speaks on Android with bare ja, no voice ID, and no voice query even when the voice list is empty', async () => {
   jest.replaceProperty(Platform, 'OS', 'android');
-  const voices = [
-    { identifier: 'english', name: 'English', language: 'en-US', quality: Speech.VoiceQuality.Default, isAvailableOffline: true },
-    { identifier: 'ja-network', name: 'Japanese network', language: 'ja-JP', quality: Speech.VoiceQuality.Enhanced },
-    { identifier: 'ja-download', name: 'Japanese download', language: 'ja-JP', quality: Speech.VoiceQuality.Enhanced, isInstalled: false },
-    { identifier: 'ja-local', name: 'Japanese local', language: 'ja-JP', quality: Speech.VoiceQuality.Default, isInstalled: true, isAvailableOffline: true },
-  ];
-  jest.mocked(Speech.getAvailableVoicesAsync).mockResolvedValueOnce(voices);
   await act(async () => speak('あく'));
-  expect(Speech.speak).toHaveBeenCalledWith('あく', expect.objectContaining({ language: 'ja', voice: 'ja-local' }));
-});
-
-it('warns and skips playback when Android has no Japanese voice', async () => {
-  jest.replaceProperty(Platform, 'OS', 'android');
-  const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
-  jest.mocked(Speech.getAvailableVoicesAsync).mockResolvedValueOnce([
-    { identifier: 'english', name: 'English', language: 'en-US', quality: Speech.VoiceQuality.Default },
-  ]);
-  await act(async () => speak('あく'));
-  expect(Speech.speak).not.toHaveBeenCalled();
-  expect(warn).toHaveBeenCalledWith('Speech playback failed:', expect.any(Error));
+  expect(Speech.getAvailableVoicesAsync).not.toHaveBeenCalled();
+  expect(Speech.speak).toHaveBeenCalledTimes(1);
+  expect(Speech.speak).toHaveBeenCalledWith('あく', expect.objectContaining({ language: 'ja', rate: 0.85 }));
+  expect(jest.mocked(Speech.speak).mock.calls[0][1]).not.toHaveProperty('voice');
 });

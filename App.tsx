@@ -199,9 +199,9 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.bg }} onLayout={onLayoutRootView}>
-      {Platform.OS !== 'ios' && <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />}
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <AppErrorBoundary>
+      {Platform.OS !== 'ios' && <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />}
       <TipJarProvider>
       <NavigationContainer theme={navTheme}>
         <Tab.Navigator
