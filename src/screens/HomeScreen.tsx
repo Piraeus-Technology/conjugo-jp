@@ -6,10 +6,10 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
-  Animated,
   ScrollView,
 } from 'react-native';
-import { Swipeable } from 'react-native-gesture-handler';
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Animated, { Extrapolation, interpolate, useAnimatedStyle, type SharedValue } from 'react-native-reanimated';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Haptics from 'expo-haptics';
 import { useNavigation } from '@react-navigation/native';
@@ -67,6 +67,28 @@ const transitivityFilters: { value: boolean; label: string }[] = [
   { value: true, label: '他動詞 (Trans.)' },
   { value: false, label: '自動詞 (Intr.)' },
 ];
+
+function DeleteAction({ translation }: { translation: SharedValue<number> }) {
+  const panelStyle = useAnimatedStyle(() => ({
+    opacity: translation.value < 0 ? 1 : 0,
+  }));
+  const iconStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: interpolate(translation.value, [-80, 0], [1, 0.5], Extrapolation.CLAMP) }],
+  }));
+
+  return (
+    <Animated.View
+      style={[styles.deleteAction, panelStyle]}
+      pointerEvents="none"
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+    >
+      <Animated.View style={iconStyle}>
+        <Ionicons name="trash-outline" size={20} color="#fff" />
+      </Animated.View>
+    </Animated.View>
+  );
+}
 
 export default function HomeScreen() {
   const colors = useColors();
@@ -219,24 +241,6 @@ export default function HomeScreen() {
     </TouchableOpacity>
   );
 
-  const renderDeleteAction = (
-    _progress: Animated.AnimatedInterpolation<number>,
-    dragX: Animated.AnimatedInterpolation<number>,
-  ) => {
-    const scale = dragX.interpolate({
-      inputRange: [-80, 0],
-      outputRange: [1, 0.5],
-      extrapolate: 'clamp',
-    });
-    return (
-      <View style={styles.deleteAction}>
-        <Animated.View style={{ transform: [{ scale }] }}>
-          <Ionicons name="trash-outline" size={20} color="#fff" />
-        </Animated.View>
-      </View>
-    );
-  };
-
   const renderVerbItem = ({ item }: { item: WordSearchResult }) => {
     const tagColor = groupTagColors[item.group as WordGroup];
     const levelTagColor = getLevelTagColors(item.jlpt);
@@ -309,9 +313,9 @@ export default function HomeScreen() {
     };
 
     return (
-      <Swipeable
+      <ReanimatedSwipeable
         key={key + type}
-        renderRightActions={renderDeleteAction}
+        renderRightActions={(_progress, translation) => <DeleteAction translation={translation} />}
         onSwipeableOpen={handleSwipeDelete}
         overshootRight={false}
       >
@@ -340,7 +344,7 @@ export default function HomeScreen() {
             <Ionicons name="chevron-forward" size={16} color={colors.textMuted} style={{ marginLeft: 8 }} />
           )}
         </TouchableOpacity>
-      </Swipeable>
+      </ReanimatedSwipeable>
     );
   };
 
@@ -400,7 +404,7 @@ export default function HomeScreen() {
           keyExtractor={(item) => item.kind + item.verb + item.matchType}
           renderItem={renderVerbItem}
           contentContainerStyle={styles.listContent}
-          ListEmptyComponent={query.trim() !== debouncedQuery.trim() ? null : (
+          ListEmptyComponent={query.trim() !== debouncedQuery.trim() ? undefined : (
             <Text style={[styles.emptyText, { color: colors.textMuted }]}>No matching words</Text>
           )}
         />

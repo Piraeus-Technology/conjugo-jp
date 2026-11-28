@@ -130,7 +130,7 @@ describe('FeedbackScreen', () => {
   });
 
   it('shares a tappable platform store link and derives the app version', () => {
-    const share = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
+    const share = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction, activityType: undefined });
     const screen = render(<FeedbackScreen />);
 
     fireEvent.press(screen.getByLabelText('Share ConjuGo JP'));

@@ -23,7 +23,7 @@ export default function ConjugationScreen() {
   const verbData = (verbs as Record<string, VerbData>)[verb];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();
   const addToHistory = useHistoryStore(state => state.addToHistory);
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<React.ComponentRef<typeof ScrollView>>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
 
   React.useEffect(() => {
@@ -32,8 +32,8 @@ export default function ConjugationScreen() {
 
   useFocusEffect(useCallback(() => () => stopSpeech(), []));
 
-  const highlightRef = useRef<React.ElementRef<typeof TouchableOpacity>>(null);
-  const scrollContentRef = useRef<View>(null);
+  const highlightRef = useRef<React.ComponentRef<typeof TouchableOpacity>>(null);
+  const scrollContentRef = useRef<React.ComponentRef<typeof View>>(null);
 
   const highlightTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const didScrollToHighlight = useRef(false);

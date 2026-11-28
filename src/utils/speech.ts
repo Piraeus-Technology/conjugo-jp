@@ -1,10 +1,17 @@
 import * as Speech from 'expo-speech';
+import type { Voice } from 'expo-speech';
+import { Platform } from 'react-native';
 
 const START_TIMEOUT_MS = 2500;
 const POLL_INTERVAL_MS = 1000;
 const MAX_FEEDBACK_MS = 15_000;
 const MIN_VISIBLE_MS = 1200;
 const LINGER_AFTER_END_MS = 400;
+
+interface AndroidVoice extends Voice {
+  isInstalled?: boolean;
+  isAvailableOffline?: boolean;
+}
 
 interface SpeechFeedback {
   id: number;
@@ -95,10 +102,27 @@ export function speak(text: string) {
   }
 
   checkPlaybackAfter(START_TIMEOUT_MS);
-  void stopNativeSpeech().then(() => {
+  void stopNativeSpeech().then(async () => {
     if (id !== speechToken) return;
+    let voice: string | undefined;
+    const isAndroid = Platform.OS === 'android';
+    if (isAndroid) {
+      const voices: AndroidVoice[] = await Speech.getAvailableVoicesAsync();
+      if (id !== speechToken) return;
+      const japanese = voices.filter(voice =>
+        voice.isInstalled !== false && /^ja(?:-|$)/i.test(voice.language),
+      );
+      voice = (japanese.find(voice => voice.isAvailableOffline)
+        ?? japanese.find(voice => voice.language === 'ja-JP')
+        ?? japanese[0])?.identifier;
+      if (!voice) {
+        reportError(new Error('No Japanese voice is available.'));
+        return;
+      }
+    }
     Speech.speak(text, {
-      language: 'ja-JP',
+      // Expo's Android locale parser accepts a language subtag; the ID selects the actual voice.
+      ...(isAndroid ? { language: 'ja', voice } : { language: 'ja-JP' }),
       rate: 0.85,
       onStart: () => {
         if (!ended && feedback?.id === id) checkPlaybackAfter(START_TIMEOUT_MS);

@@ -32,7 +32,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "react-native-iap",
+      [
+        "expo-iap",
+        {
+          "android": {
+            "store": "play"
+          }
+        }
+      ],
       "expo-font",
       "expo-asset",
       [

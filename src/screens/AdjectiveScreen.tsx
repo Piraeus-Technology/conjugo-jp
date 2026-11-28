@@ -24,9 +24,9 @@ export default function AdjectiveScreen() {
   const highlightForm = route.params.highlightForm;
   const data = adjectiveMap[word];
   const { isFavorite, toggleFavorite, loadFavorites } = useFavoritesStore();
-  const scrollRef = useRef<ScrollView>(null);
-  const scrollContentRef = useRef<View>(null);
-  const highlightRef = useRef<React.ElementRef<typeof TouchableOpacity>>(null);
+  const scrollRef = useRef<React.ComponentRef<typeof ScrollView>>(null);
+  const scrollContentRef = useRef<React.ComponentRef<typeof View>>(null);
+  const highlightRef = useRef<React.ComponentRef<typeof TouchableOpacity>>(null);
   const highlightTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const didScrollToHighlight = useRef(false);
   const [collapsedGroups, setCollapsedGroups] = useState<Record<string, boolean>>({});
