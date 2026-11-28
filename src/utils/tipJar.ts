@@ -32,26 +32,55 @@ try {
   // Keep the tip jar optional when the module cannot load.
 }
 
-const OUTCOME_TIMEOUT_MS = 120_000;
+const STORE_STEP_TIMEOUT_MS = 30_000;
+const FINISH_TIMEOUT_MS = 120_000;
+const IOS_OUTCOME_TIMEOUT_MS = 120_000;
+// Play allows 15 minutes in the billing sheet. Also cover callbacks lost before launch.
+const PLAY_REQUEST_TIMEOUT_MS = 16 * 60_000;
 
 interface TipAttempt {
   token: string;
-  deadline: number;
-  timeout: ReturnType<typeof setTimeout>;
   receiptReceived: boolean;
+  deadline?: number;
+  timeout?: ReturnType<typeof setTimeout>;
 }
 
-const attempts = new Map<string, TipAttempt>();
-const finishing = new Set<string>();
-const finished = new Set<string>();
-const attentionNotified = new Set<string>();
-let playRequest: Promise<void> | undefined;
+interface PlayRequest {
+  attempt: TipAttempt;
+  deadline: number;
+  timeout: ReturnType<typeof setTimeout>;
+}
 
-function showUnconfirmedPlayPurchase() {
-  Alert.alert(
-    'Purchase Needs Attention',
-    'Google Play is still handling the previous purchase request. Check your Google Play purchase history before leaving another tip.',
-  );
+function createTipSession() {
+  return {
+    attempts: new Map<string, TipAttempt>(),
+    finishing: new Map<string, TipAttempt | undefined>(),
+    finished: new Set<string>(),
+    attentionNotified: new Set<string>(),
+    playRequest: undefined as PlayRequest | undefined,
+    onChange: undefined as (() => void) | undefined,
+  };
+}
+
+let tipSession = createTipSession();
+
+export function __resetTipSessionForTests() {
+  clearTimeout(tipSession.playRequest?.timeout);
+  tipSession = createTipSession();
+}
+
+async function withStoreTimeout<T>(operation: Promise<T>, timeoutMs = STORE_STEP_TIMEOUT_MS): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      operation,
+      new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => reject(new Error('Tip jar store operation timed out')), timeoutMs);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 function createAttemptToken(): string {
@@ -72,47 +101,64 @@ function useTipJarController() {
   const [loading, setLoading] = useState(false);
   const [unavailable, setUnavailable] = useState(!iapModule);
   const [unsupported, setUnsupported] = useState(!iapModule);
-  const activeAttempt = useRef<TipAttempt | null>(null);
   const handlers = useRef<{
-    preparePurchase: () => Promise<boolean>;
+    tip: (sku: string) => Promise<void>;
     retryIfUnavailable: () => void;
-    purchase: (purchase: Purchase) => Promise<void>;
-    error: (error: Partial<ExpoPurchaseError> | undefined, attempt?: TipAttempt) => void;
   } | null>(null);
-
-  const settle = useCallback((attempt: TipAttempt) => {
-    if (activeAttempt.current !== attempt) return;
-    clearTimeout(attempt.timeout);
-    activeAttempt.current = null;
-    setLoading(false);
-  }, []);
-
-  const expire = useCallback((attempt: TipAttempt) => {
-    if (activeAttempt.current !== attempt || attempt.receiptReceived) return;
-    if (Platform.OS === 'android') {
-      if (attempts.has(attempt.token)) showUnconfirmedPlayPurchase();
-      else setUnavailable(true);
-    }
-    settle(attempt);
-  }, [settle]);
 
   useEffect(() => {
     const iap = iapModule;
     if (!iap) return;
 
+    const session = tipSession;
+    const { attempts, finishing, finished, attentionNotified } = session;
+    const isAndroid = Platform.OS === 'android';
     const codes = iap.ErrorCode;
     let mounted = true;
     let connected = false;
+    let product: Product | null = null;
+    let productUnavailable = false;
     let needsProduct = true;
+    let activeAttempt: TipAttempt | undefined;
     let connecting: Promise<boolean> | undefined;
+    let refreshing = false;
+    let reloadQueued = false;
     let sweep: Promise<void> | undefined;
+    let recoveryQueued = false;
     let purchaseListener: ReturnType<typeof iap.purchaseUpdatedListener> | undefined;
     let errorListener: ReturnType<typeof iap.purchaseErrorListener> | undefined;
     retainIapConnection();
 
+    const playBlocked = () => {
+      const request = session.playRequest;
+      // A marked receipt can arrive before the shared native promise drains.
+      return Boolean(request && (request.attempt.receiptReceived || request.deadline <= Date.now()));
+    };
+    const isFinishingMarkedTip = () => Array.from(finishing).some(([key, attempt]) => attempt && !finished.has(key));
+    const isBusy = () => Boolean(activeAttempt || (session.playRequest && !playBlocked()) || isFinishingMarkedTip());
+    const sync = () => {
+      setLoading(isBusy());
+      setUnavailable(productUnavailable || playBlocked());
+    };
+    session.onChange = sync;
+    sync();
+
+    const markProductUnavailable = () => {
+      productUnavailable = true;
+      needsProduct = true;
+      sync();
+    };
+
+    const settle = (attempt: TipAttempt) => {
+      if (activeAttempt !== attempt) return;
+      clearTimeout(attempt.timeout);
+      activeAttempt = undefined;
+      sync();
+    };
+
     const checkConnection = (error: unknown) => {
       const code = (error as ExpoPurchaseError | undefined)?.code;
-      if (!mounted || Platform.OS !== 'android' || (code !== codes.ServiceDisconnected && code !== codes.NotPrepared)) return false;
+      if (!mounted || !isAndroid || (code !== codes.ServiceDisconnected && code !== codes.NotPrepared)) return false;
       connected = false;
       needsProduct = true;
       // Keep the displayed product so the next tap can reconnect and refresh it.
@@ -123,7 +169,7 @@ function useTipJarController() {
       try {
         await iap.finishTransaction({ purchase, isConsumable: true });
       } catch (error) {
-        if (Platform.OS !== 'android' || (error as ExpoPurchaseError)?.code !== codes.ItemNotOwned) throw error;
+        if (!isAndroid || (error as ExpoPurchaseError)?.code !== codes.ItemNotOwned) throw error;
         // Play can report ITEM_NOT_OWNED from stale cache data. Keep an owned
         // token retryable on the next sweep, including when this query fails.
         const owned = await iap.getAvailablePurchases();
@@ -145,20 +191,26 @@ function useTipJarController() {
       const key = getTipTransactionKey(purchase, Platform.OS);
       if (!key || finished.has(key) || finishing.has(key)) return;
 
+      finishing.set(key, attempt);
       if (attempt) {
         attempt.receiptReceived = true;
-        clearTimeout(attempt.timeout);
+        settle(attempt);
       }
-      finishing.add(key);
+      sync();
       try {
-        await finishTip(purchase, key);
-        finished.add(key);
-        attentionNotified.delete(key);
-        if (attempt) {
-          attempts.delete(attempt.token);
-          Alert.alert('Thank You!', 'Your support means a lot and helps keep the app free for everyone.');
-        }
+        // Observe a late success even after the timeout makes this key retryable.
+        await withStoreTimeout(finishTip(purchase, key).then(() => {
+          if (finished.has(key)) return;
+          finished.add(key);
+          attentionNotified.delete(key);
+          if (attempt) {
+            attempts.delete(attempt.token);
+            if (mounted) Alert.alert('Thank You!', 'Your support means a lot and helps keep the app free for everyone.');
+          }
+          session.onChange?.();
+        }), FINISH_TIMEOUT_MS);
       } catch (error) {
+        if (!mounted || finished.has(key)) return;
         checkConnection(error);
         console.warn('Failed to finish tip transaction:', error);
         if (attempt && !attentionNotified.has(key)) {
@@ -170,18 +222,25 @@ function useTipJarController() {
         }
       } finally {
         finishing.delete(key);
-        if (attempt) settle(attempt);
+        session.onChange?.();
       }
     };
+
+    const recoverPurchases = async (query: Promise<Purchase[]>) => {
+      // A timed-out query can still return a charged receipt. Handle its result
+      // even if another sweep has since started or the connection went stale.
+      const handling = query.then(async purchases => {
+        for (const purchase of purchases) await handlePurchase(purchase);
+      }, () => undefined);
+      await withStoreTimeout(query);
+      await handling;
+    };
+
     const recover = async (retryDisconnect = true): Promise<void> => {
       try {
-        const purchases = Platform.OS === 'ios'
-          ? await iap.getPendingTransactionsIOS()
-          : await iap.getAvailablePurchases();
-        for (const purchase of purchases) {
-          if (!mounted || !connected) return;
-          await handlePurchase(purchase);
-        }
+        await recoverPurchases(isAndroid
+          ? iap.getAvailablePurchases()
+          : iap.getPendingTransactionsIOS());
       } catch (error) {
         if (checkConnection(error) && retryDisconnect && await connect()) {
           await recover(false);
@@ -192,11 +251,10 @@ function useTipJarController() {
           // The history query publishes verified entries even if another entry
           // fails verification. History includes unfinished consumables.
           try {
-            const verified = await iap.getAvailablePurchases({
+            await recoverPurchases(iap.getAvailablePurchases({
               onlyIncludeActiveItemsIOS: false,
               alsoPublishToEventListenerIOS: true,
-            });
-            for (const purchase of verified) await handlePurchase(purchase);
+            }));
           } catch (fallbackError) {
             console.warn('Failed to query StoreKit history during tip recovery:', fallbackError);
           }
@@ -207,19 +265,24 @@ function useTipJarController() {
     const loadProduct = async (recheck = false) => {
       if (!needsProduct && !recheck) return true;
       try {
-        const items: ProductOrSubscription[] | null = await iap.fetchProducts({ skus: [TIP_SKU], type: 'in-app' });
-        if (!mounted || !connected) return false;
-        const product = items?.find((item): item is Product => item.id === TIP_SKU && item.type === 'in-app' &&
+        const items: ProductOrSubscription[] | null = await withStoreTimeout(iap.fetchProducts({ skus: [TIP_SKU], type: 'in-app' }));
+        if (!mounted) return false;
+        const loadedProduct = items?.find((item): item is Product => item.id === TIP_SKU && item.type === 'in-app' &&
           Boolean(item.displayPrice?.trim()) &&
           (!('productStatusAndroid' in item) || item.productStatusAndroid == null || item.productStatusAndroid === 'ok'));
-        needsProduct = !product;
-        if (product) setProduct(product);
-        setUnavailable(needsProduct);
-        return !needsProduct;
+        if (!loadedProduct) {
+          markProductUnavailable();
+          return false;
+        }
+        product = loadedProduct;
+        setProduct(loadedProduct);
+        productUnavailable = false;
+        needsProduct = !connected;
+        sync();
+        return connected;
       } catch (error) {
         checkConnection(error);
-        needsProduct = true;
-        if (mounted) setUnavailable(true);
+        if (mounted) markProductUnavailable();
         return false;
       }
     };
@@ -228,7 +291,7 @@ function useTipJarController() {
       if (connecting) return connecting;
       if (connected && !recheck) return Promise.resolve(true);
       connecting = (async () => {
-        await waitForPendingIapEnd();
+        await withStoreTimeout(waitForPendingIapEnd());
         if (!mounted) return false;
         try {
           // Receive StoreKit replays so a failed finish can be retried.
@@ -237,32 +300,62 @@ function useTipJarController() {
         } catch {
           // The JS package resolves its native bridge lazily. Expo Go lacks it.
           setUnsupported(true);
-          setUnavailable(true);
+          markProductUnavailable();
           return false;
         }
         setUnsupported(false);
-        connected = await iap.initConnection();
-        if (mounted && !connected) {
-          needsProduct = true;
-          setUnavailable(true);
-        }
+        connected = await withStoreTimeout(iap.initConnection());
+        if (mounted && !connected) markProductUnavailable();
         return mounted && connected;
       })().catch(error => {
         connected = false;
-        needsProduct = true;
-        if (mounted) setUnavailable(true);
+        if (mounted) markProductUnavailable();
         throw error;
       }).finally(() => { connecting = undefined; });
       return connecting;
     };
 
-    const refresh = () => {
-      if (sweep || !mounted) return;
+    const sweepPurchases = () => {
+      if (!mounted) return;
+      if (sweep) {
+        recoveryQueued = true;
+        return;
+      }
       sweep = (async () => {
-        if (await connect(Platform.OS === 'android')) await Promise.all([recover(), loadProduct()]);
+        if (await connect()) await recover();
       })().catch(error => {
-        console.warn('Failed to connect to the tip jar store:', error);
-      }).finally(() => { sweep = undefined; });
+        console.warn('Failed to reconnect during tip recovery:', error);
+      }).finally(() => {
+        sweep = undefined;
+        if (recoveryQueued) {
+          recoveryQueued = false;
+          sweepPurchases();
+        }
+      });
+    };
+
+    const refresh = (forceProduct = false) => {
+      if (!mounted) return;
+      if (refreshing) {
+        reloadQueued = true;
+        return;
+      }
+      refreshing = true;
+      void (async () => {
+        try {
+          if (!(await connect(isAndroid))) return;
+          sweepPurchases();
+          await loadProduct(forceProduct);
+        } catch (error) {
+          console.warn('Failed to connect to the tip jar store:', error);
+        } finally {
+          refreshing = false;
+          if (reloadQueued) {
+            reloadQueued = false;
+            refresh(true);
+          }
+        }
+      })();
     };
 
     const preparePurchase = async () => {
@@ -273,127 +366,122 @@ function useTipJarController() {
       } catch (error) {
         console.warn('Failed to prepare the tip jar store:', error);
       }
-      if (mounted) setUnavailable(true);
+      if (mounted) markProductUnavailable();
       return false;
     };
 
-    function handlePurchaseError(error: Partial<ExpoPurchaseError> | undefined, attempt?: TipAttempt) {
+    function handlePurchaseError(error: Partial<ExpoPurchaseError> | undefined, attempt?: TipAttempt, wasActive = false) {
       if (!mounted) return;
       checkConnection(error);
       const code = error?.code;
       if (error?.productId && error.productId !== TIP_SKU) return;
-      if (attempt && Platform.OS === 'android' && code === codes.ServiceDisconnected) {
+      if (attempt && isAndroid && code === codes.ServiceDisconnected) {
         // The request may already have charged. Keep its marker for recovery.
-        if (!attempt.receiptReceived) settle(attempt);
-        if (sweep) void sweep.then(refresh);
-        else refresh();
+        refresh();
         return;
       }
       const retryable = code === codes.AlreadyOwned || code === codes.ItemNotOwned || code === codes.DuplicatePurchase;
       if (retryable) refresh();
       // Store error events have no attempt marker. Only a rejection from a
       // specific request can settle that request.
-      if (!attempt || attempt !== activeAttempt.current || attempt.receiptReceived) return;
-      settle(attempt);
+      if (!attempt || !wasActive || attempt.receiptReceived) return;
       if (retryable || code === codes.DeferredPayment || code === codes.Pending) return;
       attempts.delete(attempt.token);
       if (code === codes.UserCancelled || code === codes.PurchaseVerificationFinished) return;
       Alert.alert('Purchase Failed', 'Something went wrong. Please try again.');
     }
 
-    handlers.current = {
-      preparePurchase,
-      retryIfUnavailable: () => { if (!connected || needsProduct) refresh(); },
-      purchase: handlePurchase,
-      error: handlePurchaseError,
-    };
-    refresh();
-    const appState = AppState.addEventListener('change', state => {
-      if (state !== 'active') return;
-      const attempt = activeAttempt.current;
-      if (attempt && attempt.deadline <= Date.now()) expire(attempt);
-      refresh();
-    });
-
-    const attemptRef = activeAttempt;
-    return () => {
-      mounted = false;
-      handlers.current = null;
-      appState.remove();
-      purchaseListener?.remove();
-      errorListener?.remove();
-      if (attemptRef.current) clearTimeout(attemptRef.current.timeout);
-      attemptRef.current = null;
-      releaseIapConnection(purchaseListener ? iap.endConnection : undefined);
-    };
-  }, [expire, settle]);
-
-  const retryIfUnavailable = useCallback(() => handlers.current?.retryIfUnavailable(), []);
-
-  const tip = useCallback(async (sku: string) => {
-    const handler = handlers.current;
-    if (!iapModule || !handler || !product || unavailable || sku !== TIP_SKU || activeAttempt.current) return;
-    const isAndroid = Platform.OS === 'android';
-    if (isAndroid && playRequest) {
-      // Expo IAP shares pending Play promises across requests. An old request
-      // can settle a new one, so report its unconfirmed outcome immediately.
-      showUnconfirmedPlayPurchase();
-      return;
-    }
-    const token = createAttemptToken();
-    const attempt: TipAttempt = {
-      token,
-      deadline: Date.now() + OUTCOME_TIMEOUT_MS,
-      timeout: setTimeout(() => expire(attempt), OUTCOME_TIMEOUT_MS),
-      receiptReceived: false,
-    };
-    activeAttempt.current = attempt;
-    setLoading(true);
-    try {
+    const tip = async (sku: string) => {
+      if (!product || productUnavailable || sku !== TIP_SKU || session.playRequest || isBusy()) return;
+      const token = createAttemptToken();
+      const attempt: TipAttempt = { token, receiptReceived: false };
+      activeAttempt = attempt;
+      sync();
       if (isAndroid) {
-        const ready = await handler.preparePurchase();
-        if (attempt !== activeAttempt.current) return;
-        if (!ready) {
+        const ready = await preparePurchase();
+        if (!mounted) return;
+        if (!ready || isFinishingMarkedTip()) {
           settle(attempt);
           return;
         }
+        // Expo IAP can settle every pending Play promise with one answer.
+        // Keep this guard until the native promise drains, even after UI expiry.
+        session.playRequest = {
+          attempt,
+          deadline: Date.now() + PLAY_REQUEST_TIMEOUT_MS,
+          timeout: setTimeout(() => session.onChange?.(), PLAY_REQUEST_TIMEOUT_MS),
+        };
+        settle(attempt);
+      } else {
+        attempt.deadline = Date.now() + IOS_OUTCOME_TIMEOUT_MS;
+        attempt.timeout = setTimeout(() => settle(attempt), IOS_OUTCOME_TIMEOUT_MS);
       }
       attempts.set(token, attempt);
-      const request = iapModule.requestPurchase({
-        request: {
-          apple: { sku: TIP_SKU, appAccountToken: token },
-          google: { skus: [TIP_SKU], obfuscatedAccountId: token },
-        },
-        type: 'in-app',
-      });
-      if (isAndroid) {
-        const settled = request.then(() => undefined, () => undefined);
-        playRequest = settled;
-        void settled.then(() => {
-          if (playRequest === settled) playRequest = undefined;
+      const releaseRequest = () => {
+        if (session.playRequest?.attempt === attempt) {
+          clearTimeout(session.playRequest.timeout);
+          session.playRequest = undefined;
+          session.onChange?.();
+        }
+        if (mounted) settle(attempt);
+      };
+      let result: Purchase | Purchase[] | null;
+      try {
+        result = await iap.requestPurchase({
+          request: {
+            apple: { sku: TIP_SKU, appAccountToken: token },
+            google: { skus: [TIP_SKU], obfuscatedAccountId: token },
+          },
+          type: 'in-app',
         });
+      } catch (error) {
+        const wasActive = activeAttempt === attempt || session.playRequest?.attempt === attempt;
+        releaseRequest();
+        handlePurchaseError(error as ExpoPurchaseError | undefined, attempt, wasActive);
+        return;
       }
-      const result = await request;
       const purchases = Array.isArray(result) ? result : result ? [result] : [];
       const tipPurchases = purchases.filter(item => item.productId === TIP_SKU &&
         (item.purchaseState === 'purchased' || item.purchaseState === 'pending'));
       const markedPurchases = tipPurchases.filter(purchase => getAttemptToken(purchase) === token);
-      for (const purchase of markedPurchases) await handlers.current?.purchase(purchase);
+      // Acquire finish locks before releasing the request, including a receipt
+      // from an older marked attempt returned in place of this purchase.
+      const finishes = tipPurchases.map(handlePurchase);
 
-      // Empty and unrecognized results can be followed by a late receipt.
-      // Release the button but retain the marker for a possible thank-you.
-      if (!attempt.receiptReceived) settle(attempt);
-      // Play can return an already-owned receipt in place of a new purchase.
+      // Keep markers after empty results so a late receipt can be thanked.
       if (!attempt.receiptReceived && tipPurchases.length > 0 && markedPurchases.length === 0) {
         attempts.delete(token);
       }
-      for (const purchase of tipPurchases) {
-        if (getAttemptToken(purchase) !== token) await handlers.current?.purchase(purchase);
-      }
-    } catch (error) {
-      handlers.current?.error(error as ExpoPurchaseError | undefined, attempt);
-    }
-  }, [expire, product, settle, unavailable]);
+      releaseRequest();
+      await Promise.all(finishes);
+    };
+
+    handlers.current = {
+      tip,
+      retryIfUnavailable: () => { if (!connected || needsProduct || playBlocked()) refresh(true); },
+    };
+    refresh();
+    const appState = AppState.addEventListener('change', state => {
+      if (state !== 'active') return;
+      if (activeAttempt?.deadline && activeAttempt.deadline <= Date.now()) settle(activeAttempt);
+      sync();
+      refresh(productUnavailable || playBlocked());
+    });
+
+    return () => {
+      mounted = false;
+      handlers.current = null;
+      if (session.onChange === sync) session.onChange = undefined;
+      appState.remove();
+      purchaseListener?.remove();
+      errorListener?.remove();
+      clearTimeout(activeAttempt?.timeout);
+      releaseIapConnection(purchaseListener ? iap.endConnection : undefined);
+    };
+  }, []);
+
+  const retryIfUnavailable = useCallback(() => handlers.current?.retryIfUnavailable(), []);
+  const tip = useCallback(async (sku: string) => { await handlers.current?.tip(sku); }, []);
 
   return { products: product ? [product] : [], loading, unavailable, unsupported, tip, retryIfUnavailable };
 }
