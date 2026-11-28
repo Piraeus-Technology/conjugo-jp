@@ -198,7 +198,9 @@ it('guards Next before an answer and announces which option was correct', async 
 it('scrolls to a highlighted form once and cancels a pending scroll on unmount', async () => {
   mockRouteParams.highlightForm = 'masu';
   const measureLayout = jest.spyOn(View.prototype, 'measureLayout')
-    .mockImplementation((_parent, reply) => reply(0, 250, 0, 0));
+    .mockImplementation((_parent, reply) => {
+      if (typeof reply === 'function') reply(0, 250, 0, 0);
+    });
   const load = () => ready(<ConjugationScreen />);
   jest.useFakeTimers();
   try {

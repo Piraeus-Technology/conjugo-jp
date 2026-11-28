@@ -69,7 +69,7 @@ export default function FlashcardScreen() {
   const [card, setCard] = useState<PracticeCard | null>(null);
   const view = useMemo(() => (card ? describeCard(card) : null), [card]);
   const [flipped, setFlipped] = useState(false);
-  const flipAnim = useRef(new Animated.Value(0)).current;
+  const [flipAnim] = useState(() => new Animated.Value(0));
   const isAnimating = useRef(false);
   const hasGradedCard = useRef(false);
   const speechGate = useRef({
@@ -496,7 +496,7 @@ const styles = StyleSheet.create({
     backfaceVisibility: 'hidden',
   },
   frontContent: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     alignItems: 'center',
     justifyContent: 'center',
     padding: spacing.xl,

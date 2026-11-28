@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useSyncExternalStore } from 'react';
+import React, { useEffect, useState, useSyncExternalStore } from 'react';
 import { Animated, AppState, StyleSheet, Text } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,7 +11,7 @@ export default function SpeechIndicator() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const feedback = useSyncExternalStore(subscribeToSpeechFeedback, getSpeechFeedback, getSpeechFeedback);
-  const scale = useRef(new Animated.Value(1)).current;
+  const [scale] = useState(() => new Animated.Value(1));
 
   useEffect(() => {
     const sub = AppState.addEventListener('change', state => {

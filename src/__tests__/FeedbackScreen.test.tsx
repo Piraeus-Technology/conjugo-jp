@@ -23,6 +23,7 @@ const mockResetPracticeSettings = jest.fn();
 jest.mock('@expo/vector-icons/Ionicons', () => 'Ionicons');
 jest.mock('expo-constants', () => ({ expoConfig: { version: '1.2.0' } }));
 jest.mock('@react-navigation/native', () => ({
+  useFocusEffect: jest.fn(),
   useNavigation: () => ({ navigate: jest.fn() }),
 }));
 jest.mock('../utils/tipJar', () => ({
@@ -130,7 +131,7 @@ describe('FeedbackScreen', () => {
   });
 
   it('shares a tappable platform store link and derives the app version', () => {
-    const share = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction });
+    const share = jest.spyOn(Share, 'share').mockResolvedValue({ action: Share.sharedAction, activityType: undefined });
     const screen = render(<FeedbackScreen />);
 
     fireEvent.press(screen.getByLabelText('Share ConjuGo JP'));

@@ -3,7 +3,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import type { RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar, useColorScheme } from 'react-native';
+import { Platform, StatusBar, useColorScheme } from 'react-native';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -23,6 +23,7 @@ import AppErrorBoundary from './src/components/AppErrorBoundary';
 import { useThemeStore } from './src/store/themeStore';
 import { usePracticeSettingsStore } from './src/store/practiceSettingsStore';
 import { useColors, fonts } from './src/utils/theme';
+import { TipJarProvider } from './src/utils/tipJar';
 import type {
   FlashcardStackParamList,
   MoreStackParamList,
@@ -38,13 +39,20 @@ const FlashcardStack = createNativeStackNavigator<FlashcardStackParamList>();
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const Tab = createBottomTabNavigator();
 
+function useStackStatusBarStyle() {
+  const isDark = useThemeStore(state => state.isDark);
+  return Platform.OS === 'ios' ? (isDark ? 'light' : 'dark') : undefined;
+}
+
 function SearchStackScreen() {
   const colors = useColors();
+  const statusBarStyle = useStackStatusBarStyle();
 
   return (
     <SearchStack.Navigator
       id="SearchStack"
       screenOptions={{
+        statusBarStyle,
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.primaryText,
         headerTitleStyle: {
@@ -83,10 +91,12 @@ function SearchStackScreen() {
 
 function QuizStackScreen() {
   const colors = useColors();
+  const statusBarStyle = useStackStatusBarStyle();
   return (
     <QuizStack.Navigator
       id="QuizStack"
       screenOptions={{
+        statusBarStyle,
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
@@ -106,10 +116,12 @@ function QuizStackScreen() {
 
 function FlashcardStackScreen() {
   const colors = useColors();
+  const statusBarStyle = useStackStatusBarStyle();
   return (
     <FlashcardStack.Navigator
       id="FlashcardStack"
       screenOptions={{
+        statusBarStyle,
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
@@ -129,10 +141,12 @@ function FlashcardStackScreen() {
 
 function MoreStackScreen() {
   const colors = useColors();
+  const statusBarStyle = useStackStatusBarStyle();
   return (
     <MoreStack.Navigator
       id="MoreStack"
       screenOptions={{
+        statusBarStyle,
         headerStyle: { backgroundColor: colors.bg },
         headerTintColor: colors.primaryText,
         headerTitleStyle: { fontWeight: fonts.weights.semibold, color: colors.textPrimary },
@@ -184,13 +198,11 @@ export default function App() {
   };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <StatusBar
-        barStyle={isDark ? 'light-content' : 'dark-content'}
-        backgroundColor={colors.bg}
-      />
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.bg }} onLayout={onLayoutRootView}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <AppErrorBoundary>
+      {Platform.OS !== 'ios' && <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />}
+      <TipJarProvider>
       <NavigationContainer theme={navTheme}>
         <Tab.Navigator
           id="MainTabs"
@@ -261,6 +273,7 @@ export default function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
+      </TipJarProvider>
       <SpeechIndicator />
       </AppErrorBoundary>
       </SafeAreaProvider>

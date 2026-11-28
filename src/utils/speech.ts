@@ -1,4 +1,5 @@
 import * as Speech from 'expo-speech';
+import { Platform } from 'react-native';
 
 const START_TIMEOUT_MS = 2500;
 const POLL_INTERVAL_MS = 1000;
@@ -98,7 +99,8 @@ export function speak(text: string) {
   void stopNativeSpeech().then(() => {
     if (id !== speechToken) return;
     Speech.speak(text, {
-      language: 'ja-JP',
+      // Expo's Android locale parser takes just the language subtag.
+      language: Platform.OS === 'android' ? 'ja' : 'ja-JP',
       rate: 0.85,
       onStart: () => {
         if (!ended && feedback?.id === id) checkPlaybackAfter(START_TIMEOUT_MS);

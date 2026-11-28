@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, AppState } from 'react-native';
+import { Animated, AppState, Platform } from 'react-native';
 import { act, render } from '@testing-library/react-native';
 import * as Speech from 'expo-speech';
 import SpeechIndicator from '../components/SpeechIndicator';
@@ -11,6 +11,7 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 jest.mock('expo-speech', () => ({
   stop: jest.fn().mockResolvedValue(undefined),
   speak: jest.fn(),
+  getAvailableVoicesAsync: jest.fn().mockResolvedValue([]),
   isSpeakingAsync: jest.fn().mockResolvedValue(false),
 }));
 jest.mock('@expo/vector-icons/Ionicons', () => 'Ionicons');
@@ -89,4 +90,13 @@ it('lingers briefly on normal completion and clears immediately when the app bac
   act(() => jest.mocked(AppState.addEventListener).mock.calls[0][1]('background'));
   expect(screen.queryByText('よむ', { includeHiddenElements: true })).toBeNull();
   expect(Speech.stop).toHaveBeenCalledTimes(3);
+});
+
+it('speaks on Android with bare ja, no voice ID, and no voice query even when the voice list is empty', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  await act(async () => speak('あく'));
+  expect(Speech.getAvailableVoicesAsync).not.toHaveBeenCalled();
+  expect(Speech.speak).toHaveBeenCalledTimes(1);
+  expect(Speech.speak).toHaveBeenCalledWith('あく', expect.objectContaining({ language: 'ja', rate: 0.85 }));
+  expect(jest.mocked(Speech.speak).mock.calls[0][1]).not.toHaveProperty('voice');
 });
