@@ -1,8 +1,9 @@
-New: adjectives! Practice い-adjectives, な-adjectives and だ/です alongside your verbs, with 540+ words from N5 to N1.
+New: 自動詞・他動詞 pairs! Pick the verb that fits a real sentence, like 開く or 開ける, with 180 pairs from N5 to N1 and a "Why?" that names the deciding phrase.
 
-• Full tables for every adjective, with the other correct ways to say each form
-• Quiz options built from real learner mistakes (高いでした, きれくない), and a "Why?" that explains the one you picked
-• Search finds an adjective from any form: たかくなかった finds 高い
-• Already using the app? Turn adjectives on in Practice settings
+• 240+ more verbs, for 1,900+ in all
+• Search lists exact spellings, readings and romaji first
+• Each verb's page links to its pair partner
+• A more reliable Tip Jar
+• Already using the app? Turn on Transitivity Pairs in the quiz's Settings
 
 Thanks for studying with ConjuGo!
